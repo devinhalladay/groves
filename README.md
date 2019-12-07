@@ -1,29 +1,10 @@
-![Next.js Logo](../.github/images/next.svg)
+<!-- <p align="center"><img src="hill.svg" width="420" /></p> -->
 
-# Next.js Example
+<h1 align="center">"a small orchard of fruit-bearing trees"</h1>
+<p align="center"><strong>groves</strong> is a third-party are.na application that lets you view, sort, and connect your blocks in brand new ways.</p>
 
-This directory is a brief example of a [Next.js](https://nextjs.org) app that can be deployed with ZEIT Now and zero configuration.
+---
+# WIP, watch for progress!
 
-## Deploy Your Own
-
-Deploy your own Next.js project with ZEIT Now.
-
-[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/new/project?template=https://github.com/zeit/now-examples/tree/master/nextjs)
-
-_Live Example: https://nextjs.now-examples.now.sh_
-
-### How We Created This Example
-
-To get started with Next.js deployed with ZEIT Now, you can use [npm create](https://www.npmjs.com/package/create-next-app) to initialize the project:
-
-```shell
-$ npm create next-app my-app
-```
-
-### Deploying From Your Terminal
-
-You can deploy your new Next.js project with a single command from your terminal using [Now CLI](https://zeit.co/download):
-
-```shell
-$ now
-```
+## intent & goals
+create a new functional layer on top of are.na, using are.na as the "filesystem" for a desktop-like experience that allows you to associate your blocks in brand new ways, for thinking outside the block channel.

@@ -1,9 +1,9 @@
 {
-  "name": "create-next-example-app",
-  "description": "A Next.js starter app.",
+  "name": "groves",
+  "description": "are.na channels but galaxy brain",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zeit/now-examples/tree/master/nextjs"
+    "url": "https://github.com/devinhalladay/groves"
   },
   "license": "MIT",
   "scripts": {
