@@ -1,19 +1,20 @@
 {
   "name": "groves",
-  "description": "are.na channels but galaxy brain",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/devinhalladay/groves"
-  },
-  "license": "MIT",
   "scripts": {
-    "dev": "next",
+    "dev": "now dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
-    "next": "^9.0.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "are.na": "^0.1.2",
+    "axios": "^0.19.0",
+    "isomorphic-unfetch": "^3.0.0",
+    "js-cookie": "^2.2.1",
+    "micro": "^9.3.4",
+    "next": "^9.1.4",
+    "next-cookies": "^2.0.3",
+    "nookies": "^2.0.8",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   }
 }
