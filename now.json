@@ -1,0 +1,11 @@
+{
+  "name": "groves",
+  "version": 2,
+  "build": {
+    "env": {
+      "REACT_APP_APP_ID": "@react-app-app-id",
+      "REACT_APP_APP_SECRET": "@react-app-app-secret",
+      "REACT_APP_LOCAL_CALLBACK": "@react-app-local-callback"
+    }
+  }
+}
