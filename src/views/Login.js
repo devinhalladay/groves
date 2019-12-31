@@ -12,23 +12,9 @@ export default class Login extends Component {
     const parsedUrl = parseUrl(window.location.search)
     const code = parsedUrl.query.code
 
-    // fetch(`https://dev.are.na/oauth/token?client_id=${process.env.REACT_APP_APPLICATION_ID}&client_secret=${process.env.REACT_APP_APPLICATION_SECRET}&code=${code}&grant_type=authorization_code&redirect_uri=${process.env.REACT_APP_APPLICATION_CALLBACK}`, {
-    //   method: 'post',
-    //   body: JSON.stringify(),
-    //   headers: {
-    //     'Access-Control-Allow-Headers': '*'
-    //   }
-    // }).then(function(response) {
-    //   console.log(response);
-      
-    //   return response.json();
-    // }).then(function(data) {
-    //   // ChromeSamples.log('Created Gist:', data.html_url);
-    // });
-
     await axios
     .post(
-        `https://cors-anywhere.herokuapp.com/https://dev.are.na/oauth/token?client_id=${process.env.REACT_APP_APPLICATION_ID}&client_secret=${process.env.REACT_APP_APPLICATION_SECRET}&code=${code}&grant_type=authorization_code&redirect_uri=${process.env.REACT_APP_APPLICATION_CALLBACK}`,
+        `https://dev.are.na/oauth/token?client_id=${process.env.REACT_APP_APPLICATION_ID}&client_secret=${process.env.REACT_APP_APPLICATION_SECRET}&code=${code}&grant_type=authorization_code&redirect_uri=${process.env.REACT_APP_APPLICATION_CALLBACK}`,
         {},
         {
           headers: {
@@ -50,6 +36,8 @@ export default class Login extends Component {
         return response.json();
       }).then((json) => {
         localStorage.setItem('user', json)
+        console.log(json);
+        
       }).catch(err => {
         console.log(err);
       });
