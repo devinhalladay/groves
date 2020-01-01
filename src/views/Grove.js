@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import users from '../api/user.js'
 
-function Home() {
+function Grove() {
 
   const [data, setData] = useState('')
 
@@ -9,7 +9,7 @@ function Home() {
     users.then(data =>  setData(data))    
   }, [])
   return (
-    <div className="Home">
+    <div className="Grove">
       <pre>
         {JSON.stringify(data, null, 1 )}
       </pre>
@@ -17,4 +17,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Grove;
