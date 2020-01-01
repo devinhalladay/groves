@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import users from '../api/user.js'
+import users from '../api/getUser.js/index.js'
 
 function Grove() {
 
