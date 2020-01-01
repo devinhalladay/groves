@@ -1,38 +1,20 @@
-import { useEffect, useState } from 'react'
-import Head from 'next/head'
-import TableRow from '../components/TableRow'
+import React, { useEffect, useState } from 'react';
+import users from '../api/user.js'
 
-export default () => {
-  const [data, setData] = useState([])
+function Home() {
+
+  const [data, setData] = useState('')
+
   useEffect(() => {
-    async function getData() {
-      const res = await fetch('/api')
-      const newData = await res.json()
-      setData(newData)
-    }
-    getData()
+    users.then(data =>  setData(data))    
   }, [])
   return (
-    <main>
-      <h1>Logged in</h1>
-      {data.length > 0 ? (
-        data.map(d => (
-          // <TableRow
-          //   key={d.data.telephone}
-          //   creditCard={d.data.creditCard.number}
-          //   firstName={d.data.firstName}
-          //   lastName={d.data.lastName}
-          //   telephone={d.data.telephone}
-          // />
-          <div>test</div>
-        ))
-      ) : (
-        <>
-          <TableRow loading />
-          <TableRow loading />
-          <TableRow loading />
-        </>
-    )}
-      </main>
-  )
+    <div className="Home">
+      <pre>
+        {JSON.stringify(data, null, 1 )}
+      </pre>
+    </div>
+  );
 }
+
+export default Home;
