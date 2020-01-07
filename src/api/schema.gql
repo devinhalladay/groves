@@ -1,23 +1,15 @@
 type User @collection(name: "users") {
-  id: ID!
-  profile_id: String!
-  slug: String!
+  profile_id: Int! @unique
+  slug: String! @unique
   username: String!
   first_name: String!
   last_name: String!
   full_name: String!
   avatar: String!
-  avatar_image: Avatar
   channel_count: Int!
   initials: String!
   is_premium: Boolean!
   is_exceeding_private_connections_limit: Boolean!
-  badge: String!
-}
-
-type Avatar {
-  thumb: String!
-  display: String!
 }
 
 type Metadata {
@@ -37,4 +29,8 @@ type Grove @collection(name: "groves") {
 type Block {
   id: ID!
   content: String!
+}
+
+type Query {
+  userByProfileID(profile_id: Int!): [User!]
 }
