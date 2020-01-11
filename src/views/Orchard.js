@@ -3,9 +3,6 @@ import { withRouter , BrowserRouter as Router, Link, useLocation } from "react-r
 import { parseUrl } from 'query-string'
 import axios from 'axios'
 
-import { Query, Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
-
 import ChannelList from './ChannelList'
 
 

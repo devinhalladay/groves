@@ -6,52 +6,9 @@ import { withCookies, useCookies } from 'react-cookie';
 
 import UserContext from '../components/UserContext'
 
-import gql from 'graphql-tag'
-import { useMutation, useQuery, useLazyQuery } from '@apollo/react-hooks';
 import { register } from '../serviceWorker';
 
 import { useAuth, useUser } from '../api/use-auth.js'
-
-export const GET_USER = gql`
-  query User($profileID: Int!) {
-    userByProfileID(profile_id: $profileID) {
-      data {
-        slug
-        username
-        first_name
-        last_name
-        full_name
-        avatar
-        channel_count
-        profile_id
-        initials
-        is_premium
-        is_exceeding_private_connections_limit
-      }
-    }
-  }
-`
-
-export const CREATE_USER = gql`
-  mutation CreateUser(
-    $profile_id: Int!, $slug: String!, $username: String!, $first_name: String!, $last_name: String!, $full_name: String!, $avatar: String!, $channel_count: Int!, $initials: String!, $is_premium: Boolean!, $is_exceeding_private_connections_limit: Boolean!) {
-  createUser(data: {
-    profile_id: $profile_id, slug: $slug, username: $username, first_name: $first_name, last_name: $last_name, full_name: $full_name, avatar: $avatar, channel_count: $channel_count, initials: $initials, is_premium: $is_premium, is_exceeding_private_connections_limit: $is_exceeding_private_connections_limit
-  }) {
-    slug
-    username
-    first_name
-    last_name
-    full_name
-    avatar
-    channel_count
-    profile_id
-    initials
-    is_premium
-    is_exceeding_private_connections_limit
-  }
-}
-`
 
 class ArenaClient {
   constructor(accessToken) {
@@ -83,14 +40,7 @@ class ArenaClient {
 }
 
 function Callback(props) {
-  // const [user, setUser] = useState({})
   let user = localStorage.getItem('user')
-  const [createUser] = useMutation(CREATE_USER)
-
-  const [getUser, { called, loading, data }] = useLazyQuery(
-    GET_USER,
-    { variables: { profileID: user ? user.profile_id : 0 } }
-  );
 
   const [cookies, setCookie] = useCookies(['arena_token']);
 
@@ -115,24 +65,6 @@ function Callback(props) {
             arenaClient.getChannelsForMe().then(console.log)
             history.push('/orchard')
           })
-
-        
-      //   axios.get(
-      //     'https://cors-anywhere.herokuapp.com/https://api.are.na/v2/me', 
-      //     { 
-      //       "headers": {
-      //         "authorization": "Bearer " + token
-      //     }}).then((res) => {
-      //       // setUser(res.data)
-      //       props.handleAuth('LOGIN', res.data)
-      //       // getUser({profileID: res.data.profile_id})
-      //       return res.data
-      // }).then((user) => {
-      //     props.handleAuth('LOGIN', user)
-
-      //     axios.get(`https://cors-anywhere.herokuapp.com/https://api.are.na/v2/users/${user.profile_id}/channels`).then(console.log);
-      //     history.push('/orchard')
-      // })
     }).catch(err => {
       console.error(err);
     })

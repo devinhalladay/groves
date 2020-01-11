@@ -23,7 +23,6 @@ import Header from './components/Header';
 
 function App(props) {
   let localUser = localStorage.getItem('user')
-  // let isAuthenticated = localStorage.getItem('isAuthenticated')
   const { cookies } = props;
   
 
@@ -110,69 +109,5 @@ export function PrivateRoute(props, { children, ...rest }) {
     />
   );
 }
-
-
-
-// function AuthButton() {
-//   let history = useHistory();
-
-//   return fakeAuth.isAuthenticated ? (
-//     <p>
-//       Welcome!{" "}
-//       <button
-//         onClick={() => {
-//           fakeAuth.signout(() => history.push("/"));
-//         }}
-//       >
-//         Sign out
-//       </button>
-//     </p>
-//   ) : (
-//     <p>You are not logged in.</p>
-//   );
-// }
-
-// A wrapper for <Route> that redirects to the login
-// screen if you're not yet authenticated.
-// function PrivateRoute({ children, ...rest }) {
-//   return (
-//     <Route
-//       {...rest}
-//       render={({ location }) =>
-//         fakeAuth.isAuthenticated ? (
-//           children
-//         ) : (
-//           <Redirect
-//             to={{
-//               pathname: "/login",
-//               state: { from: location }
-//             }}
-//           />
-//         )
-//       }
-//     />
-//   );
-// }
-
-
-
-// function LoginPage() {
-//   let history = useHistory();
-//   let location = useLocation();
-
-//   let { from } = location.state || { from: { pathname: "/" } };
-//   let login = () => {
-//     fakeAuth.authenticate(() => {
-//       history.replace(from);
-//     });
-//   };
-
-//   return (
-//     <div>
-//       <p>You must log in to view the page at {from.pathname}</p>
-//       <button onClick={login}>Log in</button>
-//     </div>
-//   );
-// }
 
 export default withCookies(App)
