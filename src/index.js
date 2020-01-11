@@ -11,6 +11,8 @@ import { setContext } from 'apollo-link-context';
 
 import { CookiesProvider, Cookies } from 'react-cookie';
 
+import { ProvideUser, ProvideAuth } from './api/use-auth'
+
 
 const httpLink = createHttpLink({
 uri: 'https://graphql.fauna.com/graphql',
@@ -38,7 +40,7 @@ const client = new ApolloClient({
 ReactDOM.render(
   <CookiesProvider>
     <ApolloProvider client={client}>
-      <App />
+        <App />
     </ApolloProvider>
   </CookiesProvider>,
   document.getElementById('root')

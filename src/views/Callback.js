@@ -4,8 +4,13 @@ import { parseUrl } from 'query-string'
 import axios from 'axios'
 import { withCookies, useCookies } from 'react-cookie';
 
+import UserContext from '../components/UserContext'
+
 import gql from 'graphql-tag'
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation, useQuery, useLazyQuery } from '@apollo/react-hooks';
+import { register } from '../serviceWorker';
+
+import { useAuth, useUser } from '../api/use-auth.js'
 
 export const GET_USER = gql`
   query User($profileID: Int!) {
@@ -48,48 +53,95 @@ export const CREATE_USER = gql`
 }
 `
 
+class ArenaClient {
+  constructor(accessToken) {
+    this.accessToken = accessToken;
+  }
+
+  _makeRequest(method, path) {
+    return axios[method](`https://cors-anywhere.herokuapp.com/https://api.are.na/${path}`, {
+      headers: {
+        "authorization": `Bearer ${this.accessToken}`
+      }
+    });
+  }
+
+  setMe(me) {
+    this.me = me;
+    return Promise.resolve(this.me);
+  }
+
+  getMe() {
+    return this._makeRequest('get', `/v2/me`).then(resp => {
+      return resp.data;
+    });
+  }
+
+  getChannelsForMe() {
+    return this._makeRequest('get', `/v2/users/${this.me.id}/channels`);
+  }
+}
+
 function Callback(props) {
-  const [createUser] = useMutation(CREATE_USER);
-  const [getUser] = useQuery(GET_USER)
+  // const [user, setUser] = useState({})
+  let user = localStorage.getItem('user')
+  const [createUser] = useMutation(CREATE_USER)
+
+  const [getUser, { called, loading, data }] = useLazyQuery(
+    GET_USER,
+    { variables: { profileID: user ? user.profile_id : 0 } }
+  );
 
   const [cookies, setCookie] = useCookies(['arena_token']);
 
   let history = useHistory();
   const parsedUrl = parseUrl(window.location.search)
   const code = parsedUrl.query.code
-  
+
   useEffect(() => {
-    async function registerUser() {
+    async function authUser() {
       let token;
       
       axios.post(`https://cors-anywhere.herokuapp.com/https://dev.are.na/oauth/token?client_id=${process.env.REACT_APP_APPLICATION_ID}&client_secret=${process.env.REACT_APP_APPLICATION_SECRET}&code=${code}&grant_type=authorization_code&redirect_uri=${process.env.REACT_APP_APPLICATION_CALLBACK}`
-      ).then(async res => {
-        token = res.data.access_token
-        setCookie('arena_token', token, { path: '/' })
+      ).then(res => {
 
-        getUser()
+        const arenaClient = new ArenaClient(res.data.access_token);
+        setCookie('arena_token', token, { path: '/' })
+        return arenaClient.getMe()
+          .then(me => arenaClient.setMe(me))
+          .then(me => {
+            props.handleAuth('LOGIN', me)
+            console.log('cool')
+            arenaClient.getChannelsForMe().then(console.log)
+            history.push('/orchard')
+          })
+
         
-        axios.get(
-          'https://cors-anywhere.herokuapp.com/https://api.are.na/v2/me', 
-          { 
-            "headers": {
-              "authorization": "Bearer " + token
-          }}).then((res) => {
-            props.handleUpdateLoginState(res.data)
-            createUser({variables: { ...res.data }})
-        history.push("/orchard");
-      })
+      //   axios.get(
+      //     'https://cors-anywhere.herokuapp.com/https://api.are.na/v2/me', 
+      //     { 
+      //       "headers": {
+      //         "authorization": "Bearer " + token
+      //     }}).then((res) => {
+      //       // setUser(res.data)
+      //       props.handleAuth('LOGIN', res.data)
+      //       // getUser({profileID: res.data.profile_id})
+      //       return res.data
+      // }).then((user) => {
+      //     props.handleAuth('LOGIN', user)
+
+      //     axios.get(`https://cors-anywhere.herokuapp.com/https://api.are.na/v2/users/${user.profile_id}/channels`).then(console.log);
+      //     history.push('/orchard')
+      // })
     }).catch(err => {
       console.error(err);
     })
   }
 
-  
-  registerUser()
-}, [])
+  authUser()
+  }, [])
 
-return null
-
+  return null
 }
 
 

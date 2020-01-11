@@ -4,7 +4,7 @@ export default class Index extends Component {
   render() {
     return (
       <div>
-        <h1>You're logged out.</h1>
+        <h1>a gathering of fruit-bearing trees</h1>
       </div>
     )
   }

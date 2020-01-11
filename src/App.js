@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,80 +6,87 @@ import {
   Route,
   Link,
   useLocation,
-  withRouter
+  withRouter,
+  useHistory
 } from "react-router-dom";
 
-// import { History } from 'history'
-
+import { UserProvider } from './components/UserContext'
 
 import { withCookies, Cookies } from 'react-cookie';
 
 
 import Index from './views/Index'
 import Orchard from './views/Orchard';
-import Login from './views/Callback';
+import Callback from './views/Callback';
 
 import Header from './components/Header';
 
-class App extends Component {
-  constructor(props) {
-    super(props)
+function App(props) {
+  let localUser = localStorage.getItem('user')
+  // let isAuthenticated = localStorage.getItem('isAuthenticated')
+  const { cookies } = props;
+  
 
-    this.state = {
-      authenticated: false,
-      user: {},
-      grove: {}
-    }
+  const [user, setUser] = useState({
+    isAuthenticated: localStorage.getItem('isAuthenticated') || cookies.get('arena_token'),
+    ...JSON.parse(localUser)
+  })
 
-    this.handleUpdateLoginState = this.handleUpdateLoginState.bind(this)
-  }
-
-  handleUpdateLoginState(user) {
-    const { cookies } = this.props;
-
-    if (!this.state.authenticated) {
-      this.setState({
-        user: user
-      }, () => {
-        this.setState({
-          authenticated: true,
-        })
-      })
-    } else {
-      this.setState({
-        authenticated: false
-      }, () => {
-        // cookies.remove('arena_auth_token')
-        // this.props.history.push('/');
-      })
-
-      
-    }
-  }
+  const [isReady, isIsReady] = useState(false)
 
 
-  render(props) {
-    console.log(Cookies.get('arena_token'));
+  
+
+  const handleUserStatus = (action, user) => {
     
-    return (
+    switch (action) {
+      case 'LOGIN':
+        setUser({
+          isAuthenticated: true,
+          ...user
+        })
+        localStorage.setItem('user', JSON.stringify(user))
+        break;
+      case 'LOGOUT':
+        setUser({
+          isAuthenticated: false
+        })
+        localStorage.removeItem('user')
+        cookies.remove('arena_token')
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  // if (!isReady) {
+  //   // check if auth token is present
+  //   // if so, fetch the user from the API
+  //     // if we can request the user, allow the app to boot
+  //     // if the request for the user fails, clear the token
+  //   // if not, all the app to boot so they can login
+  //   return <Loading />;
+  // }
+
+  return (
       <Router>
         <div>
-          <Header handleUpdateLoginState={this.handleUpdateLoginState}></Header>
+          <Header user={ user } handleAuth={handleUserStatus}></Header>
           <Switch>
             <Route exact path="/">
               <Index />
             </Route>
             <Route path="/oauth/callback">
-              <Login {...props} handleUpdateLoginState={this.handleUpdateLoginState} />
+              <Callback {...props} handleAuth={handleUserStatus} isAuthenticated={user.isAuthenticated} />
             </Route>
-            <PrivateRoute authenticated={this.state.authenticated} path="/orchard">
-              <Orchard user={ this.state.user }/>
+            <PrivateRoute user={user} authenticated={ user.isAuthenticated } path="/orchard">
+              <Orchard user={ user }/>
             </PrivateRoute>
           </Switch>
         </div>
       </Router>
-    );
-  }
+  );
 }
 
 
