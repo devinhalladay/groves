@@ -14,6 +14,7 @@ import { UserProvider } from './components/UserContext'
 
 import { withCookies, Cookies } from 'react-cookie';
 
+import axios from 'axios'
 
 import Index from './views/Index'
 import Orchard from './views/Orchard';
@@ -27,14 +28,11 @@ function App(props) {
   
 
   const [user, setUser] = useState({
-    isAuthenticated: localStorage.getItem('isAuthenticated') || cookies.get('arena_token'),
+    isAuthenticated: cookies.get('arena_token'),
     ...JSON.parse(localUser)
   })
 
   const [isReady, isIsReady] = useState(false)
-
-
-  
 
   const handleUserStatus = (action, user) => {
     
@@ -59,6 +57,11 @@ function App(props) {
     }
   }
 
+  const handleLogin = async () => {
+    const user = await axios.get(`${process.env.REACT_APP_APPLICATION_API_BASE}/api/auth-user`)
+    return user
+  }
+
   // if (!isReady) {
   //   // check if auth token is present
   //   // if so, fetch the user from the API
@@ -71,13 +74,13 @@ function App(props) {
   return (
       <Router>
         <div>
-          <Header user={ user } handleAuth={handleUserStatus}></Header>
+          <Header user={ user } handleAuth={handleLogin}></Header>
           <Switch>
             <Route exact path="/">
               <Index />
             </Route>
             <Route path="/oauth/callback">
-              <Callback {...props} handleAuth={handleUserStatus} isAuthenticated={user.isAuthenticated} />
+              <Callback {...props} handleLogin={handleLogin} isAuthenticated={user.isAuthenticated} />
             </Route>
             <PrivateRoute user={user} authenticated={ user.isAuthenticated } path="/orchard">
               <Orchard user={ user }/>

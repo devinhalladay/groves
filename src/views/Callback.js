@@ -10,33 +10,34 @@ import { register } from '../serviceWorker';
 
 import { useAuth, useUser } from '../api/use-auth.js'
 
-class ArenaClient {
+export class ArenaClient {
   constructor(accessToken) {
     this.accessToken = accessToken;
   }
 
-  _makeRequest(method, path) {
-    return axios[method](`https://cors-anywhere.herokuapp.com/https://api.are.na/${path}`, {
-      headers: {
-        "authorization": `Bearer ${this.accessToken}`
+  _makeRequest(method, path, contents) {
+    return axios[method](`/api/make-request`, {
+      body: {
+        path: path,
+        content: {}
       }
-    });
+    })
   }
 
-  setMe(me) {
-    this.me = me;
-    return Promise.resolve(this.me);
-  }
+  // setMe(me) {
+  //   this.me = me;
+  //   return Promise.resolve(this.me);
+  // }
 
-  getMe() {
-    return this._makeRequest('get', `/v2/me`).then(resp => {
-      return resp.data;
-    });
-  }
+  // getMe() {
+  //   return this._makeRequest('get', `/v2/me`).then(resp => {
+  //     return resp.data;
+  //   });
+  // }
 
-  getChannelsForMe() {
-    return this._makeRequest('get', `/v2/users/${this.me.id}/channels`);
-  }
+  // getChannelsForMe() {
+  //   return this._makeRequest('get', `/v2/users/${this.me.id}/channels`);
+  // }
 }
 
 // get channels and store their IDs
@@ -52,34 +53,28 @@ class ArenaClient {
 // also move the authentication to the server either by server rendering (which may actually solve many of the above problems)
 // or by adding a second routing layer (in addition to react-router) in index.js that handles the oauth callback
 
-function Callback(props) {
+export function Callback(props) {
   const [cookies, setCookie] = useCookies(['arena_token']);
+
 
   let history = useHistory();
   const parsedUrl = parseUrl(window.location.search)
   const code = parsedUrl.query.code
 
   useEffect(() => {
-    async function authUser() {
-      let token;
-      
-      axios.post(`https://cors-anywhere.herokuapp.com/https://dev.are.na/oauth/token?client_id=${process.env.REACT_APP_APPLICATION_ID}&client_secret=${process.env.REACT_APP_APPLICATION_SECRET}&code=${code}&grant_type=authorization_code&redirect_uri=${process.env.REACT_APP_APPLICATION_CALLBACK}`
-      ).then(res => {
+    props.handleLogin()
+    props.handleLogin().then(console.log)
+    console.log(props.handleLogin());
+    
+  //   async function authUser() {
+  //     props.
 
-        const arenaClient = new ArenaClient(res.data.access_token);
-        setCookie('arena_token', token, { path: '/' })
-        return arenaClient.getMe()
-          .then(me => arenaClient.setMe(me))
-          .then(me => {
-            props.handleAuth('LOGIN', me)
-            console.log('cool')
-            arenaClient.getChannelsForMe().then(console.log)
-            history.push('/orchard')
-          })
-    }).catch(err => {
-      console.error(err);
-    })
-  }
+  //     // console.log(user);
+
+
+    
+  //     // hit serverless auth function
+  // }
   }, [])
 
   return null
