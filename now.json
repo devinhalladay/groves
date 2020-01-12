@@ -1,3 +1,27 @@
 {
-    "name": "groves"
+    "name": "groves",
+    "env": {
+        "REACT_APP_APPLICATION_ID": "@react_app_application_id",
+        "REACT_APP_APPLICATION_SECRET": "@react_app_application_secret",
+        "REACT_APP_APPLICATION_CALLBACK": "@react_app_application_callback",
+        "REACT_APP_API_CALLBACK": "@react_app_api_callback",
+        "REACT_APP_APPLICATION_API_BASE": "@react_app_application_api_base",
+        "SERVER_AUTH_CALLBACK": "@server_auth_callback"
+    },
+    "routes": [
+      {
+        "src": "/api/auth-user",
+        "dest": "/api/auth-user.js",
+        "headers": {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*"
+        }
+      }
+    ]
 }
+
+
+
+
+
+

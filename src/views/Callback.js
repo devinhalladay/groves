@@ -8,37 +8,35 @@ import UserContext from '../components/UserContext'
 
 import { register } from '../serviceWorker';
 
-import { useAuth, useUser } from '../api/use-auth.js'
+// export class ArenaClient {
+//   constructor(accessToken) {
+//     this.accessToken = accessToken;
+//   }
 
-export class ArenaClient {
-  constructor(accessToken) {
-    this.accessToken = accessToken;
-  }
+//   _makeRequest(method, path, contents) {
+//     return axios[method](`/api/make-request`, {
+//       body: {
+//         path: path,
+//         content: {}
+//       }
+//     })
+//   }
 
-  _makeRequest(method, path, contents) {
-    return axios[method](`/api/make-request`, {
-      body: {
-        path: path,
-        content: {}
-      }
-    })
-  }
+//   // setMe(me) {
+//   //   this.me = me;
+//   //   return Promise.resolve(this.me);
+//   // }
 
-  // setMe(me) {
-  //   this.me = me;
-  //   return Promise.resolve(this.me);
-  // }
+//   // getMe() {
+//   //   return this._makeRequest('get', `/v2/me`).then(resp => {
+//   //     return resp.data;
+//   //   });
+//   // }
 
-  // getMe() {
-  //   return this._makeRequest('get', `/v2/me`).then(resp => {
-  //     return resp.data;
-  //   });
-  // }
-
-  // getChannelsForMe() {
-  //   return this._makeRequest('get', `/v2/users/${this.me.id}/channels`);
-  // }
-}
+//   // getChannelsForMe() {
+//   //   return this._makeRequest('get', `/v2/users/${this.me.id}/channels`);
+//   // }
+// }
 
 // get channels and store their IDs
 // during onboardig you need to manualyl fetch all blocks of all channels. this will take some time. 
@@ -53,7 +51,7 @@ export class ArenaClient {
 // also move the authentication to the server either by server rendering (which may actually solve many of the above problems)
 // or by adding a second routing layer (in addition to react-router) in index.js that handles the oauth callback
 
-export function Callback(props) {
+function Callback(props) {
   const [cookies, setCookie] = useCookies(['arena_token']);
 
 
@@ -62,9 +60,16 @@ export function Callback(props) {
   const code = parsedUrl.query.code
 
   useEffect(() => {
-    props.handleLogin()
-    props.handleLogin().then(console.log)
-    console.log(props.handleLogin());
+    async function loginInUser() {
+      // await props.handleLogin('post').then(console.log)
+      await axios.post(`${process.env.REACT_APP_APPLICATION_API_BASE}/auth-user`, { code: code } ).then(console.log)
+    }
+
+    loginInUser()
+
+
+    // props.handleLogin()
+    
     
   //   async function authUser() {
   //     props.

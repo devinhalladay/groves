@@ -58,8 +58,10 @@ function App(props) {
   }
 
   const handleLogin = async () => {
-    const user = await axios.get(`${process.env.REACT_APP_APPLICATION_API_BASE}/api/auth-user`)
+    const user = await axios.get(`${process.env.REACT_APP_APPLICATION_API_BASE}/auth-user`)
     return user
+    console.log(user);
+    
   }
 
   // if (!isReady) {
@@ -74,17 +76,18 @@ function App(props) {
   return (
       <Router>
         <div>
-          <Header user={ user } handleAuth={handleLogin}></Header>
+          <Header></Header>
           <Switch>
             <Route exact path="/">
               <Index />
             </Route>
-            <Route path="/oauth/callback">
+            <Route exact path="/oauth/callback">
               <Callback {...props} handleLogin={handleLogin} isAuthenticated={user.isAuthenticated} />
             </Route>
             <PrivateRoute user={user} authenticated={ user.isAuthenticated } path="/orchard">
               <Orchard user={ user }/>
             </PrivateRoute>
+            <Route component={() => {return 'fuck'}} />
           </Switch>
         </div>
       </Router>
