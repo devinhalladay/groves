@@ -58,10 +58,9 @@ function App(props) {
   }
 
   const handleLogin = async () => {
-    const user = await axios.get(`${process.env.REACT_APP_APPLICATION_API_BASE}/auth-user`)
+    const user = await axios.get(`http://localhost:3001/${process.env.REACT_APP_APPLICATION_API_PATH}/auth-user`)
     return user
     console.log(user);
-    
   }
 
   // if (!isReady) {
@@ -87,7 +86,6 @@ function App(props) {
             <PrivateRoute user={user} authenticated={ user.isAuthenticated } path="/orchard">
               <Orchard user={ user }/>
             </PrivateRoute>
-            <Route component={() => {return 'fuck'}} />
           </Switch>
         </div>
       </Router>

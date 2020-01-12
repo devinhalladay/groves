@@ -5,7 +5,7 @@
         "REACT_APP_APPLICATION_SECRET": "@react_app_application_secret",
         "REACT_APP_APPLICATION_CALLBACK": "@react_app_application_callback",
         "REACT_APP_API_CALLBACK": "@react_app_api_callback",
-        "REACT_APP_APPLICATION_API_BASE": "@react_app_application_api_base",
+        "REACT_APP_APPLICATION_API_PATH": "@react_app_application_api_path",
         "SERVER_AUTH_CALLBACK": "@server_auth_callback"
     },
     "routes": [

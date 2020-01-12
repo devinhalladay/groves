@@ -59,8 +59,8 @@ function Callback(props) {
 
   useEffect(() => {
     async function loginInUser() {
-      await axios.post(`${process.env.REACT_APP_APPLICATION_API_BASE}/auth-user`, { code: code } ).then((res) => {
-        debugger
+      await axios.post(`http://localhost:3001/${process.env.REACT_APP_APPLICATION_API_PATH}/auth-user`, { code: code } ).then((res) => {
+        // debugger
         setCookie('arena_token', res.data.auth_token, { path: '/' })
       })
     }

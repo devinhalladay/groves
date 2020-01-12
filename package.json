@@ -18,7 +18,6 @@
     "redux": "^4.0.5"
   },
   "scripts": {
-    "dev": "HTTPS=true PORT=$PORT react-scripts start",
     "start": "HTTPS=true PORT=$PORT react-scripts start",
     "build": "HTTPS=true PORT=$PORT react-scripts build",
     "test": "react-scripts test",
