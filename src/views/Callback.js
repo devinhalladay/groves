@@ -61,25 +61,10 @@ function Callback(props) {
 
   useEffect(() => {
     async function loginInUser() {
-      // await props.handleLogin('post').then(console.log)
       await axios.post(`${process.env.REACT_APP_APPLICATION_API_BASE}/auth-user`, { code: code } ).then(console.log)
     }
 
     loginInUser()
-
-
-    // props.handleLogin()
-    
-    
-  //   async function authUser() {
-  //     props.
-
-  //     // console.log(user);
-
-
-    
-  //     // hit serverless auth function
-  // }
   }, [])
 
   return null
