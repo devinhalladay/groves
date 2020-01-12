@@ -1,6 +1,9 @@
+const axios = require('axios');
 
-// return axios[method](`https://cors-anywhere.herokuapp.com/https://api.are.na/${path}`, {
-//       headers: {
-//         "authorization": `Bearer ${this.accessToken}`
-//       }
-//     });
+module.exports = (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+
+  const code = req.header
+
+  res.json({auth_token: code})
+}

@@ -14,7 +14,7 @@ function Header(props) {
             </Link>
           </li>
           {isAuthenticated ? <li><Link to="/orchard"><a>Orchard</a></Link></li> : null}
-          {!isAuthenticated ? <li><a href={`http://dev.are.na/oauth/authorize?client_id=${process.env.REACT_APP_APPLICATION_ID}&redirect_uri=${process.env.REACT_APP_APPLICATION_CALLBACK}&response_type=code`}>Login</a></li> : null}
+          {!isAuthenticated ? <li><a href={`https://dev.are.na/oauth/authorize?client_id=${process.env.REACT_APP_APPLICATION_ID}&redirect_uri=${process.env.REACT_APP_APPLICATION_CALLBACK}&response_type=code`}>Login</a></li> : null}
         </ul>
       </nav>
     </header>

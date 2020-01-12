@@ -8,35 +8,34 @@ import UserContext from '../components/UserContext'
 
 import { register } from '../serviceWorker';
 
-// export class ArenaClient {
-//   constructor(accessToken) {
-//     this.accessToken = accessToken;
-//   }
+export class ArenaClient {
+  constructor(accessToken) {
+    this.accessToken = accessToken;
+  }
 
-//   _makeRequest(method, path, contents) {
-//     return axios[method](`/api/make-request`, {
-//       body: {
-//         path: path,
-//         content: {}
-//       }
-//     })
-//   }
+  _makeRequest(method, path) {
+    return axios[method]('https://api.are.na/v2', {
+      body: {
+        path: path
+      }
+    })
+  }
 
-//   // setMe(me) {
-//   //   this.me = me;
-//   //   return Promise.resolve(this.me);
-//   // }
+  setMe(me) {
+    this.me = me;
+    return Promise.resolve(this.me);
+  }
 
-//   // getMe() {
-//   //   return this._makeRequest('get', `/v2/me`).then(resp => {
-//   //     return resp.data;
-//   //   });
-//   // }
+  getMe() {
+    return this._makeRequest('get', `/me`).then(resp => {
+      return resp.data;
+    });
+  }
 
-//   // getChannelsForMe() {
-//   //   return this._makeRequest('get', `/v2/users/${this.me.id}/channels`);
-//   // }
-// }
+  // getChannelsForMe() {
+  //   return this._makeRequest('get', `/users/${this.me.id}/channels`);
+  // }
+}
 
 // get channels and store their IDs
 // during onboardig you need to manualyl fetch all blocks of all channels. this will take some time. 
@@ -52,8 +51,7 @@ import { register } from '../serviceWorker';
 // or by adding a second routing layer (in addition to react-router) in index.js that handles the oauth callback
 
 function Callback(props) {
-  const [cookies, setCookie] = useCookies(['arena_token']);
-
+  const [cookies, setCookie, removeCookie] = useCookies(['auth_token']);
 
   let history = useHistory();
   const parsedUrl = parseUrl(window.location.search)
@@ -61,7 +59,10 @@ function Callback(props) {
 
   useEffect(() => {
     async function loginInUser() {
-      await axios.post(`${process.env.REACT_APP_APPLICATION_API_BASE}/auth-user`, { code: code } ).then(console.log)
+      await axios.post(`${process.env.REACT_APP_APPLICATION_API_BASE}/auth-user`, { code: code } ).then((res) => {
+        debugger
+        setCookie('arena_token', res.data.auth_token, { path: '/' })
+      })
     }
 
     loginInUser()
