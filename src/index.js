@@ -14,14 +14,7 @@ import { CookiesProvider, Cookies } from 'react-cookie';
 import { ProvideUser, ProvideAuth } from './api/use-auth'
 
 
-const httpLink = createHttpLink({
-uri: 'https://graphql.fauna.com/graphql',
-});
-
 const authLink = setContext((_, { headers }) => {
-    // get the authentication token from local storage if it exists
-    // const token = localStorage.getItem('auth_token');
-
     // return the headers to the context so httpLink can read them
     return {
         headers: {
@@ -35,7 +28,7 @@ const authLink = setContext((_, { headers }) => {
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache()
-});
+})
 
 ReactDOM.render(
   <CookiesProvider>
@@ -46,4 +39,4 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-serviceWorker.unregister();  
+serviceWorker.unregister()
