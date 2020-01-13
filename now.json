@@ -1,5 +1,8 @@
 {
     "name": "groves",
+    "builds": [
+        { "src": "/api/auth-user.js", "use": "@now/node" }
+    ],
     "env": {
         "REACT_APP_APPLICATION_ID": "@react_app_application_id",
         "REACT_APP_APPLICATION_SECRET": "@react_app_application_secret",

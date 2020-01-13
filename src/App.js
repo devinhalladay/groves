@@ -22,10 +22,11 @@ import Callback from './views/Callback';
 
 import Header from './components/Header';
 
+import ArenaClient from './arena-client'
+
 function App(props) {
   let localUser = localStorage.getItem('user')
   const { cookies } = props;
-  
 
   const [user, setUser] = useState({
     isAuthenticated: cookies.get('arena_token'),

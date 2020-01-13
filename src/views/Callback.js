@@ -8,35 +8,6 @@ import UserContext from '../components/UserContext'
 
 import { register } from '../serviceWorker';
 
-export class ArenaClient {
-  constructor(accessToken) {
-    this.accessToken = accessToken;
-  }
-
-  _makeRequest(method, path) {
-    return axios[method]('https://api.are.na/v2', {
-      body: {
-        path: path
-      }
-    })
-  }
-
-  setMe(me) {
-    this.me = me;
-    return Promise.resolve(this.me);
-  }
-
-  getMe() {
-    return this._makeRequest('get', `/me`).then(resp => {
-      return resp.data;
-    });
-  }
-
-  // getChannelsForMe() {
-  //   return this._makeRequest('get', `/users/${this.me.id}/channels`);
-  // }
-}
-
 // get channels and store their IDs
 // during onboardig you need to manualyl fetch all blocks of all channels. this will take some time. 
 // you can mitigate it in these ways: let the user invoke it via a "connect content" button and then show a load state,
@@ -56,12 +27,13 @@ function Callback(props) {
   let history = useHistory();
   const parsedUrl = parseUrl(window.location.search)
   const code = parsedUrl.query.code
+  
 
   useEffect(() => {
-    async function loginInUser() {
-      await axios.post(`http://localhost:3001/${process.env.REACT_APP_APPLICATION_API_PATH}/auth-user`, { code: code } ).then((res) => {
-        // debugger
+    const loginInUser = async () => {
+      await axios.post(`http://localhost:3001/${process.env.REACT_APP_APPLICATION_API_PATH}/auth-user`, { code: code }, { headers: { "Access-Control-Allow-Origin": "*", } } ).then((res) => {
         setCookie('arena_token', res.data.auth_token, { path: '/' })
+        history.push('/orchard')
       })
     }
 
