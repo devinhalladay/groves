@@ -1,0 +1,5 @@
+yarn.lock
+.next/
+node_modules/
+.env.local
+.env.development.local
