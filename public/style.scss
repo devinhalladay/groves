@@ -22,13 +22,37 @@ html {
   align-items: start;
   flex: 0 0 1;
   position: relative;
-  padding: 20px;
+  padding: 15px;
   flex-wrap: wrap;
   flex-direction: column;
 }
 
 header {
   height: 45px;
+
+  .orchard-title {
+    background-color: rgba($primary-color, 0.2);
+    padding: 0 15px;
+    border-radius: 10px 0 0 10px;
+    line-height: 100%;
+  }
+
+  .grove-navigation {
+    appearance: none;
+    height: 100%;
+    margin-left: 15px;
+    margin-right: 15px;
+    flex: 1;
+
+    input {
+      border: 0;
+      height: 100%;
+      font-size: 100%;
+      padding: 0;
+      width: 100%;
+      outline: none;
+    }
+  }
 }
 
 .panel {
@@ -45,7 +69,7 @@ header {
     // all other panels. since header panel is unique, it might make sense to break
     // it out into its own component that inherits from my eventual work on a
     // StaticPanel component.
-    padding-top: 20px;
+    margin-top: 15px;
   }
 
   &--pin-right {
@@ -80,19 +104,43 @@ header {
   ul {
     padding: 0;
     margin: 0;
+    width: 100%;
     
     li {
       padding: 10px 15px;
       list-style: none;
+      cursor: pointer;
 
       &:last-child {
         margin-bottom: 15px
+      }
+
+      &:hover {
+        font-style: italic;
       }
 
       &.active {
         background-color: $primary-color;
         color: white;
         font-weight: bold;
+      }
+    }
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    ul {
+      li {
+        padding: 0;
+        margin-right: 15px;
+        display: inline-block;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
     }
   }
