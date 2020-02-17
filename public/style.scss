@@ -35,6 +35,16 @@ header {
     padding: 0 15px;
     border-radius: 10px 0 0 10px;
     line-height: 100%;
+    align-items: center;
+    display: flex;
+
+    * {
+      display: inline-flex;
+    }
+
+    p {
+      padding-right: 10px;
+    }
   }
 
   .grove-navigation {
