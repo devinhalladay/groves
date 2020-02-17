@@ -10,6 +10,8 @@ import {
   useHistory
 } from "react-router-dom";
 
+import useSWR from 'swr'
+
 import { UserProvider } from './components/UserContext'
 
 import { withCookies, Cookies } from 'react-cookie';
@@ -22,48 +24,69 @@ import Callback from './views/Callback';
 
 import Header from './components/Header';
 
-import ArenaClient from './arena-client'
+import ArenaClient from './arena-client';
 
 function App(props) {
-  let localUser = localStorage.getItem('user')
   const { cookies } = props;
-
   const [user, setUser] = useState({
-    isAuthenticated: cookies.get('arena_token'),
-    ...JSON.parse(localUser)
+    isAuthenticated: typeof cookies.get('arena_token') !== 'undefined'
   })
-
+  const [channels, setChannels] = useState({})
   const [isReady, isIsReady] = useState(false)
 
-  const handleUserStatus = (action, user) => {
-    
-    switch (action) {
-      case 'LOGIN':
-        setUser({
-          isAuthenticated: true,
-          ...user
-        })
-        localStorage.setItem('user', JSON.stringify(user))
-        break;
-      case 'LOGOUT':
-        setUser({
-          isAuthenticated: false
-        })
-        localStorage.removeItem('user')
-        cookies.remove('arena_token')
-        break;
+  // let history = useHistory()
 
-      default:
-        break;
+  useEffect(() => {
+    if (!isReady) {
+      if (cookies.get('arena_token')) {
+        let Arena = new ArenaClient(cookies.get('arena_token'))
+        Arena.setMe(Arena.getMe()).then((me) => {
+          setUser({
+            ...user,
+            me
+          })
+  
+        Arena.getChannelsForMe()
+          .then(chans => {
+            setChannels({
+              ...channels,
+              ...chans
+            })
+          })
+        }).catch(e => cookies.remove('arena_token'))
+  
+        isIsReady(true)
+      } else {
+        // history.push('/orchard')
+      }
     }
-  }
+  }, [])
 
-  const handleLogin = async () => {
-    const user = await axios.get(`http://localhost:3001/${process.env.REACT_APP_APPLICATION_API_PATH}/auth-user`)
-    return user
-    console.log(user);
-  }
+  return (
+    <Router>
+      <div>
+        <Header></Header>
+        <Switch>
+          
+          <Route exact path="/">
+            <Index />
+          </Route>
+          <Route exact path="/oauth/callback">
+            <Callback {...props} isAuthenticated={user.isAuthenticated} />
+          </Route>
+          <PrivateRoute channels={channels} authenticated={ user.isAuthenticated } path="/orchard">
+            <Orchard channels={channels}/>
+          </PrivateRoute>
+        </Switch>
+      </div>
+    </Router>
+  );
+}
+//   if (error) return <div>failed to load</div>
+//   if (!data) return <div>loading...</div>
+//   return <div>hello {data.name}!</div>
 
+  
   // if (!isReady) {
   //   // check if auth token is present
   //   // if so, fetch the user from the API
@@ -72,26 +95,6 @@ function App(props) {
   //   // if not, all the app to boot so they can login
   //   return <Loading />;
   // }
-
-  return (
-      <Router>
-        <div>
-          <Header></Header>
-          <Switch>
-            <Route exact path="/">
-              <Index />
-            </Route>
-            <Route exact path="/oauth/callback">
-              <Callback {...props} handleLogin={handleLogin} isAuthenticated={user.isAuthenticated} />
-            </Route>
-            <PrivateRoute user={user} authenticated={ user.isAuthenticated } path="/orchard">
-              <Orchard user={ user }/>
-            </PrivateRoute>
-          </Switch>
-        </div>
-      </Router>
-  );
-}
 
 
 
@@ -104,6 +107,7 @@ export function PrivateRoute(props, { children, ...rest }) {
           props.children
         ) : (
           <Redirect
+            push
             to={{
               pathname: "/",
               state: { from: location }

@@ -3,13 +3,15 @@ import axios from 'axios'
 export default class ArenaClient {
     constructor(accessToken) {
       this.accessToken = accessToken;
+      this.ArenaQuery = axios.create({
+        baseURL: 'https://api.are.na/v2',
+        headers: {"authorization": `Bearer ${accessToken}`}
+      });
     }
 
-    _makeRequest(method, path) {
-      return axios[method]('https://api.are.na/v2', {
-        body: {
-          path: path
-        }
+    _makeRequest(method, path, body = {}) {
+      return this.ArenaQuery[method](`${path}`, {
+        body: body
       })
     }
 
@@ -20,11 +22,14 @@ export default class ArenaClient {
 
     getMe() {
       return this._makeRequest('get', `/me`).then(resp => {
+        this.setMe(resp.data)
         return resp.data;
       });
     }
 
     getChannelsForMe() {
-      return this._makeRequest('get', `/users/${this.me.id}/channels`);
+      return this._makeRequest('get', `/users/${this.me.id}/channels`).then(resp => {
+        return resp.data
+      });
     }
   }

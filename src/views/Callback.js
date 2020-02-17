@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect, useContext } from 'react';
 import { withRouter , BrowserRouter as Router, Link, useLocation, useHistory } from "react-router-dom";
 import { parseUrl } from 'query-string'
 import axios from 'axios'
@@ -23,21 +23,19 @@ import { register } from '../serviceWorker';
 
 function Callback(props) {
   const [cookies, setCookie, removeCookie] = useCookies(['auth_token']);
-
-  let history = useHistory();
   const parsedUrl = parseUrl(window.location.search)
   const code = parsedUrl.query.code
-  
 
   useEffect(() => {
-    const loginInUser = async () => {
+    const loginUser = async () => {
       await axios.post(`http://localhost:3001/${process.env.REACT_APP_APPLICATION_API_PATH}/auth-user`, { code: code }, { headers: { "Access-Control-Allow-Origin": "*", } } ).then((res) => {
         setCookie('arena_token', res.data.auth_token, { path: '/' })
-        history.push('/orchard')
       })
+
+      props.history.push("/orchard");
     }
 
-    loginInUser()
+    loginUser()
   }, [])
 
   return null

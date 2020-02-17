@@ -5,15 +5,10 @@ import axios from 'axios'
 
 import ChannelList from './ChannelList'
 
-
-import { withCookies, useCookies } from 'react-cookie';
-
-
-import User from './User'
-
 const Orchard = (props) => {
   return (
-    <ChannelList user={props.user} />
+    // <ChannelList channels={props.channels} />
+    <div>Horray!</div>
   )
 }
 
