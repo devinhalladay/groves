@@ -1,0 +1,103 @@
+$primary-color: #6AB8FF;
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color: #000000;
+}
+
+.icon {
+  display: flex;
+  width: 14px;
+  height: 14px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.workspace {
+  display: flex;
+  align-items: start;
+  flex: 0 0 1;
+  position: relative;
+  padding: 20px;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+header {
+  height: 45px;
+}
+
+.panel {
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid #6AB8FF;
+  backdrop-filter: blur(44px);
+
+  &--pin-left {
+    flex: 1;
+    width: 250px;
+    align-self: flex-start;
+    // TODO: figure out smarter way to structure markup and css for header panel vs.
+    // all other panels. since header panel is unique, it might make sense to break
+    // it out into its own component that inherits from my eventual work on a
+    // StaticPanel component.
+    padding-top: 20px;
+  }
+
+  &--pin-right {
+    flex: 1;
+    width: 250px;
+    align-self: flex-end;
+  }
+
+  &--pin-center {
+    width: 100%;
+  }
+
+  .panel-header {
+    font-size: 87.5%;
+    padding: 15px;
+    line-height: 100%;
+    letter-spacing: 1px;
+    color: #888888;
+    text-transform: uppercase;
+    display: flex;
+
+    span {
+      align-self: flex-start;
+      flex: 1;
+    }
+
+    .icon--collapse {
+      align-self: flex-end;
+    }
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    
+    li {
+      padding: 10px 15px;
+      list-style: none;
+
+      &:last-child {
+        margin-bottom: 15px
+      }
+
+      &.active {
+        background-color: $primary-color;
+        color: white;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.header {
+  height: 45px;
+}
