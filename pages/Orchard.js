@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useEffect } from 'react';
+import React, { Component, Fragment, useEffect, useCallback } from 'react';
 // import { withRouter , BrowserRouter as Router, Link, useLocation } from "react-router-dom";
 // import { parseUrl } from 'query-string'
 // import axios from 'axios'
@@ -6,9 +6,17 @@ import React, { Component, Fragment, useEffect } from 'react';
 // import ChannelList from './ChannelList'
 
 const Orchard = (props) => {
+  const handleCreateChannel = useCallback(() => {
+    console.log('done');
+    
+  })
+
   return (
     // <ChannelList channels={props.channels} />
-    <div>Horray!</div>
+    <>
+      <div>Horray!</div>
+      <button onClick={handleCreateChannel}></button>
+    </>
   )
 }
 

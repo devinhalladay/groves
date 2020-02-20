@@ -1,11 +1,12 @@
 {
-  "name": "groves",
-  "env": {
-      "APPLICATION_ID": "@application_id",
-      "APPLICATION_SECRET": "@application_secret",
-      "APPLICATION_CALLBACK": "@application_callback",
-      "API_CALLBACK": "@api_callback",
-      "APPLICATION_API_PATH": "@application_api_path",
-      "SERVER_AUTH_CALLBACK": "@server_auth_callback"
+  "build": {
+    "env": {
+        "APPLICATION_ID": "@application_id",
+        "APPLICATION_SECRET": "@application_secret",
+        "APPLICATION_CALLBACK": "@application_callback",
+        "APPLICATION_API_CALLBACK": "@application_api_callback",
+        "APPLICATION_API_PATH": "@application_api_path",
+        "SERVER_AUTH_CALLBACK": "@server_auth_callback"
+    }
   }
 }
