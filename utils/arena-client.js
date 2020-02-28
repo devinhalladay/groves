@@ -29,6 +29,12 @@ export default class ArenaClient {
 
     getChannelsForMe() {
       return this._makeRequest('get', `/users/${this.me.id}/channels`).then(resp => {
+        // if (condition) {
+          
+        // } else {
+          
+        // }
+
         return resp.data
       });
     }

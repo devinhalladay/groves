@@ -1,16 +1,25 @@
-import Layout from '../components/Layout'
+import Layout, { Container } from '../components/Layout'
 import Panel from '../components/Panel'
 
-const Home = () => (
-  <Layout>
-    <Panel pinSide="left" title={"Formations"}>
-      <ul>
-        <li>Test</li>
-        <li class="active">Test 2</li>
-        <li>Test 3</li>
-      </ul>
-    </Panel>
-    <h1>welcome to groves</h1>
+const Home = props => (
+  <Layout {...props}>
+    <Container>
+      { props.selectedChannel.id &&
+        <>
+          <Panel pinSide="left" title={"Formations"} {...props}>
+            <ul>
+              <li>Mind Map</li>
+              <li class="active">Rhizome</li>
+              <li>Frequency Chart</li>
+            </ul>
+          </Panel>
+          <h1>{props.selectedChannel.title}</h1>
+          <small>CONTAINS {props.selectedChannel.length} BLOCKS</small>
+          <p>{props.selectedChannel.metadata.description}</p>
+        </>
+      }
+      {null}
+    </Container>
   </Layout>
 );
 

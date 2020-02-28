@@ -1,13 +1,22 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
+import ArenaClient from './arena-client';
 
 import '../public/style.scss'
 
 function GrovesClient({ Component, pageProps }) {
+  const [user, setUser] = useState({
+    isAuthenticated: typeof parseCookies()['arena_token'] !== 'undefined'
+  })
+  const [channels, setChannels] = useState([])
+  const [isReady, isIsReady] = useState(false)
+  const [selectedChannel, setSelectedChannel] = useState({})
+  let Arena = {}
+
   useEffect(() => {
     // if (!isReady) {
-      if (parseCookies('arena_token')) {
-        let Arena = new ArenaClient(cookies.get('arena_token'))
+      if (parseCookies()['arena_token']) {
+        Arena = new ArenaClient(parseCookies()['arena_token'])
         Arena.setMe(Arena.getMe()).then((me) => {
           setUser({
             ...user,
@@ -16,21 +25,35 @@ function GrovesClient({ Component, pageProps }) {
   
         Arena.getChannelsForMe()
           .then(chans => {
-            setChannels({
+            console.log(chans);
+            
+            setChannels([
               ...channels,
               ...chans
-            })
+            ])
           })
-        }).catch(e => cookies.remove('arena_token'))
+        }).catch(e => destroyCookie('arena_token'))
   
-        isIsReady(true)
+        // isIsReady(true)
       } else {
+        console.log('test');
+        
         // history.push('/orchard')
       }
     // }
   }, [])
 
-  return <Component {...pageProps} />
+  // console.log(channels);
+  
+
+  return (
+    <Component 
+      channels={channels} 
+      selectedChannel={selectedChannel}
+      setSelectedChannel={setSelectedChannel}
+      user={user} 
+      {...pageProps} />
+  )
 }
 
 export default GrovesClient

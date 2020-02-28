@@ -37,30 +37,62 @@ header {
     line-height: 100%;
     align-items: center;
     display: flex;
+    flex-grow: 0;
+    height: 100%;
 
     * {
       display: inline-flex;
     }
 
-    p {
+    a {
       padding-right: 10px;
+      color: #000;
     }
   }
 
   .grove-navigation {
-    appearance: none;
     height: 100%;
     margin-left: 15px;
-    margin-right: 15px;
-    flex: 1;
+    flex-grow: 2;
+    display: flex;
+    position: relative;
+
+    .groves-dropdown {
+      position: absolute;
+      top: 46px;
+      left: 0;
+      right: 0;
+      width: auto;
+      overflow-y: scroll;
+      max-height: 400px;
+      display: none;
+      margin-top: 15px;
+      flex-direction: column;
+
+      &.open {
+        display: flex;
+      }
+
+      li {
+        padding: 0 15px;
+        font-size: 100%;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
+        color: #252525;
+        margin-right: 0;
+        width: 100%;
+      }
+    }
 
     input {
       border: 0;
       height: 100%;
       font-size: 100%;
       padding: 0;
-      width: 100%;
+      flex: 1;
       outline: none;
+      -webkit-appearance: none;
     }
   }
 }
