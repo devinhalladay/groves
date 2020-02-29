@@ -9,6 +9,10 @@ html {
   color: #000000;
 }
 
+img {
+  max-width: 100%;
+}
+
 .icon {
   display: flex;
   width: 14px;
@@ -190,4 +194,85 @@ header {
 
 .header {
   height: 45px;
+}
+
+.block.block--channel {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: 315px;
+  height: 315px;
+  margin-bottom: 3em;
+  text-decoration: none;
+  color: rgb(75, 61, 103) !important;
+  border-color: rgb(207, 203, 214);
+      box-sizing: border-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+    border-width: 2px;
+    border-style: solid;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 0.125em;
+    margin: auto;
+}
+
+.block {
+  width: 315px;
+  height: 315px;
+  border: 1px solid black;
+  font-size: 87.5%;
+  line-height: 100%;
+}
+
+.block.block--text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: scroll;
+  border-color: rgb(207, 203, 214);
+}
+
+.block.block--channel.open {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: 315px;
+  height: 315px;
+  margin-bottom: 3em;
+  text-decoration: none;
+  color: #24AA23 !important;
+  border-color: #24AA23;
+      box-sizing: border-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+    border-width: 2px;
+    border-style: solid;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 0.125em;
+    margin: auto;
+}
+
+.block.block--channel.open a {
+  text-decoration: none;
+  color: #24AA23;
+}
+
+.block.block--channel a {
+  text-decoration: none;
+  color: #000;
+}
+
+.block.block--channel small {
+  display: block;
 }

@@ -36,7 +36,7 @@ export default class ArenaClient {
       return new Promise(async (resolve, reject) => {
         await this._makeRequest('get', `/users/${this.me.id}/channels?per=${amountPerPage}&page=${initialPage}`).then(async resp => {
           if (resp.data.total_pages === 1) {
-            return resp.data.channels;
+            resolve(resp.data.channels);
           } else {
             channelsArray.push(...resp.data.channels);          
   
@@ -52,23 +52,27 @@ export default class ArenaClient {
       })
     }
 
-    async getBlocksFromChannel(channelID) {
+    async getBlocksFromChannel(channelID, channelLength) {
       let blocksArray = [];
       let amountPerPage = 100;
-      let initialPage = 1;
+      let initialPage = 1;      
 
       return new Promise(async (resolve, reject) => {
-        await this._makeRequest('get', `/v2/channels/${channelID}?per=${amountPerPage}&page=${initialPage}`).then(async resp => {
-          if (resp.data.total_pages === 1) {
-            return resp.data.contents
+        await this._makeRequest('get', `/channels/${channelID}/contents?per=${amountPerPage}&page=${initialPage}`).then(async resp => {
+          let pageCount = Math.ceil(channelLength / amountPerPage);
+
+          if (pageCount === 1) {
+            resolve(resp.data.contents)
           } else {
             blocksArray.push(...resp.data.contents)
 
-            for (let i = initialPage + 1; i <= resp.data.total_pages; i++) {
-              await this._makeRequest('get', `/v2/channels/${channelID}?per=${amountPerPage}&page=${initialPage}`).then(resp => {
-                channelsArray.push(...resp.data.contents)
+            for (let i = initialPage + 1; i <= pageCount; i++) {
+              await this._makeRequest('get', `/channels/${channelID}/contents?per=${amountPerPage}&page=${i}`).then(resp => {
+                blocksArray.push(...resp.data.contents)
               })
             }
+
+            resolve(blocksArray)
           }
         })
       })

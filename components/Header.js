@@ -3,7 +3,7 @@ import Panel from './Panel'
 // import { withRouter , BrowserRouter as Router, Link, useLocation } from "react-router-dom";
 import GrovesNavigator from './GrovesNavigator'
 
-const Header = ({user, setSelectedChannel, selectedChannel, channels}) => {
+const Header = ({setIsReady, user, setSelectedChannel, selectedChannel, channels}) => {
   let isAuthenticated = true
 
   if (isAuthenticated) {
@@ -19,7 +19,7 @@ const Header = ({user, setSelectedChannel, selectedChannel, channels}) => {
                 </svg>
               </div>
             </div>
-            <GrovesNavigator setSelectedChannel={setSelectedChannel} channels={channels} />
+            <GrovesNavigator setIsReady={setIsReady} setSelectedChannel={setSelectedChannel} channels={channels} />
           </nav>
         </header>
       </Panel>

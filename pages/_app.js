@@ -9,7 +9,7 @@ function GrovesClient({ Component, pageProps }) {
     isAuthenticated: typeof parseCookies()['arena_token'] !== 'undefined'
   })
   const [channels, setChannels] = useState([])
-  const [isReady, isIsReady] = useState(false)
+  const [isReady, setIsReady] = useState(false)
   const [selectedChannel, setSelectedChannel] = useState({})
   let Arena = {}
 
@@ -25,16 +25,12 @@ function GrovesClient({ Component, pageProps }) {
   
         Arena.getChannelsForMe()
           .then(chans => {
-            console.log(chans);
-            
             setChannels([
               ...channels,
               ...chans
             ])
           })
         }).catch(e => destroyCookie('arena_token'))
-  
-        // isIsReady(true)
       } else {
         console.log('test');
         
@@ -42,6 +38,17 @@ function GrovesClient({ Component, pageProps }) {
       }
     // }
   }, [])
+
+  useEffect(() => {
+    if (parseCookies()['arena_token'] && selectedChannel.id) {
+      Arena = new ArenaClient(parseCookies()['arena_token'])
+      Arena.getBlocksFromChannel(selectedChannel.id, selectedChannel.length).then(blocks => {
+        setSelectedChannel({ ...selectedChannel, contents: [...blocks] })
+      }).then(() => {
+        setIsReady(true);
+      })
+    }
+  }, [selectedChannel.id])
 
   // console.log(channels);
   
@@ -51,7 +58,9 @@ function GrovesClient({ Component, pageProps }) {
       channels={channels} 
       selectedChannel={selectedChannel}
       setSelectedChannel={setSelectedChannel}
-      user={user} 
+      user={user}
+      setIsReady={setIsReady}
+      isReady={isReady}
       {...pageProps} />
   )
 }

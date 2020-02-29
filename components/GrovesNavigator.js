@@ -13,7 +13,7 @@ const GrovesNavigator = props => {
           )
         }}
         onChange={selection => {
-          console.log(selection);
+          props.setIsReady(false)
           props.setSelectedChannel(selection)
         }}
         itemToString={item => (item ? item.title : '')}
