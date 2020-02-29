@@ -1,5 +1,4 @@
 import React, { Component, Fragment, useEffect, useCallback } from 'react';
-import ArenaClient from './arena-client';
 
 // import { withRouter , BrowserRouter as Router, Link, useLocation } from "react-router-dom";
 // import { parseUrl } from 'query-string'
