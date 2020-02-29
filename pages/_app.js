@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
-import ArenaClient from './arena-client';
+import ArenaClient from '../utils/arena-client';
 
 import '../public/style.scss'
 

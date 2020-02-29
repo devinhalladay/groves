@@ -24,7 +24,7 @@ import Callback from './views/Callback';
 
 import Header from './components/Header';
 
-import ArenaClient from './arena-client';
+import ArenaClient from '../utils/arena-client';
 
 function App(props) {
   const { cookies } = props;
