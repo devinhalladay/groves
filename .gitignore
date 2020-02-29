@@ -18,6 +18,7 @@ node_modules/
 .env.local
 .env.development.local
 .env.test.local
+.env.build
 
 *.lock
 yarn.lock
