@@ -10,6 +10,10 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+.gray {
+  color: rgba(0, 0, 0, 0.6);
+}
+
 img {
   max-width: 100%;
 }
@@ -34,11 +38,12 @@ img {
 
 header {
   height: 45px;
+  overflow: hidden;
+  border-radius: 10px;
 
   .orchard-title {
     background-color: rgba($primary-color, 0.2);
     padding: 0 15px;
-    border-radius: 10px 0 0 10px;
     line-height: 100%;
     align-items: center;
     display: flex;
@@ -52,6 +57,7 @@ header {
     a {
       padding-right: 10px;
       color: #000;
+      text-decoration: none;
     }
   }
 
