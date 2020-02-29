@@ -7,22 +7,24 @@ const Home = props => {
     <Layout {...props}>
       <Container>
         { props.isReady &&
-          <div>
-            <Panel pinSide="left" title={"Formations"} {...props}>
+          <>
+            <Panel className="formationNavigator" pinSide="left" panelTitle={"Formations"} defaultPosition={{x: 0, y: 60}} {...props}>
               <ul>
                 <li>Mind Map</li>
                 <li class="active">Rhizome</li>
                 <li>Frequency Chart</li>
               </ul>
             </Panel>
-            <h1>{props.selectedChannel.title}</h1>
-            <small>CONTAINS {props.selectedChannel.length} BLOCKS</small>
-            <p>{props.selectedChannel.metadata.description}</p>
+            <Panel className="statusbar" pinSide="right" pinBottom={true} {...props}>
+              <ul>
+                <li>{props.selectedChannel.length} blocks</li>
+              </ul>
+            </Panel>
             <div className="blockList">
               {props.selectedChannel.contents.map(block =>
                 <BlockRepresentation block={block} key={block.id} />)}
             </div>
-          </div>
+          </>
         }
       </Container>
     </Layout>

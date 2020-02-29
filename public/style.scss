@@ -63,7 +63,6 @@ header {
 
   .grove-navigation {
     height: 100%;
-    margin-left: 15px;
     flex-grow: 2;
     display: flex;
     position: relative;
@@ -79,6 +78,8 @@ header {
       display: none;
       margin-top: 15px;
       flex-direction: column;
+      margin-left: 0;
+      padding-left: 0;
 
       &.open {
         display: flex;
@@ -101,6 +102,7 @@ header {
       height: 100%;
       font-size: 100%;
       padding: 0;
+      padding-left: 15px;
       flex: 1;
       outline: none;
       -webkit-appearance: none;
@@ -114,6 +116,8 @@ header {
   background: rgba(255, 255, 255, 0.6);
   border: 1px solid #6AB8FF;
   backdrop-filter: blur(44px);
+  z-index: 100;
+  position: fixed;
 
   &--pin-left {
     flex: 1;
@@ -123,7 +127,6 @@ header {
     // all other panels. since header panel is unique, it might make sense to break
     // it out into its own component that inherits from my eventual work on a
     // StaticPanel component.
-    margin-top: 15px;
   }
 
   &--pin-right {
@@ -133,7 +136,12 @@ header {
   }
 
   &--pin-center {
-    width: 100%;
+    left: 15px;
+    right: 15px;
+  }
+
+  &--pin-bottom {
+    bottom: 15px;
   }
 
   .panel-header {
@@ -144,6 +152,7 @@ header {
     color: #888888;
     text-transform: uppercase;
     display: flex;
+    cursor: all-scroll;
 
     span {
       align-self: flex-start;
@@ -152,31 +161,75 @@ header {
 
     .icon--collapse {
       align-self: flex-end;
+      position: relative;
+
+      .static {
+        position: absolute;
+        left: calc(50% - 1px);
+      }
+
+      .rotator {
+        position: absolute;
+        top: calc(50% - 1px);
+        transform-origin: 50%, 50%;
+        transition: 0.3s all ease-in-out;
+        left: calc(50% - 1px);
+        &.vertical {
+          transform: rotate(-90deg);
+        } 
+      }
     }
   }
 
-  ul {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    
-    li {
-      padding: 10px 15px;
-      list-style: none;
-      cursor: pointer;
+  &.statusbar {
+    width: fit-content;
+    padding: 6px 12px;
+    color: rgba(#000000, 0.6);
+    font-size: 87.5%;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.2);
 
-      &:last-child {
-        margin-bottom: 15px
+    ul {
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: inline-block;
+        list-style: none;
+
+        &:not(:last-child) {
+          margin-right: 12px;
+          padding-right: 12px;
+          border-right: 1px solid rgba(#000000, 0.2);
+        }
       }
+    }
+  }
 
-      &:hover {
-        font-style: italic;
-      }
-
-      &.active {
-        background-color: $primary-color;
-        color: white;
-        font-weight: bold;
+  &.formationNavigator {
+    ul {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      
+      li {
+        padding: 10px 15px;
+        list-style: none;
+        cursor: pointer;
+  
+        &:last-child {
+          margin-bottom: 15px
+        }
+  
+        &:hover {
+          font-style: italic;
+        }
+  
+        &.active {
+          background-color: $primary-color;
+          color: white;
+          font-weight: bold;
+        }
       }
     }
   }
