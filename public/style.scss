@@ -38,12 +38,12 @@ img {
 
 header {
   height: 45px;
-  overflow: hidden;
   border-radius: 10px;
 
   .orchard-title {
     background-color: rgba($primary-color, 0.2);
     padding: 0 15px;
+    border-radius: 10px 0 0 10px;
     line-height: 100%;
     align-items: center;
     display: flex;
@@ -104,6 +104,7 @@ header {
       flex: 1;
       outline: none;
       -webkit-appearance: none;
+      border-radius: 0 10px 10px 0;
     }
   }
 }
