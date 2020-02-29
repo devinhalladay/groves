@@ -1,5 +1,13 @@
 # roadmap
 
+## interface
+- ~~draggable panels~~
+- ~~collapsible panels~~
+- ~~status bar~~
+- omnibar
+  - ~~dropdown for searching your channels~~
+  - dropdown action to create new grove from unconnected channel
+
 ## settings
 - scoped to user, saved in db
 - choose default formation

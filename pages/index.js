@@ -10,8 +10,9 @@ const Home = props => {
           <>
             <Panel className="formationNavigator" pinSide="left" panelTitle={"Formations"} defaultPosition={{x: 0, y: 60}} {...props}>
               <ul>
+                <li class="active">Folder Tree</li>
                 <li>Mind Map</li>
-                <li class="active">Rhizome</li>
+                <li>Rhizome</li>
                 <li>Frequency Chart</li>
               </ul>
             </Panel>
