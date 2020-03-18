@@ -6,10 +6,11 @@ const fs = require('fs')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 
 const options = {
-	key: fs.readFileSync('./certs/localhost.key'),
-	cert: fs.readFileSync('./certs/localhost.crt')
+	key: fs.readFileSync('./certs/key.pem'),
+	cert: fs.readFileSync('./certs/certificate.pem')
 }
 
 app.prepare().then(() => {
