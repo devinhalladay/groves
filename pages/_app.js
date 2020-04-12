@@ -49,8 +49,6 @@ function GrovesClient({ Component, pageProps }) {
       })
     }
   }, [selectedChannel.id])
-
-  // console.log(channels);
   
 
   return (
@@ -59,6 +57,7 @@ function GrovesClient({ Component, pageProps }) {
       selectedChannel={selectedChannel}
       setSelectedChannel={setSelectedChannel}
       user={user}
+      isUserAuthenticated={user.isAuthenticated}
       setIsReady={setIsReady}
       isReady={isReady}
       {...pageProps} />

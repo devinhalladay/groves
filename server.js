@@ -1,6 +1,7 @@
 const https = require('https')
 const { parse } = require('url')
 const next = require('next')
+const dotenv = require('dotenv').config()
 const fs = require('fs')
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -14,6 +15,8 @@ const options = {
 }
 
 app.prepare().then(() => {
+	// dotenv.config();
+
 	https
 		.createServer(options, (req, res) => {
 			// Be sure to pass `true` as the second argument to `url.parse`.

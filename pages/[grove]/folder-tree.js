@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Layout, { Container } from '../components/Layout'
+import Layout, { Container } from '../../components/Layout'
 
 const FolderTree = () => {
   return (
@@ -9,4 +9,4 @@ const FolderTree = () => {
   )
 }
 
-export deafult FolderTree
+export default FolderTree
