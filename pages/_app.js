@@ -38,7 +38,7 @@ function GrovesClient({ Component, pageProps }) {
       } else {
         console.log('not logged in');
       }
-  })
+  }, [])
 
   useEffect(() => {
     if (parseCookies()['arena_token'] && selectedChannel.id) {
