@@ -4,6 +4,8 @@ import Panel from './Panel'
 import GrovesNavigator from './GrovesNavigator'
 import Menu from './Menu'
 
+import { LoginLink } from './AuthLinks'
+
 const Header = ({setIsReady, isUserAuthenticated, user, me, setSelectedChannel, selectedChannel, channels}) => {
   if (isUserAuthenticated) {
     return (
@@ -25,7 +27,7 @@ const Header = ({setIsReady, isUserAuthenticated, user, me, setSelectedChannel, 
         <header>
           <nav>
             <ul>
-              <li><a href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}>Login</a></li>
+              <li><LoginLink /></li>
             </ul>
           </nav>
         </header>

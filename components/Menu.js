@@ -3,6 +3,9 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import { useRouter } from 'next/router'
 import { setState, useState } from 'react'
 
+import { LoginLink, LogoutLink } from './AuthLinks'
+import { login } from '../utils/auth'
+
 const Menu = () => {
   const router = useRouter()
 
@@ -34,7 +37,7 @@ const Menu = () => {
                 //   this.dropdownMenu = element;
                 // }}
               >
-                <button onClick={() => { destroyCookie(null, 'arena_token'); router.push('/').then(() => router.reload())} }>Logout</button>
+                <LogoutLink />
               </div>
             )
             : (

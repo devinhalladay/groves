@@ -2,6 +2,8 @@ import React, { Component, useState, useEffect, useContext } from 'react';
 import Link from 'next/link'
 import Router from 'next/router'
 
+import { login } from '../../utils/auth'
+
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 // import axios from 'axios'
@@ -23,35 +25,30 @@ import fetch from 'isomorphic-unfetch'
 // also move the authentication to the server either by server rendering (which may actually solve many of the above problems)
 // or by adding a second routing layer (in addition to react-router) in index.js that handles the oauth callback
 
-const Callback = ({ ctx, auth_token, ...props }) => {
-  // const [cookies, setCookie, removeCookie] = useCookies(['auth_token']);
+const Callback = ({ ctx, access_token, ...props }) => {
+  // const [cookies, setCookie, removeCookie] = useCookies(['access_token']);
 
   React.useEffect(() => {
-    setCookie(ctx, 'arena_token', auth_token, {
-      maxAge: 30 * 24 * 60 * 60,
-      path: '/',
-    })
-    Router.replace("/callback", "/", { shallow: true });
-  }, [auth_token]);
+    login({ ctx, access_token })
+  }, [access_token])
 
   return <h1>Authenticating...</h1>
 }
 
-Callback.getInitialProps = async ({ ctx, query: { code }, ...props }) => {
+export async function getServerSideProps({ ctx, query: { code }, ...props }) {
   const res = await fetch(`${process.env.APPLICATION_API_CALLBACK}/${process.env.APPLICATION_API_PATH}/auth-user`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     },
-    body: JSON.stringify({ access_code: code })
+    body: JSON.stringify({ auth_code: code })
   });
- 
-  const data = await res.json();
 
-  return { auth_token: data.auth_token }
-  
-    // setCookie('arena_token', res.data.auth_token, { path: '/' })
+  const { access_token } = await res.json()
+ 
+  // Pass data to the page via props
+  return { props: { access_token: access_token } }
 }
 
 
