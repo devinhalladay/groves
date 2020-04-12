@@ -31,10 +31,10 @@ const Callback = ({ ctx, auth_token, ...props }) => {
       maxAge: 30 * 24 * 60 * 60,
       path: '/',
     })
-    Router.replace("/callback", "/orchard", { shallow: true });
+    Router.replace("/callback", "/", { shallow: true });
   }, [auth_token]);
 
-  return <h1>${auth_token}</h1>
+  return <h1>Authenticating...</h1>
 }
 
 Callback.getInitialProps = async ({ ctx, query: { code }, ...props }) => {
