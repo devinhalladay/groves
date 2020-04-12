@@ -4,14 +4,14 @@ import Panel from './Panel'
 import GrovesNavigator from './GrovesNavigator'
 import Menu from './Menu'
 
-const Header = ({setIsReady, isUserAuthenticated, user, setSelectedChannel, selectedChannel, channels}) => {
+const Header = ({setIsReady, isUserAuthenticated, user, me, setSelectedChannel, selectedChannel, channels}) => {
   if (isUserAuthenticated) {
     return (
       <Panel pinSide="center">
         <header>
           <nav>
             <div className="orchard-title">
-              <a href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}><span className="gray">https://www.are.na/</span><strong>devin-halladay/</strong></a>
+              <a href={`https://are.na/${me.slug}`}><span className="gray">https://www.are.na/</span><strong>{me.slug}/</strong></a>
               <Menu></Menu>
             </div>
             <GrovesNavigator setIsReady={setIsReady} setSelectedChannel={setSelectedChannel} channels={channels} />
