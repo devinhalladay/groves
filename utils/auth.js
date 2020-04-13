@@ -1,17 +1,21 @@
 import Router from 'next/router'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
+import { useEffect, useContext } from 'react'
+import UserContext from '../context/UserContext'
+import ArenaClient from '../utils/arena-client';
 
 export const login = ({ ctx, access_token }) => {
   setCookie(ctx, 'access_token', access_token, {
     maxAge: 30 * 24 * 60 * 60,
     path: '/',
   })
+
   Router.push('/app')
 }
 
 export const auth = ctx => {
-  const { access_token } = parseCookies()['access_token']
-
+  const access_token = parseCookies()['access_token']
+  
   // If there's no token, it means the user is not logged in.
   if (!access_token) {
     if (typeof window === 'undefined') {
@@ -27,8 +31,10 @@ export const auth = ctx => {
   return access_token
 }
 
-export const logout = () => {
-  destroyCookie()['access_token']
+export const logout = (ctx) => {
+  destroyCookie(ctx, 'access_token', {
+    path: '/'
+  })
   // to support logging out from all windows
   window.localStorage.setItem('logout', Date.now())
   Router.push('/')

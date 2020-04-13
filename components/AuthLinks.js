@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { logout } from '../utils/auth'
 
 export const LoginLink = () => {
   const authURL = `https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`
@@ -8,8 +9,8 @@ export const LoginLink = () => {
   )
 }
 
-export const LogoutLink = () => {
+export const LogoutLink = ctx => {
   return (
-    <button>Logout</button>
+    <button onClick={() => logout(ctx)}>Logout</button>
   )
 }

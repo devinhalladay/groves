@@ -4,6 +4,10 @@ import Router from 'next/router'
 
 import { login } from '../../utils/auth'
 
+import UserContext from '../../context/UserContext'
+import ArenaClient from '../../utils/arena-client'
+
+
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 // import axios from 'axios'
@@ -27,9 +31,24 @@ import fetch from 'isomorphic-unfetch'
 
 const Callback = ({ ctx, access_token, ...props }) => {
   // const [cookies, setCookie, removeCookie] = useCookies(['access_token']);
+  const Arena = new ArenaClient(access_token)
 
-  React.useEffect(() => {
+  const { user, setUser, channels, setChannels } = useContext(UserContext)
+
+  useEffect(() => {
     login({ ctx, access_token })
+
+    Arena.setMe(Arena.getMe())
+      .then((me) => {
+        setUser({ ...user, me })
+      })
+  }, [access_token])
+
+  useEffect(() => {
+    Arena.getChannelsForMe()
+      .then(chans => {
+        setChannels([ ...channels, ...chans ])
+      })
   }, [access_token])
 
   return <h1>Authenticating...</h1>
