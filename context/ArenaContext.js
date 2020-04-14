@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from 'react';
 import ArenaClient from '../utils/arena-client';
 import { parseCookies } from 'nookies';
 
-const ArenaContext = createContext();
+const ArenaContext = createContext({ authenticated: false });
 
 const ArenaProvider = props => {
   let [token, setToken] = useState()

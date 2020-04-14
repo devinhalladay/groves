@@ -10,9 +10,9 @@ import { LoginLink } from './AuthLinks'
 import UserContext from '../context/UserContext'
 
 const Header = ({ setSelectedChannel, channels }) => {
-  const { user } = useContext(UserContext)
-  
-  if (user.me) {
+  let user;
+
+  if (user) {
     return (
       <Panel pinSide="center">
         <header>

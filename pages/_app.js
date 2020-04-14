@@ -5,19 +5,32 @@ import UserContext, { UserProvider } from '../context/UserContext'
 
 import '../public/style.scss'
 
-import { ArenaProvider } from '../context/ArenaContext'
+import ArenaContext, { ArenaProvider } from '../context/ArenaContext'
 
-function GrovesClient({ Component, pageProps }) {
-  const [isReady, setIsReady] = useState(false)
+function GrovesClient({ Component, pageProps, isAuthenticated }) {
+  if (isAuthenticated) {
+    return (
+      <ArenaProvider>
+        <UserProvider>
+          <Component
+            {...pageProps} />
+        </UserProvider>
+      </ArenaProvider>
+    )
+  } else {
+    return (
+      <Component
+        {...pageProps} />
+    )
+  }
+}
 
-  return (
-    <ArenaProvider>
-      <UserProvider>
-        <Component
-          {...pageProps} />
-      </UserProvider>
-    </ArenaProvider>
-  )
+export async function getServerSideProps() {
+  const { arena } = useContext(ArenaContext)
+
+  return {
+    props: { isAuthenticated: typeof arena.accessToken !== 'undefined' }
+  }
 }
 
 export default GrovesClient
