@@ -2,7 +2,6 @@ import Router from 'next/router'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import { useEffect, useContext } from 'react'
 import UserContext from '../context/UserContext'
-import ArenaClient from '../utils/arena-client';
 
 export const login = ({ ctx, access_token }) => {
   setCookie(ctx, 'access_token', access_token, {
@@ -25,6 +24,7 @@ export const auth = ctx => {
     } else {
       // Redirect if on the client
       Router.push('/')
+      Router.reload()
     }
   }
 
@@ -35,6 +35,7 @@ export const logout = (ctx) => {
   destroyCookie(ctx, 'access_token', {
     path: '/'
   })
+
   // to support logging out from all windows
   window.localStorage.setItem('logout', Date.now())
   Router.push('/')

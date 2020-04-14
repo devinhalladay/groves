@@ -3,24 +3,20 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 import UserContext, { UserProvider } from '../context/UserContext'
 
-import { withAuthSync } from '../utils/auth'
-
 import '../public/style.scss'
+
+import { ArenaProvider } from '../context/ArenaContext'
 
 function GrovesClient({ Component, pageProps }) {
   const [isReady, setIsReady] = useState(false)
-  
 
   return (
-    <UserProvider>
-      <Component
-        // channels={channels} 
-        // user={user}
-        // me={user.me}
-        // setIsReady={setIsReady}
-        // isReady={isReady}
-        {...pageProps} />
-    </UserProvider>
+    <ArenaProvider>
+      <UserProvider>
+        <Component
+          {...pageProps} />
+      </UserProvider>
+    </ArenaProvider>
   )
 }
 

@@ -4,7 +4,7 @@ import Panel from './Panel'
 import GrovesNavigator from './GrovesNavigator'
 import Menu from './Menu'
 
-import { auth } from '../utils/auth'
+import { auth, withAuthSync } from '../utils/auth'
 
 import { LoginLink } from './AuthLinks'
 import UserContext from '../context/UserContext'
@@ -41,4 +41,4 @@ const Header = ({ setSelectedChannel, channels }) => {
   }
 }
 
-export default Header
+export default withAuthSync(Header)

@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { setState, useState } from 'react'
 
 import { LoginLink, LogoutLink } from './AuthLinks'
-import { login } from '../utils/auth'
 
 const Menu = () => {
   const router = useRouter()

@@ -4,7 +4,7 @@ const Home = props => {
   return (
     <Layout {...props}>
       <Container>
-        <h1>Welcome to Groves. Please login above.</h1>
+        <h1></h1>
       </Container>
     </Layout>
   )

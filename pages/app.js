@@ -6,6 +6,7 @@ import BlockRepresentation from '../components/BlockRepresentation'
 import { auth, withAuthSync } from '../utils/auth'
 
 const App = props => {
+  let shouldUpdateChannels = false
   
   useEffect(() => {
     auth()

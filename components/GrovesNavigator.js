@@ -3,6 +3,18 @@ import Downshift from "downshift";
 
 const GrovesNavigator = props => {
   const [inputItems, setInputItems] = useState(props.channels)
+
+  // useEffect(() => {
+  //   if (parseCookies()['arena_token'] && selectedChannel.id) {
+  //     Arena = new ArenaClient(parseCookies()['arena_token'])
+  //     Arena.getBlocksFromChannel(selectedChannel.id, selectedChannel.length).then(blocks => {
+  //       setSelectedChannel({ ...selectedChannel, contents: [...blocks] })
+  //     }).then(() => {
+  //       setIsReady(true);
+  //     })
+  //   }
+  // }, [selectedChannel.id])
+
   return (
     <Downshift
         onInputValueChange={inputValue => {
