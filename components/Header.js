@@ -7,10 +7,11 @@ import Menu from './Menu'
 import { auth, withAuthSync } from '../utils/auth'
 
 import { LoginLink } from './AuthLinks'
-import UserContext from '../context/UserContext'
+import UserContext, { useUser } from '../context/user-context'
+import { useAuth } from '../context/auth-context'
 
 const Header = ({ setSelectedChannel, channels }) => {
-  let user;
+  const { user } = useAuth();
 
   if (user) {
     return (
@@ -18,7 +19,7 @@ const Header = ({ setSelectedChannel, channels }) => {
         <header>
           <nav>
             <div className="orchard-title">
-              <a href={`https://are.na/${user.me.slug}`}><span className="gray">https://www.are.na/</span><strong>{user.me.slug}/</strong></a>
+              <a href={`https://are.na/${user.slug}`}><span className="gray">https://www.are.na/</span><strong>{user.slug}/</strong></a>
               <Menu></Menu>
             </div>
             <GrovesNavigator setSelectedChannel={setSelectedChannel} channels={channels} />
@@ -41,4 +42,4 @@ const Header = ({ setSelectedChannel, channels }) => {
   }
 }
 
-export default withAuthSync(Header)
+export default Header

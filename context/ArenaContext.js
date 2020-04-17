@@ -5,11 +5,11 @@ import { parseCookies } from 'nookies';
 const ArenaContext = createContext({ authenticated: false });
 
 const ArenaProvider = props => {
-  let [token, setToken] = useState()
+  // let [token, setToken] = useState()
 
-  useEffect(() => {
-    setToken(parseCookies()['access_token'])
-  }, [parseCookies()['access_token']])
+  // useEffect(() => {
+  //   setToken(parseCookies()['access_token'])
+  // }, [parseCookies()['access_token']])
   
   const [arena, setArena] = useState(new ArenaClient(parseCookies()['access_token']))
 

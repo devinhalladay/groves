@@ -2,14 +2,14 @@ import React, { Component, useState, useEffect, useContext } from 'react';
 import Link from 'next/link'
 import Router from 'next/router'
 
-import UserContext from '../../context/UserContext'
-
-
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 // import axios from 'axios'
 import fetch from 'isomorphic-unfetch'
 import ArenaContext from '../../context/ArenaContext';
+import { useAuth } from '../../context/auth-context';
+import { useUser } from '../../context/user-context';
+import Header from '../../components/Header';
 
 // import { withCookies, useCookies } from 'react-cookie';
 
@@ -27,35 +27,34 @@ import ArenaContext from '../../context/ArenaContext';
 // also move the authentication to the server either by server rendering (which may actually solve many of the above problems)
 // or by adding a second routing layer (in addition to react-router) in index.js that handles the oauth callback
 
-const Callback = ({ ctx, access_token, ...props }) => {
+const Callback = ({ ctx, query: { code }, ...props }) => {  
   const { arena } = useContext(ArenaContext)
-  const { user, setUser, channels, setChannels } = useContext(UserContext)
+  // const { user, setUser, channels, setChannels } = useUser()
+  const { login, logout } = useAuth()
+  const { instantiateUser } = useUser()
 
   useEffect(() => {
-    arena.getChannelsForMe()
-      .then(chans => {
-        setChannels([ ...channels, ...chans ])
-      })
-  }, [access_token])
+    login({ctx, code})
 
-  return <h1>Authenticating...</h1>
+
+    // setUser()
+    // arena.getChannelsForMe()
+    //   .then(chans => {
+    //     setChannels([ ...channels, ...chans ])
+    //   })
+  }, [])
+
+  return (
+    <>
+      <h1>Authenticating...</h1>
+    </>
+  )
 }
 
-export async function getServerSideProps({ ctx, query: { code }, ...props }) {
-  const res = await fetch(`${process.env.APPLICATION_API_CALLBACK}/${process.env.APPLICATION_API_PATH}/auth-user`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    },
-    body: JSON.stringify({ auth_code: code })
-  });
-
-  const { access_token } = await res.json()
- 
-  // Pass data to the page via props
-  return { props: { access_token: access_token } }
+export async function getServerSideProps({query}) {
+  return {
+    props: {query}
+  }
 }
-
 
 export default Callback

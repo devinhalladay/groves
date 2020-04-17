@@ -1,13 +1,85 @@
-import Layout, { Container } from '../components/Layout'
+// import React, { useEffect } from 'react'
+// import Layout, { Container } from '../components/Layout'
+// import Panel from '../components/Panel'
+// import BlockRepresentation from '../components/BlockRepresentation'
 
-const Home = props => {
-  return (
-    <Layout {...props}>
-      <Container>
-        <h1></h1>
-      </Container>
-    </Layout>
-  )
+// import { auth, withAuthSync } from '../utils/auth'
+
+// const App = props => {
+//   let shouldUpdateChannels = false
+  
+//   useEffect(() => {
+//     auth()
+//   }, [])
+
+//   return (
+//     <Layout {...props}>
+//       <Container>
+//           <div>
+//             <Panel className="formationNavigator" pinSide="left" panelTitle={"Formations"} defaultPosition={{x: 0, y: 60}} {...props}>
+//               <ul>
+//                 <li class="active">Folder Tree</li>
+//                 <li>Mind Map</li>
+//                 <li>Rhizome</li>
+//                 <li>Frequency Chart</li>
+//               </ul>
+//             </Panel>
+//             { props.selectedChannel &&
+//               <Panel className="statusbar" pinSide="right" pinBottom={true} {...props}>
+//                 <ul>
+//                   <li>{props.selectedChannel.length} blocks</li>
+//                 </ul>
+//               </Panel>
+//             }
+//             { props.selectedChannel &&
+//               <div className="blockList">
+//                 {props.selectedChannel.contents.map(block =>
+//                   <BlockRepresentation block={block} key={block.id} />)}
+//               </div>
+//             }
+//           </div>
+
+//       </Container>
+//     </Layout>
+//   )
+// }
+
+// export default withAuthSync(App)
+
+import React, { useEffect } from 'react'
+import { useUser } from '../context/user-context'
+import Header from '../components/Header'
+import { Router, useRouter } from 'next/router'
+import { useAuth } from '../context/auth-context'
+import { parseCookies } from 'nookies'
+
+const Root = (props) => {
+  const router = useRouter()
+  const auth = useAuth()
+  // const prevSession = auth.hasPreviousSession()
+
+  // useEffect(() => {
+  //   if (prevSession) {
+  //     router.push('/app')
+  //   }
+  // })
+
+  return <Header />
 }
 
-export default Home
+export async function getServerSideProps(context) {
+  if (parseCookies(context)['access_token']) {
+    context.res.writeHead(302, { Location: '/app' })
+    context.res.end()
+
+    return {
+      props: {true: false}, // will be passed to the page component as props
+    }
+  } else {
+    return {
+      props: {isAuthenticated: false}, // will be passed to the page component as props
+    }
+  }
+}
+
+export default Root
