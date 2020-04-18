@@ -1,21 +1,4 @@
-// import React, { useEffect } from 'react'
-// import Layout, { Container } from '../components/Layout'
-// import Panel from '../components/Panel'
-// import BlockRepresentation from '../components/BlockRepresentation'
 
-// import { auth, withAuthSync } from '../utils/auth'
-
-// const App = props => {
-//   let shouldUpdateChannels = false
-  
-//   useEffect(() => {
-//     auth()
-//   }, [])
-
-//   return (
-//     <Layout {...props}>
-//       <Container>
-//           <div>
 //             <Panel className="formationNavigator" pinSide="left" panelTitle={"Formations"} defaultPosition={{x: 0, y: 60}} {...props}>
 //               <ul>
 //                 <li class="active">Folder Tree</li>
@@ -38,13 +21,6 @@
 //               </div>
 //             }
 //           </div>
-
-//       </Container>
-//     </Layout>
-//   )
-// }
-
-// export default withAuthSync(App)
 
 import React, { useEffect } from 'react'
 import { useUser } from '../context/user-context'

@@ -1,5 +1,4 @@
-const withSass = require('@zeit/next-sass')
-module.exports = withSass({
+module.exports = {
   env: {
     APPLICATION_ID: process.env.APPLICATION_ID,
     APPLICATION_SECRET: process.env.APPLICATION_SECRET,
@@ -9,4 +8,4 @@ module.exports = withSass({
     SERVER_AUTH_CALLBACK: process.env.SERVER_AUTH_CALLBACK,
     GRAPHQL_TOKEN: process.env.GRAPHQL_TOKEN
   },
-})
+}
