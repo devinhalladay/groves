@@ -45,6 +45,7 @@ import { useUser } from '../context/user-context'
 
 const GrovesClient = ({ Component, pageProps }) => {
   // const { Component } = props
+
   return (
     <AppProviders>
       <Component {...pageProps} />

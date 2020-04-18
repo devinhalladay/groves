@@ -73,7 +73,7 @@ export async function getServerSideProps(context) {
     context.res.end()
 
     return {
-      props: {true: false}, // will be passed to the page component as props
+      props: {isAuthenticated: true}, // will be passed to the page component as props
     }
   } else {
     return {

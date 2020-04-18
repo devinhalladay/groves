@@ -6,9 +6,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "build": "next build",
-    "start": "next start",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "start": "NODE_ENV=production node server.js"
   },
   "keywords": [],
   "author": "",
