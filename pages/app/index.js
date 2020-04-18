@@ -19,6 +19,7 @@ export default (props) => {
   }
 
   return 'hello you are here'
+}
 
 export async function getServerSideProps(context) {
   if (!parseCookies(context)['access_token']) {
