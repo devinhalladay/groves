@@ -1,57 +1,45 @@
-import Link from "next/link";
-import { logout } from "../utils/auth";
+import React, { Component, useContext } from 'react'
+import Panel from './Panel'
+// import { withRouter , BrowserRouter as Router, Link, useLocation } from "react-router-dom";
+import GrovesNavigator from './GrovesNavigator'
+import Menu from './Menu'
 
-const Header = props => (
-  <header>
-    <nav>
-      <ul>
-        <li>
-          <Link href="/home">
-            <a>Home</a>
-          </Link>
-        </li>
-        <li>
-          <a
-            href={`http://dev.are.na/oauth/authorize?client_id=${process.env.APP_ID}&redirect_uri=${process.env.LOCAL_CALLBACK}&response_type=code`}
-          >
-            Login
-          </a>
-        </li>
-        <li>
-          <button onClick={logout}>Logout</button>
-        </li>
-      </ul>
-    </nav>
-    <style jsx>{`
-      ul {
-        display: flex;
-        list-style: none;
-        margin-left: 0;
-        padding-left: 0;
-      }
+import { auth, withAuthSync } from '../utils/auth'
 
-      li {
-        margin-right: 1rem;
-      }
+import { LoginLink } from './AuthLinks'
+import UserContext, { useUser } from '../context/user-context'
+import { useAuth } from '../context/auth-context'
 
-      li:first-child {
-        margin-left: auto;
-      }
+const Header = ({ setSelectedChannel, channels }) => {
+  const { user } = useAuth();
 
-      a {
-        color: #fff;
-        text-decoration: none;
-        border-bottom: 1px solid white;
-      }
+  if (user) {
+    return (
+      <Panel pinSide="center">
+        <header>
+          <nav>
+            <div className="orchard-title">
+              <a href={`https://are.na/${user.slug}`}><span className="gray">https://www.are.na/</span><strong>{user.slug}/</strong></a>
+              <Menu></Menu>
+            </div>
+            <GrovesNavigator setSelectedChannel={setSelectedChannel} channels={channels} />
+          </nav>
+        </header>
+      </Panel>
+    )
+  } else {
+    return (
+      <Panel pinSide="center">
+        <header>
+          <nav>
+            <ul>
+              <li><LoginLink /></li>
+            </ul>
+          </nav>
+        </header>
+      </Panel>
+    );
+  }
+}
 
-      header {
-        padding: 20px;
-        color: white;
-        background: black;
-        font-family: arial
-      }
-    `}</style>
-  </header>
-);
-
-export default Header;
+export default Header

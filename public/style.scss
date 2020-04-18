@@ -1,0 +1,438 @@
+$primary-color: #6AB8FF;
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 16px;
+  color: #000000;
+  -webkit-font-smoothing: antialiased;
+}
+
+.gray {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+img {
+  max-width: 100%;
+}
+
+.icon {
+  display: flex;
+  width: 14px;
+  height: 14px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.workspace {
+  display: flex;
+  align-items: start;
+  flex: 0 0 1;
+  position: relative;
+  padding: 15px;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+header {
+  height: 45px;
+  border-radius: 10px;
+
+  .orchard-title {
+    background-color: rgba($primary-color, 0.2);
+    padding: 0 15px;
+    border-radius: 10px 0 0 10px;
+    line-height: 100%;
+    align-items: center;
+    display: flex;
+    flex-grow: 0;
+    height: 100%;
+
+    * {
+      display: inline-flex;
+    }
+
+    a {
+      padding-right: 10px;
+      color: #000;
+      text-decoration: none;
+    }
+  }
+
+  .grove-navigation {
+    height: 100%;
+    flex-grow: 2;
+    display: flex;
+    position: relative;
+
+    .groves-dropdown {
+      position: absolute;
+      top: 46px;
+      left: 0;
+      right: 0;
+      width: auto;
+      overflow-y: scroll;
+      max-height: 400px;
+      display: none;
+      margin-top: 15px;
+      flex-direction: column;
+      margin-left: 0;
+      padding-left: 0;
+
+      &.open {
+        display: flex;
+      }
+
+      li {
+        padding: 0 15px;
+        font-size: 100%;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
+        color: #252525;
+        margin-right: 0;
+        width: 100%;
+      }
+    }
+
+    input {
+      border: 0;
+      height: 100%;
+      font-size: 100%;
+      padding: 0;
+      padding-left: 15px;
+      flex: 1;
+      outline: none;
+      -webkit-appearance: none;
+      border-radius: 0 10px 10px 0;
+    }
+  }
+}
+
+.panel {
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid #6AB8FF;
+  backdrop-filter: blur(44px);
+  z-index: 100;
+  position: fixed;
+
+  &--pin-left {
+    flex: 1;
+    width: 250px;
+    align-self: flex-start;
+    // TODO: figure out smarter way to structure markup and css for header panel vs.
+    // all other panels. since header panel is unique, it might make sense to break
+    // it out into its own component that inherits from my eventual work on a
+    // StaticPanel component.
+  }
+
+  &--pin-right {
+    flex: 1;
+    width: 250px;
+    align-self: flex-end;
+  }
+
+  &--pin-center {
+    left: 15px;
+    right: 15px;
+  }
+
+  &--pin-bottom {
+    bottom: 15px;
+  }
+
+  .panel-header {
+    font-size: 87.5%;
+    padding: 15px;
+    line-height: 100%;
+    letter-spacing: 1px;
+    color: #888888;
+    text-transform: uppercase;
+    display: flex;
+    cursor: all-scroll;
+
+    span {
+      align-self: flex-start;
+      flex: 1;
+    }
+
+    .icon--collapse {
+      align-self: flex-end;
+      position: relative;
+
+      .static {
+        position: absolute;
+        left: calc(50% - 1px);
+      }
+
+      .rotator {
+        position: absolute;
+        top: calc(50% - 1px);
+        transform-origin: 50%, 50%;
+        transition: 0.3s all ease-in-out;
+        left: calc(50% - 1px);
+        &.vertical {
+          transform: rotate(-90deg);
+        } 
+      }
+    }
+  }
+
+  &.statusbar {
+    width: fit-content;
+    padding: 6px 12px;
+    color: rgba(#000000, 0.6);
+    font-size: 87.5%;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.2);
+
+    ul {
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: inline-block;
+        list-style: none;
+
+        &:not(:last-child) {
+          margin-right: 12px;
+          padding-right: 12px;
+          border-right: 1px solid rgba(#000000, 0.2);
+        }
+      }
+    }
+  }
+
+  &.formationNavigator {
+    ul {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      
+      li {
+        padding: 10px 15px;
+        list-style: none;
+        cursor: pointer;
+  
+        &:last-child {
+          margin-bottom: 15px
+        }
+  
+        &:hover {
+          font-style: italic;
+        }
+  
+        &.active {
+          background-color: $primary-color;
+          color: white;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    ul {
+      li {
+        padding: 0;
+        margin-right: 15px;
+        display: inline-block;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.header {
+  height: 45px;
+}
+
+.block.block--channel {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: 315px;
+  height: 315px;
+  margin-bottom: 3em;
+  text-decoration: none;
+  color: rgb(75, 61, 103) !important;
+  border-color: rgb(207, 203, 214);
+      box-sizing: border-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+    border-width: 2px;
+    border-style: solid;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 0.125em;
+    margin: auto;
+}
+
+.block {
+  border: 1px solid rgb(207, 203, 214);
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  background-color: white;
+  user-select: none;
+  width: 315px;
+  height: 315px;
+  margin-bottom: 3em;
+  text-decoration: none;
+}
+
+.block--title {
+  box-sizing: border-box;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-top: 0.25em;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+  font-size: 0.75rem;
+  line-height: 1.33;
+  color: rgb(153, 153, 153);
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  position: relative;
+  justify-content: center;
+
+  .icon {
+    position: relative;
+    vertical-align: middle;
+    box-sizing: border-box;
+    margin-bottom: 0.125em;
+    margin-left: 0.25em;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+
+    svg {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      fill: rgb(153, 153, 153);
+    }
+  }
+}
+
+.block.block--text {
+  overflow-y: scroll;
+  border-color: rgb(207, 203, 214);
+  font-family: "Times New Roman", serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgb(88, 88, 88);
+
+  p {
+    margin: 0;
+    padding-top: 0.65625em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    position: relative;
+  }
+}
+
+.block.block--link {
+  a {
+    text-decoration: none;
+  }
+}
+
+.block.block--channel.open {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: 315px;
+  height: 315px;
+  margin-bottom: 3em;
+  text-decoration: none;
+  color: #24AA23 !important;
+  border-color: #24AA23;
+      box-sizing: border-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+    border-width: 2px;
+    border-style: solid;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 0.125em;
+    margin: auto;
+}
+
+.block.block--channel.open a {
+  text-decoration: none;
+  color: #24AA23;
+}
+
+.block.block--channel a {
+  text-decoration: none;
+  color: #000;
+}
+
+.block.block--channel small {
+  display: block;
+}
+
+.block.block--channel {
+  box-sizing: border-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border-width: 2px;
+  border-style: solid;
+  border-color: initial;
+  border-image: initial;
+  border-radius: 0.125em;
+  color: rgb(23, 172, 16);
+  border-color: rgb(193, 233, 191);
+
+  .title {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.33;
+    margin-left: 0.65625em;
+    margin-right: 0.65625em;
+    padding-top: 1em;
+    text-align: center;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  p {
+    text-align: center;
+    font-size: 0.8125rem;
+    line-height: 1.33;
+    margin-top: 0.65625em;
+    margin-bottom: 0;
+  }
+}

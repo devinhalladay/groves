@@ -1,20 +1,42 @@
 {
   "name": "groves",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "dev": "now dev",
+    "dev": "nodemon server.js",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_ENV=production node server.js"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "are.na": "^0.1.2",
-    "axios": "^0.19.0",
+    "@types/node": "^13.7.0",
+    "@types/react": "^16.9.19",
+    "@zeit/next-sass": "^1.0.1",
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "downshift": "^5.0.3",
+    "es6-promise": "^4.2.8",
+    "isomorphic-fetch": "^2.2.1",
     "isomorphic-unfetch": "^3.0.0",
-    "js-cookie": "^2.2.1",
-    "micro": "^9.3.4",
-    "next": "^9.1.4",
-    "next-cookies": "^2.0.3",
+    "next": "^9.2.1",
+    "node-sass": "^4.13.1",
+    "nodemon": "^2.0.3",
     "nookies": "^2.0.8",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-collapsible": "^2.7.0",
+    "react-dom": "^16.12.0",
+    "react-draggable": "^4.2.0",
+    "typescript": "^3.7.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@storybook/addon-actions": "^5.3.17",
+    "@storybook/addon-links": "^5.3.17",
+    "@storybook/addons": "^5.3.17",
+    "@storybook/react": "^5.3.17",
+    "babel-loader": "^8.0.6"
   }
 }
