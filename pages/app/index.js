@@ -20,25 +20,6 @@ export default (props) => {
 
   return 'hello you are here'
 
-  // if (!prevSession) {
-  //   // if (ctx.req) {
-  //   //   // If `ctx.req` is available it means we are on the server.
-  //   //   ctx.res.writeHead(302, { Location: '/login' })
-  //   //   ctx.res.end()
-  //   // } else {
-  //   //   // This should only happen on client.
-  //   router.push('/')
-  //   // }
-  // } else {
-  //   return (
-  //     <Layout>
-  //       <h1>Authenticated</h1>
-  //     </Layout>
-  //   )
-  // }
-}
-// export default GrovesApp
-
 export async function getServerSideProps(context) {
   if (!parseCookies(context)['access_token']) {
     context.res.writeHead(302, { Location: '/' })

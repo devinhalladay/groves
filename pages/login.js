@@ -18,11 +18,11 @@ Login.getInitialProps = async ctx => {
       setCookie(ctx, "auth_token", res.data.access_token);
 
       if (ctx.req) {
-        // If `ctx.req` is available it means we are on the server.
+        // We are on the server
         ctx.res.writeHead(302, { Location: "/home" });
         ctx.res.end();
       } else {
-        // This should only happen on client.
+        // We are on the client
         Router.push("/home");
       }
     })
@@ -32,7 +32,5 @@ Login.getInitialProps = async ctx => {
 
   return token;
 };
-
-// const arena = new Arena({ accessToken });
 
 export default Login;

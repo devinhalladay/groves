@@ -56,13 +56,6 @@ import { parseCookies } from 'nookies'
 const Root = (props) => {
   const router = useRouter()
   const auth = useAuth()
-  // const prevSession = auth.hasPreviousSession()
-
-  // useEffect(() => {
-  //   if (prevSession) {
-  //     router.push('/app')
-  //   }
-  // })
 
   return <Header />
 }
@@ -73,11 +66,11 @@ export async function getServerSideProps(context) {
     context.res.end()
 
     return {
-      props: {isAuthenticated: true}, // will be passed to the page component as props
+      props: {isAuthenticated: true}
     }
   } else {
     return {
-      props: {isAuthenticated: false}, // will be passed to the page component as props
+      props: {isAuthenticated: false}
     }
   }
 }

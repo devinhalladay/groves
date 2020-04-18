@@ -4,14 +4,11 @@ import Router from 'next/router'
 
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
-// import axios from 'axios'
 import fetch from 'isomorphic-unfetch'
 import ArenaContext from '../../context/ArenaContext';
 import { useAuth } from '../../context/auth-context';
 import { useUser } from '../../context/user-context';
 import Header from '../../components/Header';
-
-// import { withCookies, useCookies } from 'react-cookie';
 
 
 // get channels and store their IDs
@@ -35,13 +32,6 @@ const Callback = ({ ctx, query: { code }, ...props }) => {
 
   useEffect(() => {
     login({ctx, code})
-
-
-    // setUser()
-    // arena.getChannelsForMe()
-    //   .then(chans => {
-    //     setChannels([ ...channels, ...chans ])
-    //   })
   }, [])
 
   return (
