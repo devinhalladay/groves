@@ -3,6 +3,7 @@ import { createContext } from 'react'
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import ArenaClient from '../utils/arena-client'
 import { useRouter, Router } from 'next/router'
+import { useMutation } from '@apollo/react-hooks';
 
 const AuthContext = createContext()
 
@@ -10,6 +11,7 @@ const AuthProvider = (props) => {
   // if (weAreStillWaitingToGetTheUserData) {
   //   return 'loading'
   // }
+  
 
   const router = useRouter()
 

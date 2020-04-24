@@ -13,6 +13,9 @@ import { useAuth } from '../context/auth-context'
 const Header = ({ setSelectedChannel, channels }) => {
   const { user } = useAuth();
 
+  console.log(setSelectedChannel);
+  
+
   if (user) {
     return (
       <Panel pinSide="center">

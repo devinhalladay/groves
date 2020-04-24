@@ -28,7 +28,6 @@ const Callback = ({ ctx, query: { code }, ...props }) => {
   const { arena } = useContext(ArenaContext)
   // const { user, setUser, channels, setChannels } = useUser()
   const { login, logout } = useAuth()
-  const { instantiateUser } = useUser()
 
   useEffect(() => {
     login({ctx, code})

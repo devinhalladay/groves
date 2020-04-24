@@ -25,8 +25,11 @@ const GrovesNavigator = props => {
           )
         }}
         onChange={selection => {
-          props.setIsReady(false)
-          props.setSelectedChannel(selection)
+          if (selection === null) {
+            props.setSelectedChannel(null)
+          } else {
+            props.setSelectedChannel(selection)
+          }
         }}
         itemToString={item => (item ? item.title : '')}
       >
@@ -40,6 +43,8 @@ const GrovesNavigator = props => {
           highlightedIndex,
           selectedItem,
           isOpen,
+          clearSelection,
+          openMenu
         }) => (
           <>
             <div
@@ -47,7 +52,9 @@ const GrovesNavigator = props => {
               className="grove-navigation"
             >
               <input 
-                {...getInputProps()}
+                {...getInputProps({
+                  onFocus: openMenu
+                })}
                 placeholder="Enter a channel title..."
               />
               <ul 
@@ -55,27 +62,27 @@ const GrovesNavigator = props => {
                 className={`groves-dropdown panel ${isOpen ? 'open' : ''}`}
               >
               {isOpen &&
-                inputItems.map((item, index) => (
-                  <li
-                    style={
-                      highlightedIndex === index
-                        ? { backgroundColor: '#bde4ff' }
-                        : {}
-                    }
-                    key={`${item.id}${index}`}
-                    {...getItemProps({
-                      item,
-                      index,
-                      style: {
-                        backgroundColor:
-                          highlightedIndex === index ? "lightgray" : "white",
-                        fontWeight: selectedItem === item ? "bold" : "normal"
+                inputItems.sort((a, b) => a.title.localeCompare(b.title)).map((item, index) => (
+                    <li
+                      style={
+                        highlightedIndex === index
+                          ? { backgroundColor: '#bde4ff' }
+                          : {}
                       }
-                    })}
-                  >
-                    {item.title}
-                  </li>
-                ))}
+                      key={`${item.id}${index}`}
+                      {...getItemProps({
+                        item,
+                        index,
+                        style: {
+                          backgroundColor:
+                            highlightedIndex === index ? "lightgray" : "white",
+                          fontWeight: selectedItem === item ? "bold" : "normal"
+                        }
+                      })}
+                    >
+                      {item.title}
+                    </li>
+                  ))}
               </ul>
             </div>
           </>

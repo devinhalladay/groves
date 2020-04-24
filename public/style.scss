@@ -436,3 +436,18 @@ header {
     margin-bottom: 0;
   }
 }
+
+.miller {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.wrapper {
+  display: flex;
+  position: relative;
+  width: 10000px;
+  left: 0px;
+}
