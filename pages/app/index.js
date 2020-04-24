@@ -16,7 +16,6 @@ const GrovesApp = (props) => {
 
   return (
     <Layout {...props} >
-      <h1>test</h1>
       {selectedChannel &&
         <div>
           <h1>{selectedChannel.title}</h1>

@@ -10,7 +10,7 @@ const Header = props => {
 
   if (user) {
     return (
-      <Panel pinSide="center">
+      <Panel pinSide="center" panelType="nav">
         <header>
           <nav>
             <div className="orchard-title">

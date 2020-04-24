@@ -7,29 +7,14 @@ const GrovesNavigator = props => {
   const { selectedChannel, setSelectedChannel } = useSelection()
   const { user, channels } = useUser()
 
-  // console.log(selectedChannel);
-  
-
   const [inputItems, setInputItems] = useState(channels)
   
-
-  // useEffect(() => {
-  //   if (parseCookies()['arena_token'] && selectedChannel.id) {
-  //     Arena = new ArenaClient(parseCookies()['arena_token'])
-  //     Arena.getBlocksFromChannel(selectedChannel.id, selectedChannel.length).then(blocks => {
-  //       setSelectedChannel({ ...selectedChannel, contents: [...blocks] })
-  //     }).then(() => {
-  //       setIsReady(true);
-  //     })
-  //   }
-  // }, [selectedChannel.id])
-
   return (
     <Downshift
         onInputValueChange={inputValue => {
           setInputItems(
             channels.filter(item =>
-              item.title.toLowerCase().replace(/\W/g, '').startsWith(inputValue.toLowerCase())
+              item.title.toLowerCase().replace(/\W/g, '').startsWith(inputValue.toLowerCase().replace(/\W/g, ''))
             )
           )
         }}
@@ -73,16 +58,12 @@ const GrovesNavigator = props => {
               {isOpen &&
                 inputItems.sort((a, b) => a.title.localeCompare(b.title)).map((item, index) => (
                     <li
-                      style={
-                        highlightedIndex === index
-                          ? { backgroundColor: '#bde4ff' }
-                          : {}
-                      }z
                       key={`${item.id}${index}`}
                       {...getItemProps({
                         item,
                         index,
                         style: {
+                          cursor: 'pointer',
                           backgroundColor:
                             highlightedIndex === index ? "lightgray" : "white",
                           fontWeight: selectedItem === item ? "bold" : "normal"
@@ -91,7 +72,7 @@ const GrovesNavigator = props => {
                     >
                       {item.title}
                     </li>
-                  ))}
+                ))}
               </ul>
             </div>
           </>
