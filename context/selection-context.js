@@ -1,28 +1,16 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+import React, { useContext, createContext, useState, useEffect } from 'react'
 
-const SelectionContext = createContext();
+const SelectionContext = createContext()
 
-const SelectionProvider = props => {
+const SelectionProvider = (props) => {
   const [selectedChannel, setSelectedChannel] = useState(null)
 
-  const { children } = props
-
   return (
-    <SelectionContext.Provider
-      value={{
-        selectedChannel,
-        setSelectedChannel
-      }}
-    >
-      {children}
-    </SelectionContext.Provider>
+    <SelectionContext.Provider value={{selectedChannel, setSelectedChannel}} {...props} />
   )
 }
 
-export const SelectionConsumer = SelectionContext.Consumer
+const useSelection = () => useContext(SelectionContext)
 
-export default SelectionContext
 
-export { SelectionProvider }
-
-export const useSelection = () => useContext(SelectionContext)
+export { useSelection, SelectionProvider, SelectionContext }

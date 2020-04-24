@@ -3,6 +3,7 @@ import { useLazyQuery, useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import { useAuth } from './auth-context';
 import withApollo from '../lib/withApollo';
+import { SelectionProvider } from './selection-context';
 
 const UserContext = createContext()
 
@@ -22,9 +23,6 @@ const GET_MY_CHANNELS = gql`
 `
 
 export const UserProvider = withApollo((props) => {
-  const [user, setUser] = useState(props.user)
-  // const [channels, setChannels] = useState(null)
-  
   const { loading: loadingMyChannels, error: errorLoadingMyChannels, data: myChannels } = useQuery(GET_MY_CHANNELS)
   const [lazyLoadMyChannels, { loading, data }] = useLazyQuery(GET_MY_CHANNELS)
 
@@ -38,7 +36,11 @@ export const UserProvider = withApollo((props) => {
   const channels = myChannels.me.channels
 
   return (
-    <UserContext.Provider value={{user, lazyLoadMyChannels, channels}} {...props} />
+    <UserContext.Provider value={{lazyLoadMyChannels, channels}} {...props}>
+      <SelectionProvider>
+        {props.children}
+      </SelectionProvider>
+    </UserContext.Provider>
   )
 })
 

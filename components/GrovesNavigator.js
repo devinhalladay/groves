@@ -5,7 +5,10 @@ import { useUser } from '../context/user-context';
 
 const GrovesNavigator = props => {
   const { selectedChannel, setSelectedChannel } = useSelection()
-  const { channels } = useUser()
+  const { user, channels } = useUser()
+
+  // console.log(selectedChannel);
+  
 
   const [inputItems, setInputItems] = useState(channels)
   

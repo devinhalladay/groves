@@ -12,12 +12,10 @@ const AuthProvider = (props) => {
   const [accessToken, setAccessToken] = useState(parseCookies()['access_token'] ? parseCookies()['access_token'] : null)
   const [client, setClient] = useState(null)
 
-  const hasPreviousSession = () => {
-    return accessToken && window.localStorage.getItem('user')
-  }
+  const hasPreviousSession = accessToken !== null && window.localStorage.getItem('user')
 
   const [user, setUser] = useState(
-    hasPreviousSession() ?
+    hasPreviousSession ?
     JSON.parse(window.localStorage.getItem('user')) :
     null
   )
