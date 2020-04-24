@@ -1,15 +1,16 @@
 import '../public/style.scss'
 
 import React from 'react'
+import { AuthProvider } from '../context/auth-context'
 import AppProviders from '../components/AppProviders'
-
-import { useUser } from '../context/user-context'
 
 const GrovesClient = ({ Component, pageProps }) => {
   return (
-    <AppProviders>
-      <Component {...pageProps} />
-    </AppProviders>
+    <AuthProvider>
+      <AppProviders>
+        <Component {...pageProps} />
+      </AppProviders>
+    </AuthProvider>
   )
 }
 

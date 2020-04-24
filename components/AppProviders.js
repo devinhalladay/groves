@@ -1,16 +1,26 @@
 import React from 'react'
-import { ArenaProvider } from "../context/ArenaContext"
 import { UserProvider } from "../context/user-context"
-import { AuthProvider } from '../context/auth-context'
+import { AuthProvider, useAuth } from '../context/auth-context'
+import { SelectionProvider } from '../context/selection-context'
 
 const AppProviders = ({children}) => {
-  return (
-    <AuthProvider>
+  const { hasPreviousSession } = useAuth()
+
+  if (hasPreviousSession) {
+    return (
       <UserProvider>
-        {children}
+        <SelectionProvider>
+          {children}
+        </SelectionProvider>
       </UserProvider>
-    </AuthProvider>
-  )
+    ) 
+  } else {
+    return (
+      <div>
+        {children}
+      </div>
+    )
+  }
 }
 
 export default AppProviders

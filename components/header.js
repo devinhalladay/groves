@@ -10,11 +10,8 @@ import { LoginLink } from './AuthLinks'
 import UserContext, { useUser } from '../context/user-context'
 import { useAuth } from '../context/auth-context'
 
-const Header = ({ setSelectedChannel, channels }) => {
+const Header = props => {
   const { user } = useAuth();
-
-  console.log(setSelectedChannel);
-  
 
   if (user) {
     return (
@@ -25,7 +22,7 @@ const Header = ({ setSelectedChannel, channels }) => {
               <a href={`https://are.na/${user.slug}`}><span className="gray">https://www.are.na/</span><strong>{user.slug}/</strong></a>
               <Menu></Menu>
             </div>
-            <GrovesNavigator setSelectedChannel={setSelectedChannel} channels={channels} />
+            <GrovesNavigator />
           </nav>
         </header>
       </Panel>

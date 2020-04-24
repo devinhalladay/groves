@@ -1,8 +1,14 @@
 import React, { Component, useState } from 'react'
 import Downshift from "downshift";
+import { useSelection } from '../context/selection-context';
+import { useUser } from '../context/user-context';
 
 const GrovesNavigator = props => {
-  const [inputItems, setInputItems] = useState(props.channels)
+  const { selectedChannel, setSelectedChannel } = useSelection()
+  const { channels } = useUser()
+
+  const [inputItems, setInputItems] = useState(channels)
+  
 
   // useEffect(() => {
   //   if (parseCookies()['arena_token'] && selectedChannel.id) {
@@ -19,16 +25,16 @@ const GrovesNavigator = props => {
     <Downshift
         onInputValueChange={inputValue => {
           setInputItems(
-            props.channels.filter(item =>
+            channels.filter(item =>
               item.title.toLowerCase().replace(/\W/g, '').startsWith(inputValue.toLowerCase())
             )
           )
         }}
         onChange={selection => {
           if (selection === null) {
-            props.setSelectedChannel(null)
+            setSelectedChannel(null)
           } else {
-            props.setSelectedChannel(selection)
+            setSelectedChannel(selection)
           }
         }}
         itemToString={item => (item ? item.title : '')}
@@ -68,7 +74,7 @@ const GrovesNavigator = props => {
                         highlightedIndex === index
                           ? { backgroundColor: '#bde4ff' }
                           : {}
-                      }
+                      }z
                       key={`${item.id}${index}`}
                       {...getItemProps({
                         item,

@@ -9,36 +9,27 @@ import { useUser } from '../../context/user-context'
 import { useQuery } from '@apollo/react-hooks';
 import withApollo from '../../lib/withApollo';
 import GrovesCanvas from '../../components/GrovesCanvas';
-
-const QUERY = gql`
-  {
-    me {
-      name
-      slug
-      id
-    }
-  }
-`;
+import { useSelection } from '../../context/selection-context'
 
 export default withApollo((props) => {
   const router = useRouter()
   const auth = useAuth()
   const prevSession = auth.hasPreviousSession()
-  const { channels, selectedChannel, setSelectedChannel } = useUser()
+  const { selectedChannel, setSelectedChannel } = useSelection()
 
   if (props.isAuthenticated) {
-    const { loading, data } = useQuery(QUERY);
+    // const { loading, data } = useQuery(¡¡¡¡¡QUERY);
 
-    if (loading || !data) {
-      return (
-        <Layout>
-          <h1>Loading...</h1>
-        </Layout>
-      )
-    }
+    // if (loading || !data) {
+    //   return (
+    //     <Layout>
+    //       <h1>Loading...</h1>
+    //     </Layout>
+    //   )
+    // }
 
     return (
-      <Layout channels={channels} selectedChannel={selectedChannel} setSelectedChannel={setSelectedChannel}>
+      <Layout selectedChannel={selectedChannel} setSelectedChannel={setSelectedChannel}>
         <h1>test</h1>
         {selectedChannel &&
           <div>
