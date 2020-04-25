@@ -35,8 +35,7 @@ const MillerPanel = props => {
 
   const onRowClick = (label) => {
     tree.FindAndSetSelected(label)
-    setTree(tree)
-    console.log(tree)
+    // setTree(tree)
     setColumns(tree)
   }
 
@@ -50,16 +49,15 @@ const MillerPanel = props => {
 
   const getColumns = (localTree, columns = [], localIndex = 0) => {
     let index = localIndex || 0;
-    columns.push(getColumn(tree, index));
+    columns.push(getColumn(localTree, index));
     if (!localTree.selectedChild) return columns;
-    
     return getColumns(localTree.NextNode, columns, ++localIndex);
   }
 
   const [columns, setColumns] = useState(getColumns(tree))
   
   return (
-    <Panel pinSide="left" panelTitle={"Miller Columns"} defaultPosition={{x: 0, y: 0}} {...props}>
+    <Panel pinSide="left" panelTitle={"Miller Columns"} defaultPosition={{x: 120, y: 0}} {...props}>
       <MillerColumns
         maxColumn={4}
         minColumnWidth={150}

@@ -1,10 +1,10 @@
-class SampleTree {
+class Model {
   constructor(tree = {}, parent) {
     this.label = tree.label;
     this.parent = !tree.label ? null : parent.label;
     this.parentNode = parent;
     this.children = Array.isArray(tree.children)
-      ? tree.children.map(t => new SampleTree(t, this))
+      ? tree.children.map(t => new Model(t, this))
       : [];
     this.selectedChild = null;
   }
@@ -30,8 +30,6 @@ class SampleTree {
   }
 
   FindAndSetSelected(label) {
-    console.log(label);
-    
     if (this.IsNodeInChildren(label)) {
       this.IsNodeInChildren(label).UnsetSelected();
       this.selectedChild = label;
@@ -43,4 +41,4 @@ class SampleTree {
   }
 }
 
-export default SampleTree;
+export default Model;

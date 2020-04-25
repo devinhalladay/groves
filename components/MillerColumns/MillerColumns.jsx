@@ -32,10 +32,8 @@ class MillerColumns extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log(this.props);
-        
         if (prevProps.children) {
-            const diff = this.props.children.length - prevProps.children.length;
+            const diff = prevProps.children.length - this.props.children.length;
             if (this.props.children.length !== prevProps.children.length) {
                 const previousPeek = this.columnMover.shouldShowPeek;
                 this.columnMover.Update(this.props.children.length);
@@ -48,24 +46,15 @@ class MillerColumns extends Component {
                     this.columnMover.currentPosition = this.columnMover.currentPosition + moveTo;
                 }
 
-                console.log(prevProps.children);
-
                 this.setState({
                     children: this.getChildren(
                         this.props,
                         diff !== 0
                     ),
                 })
-                this.updateChildrenAndMove(true);
             }
         }
     }
-
-    // componentDidUpdate(prevProps) {
-    //     if (prevProps !== this.props) {
-    //         this.updateChildrenAndMove(true);
-    //     }
-    // }
 
     componentDidMount() {
         this._isMounted = true;
@@ -125,8 +114,6 @@ class MillerColumns extends Component {
     }
 
     getChildren(props = this.props, transitioning = false) {
-        console.log(props.children);
-        
         return React.Children.map(props.children, (child, index) => {
             const width = this.columnMover.invisibleColumns
                 ? index < this.columnMover.invisibleColumns
