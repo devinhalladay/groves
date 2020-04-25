@@ -5,6 +5,8 @@ import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import Panel from './Panel';
 import MillerColumns from './MillerColumns';
+import { useSelection } from '../context/selection-context';
+import MillerPanel from './MillerPanel';
 
 // const QUERY = gql`
 //   {
@@ -23,6 +25,7 @@ import MillerColumns from './MillerColumns';
 
 export default (props) => {
   const canvas = useRef(null)
+  const { selectedChannel } = useSelection()
   // const { loading, error, data } = useQuery(QUERY)
 
   // if (loading) return <p>Loading...</p>;
@@ -89,15 +92,17 @@ export default (props) => {
     <div>
       <Panel className="formationNavigator" pinSide="left" panelTitle={"Formations"} defaultPosition={{x: 0, y: 60}} {...props}>
         <ul>
-          <li class="active">Folder Tree</li>
+          <li class="active">Miller Columns</li>
           <li>Mind Map</li>
           <li>Rhizome</li>
           <li>Frequency Chart</li>
         </ul>
       </Panel>
-      <Panel pinSide="left" panelTitle={"Miller Columns"} defaultPosition={{x: 0, y: 200}} {...props}>
-        <MillerColumns />
-      </Panel>
+      <MillerPanel />
+      <div>
+          <h1>{selectedChannel.title}</h1>
+          <small>{selectedChannel.counts.contents}</small>
+        </div>
     </div>
   )
 }

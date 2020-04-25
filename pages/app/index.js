@@ -17,13 +17,19 @@ const GrovesApp = (props) => {
   return (
     <Layout {...props} >
       {selectedChannel &&
-        <div>
-          <h1>{selectedChannel.title}</h1>
-          <small>{selectedChannel.counts.contents}</small>
-        </div>
+        <GrovesCanvas />
       }
     </Layout>
   )
+}
+
+export async function getServerSideProps(context) {
+  if (!parseCookies(context)['access_token']) {
+    context.res.writeHead(301, { Location: '/' })
+    context.res.end()
+  }
+
+  return {props: {}}
 }
 
 export default GrovesApp

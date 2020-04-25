@@ -8,11 +8,3 @@ export const LoginLink = () => {
     <a href={authURL}>Login</a>
   )
 }
-
-export const LogoutLink = ctx => {
-  const { logout } = useAuth();
-
-  return (
-    <button onClick={() => logout(ctx)}>Logout</button>
-  )
-}

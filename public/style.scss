@@ -41,15 +41,48 @@ header {
   height: 45px;
   border-radius: 10px;
 
-  .orchard-title {
-    background-color: rgba($primary-color, 0.2);
-    padding: 0 15px;
-    border-radius: 10px 0 0 10px;
+  .groves-logo-container {
+    background-color: $primary-color;
+    padding: 0 10px 0 0;
+    border-radius: 8px 0 0 8px;
     line-height: 100%;
     align-items: center;
     display: flex;
     flex-grow: 0;
     height: 100%;
+
+    .groves-menu-button {
+      appearance: none;
+      border: none;
+      background: none;
+      padding: 0;
+      margin: 0;
+      outline: none;
+    }
+
+    .groves-dropdown {
+      min-width: 200px;
+      position: relative;
+      display: inline-block;
+      position: absolute;
+      background-color: #f9f9f9;
+      border: 1px solid #BDC3CA;
+      top: 55px;
+      border-radius: 10px;
+      left: 0;
+      box-shadow: 0px 8px 24px rgba(111, 123, 138, 0.2), 0px 2px 4px rgba(111, 123, 138, 0.2), 0px 0px 0px rgba(111, 123, 138, 0.1);
+      z-index: 1;
+
+      ul {
+        display: block;
+        margin: 15px;
+        padding: 0;
+        li {
+          padding: 8px;
+          display: block;
+        }
+      }
+    }
 
     * {
       display: inline-flex;

@@ -5,30 +5,37 @@ import { AuthProvider } from '../context/auth-context'
 import AppProviders from '../components/AppProviders'
 import { UserProvider } from '../context/user-context'
 import { SelectionProvider } from '../context/selection-context'
+import { parseCookies } from 'nookies'
+import { Router } from 'next/router'
 
-const GrovesClient = ({ Component, pageProps }) => {
+const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
+  if (isAuthenticated) {
+    console.log('AUTHENTICATED');
+    
+    return (
+      <AuthProvider>
+        <UserProvider>
+          <Component {...pageProps} />
+        </UserProvider>
+      </AuthProvider>
+    )
+  }
+
+  console.log('NOT AUTHENTICATED');
+
   return (
     <AuthProvider>
-      <UserProvider>
-        <Component {...pageProps} />
-      </UserProvider>
+      <Component {...pageProps} />
     </AuthProvider>
   )
 }
 
-export async function getServerSideProps(context) {
-  if (!parseCookies(context)['access_token']) {
-    context.res.writeHead(302, { Location: '/' })
-    context.res.end()
-
-    return {
-      props: {isAuthenticated: false}, // will be passed to the page component as props
-    }
-  } else {
-    return {
-      props: {isAuthenticated: true}, // will be passed to the page component as props
-    }
+GrovesClient.getInitialProps = ({ ctx }) => {
+  if (parseCookies(ctx)['access_token']) {
+    return { isAuthenticated: true };
   }
+
+  return { isAuthenticated: false }
 }
 
 export default GrovesClient

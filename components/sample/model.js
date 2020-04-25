@@ -30,6 +30,8 @@ class SampleTree {
   }
 
   FindAndSetSelected(label) {
+    console.log(label);
+    
     if (this.IsNodeInChildren(label)) {
       this.IsNodeInChildren(label).UnsetSelected();
       this.selectedChild = label;
@@ -42,4 +44,3 @@ class SampleTree {
 }
 
 export default SampleTree;
-

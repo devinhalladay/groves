@@ -3,11 +3,16 @@ import Header from '../components/Header'
 import { Router, useRouter } from 'next/router'
 import { useAuth } from '../context/auth-context'
 import { parseCookies } from 'nookies'
+import Layout from '../components/Layout'
 
 const Root = (props) => {
   const router = useRouter()
 
-  return <Header />
+  return (
+    <Layout>
+      <p>Welcome</p>
+    </Layout>
+  )
 }
 
 export async function getServerSideProps(context) {

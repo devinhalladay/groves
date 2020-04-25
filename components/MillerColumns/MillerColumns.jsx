@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ColumnMover from './ColumnMover';
+import memoize from "memoize-one";
 
 const getStyleFromElement = (element, property) => {
     return element && property && Number(window.getComputedStyle(element)[property].replace('px', ''));
@@ -16,7 +17,9 @@ const debounce = (fn, context = null, delay) => {
     }
 }
 
-class MillerColumn extends Component {
+class MillerColumns extends Component {
+    _isMounted = false;
+
     constructor(props) {
         super(props);
         this.wrapperRef = React.createRef();
@@ -28,30 +31,45 @@ class MillerColumn extends Component {
         }
     }
 
-    /* TODO:: Replace the following with other lifecycle methods */
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        const diff = nextProps.children.length - this.props.children.length;
-        if (nextProps.children.length !== this.props.children.length) {
-            const previousPeek = this.columnMover.shouldShowPeek;
-            this.columnMover.Update(nextProps.children.length);
-            const ShouldMoveSlider = this.columnMover.ShouldMoveSlider(previousPeek);
-            if ((!previousPeek && ShouldMoveSlider) || (diff > 1)) {
-                this.moveToEnd();
-            } else if (ShouldMoveSlider) {
-                const moveTo = this.columnMover.MoveTo(diff, previousPeek);
-                this.moveTo(`translateX(-${this.columnMover.currentPosition + moveTo}px)`);
-                this.columnMover.currentPosition = this.columnMover.currentPosition + moveTo;
+    componentDidUpdate(prevProps) {
+        console.log(this.props);
+        
+        if (prevProps.children) {
+            const diff = this.props.children.length - prevProps.children.length;
+            if (this.props.children.length !== prevProps.children.length) {
+                const previousPeek = this.columnMover.shouldShowPeek;
+                this.columnMover.Update(this.props.children.length);
+                const ShouldMoveSlider = this.columnMover.ShouldMoveSlider(previousPeek);
+                if ((!previousPeek && ShouldMoveSlider) || (diff > 1)) {
+                    this.moveToEnd();
+                } else if (ShouldMoveSlider) {
+                    const moveTo = this.columnMover.MoveTo(diff, previousPeek);
+                    this.moveTo(`translateX(-${this.columnMover.currentPosition + moveTo}px)`);
+                    this.columnMover.currentPosition = this.columnMover.currentPosition + moveTo;
+                }
+
+                console.log(prevProps.children);
+
+                this.setState({
+                    children: this.getChildren(
+                        this.props,
+                        diff !== 0
+                    ),
+                })
+                this.updateChildrenAndMove(true);
             }
         }
-        this.setState({
-            children: this.getChildren(
-                nextProps,
-                diff !== 0
-            ),
-        })
     }
 
+    // componentDidUpdate(prevProps) {
+    //     if (prevProps !== this.props) {
+    //         this.updateChildrenAndMove(true);
+    //     }
+    // }
+
     componentDidMount() {
+        this._isMounted = true;
+
         window.addEventListener('resize', (e) => {
             if (this.columnMover) {
                 this.columnMover.UpdateTotalWidth(getStyleFromElement(this.wrapperRef.current, 'width'));
@@ -61,7 +79,12 @@ class MillerColumn extends Component {
         const { maxColumn, columnMagin, minColumnWidth, peekWidth, children } = this.props;
         const totalWidth = getStyleFromElement(this.wrapperRef.current, 'width');
         this.columnMover = new ColumnMover(totalWidth, children.length, maxColumn, columnMagin, minColumnWidth, peekWidth)
+
         this.updateChildrenAndMove();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     updateChildrenAndMove(transitioning = false) {
@@ -102,6 +125,8 @@ class MillerColumn extends Component {
     }
 
     getChildren(props = this.props, transitioning = false) {
+        console.log(props.children);
+        
         return React.Children.map(props.children, (child, index) => {
             const width = this.columnMover.invisibleColumns
                 ? index < this.columnMover.invisibleColumns
@@ -142,7 +167,7 @@ class MillerColumn extends Component {
     }
 }
 
-MillerColumn.propTypes = {
+MillerColumns.propTypes = {
     maxColumn: PropTypes.number.isRequired,
     columnMagin: PropTypes.number.isRequired,
     minColumnWidth: PropTypes.number.isRequired,
@@ -150,8 +175,8 @@ MillerColumn.propTypes = {
     animationSpeed: PropTypes.number
 }
 
-MillerColumn.defaultProps = {
+MillerColumns.defaultProps = {
     animationSpeed: 200,
 }
 
-export default MillerColumn;
+export default MillerColumns;
