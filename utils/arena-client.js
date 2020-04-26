@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default class ArenaClient {
     constructor(accessToken) {
-      this.accessToken = accessToken;
+      this.accessToken = accessToken || false;
       this.ArenaQuery = axios.create({
         baseURL: 'https://api.are.na/v2',
         headers: {"authorization": `Bearer ${accessToken}`}

@@ -1,4 +1,4 @@
-$primary-color: #6AB8FF;
+$primary-color: #47A7FF;
 
 body,
 html {
@@ -34,21 +34,55 @@ img {
   padding: 15px;
   flex-wrap: wrap;
   flex-direction: column;
+  padding-top: 65px;
 }
 
 header {
   height: 45px;
   border-radius: 10px;
 
-  .orchard-title {
-    background-color: rgba($primary-color, 0.2);
-    padding: 0 15px;
-    border-radius: 10px 0 0 10px;
+  .groves-logo-container {
+    background-color: $primary-color;
+    padding: 0 10px 0 0;
+    border-radius: 8px 0 0 8px;
     line-height: 100%;
     align-items: center;
     display: flex;
     flex-grow: 0;
     height: 100%;
+
+    .groves-menu-button {
+      appearance: none;
+      border: none;
+      background: none;
+      padding: 0;
+      margin: 0;
+      outline: none;
+    }
+
+    .groves-dropdown {
+      min-width: 200px;
+      position: relative;
+      display: inline-block;
+      position: absolute;
+      background-color: #f9f9f9;
+      border: 1px solid #BDC3CA;
+      top: 55px;
+      border-radius: 10px;
+      left: 0;
+      box-shadow: 0px 8px 24px rgba(111, 123, 138, 0.2), 0px 2px 4px rgba(111, 123, 138, 0.2), 0px 0px 0px rgba(111, 123, 138, 0.1);
+      z-index: 1;
+
+      ul {
+        display: block;
+        margin: 15px;
+        padding: 0;
+        li {
+          padding: 8px;
+          display: block;
+        }
+      }
+    }
 
     * {
       display: inline-flex;
@@ -74,6 +108,7 @@ header {
       right: 0;
       width: auto;
       overflow-y: scroll;
+      overflow-x: hidden;
       max-height: 400px;
       display: none;
       margin-top: 15px;
@@ -142,6 +177,14 @@ header {
 
   &--pin-bottom {
     bottom: 15px;
+  }
+
+  &--nav {
+    top: 20px;
+  }
+
+  &--wide {
+    width: calc(100vw - 30px);
   }
 
   .panel-header {
@@ -435,4 +478,136 @@ header {
     margin-top: 0.65625em;
     margin-bottom: 0;
   }
+}
+
+.miller {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.wrapper {
+  display: flex;
+  position: relative;
+  width: 10000px;
+  left: 0px;
+}
+
+.finder {
+  width: 100%;
+  height: 100%;
+  min-width: 200px;
+  min-height: 150px;
+  border-top: 1px solid #d1d1d1;
+  border-bottom: 1px solid #d1d1d1;
+  display: flex;
+  overflow: scroll;
+
+  .columns {
+    width: 180px;
+    min-width: 180px;
+    height: 100%;
+    overflow-y: auto;
+    border-right: 1px solid #d1d1d1;
+    margin: 0;
+    padding: 0;
+
+    li {
+      width: 100%;
+      height: 36px;
+      line-height: 36px;
+      border-bottom: 1px solid #d1d1d1;
+      cursor: pointer;
+      display: flex;
+
+      > * {
+        margin-left: 6px;
+      }
+
+      span {
+        display: inline-block;
+        width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    .select {
+      background-color: #e6f7ff;
+    }
+
+    .disable {
+      color: #999999;
+      cursor: not-allowed;
+    }
+
+    .has-child {
+      img {
+        width: 22px;
+        height: 22px;
+        margin-top: 7px;
+      }
+      img:first-child {
+
+      }
+      img:last-child {
+
+      }
+    }
+  }
+
+  .iw-wrap {
+    background-color: #fafafa;
+    border: 1px dashed #d9d9d9;
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  .finder-button {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    -webkit-transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease;
+    vertical-align: top;
+    display: table;
+    .upload {
+      width: 100%;
+      height: 100%;
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      padding: 8px;
+      .upload-icon {
+        font-size: 20px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .image-wrap {
+    width: 100%;
+    position: relative;
+    .button-cancel {
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      border: 0;
+      border-radius: 14px;
+      color: #fff;
+      background-color: rgb(255, 70, 70);
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  }
+
 }

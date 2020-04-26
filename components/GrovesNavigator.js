@@ -1,20 +1,29 @@
 import React, { Component, useState } from 'react'
 import Downshift from "downshift";
+import { useSelection } from '../context/selection-context';
+import { useUser } from '../context/user-context';
 
 const GrovesNavigator = props => {
-  const [inputItems, setInputItems] = useState(props.channels)
+  const { selectedChannel, setSelectedChannel } = useSelection()
+  const { user, channels } = useUser()
+
+  const [inputItems, setInputItems] = useState(channels)
+  
   return (
     <Downshift
         onInputValueChange={inputValue => {
           setInputItems(
-            props.channels.filter(item =>
-              item.title.toLowerCase().replace(/\W/g, '').startsWith(inputValue.toLowerCase())
+            channels.filter(item =>
+              item.title.toLowerCase().replace(/\W/g, '').startsWith(inputValue.toLowerCase().replace(/\W/g, ''))
             )
           )
         }}
         onChange={selection => {
-          props.setIsReady(false)
-          props.setSelectedChannel(selection)
+          if (selection === null) {
+            setSelectedChannel(null)
+          } else {
+            setSelectedChannel(selection)
+          }
         }}
         itemToString={item => (item ? item.title : '')}
       >
@@ -28,6 +37,8 @@ const GrovesNavigator = props => {
           highlightedIndex,
           selectedItem,
           isOpen,
+          clearSelection,
+          openMenu
         }) => (
           <>
             <div
@@ -35,7 +46,9 @@ const GrovesNavigator = props => {
               className="grove-navigation"
             >
               <input 
-                {...getInputProps()}
+                {...getInputProps({
+                  onFocus: openMenu
+                })}
                 placeholder="Enter a channel title..."
               />
               <ul 
@@ -43,26 +56,22 @@ const GrovesNavigator = props => {
                 className={`groves-dropdown panel ${isOpen ? 'open' : ''}`}
               >
               {isOpen &&
-                inputItems.map((item, index) => (
-                  <li
-                    style={
-                      highlightedIndex === index
-                        ? { backgroundColor: '#bde4ff' }
-                        : {}
-                    }
-                    key={`${item.id}${index}`}
-                    {...getItemProps({
-                      item,
-                      index,
-                      style: {
-                        backgroundColor:
-                          highlightedIndex === index ? "lightgray" : "white",
-                        fontWeight: selectedItem === item ? "bold" : "normal"
-                      }
-                    })}
-                  >
-                    {item.title}
-                  </li>
+                inputItems.sort((a, b) => a.title.localeCompare(b.title)).map((item, index) => (
+                    <li
+                      key={`${item.id}${index}`}
+                      {...getItemProps({
+                        item,
+                        index,
+                        style: {
+                          cursor: 'pointer',
+                          backgroundColor:
+                            highlightedIndex === index ? "lightgray" : "white",
+                          fontWeight: selectedItem === item ? "bold" : "normal"
+                        }
+                      })}
+                    >
+                      {item.title}
+                    </li>
                 ))}
               </ul>
             </div>

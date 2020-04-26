@@ -1,69 +1,40 @@
-import { useEffect, useState } from 'react'
-import { parseCookies, setCookie, destroyCookie } from 'nookies'
-import ArenaClient from '../utils/arena-client';
-
 import '../public/style.scss'
 
-function GrovesClient({ Component, pageProps }) {
-  const [user, setUser] = useState({})
-  const [isUserAuthenticated, setIsUserAuthenticated] = useState(
-    typeof parseCookies()['arena_token'] !== 'undefined' &&
-      user.me !== undefined
-  )
-  const [channels, setChannels] = useState([])
-  const [isReady, setIsReady] = useState(false)
-  const [selectedChannel, setSelectedChannel] = useState({})
-  let Arena = {}
+import React from 'react'
+import { AuthProvider } from '../context/auth-context'
+import { UserProvider } from '../context/user-context'
+import { SelectionProvider } from '../context/selection-context'
+import { parseCookies } from 'nookies'
+import { Router } from 'next/router'
 
-  useEffect(() => {
-    // if (!isReady) {
-      if (parseCookies()['arena_token']) {
-        Arena = new ArenaClient(parseCookies()['arena_token'])
+const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
+  if (isAuthenticated) {
+    console.log('AUTHENTICATED');
+    
+    return (
+      <AuthProvider>
+        <UserProvider>
+          <Component {...pageProps} />
+        </UserProvider>
+      </AuthProvider>
+    )
+  }
 
-        Arena.setMe(Arena.getMe()).then((me) => {
-          setUser({
-            ...user,
-            me
-          })
-  
-        Arena.getChannelsForMe()
-          .then(chans => {
-            setChannels([
-              ...channels,
-              ...chans
-            ])
-          })
-        }).then(() => setIsUserAuthenticated(true))
-          .catch(e => destroyCookie('arena_token'))
-      } else {
-        console.log('not logged in');
-      }
-  }, [])
-
-  useEffect(() => {
-    if (parseCookies()['arena_token'] && selectedChannel.id) {
-      Arena = new ArenaClient(parseCookies()['arena_token'])
-      Arena.getBlocksFromChannel(selectedChannel.id, selectedChannel.length).then(blocks => {
-        setSelectedChannel({ ...selectedChannel, contents: [...blocks] })
-      }).then(() => {
-        setIsReady(true);
-      })
-    }
-  }, [selectedChannel.id])
-  
+  console.log('NOT AUTHENTICATED');
 
   return (
-    <Component
-      channels={channels} 
-      selectedChannel={selectedChannel}
-      isUserAuthenticated={isUserAuthenticated}
-      setSelectedChannel={setSelectedChannel}
-      user={user}
-      me={user.me}
-      setIsReady={setIsReady}
-      isReady={isReady}
-      {...pageProps} />
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
   )
+}
+
+GrovesClient.getInitialProps = ({ ctx }) => {
+  if (parseCookies(ctx)['access_token']) {
+    return { isAuthenticated: true };
+  }
+
+  return { isAuthenticated: false }
 }
 
 export default GrovesClient

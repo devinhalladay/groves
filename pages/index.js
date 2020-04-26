@@ -1,35 +1,33 @@
-import Layout, { Container } from '../components/Layout'
-import Panel from '../components/Panel'
-import BlockRepresentation from '../components/BlockRepresentation'
+import React, { useEffect } from 'react'
+import Header from '../components/Header'
+import { Router, useRouter } from 'next/router'
+import { useAuth } from '../context/auth-context'
+import { parseCookies } from 'nookies'
+import Layout from '../components/Layout'
 
-const Home = props => {
+const Root = (props) => {
+  const router = useRouter()
+
   return (
-    <Layout {...props}>
-      <Container>
-        { props.isReady &&
-          <>
-            <Panel className="formationNavigator" pinSide="left" panelTitle={"Formations"} defaultPosition={{x: 0, y: 60}} {...props}>
-              <ul>
-                <li class="active">Folder Tree</li>
-                <li>Mind Map</li>
-                <li>Rhizome</li>
-                <li>Frequency Chart</li>
-              </ul>
-            </Panel>
-            <Panel className="statusbar" pinSide="right" pinBottom={true} {...props}>
-              <ul>
-                <li>{props.selectedChannel.length} blocks</li>
-              </ul>
-            </Panel>
-            <div className="blockList">
-              {props.selectedChannel.contents.map(block =>
-                <BlockRepresentation block={block} key={block.id} />)}
-            </div>
-          </>
-        }
-      </Container>
+    <Layout>
+      <p>Welcome</p>
     </Layout>
   )
 }
 
-export default Home
+export async function getServerSideProps(context) {
+  if (parseCookies(context)['access_token']) {
+    context.res.writeHead(302, { Location: '/app' })
+    context.res.end()
+
+    return {
+      props: {isAuthenticated: true}
+    }
+  } else {
+    return {
+      props: {isAuthenticated: false}
+    }
+  }
+}
+
+export default Root

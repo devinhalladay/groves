@@ -3,8 +3,29 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import { useRouter } from 'next/router'
 import { setState, useState } from 'react'
 
+import { LoginLink, LogoutLink } from './AuthLinks'
+import { useAuth } from '../context/auth-context';
+import { useUser } from '../context/user-context';
+
+const Dropdown = props => {
+  const { logout } = useAuth()
+
+  return (
+    <div className="groves-dropdown">
+      <ul>
+        <li>Welcome, {props.user.username}</li>
+        <li>Test</li>
+        <li>Test</li>
+        <li>Test</li>
+        <li onClick={logout}>Logout</li>
+      </ul>
+    </div>
+  )
+}
+
 const Menu = () => {
   const router = useRouter()
+  const { user } = useAuth()
 
   const [showMenu, setShowMenu] = useState(false)
   const closeMenu = () => setShowMenu(false)
@@ -17,25 +38,18 @@ const Menu = () => {
 
     return (
       <div>
-        <button onClick={handleMenuClick}>
+        <button className="groves-menu-button" onClick={handleMenuClick}>
           <div className="icon icon--caret-down">
-            <svg width="11" height="6" viewBox="0 0 11 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5.14645 5.14645L0.853553 0.853553C0.538571 0.538571 0.761654 0 1.20711 0H9.79289C10.2383 0 10.4614 0.538572 10.1464 0.853554L5.85355 5.14645C5.65829 5.34171 5.34171 5.34171 5.14645 5.14645Z" fill="#333333"/>
-            </svg>
+            <svg width="12" height="12" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.07069 3.53553L4.53516 7.07107L0.999622 3.53553" stroke="white" stroke-width="1"/>
+            </svg>          
           </div>
         </button>
         
         {
           showMenu
             ? (
-              <div
-                className="menu"
-                // ref={(element) => {
-                //   this.dropdownMenu = element;
-                // }}
-              >
-                <button onClick={() => { destroyCookie(null, 'arena_token'); router.push('/').then(() => router.reload())} }>Logout</button>
-              </div>
+              <Dropdown user={user} />
             )
             : (
               null
