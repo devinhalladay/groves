@@ -1,10 +1,7 @@
 import Konva from 'konva';
 import { Stage, Layer, Star, Text } from 'react-konva';
 import { useRef } from "react"
-import { gql } from 'apollo-boost';
-import { useQuery } from '@apollo/react-hooks';
 import Panel from './Panel';
-import MillerColumns from './MillerColumns';
 import { useSelection } from '../context/selection-context';
 import MillerPanel from './MillerPanel';
 

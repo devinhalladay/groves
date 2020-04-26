@@ -21,7 +21,6 @@
     "graphql": "^15.0.0",
     "isomorphic-unfetch": "^3.0.0",
     "konva": "^4.2.2",
-    "memoize-one": "^5.1.1",
     "next": "^9.2.1",
     "next-with-apollo": "^5.0.1",
     "nookies": "^2.0.8",
@@ -30,6 +29,7 @@
     "react-dom": "^16.12.0",
     "react-draggable": "^4.2.0",
     "react-konva": "^16.13.0-0",
+    "react-mac-finder": "^1.0.0",
     "sass": "^1.26.3"
   },
   "devDependencies": {
