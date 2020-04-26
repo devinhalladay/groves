@@ -20,8 +20,6 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
     )
   }
 
-  console.log('NOT AUTHENTICATED');
-
   return (
     <AuthProvider>
       <Component {...pageProps} />

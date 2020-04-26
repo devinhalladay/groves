@@ -180,7 +180,14 @@ header {
   }
 
   &--nav {
-    top: 20px;
+    top: 15px;
+  }
+
+  &--nav--no-auth {
+    top: 15px;
+    left: 15px;
+    width: auto;
+    overflow: hidden;
   }
 
   &--wide {
@@ -610,4 +617,68 @@ header {
     }
   }
 
+}
+
+.draggable-block-container {
+  &.image {
+    div {
+      justify-content: center;
+    }
+  }
+
+  div {
+    width: 260px;
+    height: 260px;
+    background: #FFFFFF;
+    border: 1px solid #BDC3CA;
+    color: #6F7B8A;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 1px rgba(111, 123, 138, 0.2), 0px 0px 0px #6F7B8A, 0px 0px 0px rgba(111, 123, 138, 0.1);
+    border-radius: 2px;
+    cursor: grab;
+    transform: rotate(0deg);
+    transition: 0.1s transform ease-in-out;
+    display: flex;
+    flex-direction: column;
+    flex-flow: column;
+
+    &:active {
+      cursor: grabbing;
+      border: 1.5px solid #47A7FF;
+      box-sizing: border-box;
+      box-shadow: 0px 5.60708px 16.8212px rgba(111, 123, 138, 0.2), 0px 1.40177px 2.80354px rgba(111, 123, 138, 0.2), 0px 0px 0px rgba(111, 123, 138, 0.1);
+      background: linear-gradient(0deg, rgba(71, 167, 255, 0.15), rgba(71, 167, 255, 0.15)), rgba(255, 255, 255, 0.6);
+      transform: rotate(-2deg);
+      transition: 0.1s transform ease-in-out
+    }
+  }
+
+  p {
+    font-family: Times;
+    font-size: 16px;
+    line-height: 25px;
+    margin: 0;
+    padding: 10px;
+    flex: 0 0 auto;
+
+    &.title {
+      left: 10px;
+      top: 15px;
+      font-family: Neue Haas Unica Pro;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 21px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+  }
+
+  a {
+    color: $primary-color
+  }
+
+  img {
+    align-self: center;
+  }
 }
