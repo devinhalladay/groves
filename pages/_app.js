@@ -2,7 +2,6 @@ import '../public/style.scss'
 
 import React from 'react'
 import { AuthProvider } from '../context/auth-context'
-import AppProviders from '../components/AppProviders'
 import { UserProvider } from '../context/user-context'
 import { SelectionProvider } from '../context/selection-context'
 import { parseCookies } from 'nookies'
