@@ -1,16 +1,40 @@
 import '../public/style.scss'
 
 import React from 'react'
-import AppProviders from '../components/AppProviders'
+import { AuthProvider } from '../context/auth-context'
+import { UserProvider } from '../context/user-context'
+import { SelectionProvider } from '../context/selection-context'
+import { parseCookies } from 'nookies'
+import { Router } from 'next/router'
 
-import { useUser } from '../context/user-context'
+const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
+  if (isAuthenticated) {
+    console.log('AUTHENTICATED');
+    
+    return (
+      <AuthProvider>
+        <UserProvider>
+          <Component {...pageProps} />
+        </UserProvider>
+      </AuthProvider>
+    )
+  }
 
-const GrovesClient = ({ Component, pageProps }) => {
+  console.log('NOT AUTHENTICATED');
+
   return (
-    <AppProviders>
+    <AuthProvider>
       <Component {...pageProps} />
-    </AppProviders>
+    </AuthProvider>
   )
+}
+
+GrovesClient.getInitialProps = ({ ctx }) => {
+  if (parseCookies(ctx)['access_token']) {
+    return { isAuthenticated: true };
+  }
+
+  return { isAuthenticated: false }
 }
 
 export default GrovesClient

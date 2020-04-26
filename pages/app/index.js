@@ -4,34 +4,32 @@ import Layout from '../../components/Layout'
 import { useAuth } from '../../context/auth-context'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import { useRouter, Router } from 'next/router'
+import { gql } from 'apollo-boost';
+import { useUser } from '../../context/user-context'
+import { useQuery } from '@apollo/react-hooks';
+import withApollo from '../../lib/withApollo';
+import GrovesCanvas from '../../components/GrovesCanvas';
+import { useSelection, SelectionContext } from '../../context/selection-context'
 
-export default (props) => {
-  const router = useRouter()
-  const auth = useAuth()
-  const prevSession = auth.hasPreviousSession()
+const GrovesApp = (props) => {
+  const { selectedChannel, setSelectedChannel } = useSelection()
 
-  if (props.isAuthenticated) {
-    return (
-      <Layout>
-        <h1>Authenticated</h1>
-      </Layout>
-    )
-  }
-
-  return 'hello you are here'
+  return (
+    <Layout {...props} >
+      {selectedChannel &&
+        <GrovesCanvas />
+      }
+    </Layout>
+  )
 }
 
 export async function getServerSideProps(context) {
   if (!parseCookies(context)['access_token']) {
-    context.res.writeHead(302, { Location: '/' })
+    context.res.writeHead(301, { Location: '/' })
     context.res.end()
-
-    return {
-      props: {isAuthenticated: false}, // will be passed to the page component as props
-    }
-  } else {
-    return {
-      props: {isAuthenticated: true}, // will be passed to the page component as props
-    }
   }
+
+  return {props: {}}
 }
+
+export default GrovesApp

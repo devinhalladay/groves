@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react'
-import { useUser } from '../context/user-context'
 import Header from '../components/Header'
 import { Router, useRouter } from 'next/router'
 import { useAuth } from '../context/auth-context'
 import { parseCookies } from 'nookies'
+import Layout from '../components/Layout'
 
 const Root = (props) => {
   const router = useRouter()
-  const auth = useAuth()
 
-  return <Header />
+  return (
+    <Layout>
+      <p>Welcome</p>
+    </Layout>
+  )
 }
 
 export async function getServerSideProps(context) {

@@ -7,23 +7,15 @@ import { useRouter, Router } from 'next/router'
 const AuthContext = createContext()
 
 const AuthProvider = (props) => {
-  // if (weAreStillWaitingToGetTheUserData) {
-  //   return 'loading'
-  // }
-
   const router = useRouter()
 
-  const [data, setData] = useState({
-    token: parseCookies()['access_token'] ? parseCookies()['access_token'] : null,
-    client: {},
-  })
+  const [accessToken, setAccessToken] = useState(parseCookies()['access_token'] ? parseCookies()['access_token'] : null)
+  const [client, setClient] = useState(null)
 
-  const hasPreviousSession = () => {
-    return data.token && window.localStorage.getItem('user')
-  }
+  const hasPreviousSession = accessToken !== null && window.localStorage.getItem('user')
 
   const [user, setUser] = useState(
-    hasPreviousSession() ?
+    hasPreviousSession ?
     JSON.parse(window.localStorage.getItem('user')) :
     null
   )
@@ -39,10 +31,7 @@ const AuthProvider = (props) => {
       });
   
       res.json().then((res) => {
-        setData({
-          ...data,
-          token: res.access_token
-        })
+        setAccessToken(res.access_token)
   
         setCookie(ctx, 'access_token', res.access_token, {
           maxAge: 30 * 24 * 60 * 60,
@@ -51,14 +40,11 @@ const AuthProvider = (props) => {
           // return res.access_token
         })
       }).then(() => {
-        const client = new ArenaClient(parseCookies()['access_token'])
+        const arenaClient = new ArenaClient(parseCookies()['access_token'])
   
-        setData({
-          ...data,
-          client: client
-        })
+        setClient(arenaClient)
   
-        return client
+        return arenaClient
       }).then((client) => {
         client.setMe(client.getMe())
           .then((me) => {
@@ -86,7 +72,7 @@ const AuthProvider = (props) => {
   }
 
   return (
-    <AuthContext.Provider value={{data, user, login, logout, hasPreviousSession}} {...props} />
+    <AuthContext.Provider value={{accessToken, user, login, logout, hasPreviousSession}} {...props} />
   )
 }
  

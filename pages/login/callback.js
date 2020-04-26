@@ -5,7 +5,6 @@ import Router from 'next/router'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 import fetch from 'isomorphic-unfetch'
-import ArenaContext from '../../context/ArenaContext';
 import { useAuth } from '../../context/auth-context';
 import { useUser } from '../../context/user-context';
 import Header from '../../components/Header';
@@ -25,10 +24,8 @@ import Header from '../../components/Header';
 // or by adding a second routing layer (in addition to react-router) in index.js that handles the oauth callback
 
 const Callback = ({ ctx, query: { code }, ...props }) => {  
-  const { arena } = useContext(ArenaContext)
   // const { user, setUser, channels, setChannels } = useUser()
   const { login, logout } = useAuth()
-  const { instantiateUser } = useUser()
 
   useEffect(() => {
     login({ctx, code})

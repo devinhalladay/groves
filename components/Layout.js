@@ -1,12 +1,19 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import Header from './Header';
+import { useSelection } from '../context/selection-context';
+import { useUser } from '../context/user-context';
 
 const Layout = props => {
+  // const { selectedChannel, setSelectedChannel } = useSelection()
+  // const { channels } = useUser()
+
   return (
-    <div class="workspace">
+    <Fragment>
       <Header {...props} />
-      {props.children}
-    </div>
+      <div class="workspace">
+        {props.children}
+      </div>
+    </Fragment>
   )
 }
 
