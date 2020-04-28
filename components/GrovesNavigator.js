@@ -56,7 +56,7 @@ const GrovesNavigator = props => {
                 className={`groves-dropdown panel ${isOpen ? 'open' : ''}`}
               >
               {isOpen &&
-                inputItems.sort((a, b) => a.title.localeCompare(b.title)).map((item, index) => (
+                [...inputItems].sort((a, b) => a.title.localeCompare(b.title)).map((item, index) => (
                     <li
                       key={`${item.id}${index}`}
                       {...getItemProps({
