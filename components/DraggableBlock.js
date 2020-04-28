@@ -8,9 +8,9 @@ const DraggableBlock = (props) => {
   return (
     <Draggable
       handle=".draggable-block-container"
-      defaultPosition={props.defaultPosition ? {x: props.defaultPosition.x, y: props.defaultPosition.y} : {x: 0, y: 0}}
       onStart={() => setIsDragging({...isDragging, status: true, zIndex: isDragging.zIndex + 1})}
       onEnd={() => setIsDragging({...isDragging, status: false})}
+      positionOffset={{x: `${Math.floor(Math.random() * Math.floor(100))}%`, y: `${Math.floor(Math.random() * Math.floor(100))}%`}}
       >
       <div 
         className={`draggable-block-container ${props.type ? props.type : ''}`}

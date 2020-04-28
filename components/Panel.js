@@ -47,8 +47,12 @@ const Panel = (props) => {
       defaultPosition={props.defaultPosition ? {x: props.defaultPosition.x, y: props.defaultPosition.y} : {x: 0, y: 0}}
       onDrag={handleDrag}
       onStop={handleDragStop}
+      className={props.className}
+      {...props}
       >
-      <div className={`panel ${props.panelType ? 'panel--' + props.panelType : null} panel--pin-${props.pinSide ? props.pinSide : 'center'} ${props.pinBottom ? 'panel--pin-bottom' : ''} ${props.className ? props.className : ''}`}>
+      <div className={`panel ${props.panelType ? 'panel--' + props.panelType : null} panel--pin-${props.pinSide ? props.pinSide : 'center'} ${props.pinBottom ? 'panel--pin-bottom' : ''} ${props.className ? props.className : ''}`}
+        style={props.style}
+      >
         { props.panelTitle ? <Collapsible 
           trigger={<PanelHeader
           panelTitle={props.panelTitle}

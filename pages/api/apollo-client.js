@@ -56,7 +56,7 @@ export default (req, res) => {
       })
       .then(result => {
         return new Promise(resolve => {
-          res.json(result);
+          res.status(200).json(result);
           return resolve();
         });
       })

@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/client": "^3.0.0-beta.44",
+    "@apollo/client": "^3.0.0-beta.39",
     "@apollo/react-hooks": "^3.1.5",
     "apollo-boost": "^0.4.7",
     "axios": "^0.19.2",
@@ -20,6 +20,7 @@
     "downshift": "^5.0.3",
     "es6-promise": "^4.2.8",
     "graphql": "^15.0.0",
+    "html-react-parser": "^0.10.3",
     "isomorphic-unfetch": "^3.0.0",
     "konva": "^4.2.2",
     "next": "^9.2.1",
