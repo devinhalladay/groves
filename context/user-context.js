@@ -35,8 +35,6 @@ export const UserProvider = withApollo((props) => {
 
   const channels = myChannels.me.channels
   const me = myChannels.me
-  console.log(channels);
-  
 
   return (
     <UserContext.Provider value={{lazyLoadMyChannels, me, channels}} {...props}>
