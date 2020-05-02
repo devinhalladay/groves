@@ -10,7 +10,7 @@ const DraggableBlock = (props) => {
       handle=".draggable-block-container"
       onStart={() => setIsDragging({...isDragging, status: true, zIndex: isDragging.zIndex + 1})}
       onEnd={() => setIsDragging({...isDragging, status: false})}
-      positionOffset={{x: `${Math.floor(Math.random() * Math.floor(100))}%`, y: `${Math.floor(Math.random() * Math.floor(100))}%`}}
+      {...props}
       >
       <div 
         className={`draggable-block-container ${props.type ? props.type : ''}`}
@@ -19,6 +19,7 @@ const DraggableBlock = (props) => {
         }}  
       >
         <div>
+
           {props.title &&
             <p className="title">{props.title}</p>
           }

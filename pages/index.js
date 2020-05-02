@@ -63,6 +63,7 @@ const Root = withApollo((props) => {
             <DraggableBlock 
               title={blokk.title ? blokk.title : null}
               type={blokk.image_url ? 'image' : null}
+              defaultPosition={{x: Math.floor(Math.random() * 100), y: Math.floor(Math.random() * 100) }}
               bounds={'parent'}>
               {
                 blokk.content ?
