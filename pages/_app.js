@@ -1,6 +1,6 @@
 import '../public/style.scss'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AuthProvider } from '../context/auth-context'
 import { UserProvider } from '../context/user-context'
 import { SelectionProvider } from '../context/selection-context'
@@ -9,6 +9,10 @@ import { Router } from 'next/router'
 import Head from 'next/head'
 
 const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
+    useEffect(() => {
+      window.analytics.page()
+    }, [])
+
   if (isAuthenticated) {
     return (
       <AuthProvider>
@@ -23,6 +27,11 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
     <div>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script dangerouslySetInnerHTML={{__html: `
+          !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var t=analytics.methods[e];analytics[t]=analytics.factory(t)}analytics.load=function(e,t){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://cdn.segment.com/analytics.js/v1/"+e+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=t};analytics.SNIPPET_VERSION="4.1.0";
+          analytics.load("4TeWCt1kFP32yi2z02MP0yLhXaDjECqs");
+          }}();
+        `}} />
       </Head>
       <AuthProvider>
         <Component {...pageProps} />

@@ -1,9 +1,19 @@
 import Draggable from 'react-draggable';
 import Collapsible from 'react-collapsible';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const DraggableBlock = (props) => {
   const [isDragging, setIsDragging] = useState({status: false, zIndex: 1000})
+
+  let analytics = window.analytics
+
+  // useEffect(() => {
+  //   analytics = window.analytics
+  // }, [])
+
+  let handleDragMetric = () => {
+    analytics.track('Dragged Block');
+  }
 
   return (
     <Draggable
@@ -11,8 +21,11 @@ const DraggableBlock = (props) => {
       onStart={() => {
         props.setDragStates({ ...props.dragStates, maxZIndex: props.dragStates.maxZIndex + 1})
         setIsDragging({...isDragging, status: true, zIndex: props.dragStates.maxZIndex})
+        handleDragMetric()
       }}
-      onEnd={() => setIsDragging({...isDragging, status: false})}
+      onEnd={() => {
+        setIsDragging({...isDragging, status: false})
+      }}
       {...props}
       >
       <div 

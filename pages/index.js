@@ -53,7 +53,7 @@ const Root = withApollo((props) => {
       className={"newsletter-panel"}
       defaultPosition={{x: 10, y: 470 }} panelTitle={"Subscribe to updates"} {...props}>
         <p>Get very occasional updates on development, beta testing, and launch dates.</p>
-        <form action="">
+        <form action="https://network.us18.list-manage.com/subscribe/post?u=488634612d3795996b128e2ba&amp;id=d3ad9e4e39" method="post">
           <label htmlFor="EMAIL">Email address</label>
           <input name="EMAIL" type="email" placeholder="dev@groves.network"/>
           <input type="submit" value="Submit"/>
