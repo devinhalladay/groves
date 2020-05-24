@@ -19,11 +19,13 @@ const GET_LANDING_BLOCKS = gql`
       blokks {
         ... on Image {
           image_url
+          description
         }
         
         ... on Text {
           title
           content (format: HTML)
+          description
         }
       }
     }
@@ -51,7 +53,7 @@ const Root = withApollo((props) => {
       }}
       className={"newsletter-panel"}
       bounds={'parent'}
-      defaultPosition={{x: Math.floor(Math.random() * 100), y: Math.floor(Math.random() * 100) }} panelTitle={"Subscribe to updates"} {...props}>
+      defaultPosition={{x: 1031, y: 311 }} panelTitle={"Subscribe to updates"} {...props}>
         <p>Get very occasional updates on development, beta testing, and launch dates.</p>
         <form action="">
           <label htmlFor="EMAIL">Email address</label>
@@ -61,12 +63,12 @@ const Root = withApollo((props) => {
       </Panel>
       {
         data.channel.blokks.map((blokk, i) => {
+          const description = JSON.parse(blokk.description.replace('\n', ''))
           return (
-            <DraggableBlock 
+            <DraggableBlock
               title={blokk.title ? blokk.title : null}
               type={blokk.image_url ? 'image' : null}
-              defaultPosition={{x: Math.floor(Math.random() * 100), y: Math.floor(Math.random() * 100) }}
-              bounds={'.workspace'}
+              defaultPosition={{x: description.x, y: description.y }}
               dragStates={dragStates}
               setDragStates={setDragStates}
               >

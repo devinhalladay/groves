@@ -6,6 +6,7 @@ import { UserProvider } from '../context/user-context'
 import { SelectionProvider } from '../context/selection-context'
 import { parseCookies } from 'nookies'
 import { Router } from 'next/router'
+import Head from 'next/head'
 
 const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
   if (isAuthenticated) {
@@ -21,9 +22,14 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
   }
 
   return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
+    <div>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
+    </div>
   )
 }
 
