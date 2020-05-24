@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Router, useRouter } from 'next/router'
 import { useAuth } from '../context/auth-context'
@@ -10,6 +10,8 @@ import { useQuery } from '@apollo/react-hooks'
 import withApollo from '../lib/withApollo'
 import parse from 'html-react-parser'
 import Panel from '../components/Panel'
+import { useSetRecoilState, atom } from 'recoil'
+import { getDirectiveValues } from 'graphql'
 
 const GET_LANDING_BLOCKS = gql`
   {
@@ -31,26 +33,26 @@ const GET_LANDING_BLOCKS = gql`
 const Root = withApollo((props) => {
   const router = useRouter()
   const {loading, error, data } = useQuery(GET_LANDING_BLOCKS)
-
-  // console.log(data); // returns {channel: {…}}
-  // console.log(data.channel.blokks) // data is undefined
-
+  const [dragStates, setDragStates] = useState({
+    maxZIndex: 1000
+  })
+  
   if (loading) {
     return "loading"
   } else if (error) {
     console.error(error)
     return `Error: ${error}`
   }
-
-  console.log(data.channel.blokks);
   
   return (
     <Layout>
       <Panel style={{
-        width: '250px'
+        width: '350px'
       }}
-      className={"newletter-panel"}
-      positionOffset={{x: `${Math.floor(Math.random() * Math.floor(100))}%`, y: `${Math.floor(Math.random() * Math.floor(100))}%`}} panelTitle={"Subscribe to updates"} {...props}>
+      className={"newsletter-panel"}
+      bounds={'parent'}
+      defaultPosition={{x: Math.floor(Math.random() * 100), y: Math.floor(Math.random() * 100) }} panelTitle={"Subscribe to updates"} {...props}>
+        <p>Get very occasional updates on development, beta testing, and launch dates.</p>
         <form action="">
           <label htmlFor="EMAIL">Email address</label>
           <input name="EMAIL" type="email" placeholder="dev@groves.network"/>
@@ -64,7 +66,10 @@ const Root = withApollo((props) => {
               title={blokk.title ? blokk.title : null}
               type={blokk.image_url ? 'image' : null}
               defaultPosition={{x: Math.floor(Math.random() * 100), y: Math.floor(Math.random() * 100) }}
-              bounds={'parent'}>
+              bounds={'.workspace'}
+              dragStates={dragStates}
+              setDragStates={setDragStates}
+              >
               {
                 blokk.content ?
                   parse(blokk.content)

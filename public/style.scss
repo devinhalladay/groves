@@ -36,14 +36,18 @@ img {
   padding: 15px;
   flex-wrap: wrap;
   flex-direction: column;
-  padding-top: 65px;
-  width: 100vw;
-  height: calc(100vh - 80px);
+  width: calc(100vw - 30px);
+  height: calc(100vh - 30px);
 }
 
 header {
   height: 45px;
   border-radius: 10px;
+
+  p {
+    padding: 0 15px;
+    color: #888888;
+  }
 
   .groves-logo-container {
     background-color: $primary-color;
@@ -185,6 +189,7 @@ header {
 
   &--nav {
     top: 15px;
+    z-index: 999999;
   }
 
   &--nav--no-auth {
@@ -192,6 +197,7 @@ header {
     left: 15px;
     width: auto;
     overflow: hidden;
+    z-index: 999999;
   }
 
   &--wide {
@@ -689,7 +695,9 @@ header {
   }
 }
 
-.newletter-panel {
+.newsletter-panel {
+  z-index: 99999;
+  
   form {
     padding: 15px;
     width: 100%;
@@ -697,30 +705,39 @@ header {
 
   label {
     display: block;
-    font-size: 12px;
-    padding-bottom: 5px;
+    font-size: 15px;
+    padding-bottom: 8px;
+  }
+
+  p {
+    padding: 0 15px;
+    margin: 0;
+    font-family: Times;
+    font-size: 16px;
+    color: #6F7B8A;
+    line-height: 25px;
   }
 
   input {
     width: calc(100% - 40px);
     display: block;
-    height: 26px;
+    height: 32px;
     outline: 0;
     border: 1px solid #BDC3CA;
     border-radius: 2px;
-    font-size: 14px;
+    font-size: 16px;
     padding-left: 10px;
   }
 
   input[type="submit"] {
     border: none;
     background-color: $primary-color;
-    font-size: 14px;
+    font-size: 16px;
     outline: none;
     color: white;
-    margin-top: 10px;
-    padding: 15px;
+    margin-top: 12px;
+    padding: 18px;
     line-height: 0px;
-    width: fit-content
+    width: calc(100% - 30px);
   }
 }

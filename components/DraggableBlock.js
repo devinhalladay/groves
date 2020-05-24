@@ -1,6 +1,7 @@
 import Draggable from 'react-draggable';
 import Collapsible from 'react-collapsible';
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 
 const DraggableBlock = (props) => {
   const [isDragging, setIsDragging] = useState({status: false, zIndex: 1000})
@@ -8,7 +9,10 @@ const DraggableBlock = (props) => {
   return (
     <Draggable
       handle=".draggable-block-container"
-      onStart={() => setIsDragging({...isDragging, status: true, zIndex: isDragging.zIndex + 1})}
+      onStart={() => {
+        props.setDragStates({ ...props.dragStates, maxZIndex: props.dragStates.maxZIndex + 1})
+        setIsDragging({...isDragging, status: true, zIndex: props.dragStates.maxZIndex})
+      }}
       onEnd={() => setIsDragging({...isDragging, status: false})}
       {...props}
       >
