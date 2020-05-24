@@ -63,7 +63,7 @@ const Panel = (props) => {
           open={isOpen}
           transitionTime={300}
           easing={'ease-in-out'}
-          triggerDisabled={!isCollapsibleEnabled}>
+          triggerDisabled={!props.canCollapse || !isCollapsibleEnabled}>
           {props.children}
           </Collapsible>
           : props.children

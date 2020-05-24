@@ -50,6 +50,7 @@ const Root = withApollo((props) => {
       <Panel style={{
         width: '350px'
       }}
+      canCollapse={false}
       className={"newsletter-panel"}
       defaultPosition={{x: 10, y: 470 }} panelTitle={"Subscribe to updates"} {...props}>
         <p>Get very occasional updates on development, beta testing, and launch dates.</p>
