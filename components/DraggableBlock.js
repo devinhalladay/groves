@@ -1,7 +1,6 @@
 import Draggable from 'react-draggable';
 import Collapsible from 'react-collapsible';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
 
 const DraggableBlock = (props) => {
   const [isDragging, setIsDragging] = useState({status: false, zIndex: 1000})

@@ -10,7 +10,6 @@ import { useQuery } from '@apollo/react-hooks'
 import withApollo from '../lib/withApollo'
 import parse from 'html-react-parser'
 import Panel from '../components/Panel'
-import { useSetRecoilState, atom } from 'recoil'
 import { getDirectiveValues } from 'graphql'
 
 const GET_LANDING_BLOCKS = gql`
