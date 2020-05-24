@@ -51,8 +51,7 @@ const Root = withApollo((props) => {
         width: '350px'
       }}
       className={"newsletter-panel"}
-      bounds={'parent'}
-      defaultPosition={{x: 1031, y: 311 }} panelTitle={"Subscribe to updates"} {...props}>
+      defaultPosition={{x: 10, y: 470 }} panelTitle={"Subscribe to updates"} {...props}>
         <p>Get very occasional updates on development, beta testing, and launch dates.</p>
         <form action="">
           <label htmlFor="EMAIL">Email address</label>
@@ -66,7 +65,7 @@ const Root = withApollo((props) => {
           return (
             <DraggableBlock
               title={blokk.title ? blokk.title : null}
-              type={blokk.image_url ? 'image' : null}
+              type={blokk.image_url ? 'image' : 'text'}
               defaultPosition={{x: description.x, y: description.y }}
               dragStates={dragStates}
               setDragStates={setDragStates}

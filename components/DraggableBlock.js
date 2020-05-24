@@ -21,14 +21,20 @@ const DraggableBlock = (props) => {
           zIndex: isDragging.zIndex
         }}  
       >
-        <div>
-
-          {props.title &&
-            <p className="title">{props.title}</p>
-          }
-          { 
-            props.children
-          }
+        <div className="block">
+        {
+          props.type ==='text' ?
+            <div className="text">
+              {props.title &&
+                <p className="title">{props.title}</p>
+              }
+              { 
+                props.children
+              }
+            </div>
+          :
+          props.children
+        }
         </div>
       </div>
     </Draggable>
