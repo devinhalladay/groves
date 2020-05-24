@@ -7,6 +7,7 @@ module.exports = {
     APPLICATION_API_PATH: process.env.APPLICATION_API_PATH,
     SERVER_AUTH_CALLBACK: process.env.SERVER_AUTH_CALLBACK,
     GRAPHQL_TOKEN: process.env.GRAPHQL_TOKEN,
-    AUTHENTICATION_ENABLED: process.env.NODE_ENV === 'production' ? false : false
+    // AUTHENTICATION_ENABLED: process.env.NODE_ENV === 'production' ? true : false
+    AUTHENTICATION_ENABLED: false
   },
 }

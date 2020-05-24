@@ -10,8 +10,6 @@ import Head from 'next/head'
 
 const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
   if (isAuthenticated) {
-    console.log('AUTHENTICATED');
-    
     return (
       <AuthProvider>
         <UserProvider>
