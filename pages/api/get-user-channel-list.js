@@ -3,8 +3,6 @@ const axios = require('axios');
 export default async (req, res) => {
   if (req.body) {
     const token = await axios.get(`http://api.are.na/v2/users/${req.body.user_id}/following`).then((response) => {
-      console.log(response);
-      
         return response
       })
     

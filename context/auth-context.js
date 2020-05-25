@@ -36,8 +36,6 @@ const AuthProvider = (props) => {
         setCookie(ctx, 'access_token', res.access_token, {
           maxAge: 30 * 24 * 60 * 60,
           path: '/',
-          // Router.push('/app')
-          // return res.access_token
         })
       }).then(() => {
         const arenaClient = new ArenaClient(parseCookies()['access_token'])

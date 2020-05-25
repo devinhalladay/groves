@@ -3,14 +3,12 @@ import '../public/style.scss'
 import React, { useEffect } from 'react'
 import { AuthProvider } from '../context/auth-context'
 import { UserProvider } from '../context/user-context'
-import { SelectionProvider } from '../context/selection-context'
 import { parseCookies } from 'nookies'
-import { Router } from 'next/router'
 import Head from 'next/head'
 
 const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
     useEffect(() => {
-      window.analytics.page()
+      analytics.page()
     }, [])
 
   if (isAuthenticated) {

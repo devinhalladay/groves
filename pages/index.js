@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../components/Header'
 import { Router, useRouter } from 'next/router'
-import { useAuth } from '../context/auth-context'
-import { parseCookies } from 'nookies'
 import Layout from '../components/Layout'
 import DraggableBlock from '../components/DraggableBlock'
 import { gql } from 'apollo-boost'
@@ -10,7 +7,6 @@ import { useQuery } from '@apollo/react-hooks'
 import withApollo from '../lib/withApollo'
 import parse from 'html-react-parser'
 import Panel from '../components/Panel'
-import { getDirectiveValues } from 'graphql'
 
 const GET_LANDING_BLOCKS = gql`
   {
@@ -87,24 +83,5 @@ const Root = withApollo((props) => {
     </Layout>
   )
 })
-
-// export async function getServerSideProps(context) {
-//   if (process.env.AUTHENTICATION_ENABLED) {
-//     if (parseCookies(context)['access_token']) {
-//       context.res.writeHead(302, { Location: '/app' })
-//       context.res.end()
-  
-//       return {
-//         props: {isAuthenticated: true}
-//       }
-//     } else {
-//       return {
-//         props: {isAuthenticated: false}
-//       }
-//     }
-//   } else {
-//     return {props: {}}
-//   }
-// }
 
 export default Root

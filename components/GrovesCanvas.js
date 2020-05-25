@@ -5,28 +5,9 @@ import Panel from './Panel';
 import { useSelection } from '../context/selection-context';
 import MillerPanel from './MillerPanel';
 
-// const QUERY = gql`
-//   {
-//     user (id:11309) {
-//       id
-//       name
-//       kontents (per: 1, type: IMAGE) {
-//         ... on Image {
-//           title
-//           image_url
-//         }
-//       }
-//     }
-//   }
-// `
-
 export default (props) => {
   const canvas = useRef(null)
   const { selectedChannel } = useSelection()
-  // const { loading, error, data } = useQuery(QUERY)
-
-  // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error :(</p>;
 
   const handleDragStart = e => {
     e.target.setAttrs({

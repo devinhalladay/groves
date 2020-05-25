@@ -7,10 +7,6 @@ const DraggableBlock = (props) => {
 
   let analytics = window.analytics
 
-  // useEffect(() => {
-  //   analytics = window.analytics
-  // }, [])
-
   let handleDragMetric = () => {
     analytics.track('Dragged Block');
   }
