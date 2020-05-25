@@ -811,5 +811,7 @@ header {
     padding: 18px;
     line-height: 0px;
     width: calc(100% - 30px);
+    -webkit-appearance: none;
+    cursor: pointer;
   }
 }
