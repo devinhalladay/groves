@@ -68,5 +68,3 @@ const Header = props => {
 }
 
 export default Header
-
-// <a href={`https://are.na/${user.slug}`}><span className="gray">https://www.are.na/</span><strong>{user.slug}/</strong></a>

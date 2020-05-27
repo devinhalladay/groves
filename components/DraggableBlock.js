@@ -1,4 +1,3 @@
-import Draggable from 'react-draggable';
 import Collapsible from 'react-collapsible';
 import { useState, useEffect } from 'react';
 
@@ -12,7 +11,7 @@ const DraggableBlock = (props) => {
   }
 
   return (
-    <Draggable
+    <div
       handle=".draggable-block-container"
       onStart={() => {
         props.setDragStates({ ...props.dragStates, maxZIndex: props.dragStates.maxZIndex + 1})
@@ -46,7 +45,7 @@ const DraggableBlock = (props) => {
         }
         </div>
       </div>
-    </Draggable>
+    </div>
   )
 }
 

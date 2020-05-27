@@ -1,4 +1,3 @@
-import Draggable from 'react-draggable';
 import Collapsible from 'react-collapsible';
 import { useState } from 'react';
 
@@ -42,7 +41,7 @@ const Panel = (props) => {
   }
 
   return (
-    <Draggable
+    <div
       handle=".panel-header"
       defaultPosition={props.defaultPosition ? {x: props.defaultPosition.x, y: props.defaultPosition.y} : {x: 0, y: 0}}
       onDrag={handleDrag}
@@ -69,14 +68,8 @@ const Panel = (props) => {
           : props.children
         }
       </div>
-    </Draggable>
+    </div>
   )
 }
-
-// Page.getInitialProps = async ctx => {
-  // const res = await fetch('https://api.github.com/repos/zeit/next.js')
-  // const json = await res.json()
-  // return { stars: json.stargazers_count }
-// }
 
 export default Panel;

@@ -40,27 +40,28 @@ const Root = withApollo((props) => {
     console.error(error)
     return `Error: ${error}`
   }
+
+  // <Panel style={{
+  //   width: '350px'
+  // }}
+  // canCollapse={false}
+  // className={"newsletter-panel"}
+  // defaultPosition={{x: 10, y: 470 }} panelTitle={"Subscribe to updates"} {...props}>
+  //   <p>Get very occasional updates on development, beta testing, and launch dates.</p>
+  //   <form action="https://network.us18.list-manage.com/subscribe/post?u=488634612d3795996b128e2ba&amp;id=d3ad9e4e39" method="post">
+  //     <label htmlFor="EMAIL">Email address</label>
+  //     <input name="EMAIL" type="email" placeholder="dev@groves.network"/>
+  //     <input type="submit" value="Submit"/>
+  //   </form>
+  // </Panel>
   
   return (
     <Layout>
-      <Panel style={{
-        width: '350px'
-      }}
-      canCollapse={false}
-      className={"newsletter-panel"}
-      defaultPosition={{x: 10, y: 470 }} panelTitle={"Subscribe to updates"} {...props}>
-        <p>Get very occasional updates on development, beta testing, and launch dates.</p>
-        <form action="https://network.us18.list-manage.com/subscribe/post?u=488634612d3795996b128e2ba&amp;id=d3ad9e4e39" method="post">
-          <label htmlFor="EMAIL">Email address</label>
-          <input name="EMAIL" type="email" placeholder="dev@groves.network"/>
-          <input type="submit" value="Submit"/>
-        </form>
-      </Panel>
       {
         data.channel.blokks.map((blokk, i) => {
           const description = JSON.parse(blokk.description.replace('\n', ''))
           return (
-            <DraggableBlock
+            <div
               title={blokk.title ? blokk.title : null}
               type={blokk.image_url ? 'image' : 'text'}
               defaultPosition={{x: description.x, y: description.y }}
@@ -76,7 +77,7 @@ const Root = withApollo((props) => {
                 :
                   <p>Welcome to Groves</p>
               }
-            </DraggableBlock>
+            </div>
           )
         })
       }

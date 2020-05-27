@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import { Stage, Layer, Star, Text } from 'react-konva';
+import { Stage, Layer, Text } from 'react-konva';
 import { useRef } from "react"
 import Panel from './Panel';
 import { useSelection } from '../context/selection-context';
@@ -44,28 +44,20 @@ export default (props) => {
   // return <canvas ref={canvas} width={640} height={425} />
 
   return (
-    // <Stage width={window.innerWidth} height={window.innerHeight}>
-    //     <Layer>
-    //       {
-    //         // [...data.user.contents].map((conn) => {
-    //         //   [...conn.connections].map((connectables) => {
-    //         //     console.log(connectables);
-                
-    //         //     // connectables.forEach((connectable) => {
-    //         //     //   console.log(connectable.title);
-    //         //     // })
-                
-    //         //     // const title = 'test'
-    //         //     //   return (
-    //         //     //     <Text text={title} key={Math.random(1)} />
-    //         //     //   )
-    //         //   })
-    //         // })
-    //         // return <Image
-    //         <Text text={'Test'} />
-    //       }
-    //     </Layer>
-    //   </Stage>
+    <Stage width={window.innerWidth} height={window.innerHeight}>
+      <Layer>
+        {
+          [...data.user.contents].map((conn) => {
+            [...conn.connections].map((connectables) => {
+              const title = 'test'
+              return (
+                <Text text={title} key={Math.random(1)} />
+              )
+            })
+          })
+        }
+      </Layer>
+    </Stage>
 
     <div>
       <Panel className="formationNavigator" pinSide="left" panelTitle={"Formations"} defaultPosition={{x: 0, y: 60}} {...props}>
