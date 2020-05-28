@@ -74,15 +74,17 @@ img {
 
 .workspace {
   position: relative;
-  display: flex;
-  align-items: start;
-  flex: 0 0 1;
-  position: relative;
-  padding: 15px;
-  flex-wrap: wrap;
-  flex-direction: column;
-  width: calc(100vw - 30px);
-  height: calc(100vh - 30px);
+  // display: flex;
+  // align-items: start;
+  // flex: 0 0 1;
+  // padding: 15px;
+  // flex-wrap: wrap;
+  // flex-direction: column;
+  // width: calc(100vw - 30px);
+  // height: calc(100vh - 30px);
+  .react-draggable {
+    position: absolute;
+  }
 }
 
 header {

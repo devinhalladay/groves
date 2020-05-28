@@ -3,7 +3,7 @@ import Collapsible from 'react-collapsible';
 import { useState, useEffect } from 'react';
 
 const DraggableBlock = (props) => {
-  const [isDragging, setIsDragging] = useState({status: false, zIndex: 1000})
+  const [zIndex, setZIndex] = useState(1000)
 
   let analytics = window.analytics
 
@@ -16,18 +16,15 @@ const DraggableBlock = (props) => {
       handle=".draggable-block-container"
       onStart={() => {
         props.setDragStates({ ...props.dragStates, maxZIndex: props.dragStates.maxZIndex + 1})
-        setIsDragging({...isDragging, status: true, zIndex: props.dragStates.maxZIndex})
+        setZIndex(props.dragStates.maxZIndex)
         handleDragMetric()
-      }}
-      onEnd={() => {
-        setIsDragging({...isDragging, status: false})
       }}
       {...props}
       >
       <div 
         className={`draggable-block-container ${props.type ? props.type : ''}`}
         style={{
-          zIndex: isDragging.zIndex
+          zIndex: zIndex
         }}  
       >
         <div className="block">

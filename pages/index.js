@@ -33,6 +33,7 @@ const Root = withApollo((props) => {
   const [dragStates, setDragStates] = useState({
     maxZIndex: 1000
   })
+  const [isDragging, setIsDragging] = useState(false)
   
   if (loading) {
     return "loading"
@@ -48,7 +49,7 @@ const Root = withApollo((props) => {
       }}
       canCollapse={false}
       className={"newsletter-panel"}
-      defaultPosition={{x: 10, y: 470 }} panelTitle={"Subscribe to updates"} {...props}>
+      defaultPosition={{x: 25, y: 520 }} panelTitle={"Subscribe to updates"} {...props}>
         <p>Get very occasional updates on development, beta testing, and launch dates.</p>
         <form action="https://network.us18.list-manage.com/subscribe/post?u=488634612d3795996b128e2ba&amp;id=d3ad9e4e39" method="post">
           <label htmlFor="EMAIL">Email address</label>
@@ -63,9 +64,15 @@ const Root = withApollo((props) => {
             <DraggableBlock
               title={blokk.title ? blokk.title : null}
               type={blokk.image_url ? 'image' : 'text'}
-              defaultPosition={{x: description.x, y: description.y }}
+              positionOffset={{x: description.x, y: description.y }}
               dragStates={dragStates}
               setDragStates={setDragStates}
+              onDrag={() => {
+                setIsDragging(true)
+              }}
+              onStop={() => {
+                setIsDragging(false)
+              }}
               >
               {
                 blokk.content ?
