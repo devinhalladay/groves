@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Router, useRouter } from 'next/router'
 import Layout from '../components/Layout'
 import DraggableBlock from '../components/DraggableBlock'
@@ -13,11 +13,13 @@ const GET_LANDING_BLOCKS = gql`
     channel (id: 670488) {
       blokks {
         ... on Image {
+          id
           image_url
           description
         }
         
         ... on Text {
+          id
           title
           content (format: HTML)
           description
@@ -27,7 +29,10 @@ const GET_LANDING_BLOCKS = gql`
   }
 `
 
-const Root = withApollo((props) => {
+const Root = (props) => {
+  // constructor() {
+    
+  // }
   const router = useRouter()
   const {loading, error, data } = useQuery(GET_LANDING_BLOCKS)
   const [dragStates, setDragStates] = useState({
@@ -67,6 +72,10 @@ const Root = withApollo((props) => {
               positionOffset={{x: description.x, y: description.y }}
               dragStates={dragStates}
               setDragStates={setDragStates}
+              key={blokk.id}
+              ref={ref => {
+                refsArray[i] = ref
+              }}
               onDrag={() => {
                 setIsDragging(true)
               }}
@@ -89,6 +98,6 @@ const Root = withApollo((props) => {
       }
     </Layout>
   )
-})
+}
 
-export default Root
+export default withApollo(Root)

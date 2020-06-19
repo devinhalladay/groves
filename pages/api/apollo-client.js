@@ -9,6 +9,9 @@ export default async (req, res) => {
   query = JSON.parse(JSON.stringify(query))
   
   const authURL = `https://api.are.na/graphql`
+
+  console.log(req.headers['authorization']);
+  console.log(process.env.GRAPHQL_TOKEN);
   
   try {
     await axios.post(authURL, {
@@ -19,9 +22,13 @@ export default async (req, res) => {
         "X-APP-TOKEN": process.env.GRAPHQL_TOKEN,
       }
     }).then(response => {
+      console.log(response.data);
+      
       res.status(response.status).json(response.data)
     })
   } catch (error) {
+    console.log(error);
+    
     return error
     res.status(400).json({ message: error })
   }
