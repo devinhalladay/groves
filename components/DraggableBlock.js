@@ -29,16 +29,6 @@ const DraggableBlock = (props) => {
       >
         <div className="block">
         {
-          props.type ==='text' ?
-            <div className="text">
-              {props.title &&
-                <p className="title">{props.title}</p>
-              }
-              { 
-                props.children
-              }
-            </div>
-          :
           props.children
         }
         </div>

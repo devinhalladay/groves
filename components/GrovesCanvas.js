@@ -78,8 +78,8 @@ export default (props) => {
       </Panel>
       <MillerPanel />
       <div>
-          <h1>{selectedChannel.title}</h1>
-          <small>{selectedChannel.counts.contents}</small>
+          {/* <h1>{selectedChannel.title}</h1> */}
+          {props.children}
         </div>
     </div>
   )

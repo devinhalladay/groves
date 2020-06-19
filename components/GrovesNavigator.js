@@ -2,9 +2,12 @@ import React, { Component, useState } from 'react'
 import Downshift from "downshift";
 import { useSelection } from '../context/selection-context';
 import { useUser } from '../context/user-context';
+import { useRouter } from 'next/router';
 
 const GrovesNavigator = props => {
-  const { selectedChannel, setSelectedChannel } = useSelection()
+  const router = useRouter()
+
+  const { selectedChannel, setSelectedChannel, getSelectedChannel } = useSelection()
   const { user, channels } = useUser()
 
   const [inputItems, setInputItems] = useState(channels)
@@ -22,10 +25,26 @@ const GrovesNavigator = props => {
           if (selection === null) {
             setSelectedChannel(null)
           } else {
-            setSelectedChannel(selection)
+            router.push(`/g/[${selection.id}]`, `/g/${selection.id}`, { shallow: true })
           }
         }}
         itemToString={item => (item ? item.title : '')}
+        initialSelectedItem={
+          selectedChannel && selectedChannel.id ? 
+            channels.filter(item => 
+              item.id == selectedChannel.id
+            )
+          :
+          null
+        }
+        initialInputValue={
+          selectedChannel && selectedChannel.id ? 
+            channels.filter(item => 
+              item.id == selectedChannel.id
+            ).title
+          :
+          null
+        }
       >
         {({
           getInputProps,

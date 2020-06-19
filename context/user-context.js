@@ -14,6 +14,8 @@ const GET_MY_CHANNELS = gql`
       name
       channels (per: 20) {
         title
+        slug
+        id
         counts {
           contents
         }

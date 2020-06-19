@@ -4,15 +4,17 @@ import { parseCookies, setCookie } from 'nookies';
 const axios = require('axios');
 
 export default async (req, res) => {
-  let { query } = await req.body
+  let { query, variables } = await req.body
 
-  query = JSON.parse(JSON.stringify(query))
+  query = JSON.parse(JSON.stringify(query))  
   
   const authURL = `https://api.are.na/graphql`
 
+  console.log(query);
+
   try {
     await axios.post(authURL, {
-      query
+      ...req.body
     }, {
       headers: {
         "authorization": `${req.headers['authorization']}`,
