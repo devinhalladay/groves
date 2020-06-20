@@ -1,6 +1,7 @@
 import Draggable from 'react-draggable';
 import Collapsible from 'react-collapsible';
 import { useState, useEffect } from 'react';
+import BlockRepresentation from './BlockRepresentation';
 
 const DraggableBlock = (props) => {
   const [zIndex, setZIndex] = useState(1000)
@@ -22,15 +23,13 @@ const DraggableBlock = (props) => {
       {...props}
       >
       <div 
-        className={`draggable-block-container ${props.type ? props.type : ''}`}
+        className={`draggable-block-container ${props.block.__typename ? props.block.__typename : ''}`}
         style={{
           zIndex: zIndex
         }}  
       >
         <div className="block">
-        {
-          props.children
-        }
+          <BlockRepresentation block={props.block} />
         </div>
       </div>
     </Draggable>

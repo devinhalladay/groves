@@ -677,7 +677,7 @@ header {
 }
 
 .draggable-block-container {
-  &.image {
+  &.Image {
     div {
       justify-content: center;
     }
@@ -698,6 +698,10 @@ header {
     display: flex;
     flex-direction: column;
     flex-flow: column;
+
+    img, a {
+      pointer-events: none;
+    }
 
     .text {
       overflow-y: scroll;

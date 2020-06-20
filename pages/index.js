@@ -70,6 +70,7 @@ const Root = (props) => {
               title={blokk.title ? blokk.title : null}
               type={blokk.image_url ? 'image' : 'text'}
               positionOffset={{x: description.x, y: description.y }}
+              block={blokk}
               dragStates={dragStates}
               setDragStates={setDragStates}
               key={blokk.id}
@@ -82,17 +83,7 @@ const Root = (props) => {
               onStop={() => {
                 setIsDragging(false)
               }}
-              >
-              {
-                blokk.content ?
-                  parse(blokk.content)
-                :
-                blokk.image_url ?
-                  <img draggable={false} src={blokk.image_url} alt={"an image of a shady grove"}/>
-                :
-                  <p>Welcome to Groves</p>
-              }
-            </DraggableBlock>
+            />
           )
         })
       }

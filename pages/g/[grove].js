@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import parse from 'html-react-parser'
 import { useUser } from '../../context/user-context'
 import withApollo from '../../lib/withApollo'
-import { gql } from 'apollo-boost'
+import { gql, NetworkStatus } from 'apollo-boost'
 import { useLazyQuery, useQuery } from '@apollo/react-hooks'
 import DraggableBlock from '../../components/DraggableBlock'
 import BlockRepresentation from '../../components/BlockRepresentation'
@@ -139,8 +139,10 @@ const Grove = (props) => {
 
   const { selectedChannel, setSelectedChannel } = useSelection()
 
-  const { loading, error, data } = useQuery(CHANNEL_SKELETON, {
-    variables: { channelId: router.query.grove }
+  const { loading, error, data, refetch, networkStatus } = useQuery(CHANNEL_SKELETON, {
+    variables: { channelId: router.query.grove },
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: 'no-cache'
   })
   
 
@@ -151,24 +153,49 @@ const Grove = (props) => {
   //   }
   // })
 
-  if (loading) {
+  if (networkStatus === NetworkStatus.refetch) return 'Refetching!';
 
+  if (loading) {
     return "loading"
   } else if (error) {
     console.error(error)
     return `Error: ${error}`
   }
 
-  console.log(data);
-  
-
-  setSelectedChannel(data.channel)
+  if (data && data.channel) {
+    setSelectedChannel(data.channel)
+    console.log(Date.now());
+    console.log(selectedChannel);
+  }
 
   return (
     <Layout {...props} >
       { selectedChannel &&
         <GrovesCanvas>
-          
+          {
+            data.channel.initial_contents.map((blokk, i) => {
+              return (
+                <DraggableBlock
+                  title={blokk.title ? blokk.title : null}
+                  type={blokk.__typename}
+                  dragStates={dragStates}
+                  setDragStates={setDragStates}
+                  key={blokk.id}
+                  block={blokk}
+                  ref={ref => {
+                    refsArray[i] = ref
+                  }}
+                  onDrag={() => {
+                    setIsDragging(true)
+                  }}
+                  onStop={() => {
+                    setIsDragging(false)
+                  }}
+                  >
+                </DraggableBlock>
+              )
+            })
+          }
         </GrovesCanvas>
       }
     </Layout>

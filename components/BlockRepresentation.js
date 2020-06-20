@@ -1,3 +1,6 @@
+import { Fragment } from "react";
+import parse from 'html-react-parser'
+
 export default (props) => {
   const block = props.block;
 
@@ -5,21 +8,19 @@ export default (props) => {
 
   if (block.__typename === 'Image') {
     return (
-      <div className="block block--image">
-        <img src={block.image_url} />
-      </div>
+      <Fragment>
+        <img draggable={false} src={block.image_url} />
+      </Fragment>
     )
   } else if (block.__typename === 'Text') {
     return (
-      <div className="block block--text">
-        <p>
-          {block.content}
-        </p>
-      </div>
+      <Fragment>
+        {parse(block.content)}
+      </Fragment>
     )
   } else if (block.__typename === 'Link') {
     return (
-      <div className="block block--link">
+      <Fragment>
         <a href={block.source_url} target="_blank" rel="noopener noreferrer">
           <div className="block--link__thumbnail">
             <img src={block.image_url} />
@@ -33,37 +34,37 @@ export default (props) => {
             </div>
           </div>
         </a>
-      </div>
+      </Fragment>
       )
   } else if (block.__typename === 'Attachment') {
     return (
-      <div className="block block--attachment">
+      <Fragment>
         <a href={block.href} target="_blank" rel="noopener noreferrer">
           <div className="block--attachment__thumnbail">
             <img src={block.image_url ? block.image_url : ''} />
             <p>{block.title}</p>
           </div>
         </a>
-      </div>
+      </Fragment>
       )
   } else if (block.__typename === 'Embed') {
     return (
-      <div className="block block--media">
+      <Fragment>
         <p>
-        TODO: EMBED
+          TODO: EMBED
           {block.title}
         </p>
-      </div>
+      </Fragment>
     )
   } else if (block.__typename === 'Channel') {
     return (
-      <div className={`block block--channel ${block.state ? 'open' : ''}`}>
+      <Fragment>
         <a target="_blank" rel="noopener noreferrer" href={block.href}>
           <p className="title">{block.title}</p>
           {/* <p>{block.user.full_name}</p> */}
           {/* <p>{block.length} blocks</p> */}
         </a>
-      </div>
+      </Fragment>
     )
   } else {
     console.error('unknown block type');
