@@ -11,6 +11,7 @@ import { gql, NetworkStatus } from 'apollo-boost'
 import { useLazyQuery, useQuery } from '@apollo/react-hooks'
 import DraggableBlock from '../../components/DraggableBlock'
 import BlockRepresentation from '../../components/BlockRepresentation'
+import { WorkspaceProvider } from '../../context/workspace-context'
 
 const grovePageFragments = {
   channelContentsConnectable: gql`
@@ -144,14 +145,7 @@ const Grove = (props) => {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: 'no-cache'
   })
-  
 
-  // const { loading: loadingChannelSet, error: errorLoadingChannelSet, data: channelSetData } = useQuery(CHANNEL_CONTENTS_SET, {
-  //   variables: { 
-  //     channelId: router.query.grove,
-  //     connectables: skeletonData.channel.skeleton
-  //   }
-  // })
 
   if (networkStatus === NetworkStatus.refetch) return 'Refetching!';
 
@@ -169,36 +163,38 @@ const Grove = (props) => {
   }
 
   return (
-    <Layout {...props} >
-      { selectedChannel &&
-        <GrovesCanvas>
-          {
-            data.channel.initial_contents.map((blokk, i) => {
-              return (
-                <DraggableBlock
-                  title={blokk.title ? blokk.title : null}
-                  type={blokk.__typename}
-                  dragStates={dragStates}
-                  setDragStates={setDragStates}
-                  key={blokk.id}
-                  block={blokk}
-                  ref={ref => {
-                    refsArray[i] = ref
-                  }}
-                  onDrag={() => {
-                    setIsDragging(true)
-                  }}
-                  onStop={() => {
-                    setIsDragging(false)
-                  }}
-                  >
-                </DraggableBlock>
-              )
-            })
-          }
-        </GrovesCanvas>
-      }
-    </Layout>
+    <WorkspaceProvider>
+      <Layout {...props} >
+        { selectedChannel &&
+          <GrovesCanvas>
+            {
+              data.channel.initial_contents.map((blokk, i) => {
+                return (
+                  <DraggableBlock
+                    title={blokk.title ? blokk.title : null}
+                    type={blokk.__typename}
+                    dragStates={dragStates}
+                    setDragStates={setDragStates}
+                    key={blokk.id}
+                    block={blokk}
+                    ref={ref => {
+                      refsArray[i] = ref
+                    }}
+                    onDrag={() => {
+                      setIsDragging(true)
+                    }}
+                    onStop={() => {
+                      setIsDragging(false)
+                    }}
+                    >
+                  </DraggableBlock>
+                )
+              })
+            }
+          </GrovesCanvas>
+        }
+      </Layout>
+    </WorkspaceProvider>
   )
 }
 
