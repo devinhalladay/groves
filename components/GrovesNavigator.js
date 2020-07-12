@@ -25,7 +25,7 @@ const GrovesNavigator = props => {
           if (selection === null) {
             setSelectedChannel(null)
           } else {
-            router.push(`/g/[${selection.id}]`, `/g/${selection.id}`, { shallow: true })
+            router.push(`/g/[grove]`, `/g/${selection.id}`, { shallow: true })
           }
         }}
         itemToString={item => (item ? item.title : '')}

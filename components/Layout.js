@@ -9,7 +9,6 @@ const Layout = props => {
 
   return (
     <Fragment>
-      <Header {...props} />
       <div class="workspace">
         {props.children}
       </div>

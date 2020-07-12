@@ -1,15 +1,14 @@
 {
   "name": "groves",
   "version": "0.0.1",
-  "description": "",
+  "description": "associative are.na client",
   "main": "index.js",
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "devin@devinhalladay.com",
   "license": "ISC",
   "dependencies": {
     "@apollo/client": "^3.0.0-beta.39",
@@ -22,7 +21,6 @@
     "graphql": "^15.0.0",
     "html-react-parser": "^0.10.3",
     "isomorphic-unfetch": "^3.0.0",
-    "konva": "^4.2.2",
     "next": "^9.2.1",
     "next-with-apollo": "^5.0.1",
     "nookies": "^2.0.8",
@@ -30,8 +28,6 @@
     "react-collapsible": "^2.7.0",
     "react-dom": "^16.12.0",
     "react-draggable": "^4.4.2",
-    "react-konva": "^16.13.0-0",
-    "react-mac-finder": "^1.0.0",
     "sass": "^1.26.3"
   },
   "devDependencies": {
