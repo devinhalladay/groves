@@ -1,23 +1,23 @@
 import { Fragment } from "react";
-import parse from 'html-react-parser'
+import parse from "html-react-parser";
 
 export default (props) => {
   const block = props.block;
 
-  if (block.__typename === 'Image') {
+  if (block.__typename === "Image") {
     return (
       <Fragment>
         <img draggable={false} src={block.image_url} />
       </Fragment>
-    )
-  } else if (block.__typename === 'Text') {
+    );
+  } else if (block.__typename === "Text") {
     return (
       <Fragment>
         <p className="block--title">{block.title || null}</p>
         {parse(block.content)}
       </Fragment>
-    )
-  } else if (block.__typename === 'Link') {
+    );
+  } else if (block.__typename === "Link") {
     return (
       <Fragment>
         <a href={block.source_url} target="_blank" rel="noopener noreferrer">
@@ -34,19 +34,19 @@ export default (props) => {
           </div>
         </a>
       </Fragment>
-      )
-  } else if (block.__typename === 'Attachment') {
+    );
+  } else if (block.__typename === "Attachment") {
     return (
       <Fragment>
         <a href={block.href} target="_blank" rel="noopener noreferrer">
           <div className="block--attachment__thumnbail">
-            <img src={block.image_url ? block.image_url : ''} />
+            <img src={block.image_url ? block.image_url : ""} />
             <p>{block.title}</p>
           </div>
         </a>
       </Fragment>
-      )
-  } else if (block.__typename === 'Embed') {
+    );
+  } else if (block.__typename === "Embed") {
     return (
       <Fragment>
         <p>
@@ -54,8 +54,8 @@ export default (props) => {
           {block.title}
         </p>
       </Fragment>
-    )
-  } else if (block.__typename === 'Channel') {
+    );
+  } else if (block.__typename === "Channel") {
     return (
       <Fragment>
         <a target="_blank" rel="noopener noreferrer" href={block.href}>
@@ -64,9 +64,9 @@ export default (props) => {
           {/* <p>{block.length} blocks</p> */}
         </a>
       </Fragment>
-    )
+    );
   } else {
-    console.error('unknown block type');
-    return <p>unknown block type</p>
+    console.error("unknown block type");
+    return <p>unknown block type</p>;
   }
-}
+};
