@@ -1,20 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from "axios";
 import Router from "next/router";
-import { parseCookies, setCookie, destroyCookie } from "nookies";
+import { setCookie } from "nookies";
 
-const Login = props => {
+const Login = (props) => {
   return <div>Loading</div>;
 };
 
-Login.getInitialProps = async ctx => {
+Login.getInitialProps = async (ctx) => {
   let code = ctx.query.code;
 
   await axios
     .post(
       `https://dev.are.na/oauth/token?client_id=${process.env.APP_ID}&client_secret=${process.env.APP_SECRET}&code=${code}&grant_type=authorization_code&redirect_uri=${process.env.LOCAL_CALLBACK}`
     )
-    .then(async res => {
+    .then(async (res) => {
       setCookie(ctx, "auth_token", res.data.access_token);
 
       if (ctx.req) {
@@ -26,7 +26,7 @@ Login.getInitialProps = async ctx => {
         Router.push("/home");
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 

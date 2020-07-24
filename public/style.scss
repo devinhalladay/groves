@@ -1,49 +1,129 @@
-$primary-color: #47A7FF;
+$primary-color: #47a7ff;
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
 }
 body {
-	line-height: 1;
+  line-height: 1;
 }
-ol, ul {
-	list-style: none;
+ol,
+ul {
+  list-style: none;
 }
-blockquote, q {
-	quotes: none;
+blockquote,
+q {
+  quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
-
 
 body,
 html {
@@ -52,7 +132,7 @@ html {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-size: 16px;
   color: #000000;
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -74,14 +154,6 @@ img {
 
 .workspace {
   position: relative;
-  // display: flex;
-  // align-items: start;
-  // flex: 0 0 1;
-  // padding: 15px;
-  // flex-wrap: wrap;
-  // flex-direction: column;
-  // width: calc(100vw - 30px);
-  // height: calc(100vh - 30px);
   .react-draggable {
     position: absolute;
   }
@@ -121,11 +193,13 @@ header {
       display: inline-block;
       position: absolute;
       background-color: #f9f9f9;
-      border: 1px solid #BDC3CA;
+      border: 1px solid #bdc3ca;
       top: 55px;
       border-radius: 10px;
       left: 0;
-      box-shadow: 0px 8px 24px rgba(111, 123, 138, 0.2), 0px 2px 4px rgba(111, 123, 138, 0.2), 0px 0px 0px rgba(111, 123, 138, 0.1);
+      box-shadow: 0px 8px 24px rgba(111, 123, 138, 0.2),
+        0px 2px 4px rgba(111, 123, 138, 0.2),
+        0px 0px 0px rgba(111, 123, 138, 0.1);
       z-index: 1;
 
       ul {
@@ -204,7 +278,7 @@ header {
 .panel {
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.6);
-  border: 1px solid #6AB8FF;
+  border: 1px solid #6ab8ff;
   backdrop-filter: blur(44px);
   z-index: 100;
   position: fixed;
@@ -283,7 +357,7 @@ header {
         left: calc(50% - 1px);
         &.vertical {
           transform: rotate(-90deg);
-        } 
+        }
       }
     }
   }
@@ -318,20 +392,20 @@ header {
       padding: 0;
       margin: 0;
       width: 100%;
-      
+
       li {
         padding: 10px 15px;
         list-style: none;
         cursor: pointer;
-  
+
         &:last-child {
-          margin-bottom: 15px
+          margin-bottom: 15px;
         }
-  
+
         &:hover {
           font-style: italic;
         }
-  
+
         &.active {
           background-color: $primary-color;
           color: white;
@@ -374,19 +448,19 @@ header {
   text-decoration: none;
   color: rgb(75, 61, 103) !important;
   border-color: rgb(207, 203, 214);
-      box-sizing: border-box;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    flex-direction: column;
-    border-width: 2px;
-    border-style: solid;
-    border-color: initial;
-    border-image: initial;
-    border-radius: 0.125em;
-    margin: auto;
+  box-sizing: border-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-direction: column;
+  border-width: 2px;
+  border-style: solid;
+  border-color: initial;
+  border-image: initial;
+  border-radius: 0.125em;
+  margin: auto;
 }
 
 .block {
@@ -472,26 +546,26 @@ header {
   height: 315px;
   margin-bottom: 3em;
   text-decoration: none;
-  color: #24AA23 !important;
-  border-color: #24AA23;
-      box-sizing: border-box;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    flex-direction: column;
-    border-width: 2px;
-    border-style: solid;
-    border-color: initial;
-    border-image: initial;
-    border-radius: 0.125em;
-    margin: auto;
+  color: #24aa23 !important;
+  border-color: #24aa23;
+  box-sizing: border-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-direction: column;
+  border-width: 2px;
+  border-style: solid;
+  border-color: initial;
+  border-image: initial;
+  border-radius: 0.125em;
+  margin: auto;
 }
 
 .block.block--channel.open a {
   text-decoration: none;
-  color: #24AA23;
+  color: #24aa23;
 }
 
 .block.block--channel a {
@@ -615,10 +689,8 @@ header {
         margin-top: 7px;
       }
       img:first-child {
-
       }
       img:last-child {
-
       }
     }
   }
@@ -673,7 +745,6 @@ header {
       cursor: pointer;
     }
   }
-
 }
 
 .draggable-block-container {
@@ -689,11 +760,12 @@ header {
   .block {
     width: 100%;
     height: 100%;
-    background: #FFFFFF;
-    border: 1px solid #BDC3CA;
-    color: #6F7B8A;
+    background: #ffffff;
+    border: 1px solid #bdc3ca;
+    color: #6f7b8a;
     box-sizing: border-box;
-    box-shadow: 0px 1px 1px rgba(111, 123, 138, 0.2), 0px 0px 0px #6F7B8A, 0px 0px 0px rgba(111, 123, 138, 0.1);
+    box-shadow: 0px 1px 1px rgba(111, 123, 138, 0.2), 0px 0px 0px #6f7b8a,
+      0px 0px 0px rgba(111, 123, 138, 0.1);
     border-radius: 2px;
     cursor: grab;
     transform: rotate(0deg);
@@ -703,7 +775,8 @@ header {
     flex-flow: column;
     margin: 0;
 
-    img, a {
+    img,
+    a {
       pointer-events: none;
     }
 
@@ -719,13 +792,14 @@ header {
     }
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       z-index: -1;
       width: 100%;
       height: 100%;
       transition: 0.2s all ease-in-out;
-      box-shadow: 1px 4px 9px rgba(111, 123, 138, 0.2), 0px 0px 0px #6F7B8A, -2px 3px 0px rgba(111, 123, 138, 0.1);
+      box-shadow: 1px 4px 9px rgba(111, 123, 138, 0.2), 0px 0px 0px #6f7b8a,
+        -2px 3px 0px rgba(111, 123, 138, 0.1);
       opacity: 0;
     }
 
@@ -735,12 +809,19 @@ header {
 
     &:active {
       cursor: grabbing;
-      border: 1.5px solid #47A7FF;
+      border: 1.5px solid #47a7ff;
       box-sizing: border-box;
-      box-shadow: 0px 5.60708px 16.8212px rgba(111, 123, 138, 0.2), 0px 1.40177px 2.80354px rgba(111, 123, 138, 0.2), 0px 0px 0px rgba(111, 123, 138, 0.1);
-      background: linear-gradient(0deg, rgba(71, 167, 255, 0.15), rgba(71, 167, 255, 0.15)), rgba(255, 255, 255, 0.6);
+      box-shadow: 0px 5.60708px 16.8212px rgba(111, 123, 138, 0.2),
+        0px 1.40177px 2.80354px rgba(111, 123, 138, 0.2),
+        0px 0px 0px rgba(111, 123, 138, 0.1);
+      background: linear-gradient(
+          0deg,
+          rgba(71, 167, 255, 0.15),
+          rgba(71, 167, 255, 0.15)
+        ),
+        rgba(255, 255, 255, 0.6);
       transform: scale(1.05, 1.05) rotate(-2deg);
-      transition: 0.2s all ease-in-out
+      transition: 0.2s all ease-in-out;
     }
   }
 
@@ -767,7 +848,7 @@ header {
   }
 
   a {
-    color: $primary-color
+    color: $primary-color;
   }
 
   img {
@@ -797,7 +878,7 @@ header {
     margin: 0;
     font-family: Times;
     font-size: 16px;
-    color: #6F7B8A;
+    color: #6f7b8a;
     line-height: 25px;
   }
 
@@ -806,7 +887,7 @@ header {
     display: block;
     height: 32px;
     outline: 0;
-    border: 1px solid #BDC3CA;
+    border: 1px solid #bdc3ca;
     border-radius: 2px;
     font-size: 16px;
     padding-left: 10px;

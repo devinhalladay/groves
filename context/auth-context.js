@@ -1,13 +1,10 @@
 import React, { useContext, useState } from "react";
 import { createContext } from "react";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
-import { useRouter, Router } from "next/router";
+import { useRouter } from "next/router";
 import withApollo from "../lib/withApollo";
 
 const AuthContext = createContext();
-
-import { gql } from "apollo-boost";
-import { useLazyQuery, useQuery } from "@apollo/react-hooks";
 
 const AuthProvider = withApollo((props) => {
   const router = useRouter();
@@ -15,7 +12,6 @@ const AuthProvider = withApollo((props) => {
   const [accessToken, setAccessToken] = useState(
     parseCookies()["access_token"] ? parseCookies()["access_token"] : null
   );
-  const [client, setClient] = useState(null);
 
   const hasPreviousSession =
     accessToken !== null && window.localStorage.getItem("user");
@@ -42,7 +38,8 @@ const AuthProvider = withApollo((props) => {
           maxAge: 30 * 24 * 60 * 60,
           path: "/",
         });
-      }).then(() => {
+      })
+      .then(() => {
         router.push("/app");
       });
   };
@@ -52,8 +49,8 @@ const AuthProvider = withApollo((props) => {
       path: "/",
     });
 
-    // to support logging out from all windows
-    // window.localStorage.setItem('logout', Date.now())
+    // TODO: Make sure users logout from all tabs
+    window.localStorage.setItem("logout", Date.now());
 
     window.localStorage.removeItem("user");
 

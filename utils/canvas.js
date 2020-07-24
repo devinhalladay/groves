@@ -1,3 +1,4 @@
+// Cursor osition within the visible browser viewport
 const cursorPositionInViewport = (event) => {
   let x, y;
 
@@ -7,6 +8,7 @@ const cursorPositionInViewport = (event) => {
   return { x, y };
 };
 
+// Cursor position within the entire page width and height
 const cursorPositionInPage = (event) => {
   let x, y;
 
@@ -16,6 +18,7 @@ const cursorPositionInPage = (event) => {
   return { x, y };
 };
 
+// Dimensions of the visible browser viewport
 const viewportDimensions = () => {
   let width, height;
 
@@ -25,15 +28,24 @@ const viewportDimensions = () => {
   return { width, height };
 };
 
-const shouldScrollAtEdge = (windowData, e) => {
-  // const cursorData = cursorPositionInViewport(e);
+// Much of the below is sourced from this post by Ben Nadel:
+// https://www.bennadel.com/blog/3460-automatically-scroll-the-window-when-the-user-approaches-the-viewport-edge-in-javascript.htm
 
-  if (!(windowData.isInLeftEdge || windowData.isInRightEdge || windowData.isInTopEdge || windowData.isInBottomEdge)) {
+// Determine whether we should adjust window scroll
+const shouldScrollAtEdge = (windowData, e) => {
+  if (
+    !(
+      windowData.isInLeftEdge ||
+      windowData.isInRightEdge ||
+      windowData.isInTopEdge ||
+      windowData.isInBottomEdge
+    )
+  ) {
     clearTimeout(windowData.timer);
     return false;
   }
 
-  return true
+  return true;
 };
 
 // Adjust the window scroll based on the user's mouse position. Returns True
@@ -89,26 +101,32 @@ const adjustWindowScroll = (windowData) => {
 
   // Should we scroll left?
   if (windowData.isInLeftEdge && canScrollLeft) {
-    let intensity = (windowData.edgeLeft - windowData.cursorPosition.x) / windowData.edgeSize;
+    let intensity =
+      (windowData.edgeLeft - windowData.cursorPosition.x) / windowData.edgeSize;
 
     nextScrollX = nextScrollX - maxStep * intensity;
 
     // Should we scroll right?
   } else if (windowData.isInRightEdge && canScrollRight) {
-    let intensity = (windowData.cursorPosition.x - windowData.edgeRight) / windowData.edgeSize;
+    let intensity =
+      (windowData.cursorPosition.x - windowData.edgeRight) /
+      windowData.edgeSize;
 
     nextScrollX = nextScrollX + maxStep * intensity;
   }
 
   // Should we scroll up?
   if (windowData.isInTopEdge && canScrollUp) {
-    let intensity = (windowData.edgeTop - windowData.cursorPosition.y) / windowData.edgeSize;
+    let intensity =
+      (windowData.edgeTop - windowData.cursorPosition.y) / windowData.edgeSize;
 
     nextScrollY = nextScrollY - maxStep * intensity;
 
     // Should we scroll down?
   } else if (windowData.isInBottomEdge && canScrollDown) {
-    let intensity = (windowData.cursorPosition.y - windowData.edgeBottom) / windowData.edgeSize;
+    let intensity =
+      (windowData.cursorPosition.y - windowData.edgeBottom) /
+      windowData.edgeSize;
 
     nextScrollY = nextScrollY + maxStep * intensity;
   }
@@ -133,5 +151,5 @@ export {
   cursorPositionInPage,
   viewportDimensions,
   shouldScrollAtEdge,
-  adjustWindowScroll
-}
+  adjustWindowScroll,
+};

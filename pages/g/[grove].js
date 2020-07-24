@@ -1,15 +1,12 @@
 import { useRouter } from "next/router";
-import {
-  useSelection,
-  SelectionContext,
-} from "../../context/selection-context";
+import { useSelection } from "../../context/selection-context";
 import GrovesCanvas from "../../components/GrovesCanvas";
 import { parseCookies } from "nookies";
 import Layout from "../../components/Layout";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import withApollo from "../../lib/withApollo";
 import { gql, NetworkStatus } from "apollo-boost";
-import { useLazyQuery, useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import DraggableBlock from "../../components/DraggableBlock";
 import { WorkspaceProvider } from "../../context/workspace-context";
 
@@ -83,22 +80,6 @@ const grovePageFragments = {
   `,
 };
 
-// const GET_SELECTED_CHANNEL = gql`
-//   query ($channelId: ID!) {
-//     channel (id: $channelId) {
-//       id
-//       title
-//       blokks (type: IMAGE) {
-//         ... on Image {
-//           id
-//           title
-//           image_url
-//         }
-//       }
-//     }
-//   }
-// `
-
 const CHANNEL_SKELETON = gql`
   query ChannelSkeleton($channelId: ID!) {
     channel(id: $channelId) {
@@ -127,7 +108,6 @@ const Grove = (props) => {
   const [dragStates, setDragStates] = useState({
     maxZIndex: 1000,
   });
-  const [isDragging, setIsDragging] = useState(false);
 
   const { selectedChannel, setSelectedChannel } = useSelection();
 
