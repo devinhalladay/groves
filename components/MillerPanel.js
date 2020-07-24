@@ -9,9 +9,6 @@ const MillerPanel = props => {
   const [value, setValue] = useState('')
   const [isEnd, setIsEnd] = useState(true)
 
-  console.log(data);
-  
-
   return (
     <Panel pinSide="left" panelTitle={"Miller Columns"} panelType="wide" defaultPosition={{x: 0, y: 60}} {...props}>
       <div className="finder-demo">

@@ -121,22 +121,8 @@ const CHANNEL_SKELETON = gql`
   ${grovePageFragments.channelContentsConnectable}
 `;
 
-// const CHANNEL_CONTENTS_SET = gql`
-//   query ChannelContentsSet($channelId: ID!, $connectables: [ConnectableInput]!) {
-//     channel (id: $channelId) {
-//       contents(connectables: $connectables) {
-//         ... on ChannelContentsConnectable {
-//           ...KonnectableDisplay
-//         }
-//       }
-//     }
-//   }
-//   ${grovePageFragments.ChannelContentsConnectable}
-// `
-
 const Grove = (props) => {
   const router = useRouter();
-  console.log(router.query.grove);
 
   const [dragStates, setDragStates] = useState({
     maxZIndex: 1000,
@@ -165,8 +151,6 @@ const Grove = (props) => {
 
   if (data && data.channel) {
     setSelectedChannel(data.channel);
-    console.log(Date.now());
-    console.log(selectedChannel);
   }
 
   return (
@@ -183,15 +167,6 @@ const Grove = (props) => {
                   setDragStates={setDragStates}
                   key={blokk.id}
                   block={blokk}
-                  ref={(ref) => {
-                    refsArray[i] = ref;
-                  }}
-                  onDrag={() => {
-                    setIsDragging(true);
-                  }}
-                  onStop={() => {
-                    setIsDragging(false);
-                  }}
                 ></DraggableBlock>
               );
             })}

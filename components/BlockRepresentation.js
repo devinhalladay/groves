@@ -4,8 +4,6 @@ import parse from 'html-react-parser'
 export default (props) => {
   const block = props.block;
 
-  console.log(block);
-
   if (block.__typename === 'Image') {
     return (
       <Fragment>
@@ -15,6 +13,7 @@ export default (props) => {
   } else if (block.__typename === 'Text') {
     return (
       <Fragment>
+        <p className="block--title">{block.title || null}</p>
         {parse(block.content)}
       </Fragment>
     )

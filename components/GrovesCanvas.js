@@ -1,6 +1,4 @@
-import Konva from "konva";
-import { Stage, Layer, Star, Text } from "react-konva";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Panel from "./Panel";
 import { useSelection } from "../context/selection-context";
 import MillerPanel from "./MillerPanel";
@@ -10,6 +8,13 @@ export default (props) => {
   const canvas = useRef(null);
   const { selectedChannel } = useSelection();
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
+  const [canvasSpace, setCanvasSpace] = useState({
+    scrollAreaHeight: null,
+    scrollAreaWidth: null,
+    maxHeight: null,
+    maxWidth: null,
+    timer: null,
+  });
 
   const handleDragStart = (e) => {
     e.target.setAttrs({
@@ -33,42 +38,9 @@ export default (props) => {
     });
   };
 
-  // const funcy = () => {
-  //   [...data.user.contents].map((conn) => {
-  //     console.log(conn.connections.connectable.title);
-
-  //   })
-  // }
-  // funcy()
-
-  // return <canvas ref={canvas} width={640} height={425} />
-
   return (
-    // <Stage width={window.innerWidth} height={window.innerHeight}>
-    //     <Layer>
-    //       {
-    //         // [...data.user.contents].map((conn) => {
-    //         //   [...conn.connections].map((connectables) => {
-    //         //     console.log(connectables);
-
-    //         //     // connectables.forEach((connectable) => {
-    //         //     //   console.log(connectable.title);
-    //         //     // })
-
-    //         //     // const title = 'test'
-    //         //     //   return (
-    //         //     //     <Text text={title} key={Math.random(1)} />
-    //         //     //   )
-    //         //   })
-    //         // })
-    //         // return <Image
-    //         <Text text={'Test'} />
-    //       }
-    //     </Layer>
-    //   </Stage>
-
     <div>
-      <Panel
+      {/* <Panel
         className="formationNavigator"
         pinSide="left"
         panelTitle={"Formations"}
@@ -87,11 +59,16 @@ export default (props) => {
           <li>Rhizome</li>
           <li>Frequency Chart</li>
         </ul>
-      </Panel>
-      <MillerPanel />
+      </Panel> */}
+      {/* <MillerPanel /> */}
       <div>
         {/* <h1>{selectedChannel.title}</h1> */}
-        {props.children}
+        {React.Children.map(props.children, (child) =>
+          React.cloneElement(child, {
+            canvasSpace: canvasSpace,
+            setCanvasSpace: setCanvasSpace,
+          })
+        )}
       </div>
     </div>
   );
