@@ -7,11 +7,16 @@ import { SelectionProvider } from './selection-context';
 
 const UserContext = createContext()
 
-const GET_MY_CHANNELS = gql`
+const CURRENT_USER = gql`
   {
     me {
       id
+      slug
       name
+      avatar
+      counts {
+        channels
+      }
       channels (per: 20) {
         title
         slug
@@ -25,21 +30,21 @@ const GET_MY_CHANNELS = gql`
 `
 
 export const UserProvider = withApollo((props) => {
-  const { loading: loadingMyChannels, error: errorLoadingMyChannels, data: myChannels } = useQuery(GET_MY_CHANNELS)
-  const [lazyLoadMyChannels, { loading, data }] = useLazyQuery(GET_MY_CHANNELS)
+  const { loading: loadingCurrentUser, error: errorLoadingCurrentUser, data: currentUser } = useQuery(CURRENT_USER)
 
-  if (loadingMyChannels) {
-    return 'Loading your channels...'
-  } else if (errorLoadingMyChannels) {
-    console.error(errorLoadingMyChannels)
-    return `Error: ${errorLoadingMyChannels}`
+  if (loadingCurrentUser) {
+    return 'Loading...'
+  } else if (errorLoadingCurrentUser) {
+    console.error(errorLoadingCurrentUser)
+    return `Error: ${errorLoadingCurrentUser}`
   }
 
-  const channels = myChannels.me.channels
-  const me = myChannels.me
+
+  window.localStorage.setItem("user", currentUser);
+  const channels = currentUser.me.channels
 
   return (
-    <UserContext.Provider value={{lazyLoadMyChannels, me, channels}} {...props}>
+    <UserContext.Provider value={{currentUser, channels}} {...props}>
       <SelectionProvider>
         {props.children}
       </SelectionProvider>

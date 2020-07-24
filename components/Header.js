@@ -4,9 +4,10 @@ import GrovesNavigator from './GrovesNavigator'
 import Menu from './Menu'
 import { LoginLink } from './AuthLinks'
 import { useAuth } from '../context/auth-context'
+import { useUser } from '../context/user-context'
 
 const Header = props => {
-  const { user } = useAuth();
+  const { hasPreviousSession } = useAuth();
 
   if (!process.env.AUTHENTICATION_ENABLED) {
     return (
@@ -26,7 +27,7 @@ const Header = props => {
     )
   }
 
-  if (user) {
+  if (hasPreviousSession) {
     return (
       <Panel pinSide="center" panelType="nav">
         <header>

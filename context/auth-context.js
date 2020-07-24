@@ -1,79 +1,73 @@
-import React, { useContext, useState } from 'react'
-import { createContext } from 'react'
-import { setCookie, parseCookies, destroyCookie } from 'nookies'
-import ArenaClient from '../utils/arena-client'
-import { useRouter, Router } from 'next/router'
+import React, { useContext, useState } from "react";
+import { createContext } from "react";
+import { setCookie, parseCookies, destroyCookie } from "nookies";
+import { useRouter, Router } from "next/router";
+import withApollo from "../lib/withApollo";
 
-const AuthContext = createContext()
+const AuthContext = createContext();
 
-const AuthProvider = (props) => {
-  const router = useRouter()
+import { gql } from "apollo-boost";
+import { useLazyQuery, useQuery } from "@apollo/react-hooks";
 
-  const [accessToken, setAccessToken] = useState(parseCookies()['access_token'] ? parseCookies()['access_token'] : null)
-  const [client, setClient] = useState(null)
+const AuthProvider = withApollo((props) => {
+  const router = useRouter();
 
-  const hasPreviousSession = accessToken !== null && window.localStorage.getItem('user')
+  const [accessToken, setAccessToken] = useState(
+    parseCookies()["access_token"] ? parseCookies()["access_token"] : null
+  );
+  const [client, setClient] = useState(null);
 
-  const [user, setUser] = useState(
-    hasPreviousSession ?
-    JSON.parse(window.localStorage.getItem('user')) :
-    null
-  )
+  const hasPreviousSession =
+    accessToken !== null && window.localStorage.getItem("user");
 
-  const login = async ({ctx, code}) => {
-      const res = await fetch(`${process.env.APPLICATION_API_CALLBACK}/${process.env.APPLICATION_API_PATH}/auth-user`, {
-        method: 'POST',
+  const login = async ({ ctx, code }) => {
+    const res = await fetch(
+      `${process.env.APPLICATION_API_CALLBACK}/${process.env.APPLICATION_API_PATH}/auth-user`,
+      {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
-        body: JSON.stringify({ auth_code: code })
-      });
-  
-      res.json().then((res) => {
-        setAccessToken(res.access_token)
-  
-        setCookie(ctx, 'access_token', res.access_token, {
+        body: JSON.stringify({ auth_code: code }),
+      }
+    );
+
+    res
+      .json()
+      .then((res) => {
+        setAccessToken(res.access_token);
+
+        setCookie(ctx, "access_token", res.access_token, {
           maxAge: 30 * 24 * 60 * 60,
-          path: '/',
-        })
+          path: "/",
+        });
       }).then(() => {
-        const arenaClient = new ArenaClient(parseCookies()['access_token'])
-  
-        setClient(arenaClient)
-  
-        return arenaClient
-      }).then((client) => {
-        client.setMe(client.getMe())
-          .then((me) => {
-            window.localStorage.setItem('user', JSON.stringify(me));
-            setUser({ ...me })
-          })
-      }).then(() => {
-        router.push('/app')
-      })
-  }
+        router.push("/app");
+      });
+  };
 
   const logout = (ctx) => {
-    destroyCookie(ctx, 'access_token', {
-      path: '/'
-    })
-  
+    destroyCookie(ctx, "access_token", {
+      path: "/",
+    });
+
     // to support logging out from all windows
     // window.localStorage.setItem('logout', Date.now())
 
-    window.localStorage.removeItem('user')
+    window.localStorage.removeItem("user");
 
-    setUser(null)
-
-    router.push('/')
-  }
+    router.push("/");
+  };
 
   return (
-    <AuthContext.Provider value={{accessToken, user, login, logout, hasPreviousSession}} {...props} />
-  )
-}
- 
-const useAuth = () => useContext(AuthContext)
+    <AuthContext.Provider
+      value={{ accessToken, login, logout, hasPreviousSession }}
+      {...props}
+    />
+  );
+});
 
-export { useAuth, AuthProvider, AuthContext }
+const useAuth = () => useContext(AuthContext);
+
+export { useAuth, AuthProvider, AuthContext };
