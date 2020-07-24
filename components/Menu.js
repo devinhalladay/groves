@@ -13,11 +13,8 @@ const Dropdown = props => {
   return (
     <div className="groves-dropdown">
       <ul>
-        <li>Welcome, {props.user.username}</li>
-        <li>Test</li>
-        <li>Test</li>
-        <li>Test</li>
-        <li onClick={logout}>Logout</li>
+        <li>Welcome, {props.user.me.name}</li>
+        <li onClick={logout} className="pointer">Logout</li>
       </ul>
     </div>
   )
@@ -25,7 +22,7 @@ const Dropdown = props => {
 
 const Menu = () => {
   const router = useRouter()
-  const { user } = useAuth()
+  const { currentUser } = useUser()
 
   const [showMenu, setShowMenu] = useState(false)
   const closeMenu = () => setShowMenu(false)
@@ -49,7 +46,7 @@ const Menu = () => {
         {
           showMenu
             ? (
-              <Dropdown user={user} />
+              <Dropdown user={currentUser} />
             )
             : (
               null
