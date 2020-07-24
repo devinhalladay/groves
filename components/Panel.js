@@ -1,3 +1,4 @@
+// TODO: Remove react-draggable dependency
 import Draggable from "react-draggable";
 import Collapsible from "react-collapsible";
 import { useState } from "react";
@@ -100,11 +101,5 @@ const Panel = (props) => {
     </Draggable>
   );
 };
-
-// Page.getInitialProps = async ctx => {
-// const res = await fetch('https://api.github.com/repos/zeit/next.js')
-// const json = await res.json()
-// return { stars: json.stargazers_count }
-// }
 
 export default Panel;
