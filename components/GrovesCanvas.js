@@ -2,8 +2,9 @@ import { useRef, useState } from "react";
 import { useSelection } from "../context/selection-context";
 import MillerPanel from "./MillerPanel";
 import { useWorkspace } from "../context/workspace-context";
+import withApollo from "../lib/withApollo";
 
-export default (props) => {
+export default withApollo((props) => {
   const canvas = useRef(null);
   const { selectedChannel } = useSelection();
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
@@ -28,4 +29,4 @@ export default (props) => {
       </div>
     </div>
   );
-};
+});

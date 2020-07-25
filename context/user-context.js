@@ -11,7 +11,11 @@ const CURRENT_USER = gql`
     me {
       channels_index {
         channels {
+          id
           title
+          counts {
+            contents
+          }
         }
       }
       id
@@ -50,10 +54,6 @@ export const UserProvider = withApollo((props) => {
   // window.localStorage.setItem("user", JSON.stringify(currentUser));
   const channels = currentUser.me.channels;
   const index = currentUser.me.channels_index
-
-  console.log(index);
-  console.log(channels);
-  console.log([].concat.apply([], index));
 
   return (
     <UserContext.Provider value={{ currentUser, channels, index }} {...props}>

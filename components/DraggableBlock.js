@@ -7,14 +7,22 @@ import {
   shouldScrollAtEdge,
   adjustWindowScroll,
 } from "../utils/canvas";
+import InlineExpandedChannel from "./InlineExpandedChannel";
+import withApollo from "../lib/withApollo";
 
-const DraggableBlock = ({ canvasSpace, setCanvasSpace, ...props }) => {
+const DraggableBlock = ({ canvasSpace, setCanvasSpace, block, width, height, ...props }) => {
+  console.log(props.client);
   const [zIndex, setZIndex] = useState(1000);
+  const [blockLocalState, setBlockLocalState] = useState({
+    ...block,
+    isExpanded: false,
+    draggingEnabled: true
+  });
   const [spatialState, setSpatialState] = useState({
     x: 200,
     y: 200,
-    width: 200,
-    height: 200,
+    width: width || 200,
+    height: height || 200,
     isBeingDragged: false,
     cursor: {
       movementDirection: {},
@@ -31,12 +39,28 @@ const DraggableBlock = ({ canvasSpace, setCanvasSpace, ...props }) => {
     },
   });
 
+  const [dragStates, setDragStates] = useState({
+    maxZIndex: 1000,
+  });
+
   const rndEl = useRef(null);
 
   let analytics = window.analytics;
 
   let handleDragMetric = () => {
     analytics.track("Dragged Block");
+  };
+
+  const expandChannelInline = (channel) => {
+    setBlockLocalState({
+      ...blockLocalState,
+      isExpanded: true,
+    });
+    setSpatialState({
+      ...spatialState,
+      width: 800,
+      height: 600
+    })
   };
 
   const getMovementDirection = (e, d) => {
@@ -56,7 +80,7 @@ const DraggableBlock = ({ canvasSpace, setCanvasSpace, ...props }) => {
   return (
     <Rnd
       ref={rndEl}
-      key={props.block.id}
+      key={block.id}
       size={{ width: spatialState.width, height: spatialState.height }}
       lockAspectRatio="true"
       position={{ x: spatialState.x, y: spatialState.y }}
@@ -68,6 +92,7 @@ const DraggableBlock = ({ canvasSpace, setCanvasSpace, ...props }) => {
         setZIndex(props.dragStates.maxZIndex);
         setSpatialState({ ...spatialState, isBeingDragged: true });
       }}
+      disableDragging={blockLocalState.isExpanded}
       onDrag={(e, d) => {
         setSpatialState({
           ...spatialState,
@@ -120,12 +145,30 @@ const DraggableBlock = ({ canvasSpace, setCanvasSpace, ...props }) => {
     >
       <div
         className={`draggable-block-container ${
-          props.block.__typename ? props.block.__typename : ""
+          block.__typename ? block.__typename : ""
         }`}
+        onClick={() => {
+          if (block.__typename === "Channel") {
+            expandChannelInline();
+          }
+        }}
       >
-        <div className="block">
-          <BlockRepresentation block={props.block} />
-        </div>
+        {blockLocalState.isExpanded ? (
+          <div className="block">
+            <p>{block.title}</p>
+            <InlineExpandedChannel
+              channel={block}
+              dragStates={dragStates}
+              setDragStates={setDragStates}
+              setSpatialState={setSpatialState}
+              spatialState={spatialState}
+            />
+          </div>
+        ) : (
+          <div className="block">
+            <BlockRepresentation block={block} />
+          </div>
+        )}
       </div>
     </Rnd>
   );
