@@ -131,10 +131,10 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
         />
       </Head>
       <AuthProvider>
-          <div>
-            <Header {...pageProps} />
-            <Component {...pageProps} />
-          </div>
+        <div>
+          <Header {...pageProps} />
+          <Component {...pageProps} />
+        </div>
       </AuthProvider>
     </div>
   );

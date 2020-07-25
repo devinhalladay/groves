@@ -1,19 +1,18 @@
-import React, { useContext, createContext, useState, useEffect } from 'react'
-import Router, { useRouter } from 'next/router'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
-import withApollo from '../lib/withApollo'
+import React, { useContext, createContext, useState } from "react";
 
-const WorkspaceContext = createContext()
+const WorkspaceContext = createContext();
 
 const WorkspaceProvider = (props) => {
-  const [workspaceOptions, setWorkspaceOptions] = useState(null)
+  const [workspaceOptions, setWorkspaceOptions] = useState(null);
 
   return (
-    <WorkspaceContext.Provider value={{workspaceOptions, setWorkspaceOptions}} {...props} />
-  )
-}
+    <WorkspaceContext.Provider
+      value={{ workspaceOptions, setWorkspaceOptions }}
+      {...props}
+    />
+  );
+};
 
-const useWorkspace = () => useContext(WorkspaceContext)
+const useWorkspace = () => useContext(WorkspaceContext);
 
-export { useWorkspace, WorkspaceProvider, WorkspaceContext }
+export { useWorkspace, WorkspaceProvider, WorkspaceContext };

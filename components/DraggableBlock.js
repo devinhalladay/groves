@@ -1,9 +1,6 @@
-import Draggable from "react-draggable";
-import Collapsible from "react-collapsible";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import BlockRepresentation from "./BlockRepresentation";
 import { Rnd } from "react-rnd";
-import useEventListener from "@use-it/event-listener";
 import {
   cursorPositionInViewport,
   viewportDimensions,
@@ -42,34 +39,7 @@ const DraggableBlock = ({ canvasSpace, setCanvasSpace, ...props }) => {
     analytics.track("Dragged Block");
   };
 
-  // useEventListener(
-  //   'mousedown',
-  //   (e) => {
-  //     console.log('uh');
-  //     const position = cursorPositionInViewport(e);
-  //     console.log(position);
-  //     // const pagePosition = cursorPositionInPage(e)
-  //   },
-  //   rndEl.current
-  // );
-
-  // useEventListener('mouseup', (e) => {
-  //   e.preventDefault();
-  //   stopDraggingItem(e);
-  // });
-
-  // useEventListener('mousemove', (e) => {
-  //   e.preventDefault();
-  //   let viewport = viewportDimensions()
-  //   let cursor = cursorPositionInViewport(e)
-
-  //   if (state.isBeingDragged) {
-  //     dragItem(e);
-  //   }
-  // });
-
   const getMovementDirection = (e, d) => {
-    // const currentCursor = cursorPositionInViewport(e);
     if (Math.sign(d.deltaY) === 1) {
       return { y: "up" };
     } else if (Math.sign(d.deltaY) === -1) {
@@ -90,7 +60,7 @@ const DraggableBlock = ({ canvasSpace, setCanvasSpace, ...props }) => {
       size={{ width: spatialState.width, height: spatialState.height }}
       lockAspectRatio="true"
       position={{ x: spatialState.x, y: spatialState.y }}
-      onDragStart={() => {
+      onDragStart={(e) => {
         props.setDragStates({
           ...props.dragStates,
           maxZIndex: props.dragStates.maxZIndex + 1,

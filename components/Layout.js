@@ -1,23 +1,15 @@
-import React, {Fragment} from 'react'
-import Header from './Header';
-import { useSelection } from '../context/selection-context';
-import { useUser } from '../context/user-context';
+import React, { Fragment } from "react";
 
-const Layout = props => {
-  // const { selectedChannel, setSelectedChannel } = useSelection()
-  // const { channels } = useUser()
-
+const Layout = (props) => {
   return (
     <Fragment>
-      <div class="workspace">
-        {props.children}
-      </div>
+      <div class="workspace">{props.children}</div>
     </Fragment>
-  )
-}
+  );
+};
 
-export const Container = props => {
-  return props.children
-}
+export const Container = (props) => {
+  return props.children;
+};
 
 export default Layout;
