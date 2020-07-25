@@ -2,7 +2,6 @@ import React from "react";
 import Panel from "./Panel";
 import GrovesNavigator from "./GrovesNavigator";
 import Menu from "./Menu";
-import { LoginLink } from "./AuthLinks";
 import { useAuth } from "../context/auth-context";
 import { useUser } from "../context/user-context";
 
@@ -106,7 +105,11 @@ const Header = (props) => {
             {process.env.AUTHENTICATION_ENABLED && (
               <ul>
                 <li>
-                  <LoginLink />
+                  <a
+                    href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}
+                  >
+                    Login
+                  </a>
                 </li>
               </ul>
             )}

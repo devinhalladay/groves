@@ -16,7 +16,7 @@ export default (props) => {
   });
 
   return (
-    <div
+    <div>
       {/* <MillerPanel /> */}
       <div>
         {React.Children.map(props.children, (child) =>

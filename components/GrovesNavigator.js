@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import Downshift from "downshift";
 import { useSelection } from "../context/selection-context";
 import { useRouter } from "next/router";
+import { useUser } from '../context/user-context'
 
 const GrovesNavigator = (props) => {
   const router = useRouter();
+
+  const { channels } = useUser()
 
   const {
     selectedChannel,

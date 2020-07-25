@@ -42,8 +42,9 @@ export const UserProvider = withApollo((props) => {
     return `Error: ${errorLoadingCurrentUser}`;
   }
 
-  window.localStorage.setItem("user", currentUser);
+  // window.localStorage.setItem("user", JSON.stringify(currentUser));
   const channels = currentUser.me.channels;
+  console.log(currentUser);
 
   return (
     <UserContext.Provider value={{ currentUser, channels }} {...props}>
