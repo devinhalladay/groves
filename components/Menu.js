@@ -47,7 +47,7 @@ const Menu = () => {
             <path
               d="M8.07069 3.53553L4.53516 7.07107L0.999622 3.53553"
               stroke="white"
-              stroke-width="1"
+              strokeWidth="1"
             />
           </svg>
         </div>

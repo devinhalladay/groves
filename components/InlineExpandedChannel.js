@@ -20,8 +20,6 @@ export default withApollo(({ channel, apollo, dragStates, setDragStates, ...prop
     return <p>Loading...</p>;
   }
 
-  console.log(data);
-
   return (
     <GrovesCanvas>
       {data.channel &&

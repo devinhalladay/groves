@@ -1,21 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Downshift from "downshift";
 import { useSelection } from "../context/selection-context";
 import { useRouter } from "next/router";
 import { useUser } from '../context/user-context'
 
-const GrovesNavigator = (props) => {
+const GrovesNavigator = ({selectedChannel, ...props}) => {
   const router = useRouter();
 
   const { channels, index } = useUser()
 
+  // TODO: think about handling initial selection logic here
+  // rather than in [grove].js itself. I think it would be
+  // pretty nice to have all selection logic in one place,
+  // and actually maybe I can create a state subscription in 
+  // the SelectionProvider so subcomponents can subscribe to
+  // SelectionProvider's state and re-render when selection changes.
+  // This would prevent having to thread the selectedChannel
+  // through to every child component that needs it.
+  
   const allUserChannels = index.flatMap(channelSet => channelSet.channels.flatMap(c => c));
-
-  const {
-    selectedChannel,
-    setSelectedChannel,
-  } = useSelection();
-
+  const initialSelection = allUserChannels.find((item) => item.id == router.query.grove)
+  
   const [inputItems, setInputItems] = useState(allUserChannels);
 
   return (
@@ -31,22 +36,14 @@ const GrovesNavigator = (props) => {
         );
       }}
       onChange={(selection) => {
-        if (selection === null) {
-          setSelectedChannel(null);
-        } else {
-          router.push(`/g/[grove]`, `/g/${selection.id}`, { shallow: true });
-        }
+        router.push(`/g/[grove]`, `/g/${selection.id}`, { shallow: true });
       }}
       itemToString={(item) => (item ? item.title : "")}
       initialSelectedItem={
-        selectedChannel && selectedChannel.id
-          ? allUserChannels.filter((item) => item.id == selectedChannel.id)
-          : null
+        initialSelection
       }
       initialInputValue={
-        selectedChannel && selectedChannel.id
-          ? allUserChannels.filter((item) => item.id == selectedChannel.id).title
-          : null
+        initialSelection.title
       }
     >
       {({

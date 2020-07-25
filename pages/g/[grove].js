@@ -26,6 +26,7 @@ const Grove = (props) => {
       variables: { channelId: router.query.grove },
       notifyOnNetworkStatusChange: true,
       fetchPolicy: "no-cache",
+      notifyOnNetworkStatusChange: true
     }
   );
 
@@ -49,17 +50,15 @@ const Grove = (props) => {
           <GrovesCanvas {...props}>
             {data.channel.initial_contents.map((blokk, i) => {
               return (
-                <>
-                  <DraggableBlock
-                    title={blokk.title ? blokk.title : null}
-                    type={blokk.__typename}
-                    dragStates={dragStates}
-                    setDragStates={setDragStates}
-                    key={blokk.id}
-                    block={blokk}
-                    {...props}
-                  />
-                </>
+                <DraggableBlock
+                  title={blokk.title ? blokk.title : null}
+                  type={blokk.__typename}
+                  dragStates={dragStates}
+                  setDragStates={setDragStates}
+                  key={blokk.id}
+                  block={blokk}
+                  {...props}
+                />
               );
             })}
           </GrovesCanvas>

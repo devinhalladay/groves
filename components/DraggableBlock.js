@@ -10,13 +10,19 @@ import {
 import InlineExpandedChannel from "./InlineExpandedChannel";
 import withApollo from "../lib/withApollo";
 
-const DraggableBlock = ({ canvasSpace, setCanvasSpace, block, width, height, ...props }) => {
-  console.log(props.client);
+const DraggableBlock = ({
+  canvasSpace,
+  setCanvasSpace,
+  block,
+  width,
+  height,
+  ...props
+}) => {
   const [zIndex, setZIndex] = useState(1000);
   const [blockLocalState, setBlockLocalState] = useState({
     ...block,
     isExpanded: false,
-    draggingEnabled: true
+    draggingEnabled: true,
   });
   const [spatialState, setSpatialState] = useState({
     x: 200,
@@ -45,6 +51,8 @@ const DraggableBlock = ({ canvasSpace, setCanvasSpace, block, width, height, ...
 
   const rndEl = useRef(null);
 
+  let timeout = null;
+  
   let analytics = window.analytics;
 
   let handleDragMetric = () => {
@@ -59,8 +67,8 @@ const DraggableBlock = ({ canvasSpace, setCanvasSpace, block, width, height, ...
     setSpatialState({
       ...spatialState,
       width: 800,
-      height: 600
-    })
+      height: 600,
+    });
   };
 
   const getMovementDirection = (e, d) => {
@@ -85,17 +93,22 @@ const DraggableBlock = ({ canvasSpace, setCanvasSpace, block, width, height, ...
       lockAspectRatio="true"
       position={{ x: spatialState.x, y: spatialState.y }}
       onDragStart={(e) => {
-        props.setDragStates({
-          ...props.dragStates,
-          maxZIndex: props.dragStates.maxZIndex + 1,
-        });
-        setZIndex(props.dragStates.maxZIndex);
-        setSpatialState({ ...spatialState, isBeingDragged: true });
+        if (spatialState.isBeingDragged) {
+            props.setDragStates({
+            ...props.dragStates,
+            maxZIndex: props.dragStates.maxZIndex + 1,
+          });
+          setZIndex(props.dragStates.maxZIndex);
+          setSpatialState({ ...spatialState, isBeingDragged: true });
+        } else {
+          return false
+        }
       }}
       disableDragging={blockLocalState.isExpanded}
       onDrag={(e, d) => {
         setSpatialState({
           ...spatialState,
+          isBeingDragged: true,
           cursor: {
             ...spatialState.cursor,
             movementDirection: getMovementDirection(e, d),
@@ -123,7 +136,17 @@ const DraggableBlock = ({ canvasSpace, setCanvasSpace, block, width, height, ...
           adjustWindowScroll(spatialState.cursor);
         }
       }}
-      onDragStop={(e, d) => {
+      onDragStop={(e, d, deltaX, deltaY) => {
+        if (timeout) {
+          clearTimeout(timeout);
+        }
+        timeout = setTimeout(() => {
+          if (deltaX === 0 && deltaY === 0) {
+            alert("asd");
+            return false;
+          }
+        }, 10);
+
         setSpatialState({
           ...spatialState,
           isBeingDragged: false,
