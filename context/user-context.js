@@ -9,6 +9,11 @@ const UserContext = createContext();
 const CURRENT_USER = gql`
   {
     me {
+      channels_index {
+        channels {
+          title
+        }
+      }
       id
       slug
       name
@@ -44,10 +49,14 @@ export const UserProvider = withApollo((props) => {
 
   // window.localStorage.setItem("user", JSON.stringify(currentUser));
   const channels = currentUser.me.channels;
-  console.log(currentUser);
+  const index = currentUser.me.channels_index
+
+  console.log(index);
+  console.log(channels);
+  console.log([].concat.apply([], index));
 
   return (
-    <UserContext.Provider value={{ currentUser, channels }} {...props}>
+    <UserContext.Provider value={{ currentUser, channels, index }} {...props}>
       <SelectionProvider>{props.children}</SelectionProvider>
     </UserContext.Provider>
   );

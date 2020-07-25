@@ -7,20 +7,22 @@ import { useUser } from '../context/user-context'
 const GrovesNavigator = (props) => {
   const router = useRouter();
 
-  const { channels } = useUser()
+  const { channels, index } = useUser()
+
+  const allUserChannels = index.flatMap(channelSet => channelSet.channels.flatMap(c => c));
 
   const {
     selectedChannel,
     setSelectedChannel,
   } = useSelection();
 
-  const [inputItems, setInputItems] = useState(channels);
+  const [inputItems, setInputItems] = useState(allUserChannels);
 
   return (
     <Downshift
       onInputValueChange={(inputValue) => {
         setInputItems(
-          channels.filter((item) =>
+          allUserChannels.filter((item) =>
             item.title
               .toLowerCase()
               .replace(/\W/g, "")
@@ -38,12 +40,12 @@ const GrovesNavigator = (props) => {
       itemToString={(item) => (item ? item.title : "")}
       initialSelectedItem={
         selectedChannel && selectedChannel.id
-          ? channels.filter((item) => item.id == selectedChannel.id)
+          ? allUserChannels.filter((item) => item.id == selectedChannel.id)
           : null
       }
       initialInputValue={
         selectedChannel && selectedChannel.id
-          ? channels.filter((item) => item.id == selectedChannel.id).title
+          ? allUserChannels.filter((item) => item.id == selectedChannel.id).title
           : null
       }
     >

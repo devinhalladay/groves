@@ -14,7 +14,7 @@ export default (props) => {
     return (
       <Fragment>
         <p className="block--title">{block.title || null}</p>
-        {parse(block.content)}
+        {parse(`${block.content}`)}
       </Fragment>
     );
   } else if (block.__typename === "Link") {
@@ -60,8 +60,8 @@ export default (props) => {
       <Fragment>
         <a target="_blank" rel="noopener noreferrer" href={block.href}>
           <p className="title">{block.title}</p>
-          {/* <p>{block.user.full_name}</p> */}
-          {/* <p>{block.length} blocks</p> */}
+          <p>{block.user.name}</p>
+          <p>{block.length} blocks</p>
         </a>
       </Fragment>
     );
