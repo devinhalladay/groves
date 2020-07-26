@@ -27,6 +27,14 @@ export default () => {
       <div className="selection-panel">
         <div className="header">
           <p className="title">Selection</p>
+          <button onClick={() => {
+            setSelectedConnection(null)
+          }}>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.6211 4.04367L4.62109 12.0437" stroke="#BDC3CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4.62109 4.04367L12.6211 12.0437" stroke="#BDC3CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         </div>
         <div className="contents">
           <Loading />
@@ -48,6 +56,14 @@ export default () => {
     <div className="selection-panel">
       <div className="header">
         <p className="title">Selection</p>
+        <button onClick={() => {
+            setSelectedConnection(null)
+          }}>
+          <svg width="17" height="17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.6211 4.04367L4.62109 12.0437" stroke="#BDC3CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4.62109 4.04367L12.6211 12.0437" stroke="#BDC3CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
       </div>
       <div className="contents">
         <p>

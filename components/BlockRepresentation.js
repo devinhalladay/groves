@@ -19,11 +19,7 @@ export default ({ block }) => {
   } else if (block.__typename === "Link") {
     return (
       <Fragment>
-        <a href={block.source_url} target="_blank" rel="noopener noreferrer">
-          <div className="block--link__thumbnail">
             <img src={block.image_url} />
-          </div>
-        </a>
       </Fragment>
     );
   } else if (block.__typename === "Attachment") {
