@@ -56,6 +56,7 @@ const grovePageFragments = {
     }
 
     fragment KonnectableLink on Link {
+      id
       href
       title
       image_url(size: DISPLAY)
@@ -80,9 +81,27 @@ const grovePageFragments = {
     fragment KonnectableMetadata on Konnectable {
       ... on ConnectableInterface {
         __typename
+        description
         user {
           id
           name
+        }
+      }
+    }
+  `,
+  connectableMetadataPanel: gql`
+    fragment ConnectableMetadataPanel on Konnectable {
+      ... on Model {
+        created_at(relative: true)
+        updated_at(relative: true)
+      }
+      ... on ConnectableInterface {
+        title
+        description(format: HTML)
+        user {
+          id
+          name
+          href
         }
       }
     }
@@ -112,7 +131,23 @@ const CHANNEL_SKELETON = gql`
   ${grovePageFragments.channelContentsConnectable}
 `;
 
-export {
-  CHANNEL_SKELETON,
-  CURRENT_USER
-}
+const SELECTED_CHANNEL = gql`
+  query CurrentChannel($id: ID!) {
+    channel(id: $id) {
+      id
+      title
+      description
+    }
+  }
+`;
+
+const SELECTED_BLOCK = gql`
+  query CurrentBlock($id: ID!) {
+    block: blokk(id: $id) {
+      ...ChannelContentsConnectable
+    }
+  },
+  ${grovePageFragments.channelContentsConnectable}
+`;
+
+export { CHANNEL_SKELETON, CURRENT_USER, SELECTED_BLOCK, SELECTED_CHANNEL };

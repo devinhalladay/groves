@@ -38,7 +38,7 @@ const Root = (props) => {
   const [isDragging, setIsDragging] = useState(false);
 
   if (loading) {
-    return <Loading description="Loading landing page channel..." />
+    return <Loading fullScreen="true" description="Loading landing page channel..." />
   } else if (error) {
     console.error(error);
     return `Error: ${error}`;
@@ -70,7 +70,6 @@ const Root = (props) => {
         </form>
       </Panel>
       {data.channel.blokks.map((blokk, i) => {
-        const description = JSON.parse(blokk.description.replace("\n", ""));
         return (
           <DraggableBlock
             title={blokk.title ? blokk.title : null}

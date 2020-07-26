@@ -19,8 +19,6 @@ const Grove = (props) => {
 
   const { initialSelection, selectedChannel, setSelectedChannel } = useSelection();
 
-  console.log(initialSelection);
-
   return (
     <WorkspaceProvider>
       <Layout {...props}>

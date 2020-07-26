@@ -9,6 +9,7 @@ import { gql, NetworkStatus } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import DraggableBlock from "../../components/DraggableBlock";
 import { WorkspaceProvider } from "../../context/workspace-context";
+import SelectionPanel from "../../components/SelectionPanel";
 
 const Grove = (props) => {
   const router = useRouter();
@@ -17,44 +18,46 @@ const Grove = (props) => {
     maxZIndex: 1000,
   });
 
-  const { initialSelection, selectedChannel, setSelectedChannel } = useSelection();
-
-  console.log(initialSelection);
+  const {
+    initialSelection,
+    selectedChannel,
+    setSelectedChannel,
+    selectedConnection,
+  } = useSelection();
 
   return (
     <WorkspaceProvider>
       <Layout {...props}>
-          <GrovesCanvas {...props}>
-        {selectedChannel && selectedChannel.channel ? 
-            selectedChannel.channel.initial_contents.map((blokk, i) => {
-              return (
-                <DraggableBlock
-                  title={blokk.title ? blokk.title : null}
-                  type={blokk.__typename}
-                  dragStates={dragStates}
-                  setDragStates={setDragStates}
-                  key={blokk.id}
-                  block={blokk}
-                  {...props}
-                />
-              );
-            })
-            :
-            initialSelection.channel.initial_contents.map((blokk, i) => {
-              return (
-                <DraggableBlock
-                  title={blokk.title ? blokk.title : null}
-                  type={blokk.__typename}
-                  dragStates={dragStates}
-                  setDragStates={setDragStates}
-                  key={blokk.id}
-                  block={blokk}
-                  {...props}
-                />
-              );
-            })
-            }
-          </GrovesCanvas>
+        {selectedConnection && <SelectionPanel />}
+        <GrovesCanvas {...props}>
+          {selectedChannel && selectedChannel.channel
+            ? selectedChannel.channel.initial_contents.map((blokk, i) => {
+                return (
+                  <DraggableBlock
+                    title={blokk.title ? blokk.title : null}
+                    type={blokk.__typename}
+                    dragStates={dragStates}
+                    setDragStates={setDragStates}
+                    key={blokk.id}
+                    block={blokk}
+                    {...props}
+                  />
+                );
+              })
+            : initialSelection.channel.initial_contents.map((blokk, i) => {
+                return (
+                  <DraggableBlock
+                    title={blokk.title ? blokk.title : null}
+                    type={blokk.__typename}
+                    dragStates={dragStates}
+                    setDragStates={setDragStates}
+                    key={blokk.id}
+                    block={blokk}
+                    {...props}
+                  />
+                );
+              })}
+        </GrovesCanvas>
       </Layout>
     </WorkspaceProvider>
   );

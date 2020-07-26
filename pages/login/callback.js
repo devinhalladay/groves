@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useAuth } from "../../context/auth-context";
+import Loading from "../../components/Loading";
 
 const Callback = ({ ctx, query: { code }, ...props }) => {
   const { login, logout } = useAuth();
@@ -10,7 +11,7 @@ const Callback = ({ ctx, query: { code }, ...props }) => {
 
   return (
     <>
-      <h1>Authenticating...</h1>
+      <Loading fullScreen="true" description="Authenticating..." />
     </>
   );
 };
