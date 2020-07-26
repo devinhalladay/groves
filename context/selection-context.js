@@ -4,6 +4,7 @@ import { CHANNEL_SKELETON } from "../queries";
 import { useRouter } from "next/router";
 import withApollo from "../lib/withApollo";
 import { NetworkStatus } from "apollo-boost";
+import Loading from "../components/Loading";
 
 const SelectionContext = createContext();
 
@@ -32,7 +33,7 @@ const SelectionProvider = withApollo((props) => {
   if (networkStatus === NetworkStatus.refetch) return "Refetching!";
 
   if (loading) {
-    return "loading";
+    return <Loading />
   } else if (error) {
     console.error(error);
     return `Error: ${error}`;
