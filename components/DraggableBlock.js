@@ -16,10 +16,12 @@ const DraggableBlock = ({
   block,
   width,
   height,
+  dragStates,
+  setDragStates,
   ...props
 }) => {
   const description = JSON.parse(block.description.replace("\n", ""));
-  const [zIndex, setZIndex] = useState(1000);
+  const [zIndex, setZIndex] = useState(dragStates.maxZIndex);
   const [blockLocalState, setBlockLocalState] = useState({
     ...block,
     isExpanded: false,
@@ -44,10 +46,6 @@ const DraggableBlock = ({
       isInTopEdge: false,
       isInBottomEdge: false,
     },
-  });
-
-  const [dragStates, setDragStates] = useState({
-    maxZIndex: 1000,
   });
 
   const rndEl = useRef(null);
@@ -93,14 +91,17 @@ const DraggableBlock = ({
       ref={rndEl}
       key={block.id}
       size={{ width: spatialState.width, height: spatialState.height }}
-      position={{ x: block.description.x || spatialState.x, y: block.description.y || spatialState.y }}
+      position={{
+        x: block.description.x || spatialState.x,
+        y: block.description.y || spatialState.y,
+      }}
       onDragStart={(e) => {
+        setZIndex(dragStates.maxZIndex + 1);
+        setDragStates({
+          ...dragStates,
+          maxZIndex: dragStates.maxZIndex + 1,
+        });
         if (spatialState.isBeingDragged) {
-          props.setDragStates({
-            ...props.dragStates,
-            maxZIndex: props.dragStates.maxZIndex + 1,
-          });
-          setZIndex(props.dragStates.maxZIndex);
           setSpatialState({ ...spatialState, isBeingDragged: true });
         } else {
           return false;
@@ -148,11 +149,13 @@ const DraggableBlock = ({
 
         handleDragMetric();
       }}
-
       // bounds="parent"
 
       onResize={(e, direction, ref, delta, position) => {
-        if (spatialState.width + delta.width >= 500 && spatialState.height + delta.height >= 400) {
+        if (
+          spatialState.width + delta.width >= 500 &&
+          spatialState.height + delta.height >= 400
+        ) {
           if (block.__typename === "Channel") {
             expandChannelInline();
           }
@@ -162,9 +165,8 @@ const DraggableBlock = ({
           }
         }
       }}
-
       onResizeStop={(e, direction, ref, delta, position) => {
-        console.log(spatialState.width + delta.width)
+        console.log(spatialState.width + delta.width);
         setSpatialState({
           ...spatialState,
           width: spatialState.width + delta.width,

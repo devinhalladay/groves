@@ -34,7 +34,7 @@ const UnauthenticatedHeader = (props) => {
             </svg>
           </div>
           <p>Groves</p>
-          {/* {process.env.AUTHENTICATION_ENABLED && (
+          {process.env.AUTHENTICATION_ENABLED && (
             <ul>
               <li>
                 <a
@@ -44,7 +44,7 @@ const UnauthenticatedHeader = (props) => {
                 </a>
               </li>
             </ul>
-          )} */}
+          )}
         </nav>
       </header>
     </Panel>
