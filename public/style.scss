@@ -478,45 +478,6 @@ header {
   text-decoration: none;
 }
 
-.block--title {
-  box-sizing: border-box;
-  margin-bottom: 0;
-  margin-top: 0;
-  padding-top: 0.25em;
-  padding-left: 0.75em;
-  padding-right: 0.75em;
-  font-size: 0.75rem;
-  line-height: 1.33;
-  color: rgb(153, 153, 153);
-  font-weight: bold;
-  text-align: center;
-  display: flex;
-  position: relative;
-  justify-content: center;
-
-  .icon {
-    position: relative;
-    vertical-align: middle;
-    box-sizing: border-box;
-    margin-bottom: 0.125em;
-    margin-left: 0.25em;
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-
-    svg {
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      bottom: 0px;
-      left: 0px;
-      width: 100%;
-      height: 100%;
-      fill: rgb(153, 153, 153);
-    }
-  }
-}
-
 .block.block--text {
   overflow-y: scroll;
   border-color: rgb(207, 203, 214);
@@ -524,6 +485,45 @@ header {
   font-size: 1rem;
   line-height: 1.5;
   color: rgb(88, 88, 88);
+
+  .block--title {
+    box-sizing: border-box;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 0.25em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    font-size: 0.75rem;
+    line-height: 1.33;
+    text-align: left;
+    color: rgb(153, 153, 153);
+    font-weight: bold;
+    display: flex;
+    position: relative;
+    justify-content: center;
+  
+    .icon {
+      position: relative;
+      vertical-align: middle;
+      box-sizing: border-box;
+      margin-bottom: 0.125em;
+      margin-left: 0.25em;
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+  
+      svg {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        fill: rgb(153, 153, 153);
+      }
+    }
+  }
 
   p {
     margin: 0;
@@ -603,8 +603,8 @@ header {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 1.5rem;
     line-height: 1.33;
-    margin-left: 0.65625em;
-    margin-right: 0.65625em;
+    margin: 0;
+    padding: 0;
     padding-top: 1em;
     text-align: center;
     overflow-wrap: break-word;
@@ -843,9 +843,7 @@ header {
     flex: 0 0 auto;
 
     &.title {
-      left: 10px;
-      top: 15px;
-      padding-top: 10px;
+      padding: 15px 0 0 10px;
       font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
       font-style: normal;
       font-weight: normal;

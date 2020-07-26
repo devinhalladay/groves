@@ -12,7 +12,7 @@ export default ({ block }) => {
   } else if (block.__typename === "Text") {
     return (
       <Fragment>
-        <p className="block--title">{block.title || null}</p>
+        <p className="title">{block.title || null}</p>
         {parse(`${block.content}`)}
       </Fragment>
     );
@@ -22,7 +22,7 @@ export default ({ block }) => {
         <a href={block.source_url} target="_blank" rel="noopener noreferrer">
           <div className="block--link__thumbnail">
             <img src={block.image_url} />
-            <div className="block--title">
+            <div className="title">
               <span>{block.title}</span>
               <div class="icon">
                 <svg viewbox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
