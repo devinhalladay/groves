@@ -9,6 +9,8 @@ import {
 } from "../utils/canvas";
 import InlineExpandedChannel from "./InlineExpandedChannel";
 import withApollo from "../lib/withApollo";
+import { useSelection } from "../context/selection-context";
+import { useAuth } from '../context/auth-context'
 
 const DraggableBlock = ({
   canvasSpace,
@@ -22,10 +24,13 @@ const DraggableBlock = ({
 }) => {
   let description
 
-  if (block.description) {
+  if (block.description && block.description.includes('"x":')) {
     description = JSON.parse(block.description.replace("\n", ""));
   }
   const [zIndex, setZIndex] = useState(dragStates.maxZIndex);
+  
+  const { selectedConnection, setSelectedConnection, selectedRef, setSelectedRef } = useSelection()
+
   const [blockLocalState, setBlockLocalState] = useState({
     ...block,
     isExpanded: false,
@@ -96,8 +101,8 @@ const DraggableBlock = ({
       key={block.id}
       size={{ width: spatialState.width, height: spatialState.height }}
       position={{
-        x: description ? description.x : spatialState.x,
-        y: description ? description.y : spatialState.y,
+        x: spatialState.x,
+        y: spatialState.y,
       }}
       onDragStart={(e) => {
         setZIndex(dragStates.maxZIndex + 1);
@@ -115,7 +120,7 @@ const DraggableBlock = ({
       onDrag={(e, d) => {
         setSpatialState({
           ...spatialState,
-          isBeingDragged: true,
+          isBeingDragged: !(d.x < 5  && d.y < 5),
           cursor: {
             ...spatialState.cursor,
             movementDirection: getMovementDirection(e, d),
@@ -144,7 +149,8 @@ const DraggableBlock = ({
         }
       }}
       onDragStop={(e, d, deltaX, deltaY) => {
-        setSpatialState({
+        if (spatialState.isBeingDragged) {
+          setSpatialState({
           ...spatialState,
           isBeingDragged: false,
           x: d.x,
@@ -152,6 +158,12 @@ const DraggableBlock = ({
         });
 
         handleDragMetric();
+        } else {
+          setSelectedConnection({
+            ...block
+          })
+          setSelectedRef(rndEl)
+        }
       }}
       // bounds="parent"
 
@@ -170,7 +182,6 @@ const DraggableBlock = ({
         }
       }}
       onResizeStop={(e, direction, ref, delta, position) => {
-        console.log(spatialState.width + delta.width);
         setSpatialState({
           ...spatialState,
           width: spatialState.width + delta.width,
@@ -184,7 +195,7 @@ const DraggableBlock = ({
       <div
         className={`draggable-block-container ${
           block.__typename ? block.__typename : ""
-        }`}
+        } ${ (selectedConnection && selectedConnection.id) ? ((block.id === selectedConnection.id) ? 'selected' : "") : "" }`}
       >
         {blockLocalState.isExpanded ? (
           <div
@@ -206,6 +217,6 @@ const DraggableBlock = ({
       </div>
     </Rnd>
   );
-};
+}
 
 export default DraggableBlock;

@@ -6,6 +6,7 @@ import { UserProvider } from "../context/user-context";
 import { parseCookies } from "nookies";
 import Head from "next/head";
 import { AuthenticatedHeader, UnauthenticatedHeader } from "../components/Header";
+import { SelectionProvider } from "../context/selection-context";
 
 const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
   useEffect(() => {

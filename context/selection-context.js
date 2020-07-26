@@ -13,15 +13,19 @@ const SelectionProvider = withApollo((props) => {
 
   const [selectedChannel, setSelectedChannel] = useState(null);
 
+  const [selectedConnection, setSelectedConnection] = useState(null);
+
+  const [selectedRef, setSelectedRef] = useState(null)
+
   const getChannelID = () => {
     if (selectedChannel && selectedChannel.id) {
-      return selectedChannel.id
+      return selectedChannel.id;
     } else if (router.query.grove) {
-      return router.query.grove
+      return router.query.grove;
     } else {
-      return '757665'
-    }      
-  }
+      return "757665";
+    }
+  };
 
   const {
     loading,
@@ -31,7 +35,7 @@ const SelectionProvider = withApollo((props) => {
     networkStatus,
   } = useQuery(CHANNEL_SKELETON, {
     variables: {
-      channelId: getChannelID()
+      channelId: getChannelID(),
     },
     fetchPolicy: "no-cache",
     client: props.apollo,
@@ -40,7 +44,7 @@ const SelectionProvider = withApollo((props) => {
   if (networkStatus === NetworkStatus.refetch) return "Refetching!";
 
   if (loading) {
-    return <Loading description={"Loading your Grove :)"} />
+    return <Loading fullScreen="true" description={"Loading your Grove :)"} />;
   } else if (error) {
     console.error(error);
     return `Error: ${error}`;
@@ -48,11 +52,16 @@ const SelectionProvider = withApollo((props) => {
 
   let initialSelection = channelSkeleton;
 
-  console.log(channelSkeleton);
-
   return (
     <SelectionContext.Provider
-      value={{ selectedChannel, setSelectedChannel, initialSelection }}
+      value={{
+        selectedChannel,
+        setSelectedChannel,
+        initialSelection,
+        selectedConnection,
+        setSelectedConnection,
+        selectedRef, setSelectedRef
+      }}
       {...props}
     />
   );
@@ -60,4 +69,8 @@ const SelectionProvider = withApollo((props) => {
 
 const useSelection = () => useContext(SelectionContext);
 
-export { useSelection, SelectionProvider, SelectionContext };
+export {
+  useSelection,
+  SelectionProvider,
+  SelectionContext,
+};

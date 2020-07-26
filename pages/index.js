@@ -7,6 +7,7 @@ import { useQuery } from "@apollo/react-hooks";
 import withApollo from "../lib/withApollo";
 import Panel from "../components/Panel";
 import Loading from "../components/Loading";
+import { SelectionProvider } from "../context/selection-context";
 
 const GET_LANDING_BLOCKS = gql`
   {
@@ -38,13 +39,14 @@ const Root = (props) => {
   const [isDragging, setIsDragging] = useState(false);
 
   if (loading) {
-    return <Loading description="Loading landing page channel..." />
+    return <Loading fullScreen="true" description="Loading landing page channel..." />
   } else if (error) {
     console.error(error);
     return `Error: ${error}`;
   }
 
   return (
+    <SelectionProvider>
     <Layout>
       <Panel
         style={{
@@ -70,25 +72,20 @@ const Root = (props) => {
         </form>
       </Panel>
       {data.channel.blokks.map((blokk, i) => {
-        const description = JSON.parse(blokk.description.replace("\n", ""));
         return (
           <DraggableBlock
             title={blokk.title ? blokk.title : null}
-            type={blokk.image_url ? "image" : "text"}
-            block={blokk}
+            type={blokk.__typename}
             dragStates={dragStates}
             setDragStates={setDragStates}
             key={blokk.id}
-            onDrag={() => {
-              setIsDragging(true);
-            }}
-            onStop={() => {
-              setIsDragging(false);
-            }}
+            block={blokk}
+            {...props}
           />
         );
       })}
     </Layout>
+    </SelectionProvider>
   );
 };
 

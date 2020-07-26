@@ -1,7 +1,6 @@
-export default ({ description }) => {
-  console.log(description);
+export default ({ description, fullScreen }) => {
   return (
-    <div className="loading-screen">
+    <div className={`loading-screen ${!!fullScreen && 'fullscreen'}`}>
       <div class="lds-grid">
         <div></div>
         <div></div>
