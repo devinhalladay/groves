@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import Layout from "../../components/Layout";
-import DraggableBlock from "../../components/DraggableBlock";
+import Layout from "../components/Layout";
+import DraggableBlock from "../components/DraggableBlock";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-import withApollo from "../../lib/withApollo";
-import Panel from "../../components/Panel";
+import withApollo from "../lib/withApollo";
+import Panel from "../components/Panel";
 
 const GET_LANDING_BLOCKS = gql`
   {

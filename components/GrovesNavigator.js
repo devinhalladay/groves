@@ -4,11 +4,11 @@ import { useSelection } from "../context/selection-context";
 import { useRouter } from "next/router";
 import { useUser } from '../context/user-context'
 
-const GrovesNavigator = ({selectedChannel, ...props}) => {
+const GrovesNavigator = (props) => {
   const router = useRouter();
 
   const { channels, index } = useUser()
-  const { initialSelection } = useSelection()
+  const { selectedChannel, setSelectedChannel, initialSelection } = useSelection()
 
   // TODO: think about handling initial selection logic here
   // rather than in [grove].js itself. I think it would be

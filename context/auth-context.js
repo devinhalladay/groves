@@ -34,7 +34,7 @@ const AuthProvider = (props) => {
           path: "/",
         });
 
-        router.push("/app");
+        router.push("/g");
       })
   };
 

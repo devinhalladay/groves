@@ -9,7 +9,7 @@ export const login = ({ ctx, access_token }) => {
     path: "/",
   });
 
-  Router.push("/app");
+  Router.push("/g");
 };
 
 export const auth = (ctx) => {

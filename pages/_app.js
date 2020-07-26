@@ -5,7 +5,7 @@ import { AuthProvider } from "../context/auth-context";
 import { UserProvider } from "../context/user-context";
 import { parseCookies } from "nookies";
 import Head from "next/head";
-import Header from "../components/Header";
+import { AuthenticatedHeader, UnauthenticatedHeader } from "../components/Header";
 
 const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
   useEffect(() => {
@@ -70,7 +70,7 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
         </Head>
         <AuthProvider>
           <UserProvider>
-            <Header {...pageProps} />
+            <AuthenticatedHeader {...pageProps} />
             <Component {...pageProps} />
           </UserProvider>
         </AuthProvider>
@@ -132,7 +132,7 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
       </Head>
       <AuthProvider>
         <div>
-          <Header {...pageProps} />
+          <UnauthenticatedHeader {...pageProps} />
           <Component {...pageProps} />
         </div>
       </AuthProvider>
