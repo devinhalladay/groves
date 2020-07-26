@@ -6,6 +6,7 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import withApollo from "../lib/withApollo";
 import Panel from "../components/Panel";
+import Loading from "../components/Loading";
 
 const GET_LANDING_BLOCKS = gql`
   {
@@ -37,7 +38,7 @@ const Root = (props) => {
   const [isDragging, setIsDragging] = useState(false);
 
   if (loading) {
-    return "loading";
+    return <Loading description="Loading landing page channel..." />
   } else if (error) {
     console.error(error);
     return `Error: ${error}`;
