@@ -3,27 +3,10 @@ import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import withApollo from "../lib/withApollo";
 import { SelectionProvider } from "./selection-context";
+import { CURRENT_USER } from '../queries'
+import Loading from "../components/Loading";
 
 const UserContext = createContext();
-
-const CURRENT_USER = gql`
-  {
-    me {
-      channels_index {
-        channels {
-          id
-          title
-          counts {
-            contents
-          }
-        }
-      }
-      id
-      slug
-      name
-    }
-  }
-`;
 
 export const UserProvider = withApollo((props) => {
   const {
@@ -33,13 +16,12 @@ export const UserProvider = withApollo((props) => {
   } = useQuery(CURRENT_USER);
 
   if (loadingCurrentUser) {
-    return "Loading...";
+    return <Loading />
   } else if (errorLoadingCurrentUser) {
     console.error(errorLoadingCurrentUser);
     return `Error: ${errorLoadingCurrentUser}`;
   }
 
-  // window.localStorage.setItem("user", JSON.stringify(currentUser));
   const channels = currentUser.me.channels;
   const index = currentUser.me.channels_index
 

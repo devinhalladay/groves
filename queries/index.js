@@ -1,5 +1,23 @@
 import { gql } from "apollo-boost";
 
+const CURRENT_USER = gql`
+  {
+    me {
+      channels_index {
+        channels {
+          id
+          title
+          counts {
+            contents
+          }
+        }
+      }
+      id
+      slug
+      name
+    }
+  }
+`;
 
 const grovePageFragments = {
   channelContentsConnectable: gql`
@@ -94,5 +112,6 @@ const CHANNEL_SKELETON = gql`
 `;
 
 export {
-  CHANNEL_SKELETON
+  CHANNEL_SKELETON,
+  CURRENT_USER
 }
