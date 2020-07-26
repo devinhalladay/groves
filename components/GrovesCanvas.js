@@ -9,8 +9,6 @@ export default withApollo((props) => {
   const canvas = useRef(null);
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
 
-  const ref = useRef(null)
-
   const [canvasSpace, setCanvasSpace] = useState({
     scrollAreaHeight: null,
     scrollAreaWidth: null,
@@ -19,16 +17,10 @@ export default withApollo((props) => {
     timer: null,
   });
 
-  console.log(ref);
-
   return React.Children.map(props.children, (child) =>
-    <div ref={ref}>
-    {
       React.cloneElement(child, {
       canvasSpace: canvasSpace,
       setCanvasSpace: setCanvasSpace,
     })
-    }
-    </div>
   );
 });

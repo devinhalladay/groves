@@ -28,8 +28,8 @@ const Grove = (props) => {
 
   return (
     <WorkspaceProvider>
+      {selectedConnection && <SelectionPanel />}
       <Layout {...props}>
-        {selectedConnection && <SelectionPanel />}
 
         <GrovesCanvas {...props}>
           {selectedChannel && selectedChannel.channel

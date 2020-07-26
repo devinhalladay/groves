@@ -1,17 +1,23 @@
 import React, { Fragment, useState } from "react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Slider, { Range } from "rc-slider";
+import { useSelection } from "../context/selection-context";
 
 const Layout = (props) => {
+  const { selectedConnection } = useSelection()
+
   return (
     <TransformWrapper
       defaultScale={1}
       defaultPositionX={200}
       defaultPositionY={100}
+      disableOnTarget={[".react-draggable"]}
     >
       {({ zoomIn, zoomOut, resetTransform, setScale, ...rest }) => (
         <Fragment>
-          <div className="zoomTools">
+          <div className="zoomTools" style={{
+          right: selectedConnection ? '330px' : '15px'
+      }}>
             <button className="icon-button" onClick={zoomIn}>
               <svg
                 width="20"
@@ -86,8 +92,8 @@ const Layout = (props) => {
               </svg>
             </button>
           </div>
-          <TransformComponent style={{ width: "10px" }}>
-            <div className="workspace">{props.children}</div>
+          <TransformComponent style={{ width: "10px" }} disableOnTarget={[".react-draggable"]}>
+            {props.children}
           </TransformComponent>
         </Fragment>
       )}

@@ -4,6 +4,7 @@
   height: 160px;
   right: 15px;
   bottom: 15px;
+  transition: all ease-in-out 0.1s;
   padding: 5px 0;
   background: #ffffff;
   border: 1px solid #d7dde4;
@@ -15,7 +16,7 @@
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
-  z-index: 9999999;
+  z-index: 99999;
 }
 
 .sliderContainer {

@@ -27,7 +27,7 @@ export default () => {
       <div className="selection-panel">
         <div className="header">
           <p className="title">Selection</p>
-          <button onClick={() => {
+          <button className="icon-button" onClick={() => {
             setSelectedConnection(null)
           }}>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,10 +53,12 @@ export default () => {
   // console.log(data);
 
   return (
-    <div className="selection-panel">
+    <div className="selection-panel" style={{
+      right: selectedConnection ? '15px' : '-315px'
+    }}>
       <div className="header">
         <p className="title">Selection</p>
-        <button onClick={() => {
+        <button className="icon-button" onClick={() => {
             setSelectedConnection(null)
           }}>
           <svg width="17" height="17" fill="none" xmlns="http://www.w3.org/2000/svg">
