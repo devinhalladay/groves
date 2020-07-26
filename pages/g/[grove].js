@@ -9,7 +9,6 @@ import { gql, NetworkStatus } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import DraggableBlock from "../../components/DraggableBlock";
 import { WorkspaceProvider } from "../../context/workspace-context";
-import { CHANNEL_SKELETON } from '../../queries'
 
 const Grove = (props) => {
   const router = useRouter();
@@ -18,37 +17,16 @@ const Grove = (props) => {
     maxZIndex: 1000,
   });
 
-  const { selectedChannel, setSelectedChannel } = useSelection();
+  const { initialSelection, selectedChannel, setSelectedChannel } = useSelection();
 
-  const { loading, error, data, refetch, networkStatus } = useQuery(
-    CHANNEL_SKELETON,
-    {
-      variables: { channelId: router.query.grove },
-      notifyOnNetworkStatusChange: true,
-      fetchPolicy: "no-cache",
-      notifyOnNetworkStatusChange: true
-    }
-  );
-
-  if (networkStatus === NetworkStatus.refetch) return "Refetching!";
-
-  if (loading) {
-    return "loading";
-  } else if (error) {
-    console.error(error);
-    return `Error: ${error}`;
-  }
-
-  if (data && data.channel) {
-    setSelectedChannel(data.channel);
-  }
+  console.log(initialSelection);
 
   return (
     <WorkspaceProvider>
       <Layout {...props}>
-        {selectedChannel && (
           <GrovesCanvas {...props}>
-            {data.channel.initial_contents.map((blokk, i) => {
+        {selectedChannel && selectedChannel.channel ? 
+            selectedChannel.channel.initial_contents.map((blokk, i) => {
               return (
                 <DraggableBlock
                   title={blokk.title ? blokk.title : null}
@@ -60,9 +38,23 @@ const Grove = (props) => {
                   {...props}
                 />
               );
-            })}
+            })
+            :
+            initialSelection.channel.initial_contents.map((blokk, i) => {
+              return (
+                <DraggableBlock
+                  title={blokk.title ? blokk.title : null}
+                  type={blokk.__typename}
+                  dragStates={dragStates}
+                  setDragStates={setDragStates}
+                  key={blokk.id}
+                  block={blokk}
+                  {...props}
+                />
+              );
+            })
+            }
           </GrovesCanvas>
-        )}
       </Layout>
     </WorkspaceProvider>
   );

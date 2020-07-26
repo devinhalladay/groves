@@ -21,18 +21,6 @@ const CURRENT_USER = gql`
       id
       slug
       name
-      avatar
-      counts {
-        channels
-      }
-      channels(per: 20) {
-        title
-        slug
-        id
-        counts {
-          contents
-        }
-      }
     }
   }
 `;

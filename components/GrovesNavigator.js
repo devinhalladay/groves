@@ -8,6 +8,7 @@ const GrovesNavigator = ({selectedChannel, ...props}) => {
   const router = useRouter();
 
   const { channels, index } = useUser()
+  const { initialSelection } = useSelection()
 
   // TODO: think about handling initial selection logic here
   // rather than in [grove].js itself. I think it would be
@@ -19,7 +20,6 @@ const GrovesNavigator = ({selectedChannel, ...props}) => {
   // through to every child component that needs it.
   
   const allUserChannels = index.flatMap(channelSet => channelSet.channels.flatMap(c => c));
-  const initialSelection = allUserChannels.find((item) => item.id == router.query.grove)
   
   const [inputItems, setInputItems] = useState(allUserChannels);
 
@@ -40,10 +40,10 @@ const GrovesNavigator = ({selectedChannel, ...props}) => {
       }}
       itemToString={(item) => (item ? item.title : "")}
       initialSelectedItem={
-        initialSelection
+        initialSelection.channel
       }
       initialInputValue={
-        initialSelection.title
+        initialSelection.channel.title
       }
     >
       {({
