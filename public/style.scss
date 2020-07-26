@@ -838,7 +838,12 @@ header {
     .block {
     border: 4px solid #FFAE64;
     color: #6f7b8a;
-    box-sizing: content-box;
+    .block {
+      background: #ffffff;
+    border: 1px solid #bdc3ca;
+    color: #6f7b8a;
+    box-sizing: border-box;
+    }
     }
     
   }

@@ -101,8 +101,8 @@ const DraggableBlock = ({
       key={block.id}
       size={{ width: spatialState.width, height: spatialState.height }}
       position={{
-        x: description ? description.x : spatialState.x,
-        y: description ? description.y : spatialState.y,
+        x: spatialState.x,
+        y: spatialState.y,
       }}
       onDragStart={(e) => {
         setZIndex(dragStates.maxZIndex + 1);
