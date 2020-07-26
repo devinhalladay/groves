@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 const Layout = (props) => {
   return (
     <Fragment>
-      <div class="workspace">{props.children}</div>
+      <div className="workspace">{props.children}</div>
     </Fragment>
   );
 };
