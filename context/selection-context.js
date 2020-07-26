@@ -13,6 +13,16 @@ const SelectionProvider = withApollo((props) => {
 
   const [selectedChannel, setSelectedChannel] = useState(null);
 
+  const getChannelID = () => {
+    if (selectedChannel && selectedChannel.id) {
+      return selectedChannel.id
+    } else if (router.query.grove) {
+      return router.query.grove
+    } else {
+      return '757665'
+    }      
+  }
+
   const {
     loading,
     error,
@@ -21,10 +31,7 @@ const SelectionProvider = withApollo((props) => {
     networkStatus,
   } = useQuery(CHANNEL_SKELETON, {
     variables: {
-      channelId:
-        selectedChannel && selectedChannel.id
-          ? selectedChannel.id
-          : router.query.grove
+      channelId: getChannelID()
     },
     fetchPolicy: "no-cache",
     client: props.apollo,
