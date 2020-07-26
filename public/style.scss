@@ -168,6 +168,7 @@ header {
   p {
     padding: 0 15px;
     color: #888888;
+    flex: 1;
   }
 
   .groves-logo-container {
@@ -211,6 +212,22 @@ header {
         li {
           padding: 8px;
           display: block;
+
+          a {
+            text-decoration: none;
+            color: #6f7b8a;
+            padding: 5px 10px;
+            background-color: white;
+            background: linear-gradient(
+                180deg,
+                #ffffff 0%,
+                rgba(255, 255, 255, 0) 100%
+              ),
+              #f5f8fa;
+            border: 1px solid #bdc3ca;
+            box-shadow: 0.25px 0.25px 2px rgba(111, 123, 138, 0.19);
+            border-radius: 2px;
+          }
         }
       }
     }
@@ -836,16 +853,15 @@ header {
 
   &.selected {
     .block {
-    border: 4px solid #FFAE64;
-    color: #6f7b8a;
-    .block {
-      background: #ffffff;
-    border: 1px solid #bdc3ca;
-    color: #6f7b8a;
-    box-sizing: border-box;
+      border: 4px solid #ffae64;
+      color: #6f7b8a;
+      .block {
+        background: #ffffff;
+        border: 1px solid #bdc3ca;
+        color: #6f7b8a;
+        box-sizing: border-box;
+      }
     }
-    }
-    
   }
 
   p {
