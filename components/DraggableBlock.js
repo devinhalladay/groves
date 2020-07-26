@@ -52,22 +52,24 @@ const DraggableBlock = ({
   const rndEl = useRef(null);
 
   let timeout = null;
-  
+
   let analytics = window.analytics;
 
   let handleDragMetric = () => {
     analytics.track("Dragged Block");
   };
 
-  const expandChannelInline = (channel) => {
+  const expandChannelInline = () => {
     setBlockLocalState({
       ...blockLocalState,
       isExpanded: true,
     });
-    setSpatialState({
-      ...spatialState,
-      width: 800,
-      height: 600,
+  };
+
+  const retractChannelInline = () => {
+    setBlockLocalState({
+      ...blockLocalState,
+      isExpanded: false,
     });
   };
 
@@ -90,18 +92,17 @@ const DraggableBlock = ({
       ref={rndEl}
       key={block.id}
       size={{ width: spatialState.width, height: spatialState.height }}
-      lockAspectRatio="true"
       position={{ x: spatialState.x, y: spatialState.y }}
       onDragStart={(e) => {
         if (spatialState.isBeingDragged) {
-            props.setDragStates({
+          props.setDragStates({
             ...props.dragStates,
             maxZIndex: props.dragStates.maxZIndex + 1,
           });
           setZIndex(props.dragStates.maxZIndex);
           setSpatialState({ ...spatialState, isBeingDragged: true });
         } else {
-          return false
+          return false;
         }
       }}
       disableDragging={blockLocalState.isExpanded}
@@ -137,29 +138,36 @@ const DraggableBlock = ({
         }
       }}
       onDragStop={(e, d, deltaX, deltaY) => {
-        if (timeout) {
-          clearTimeout(timeout);
-        }
-        timeout = setTimeout(() => {
-          if (deltaX === 0 && deltaY === 0) {
-            alert("asd");
-            return false;
-          }
-        }, 10);
-
         setSpatialState({
           ...spatialState,
           isBeingDragged: false,
           x: d.x,
           y: d.y,
         });
+
         handleDragMetric();
       }}
+
+      // bounds="parent"
+
+      onResize={(e, direction, ref, delta, position) => {
+        if (spatialState.width + delta.width >= 500 && spatialState.height + delta.height >= 400) {
+          if (block.__typename === "Channel") {
+            expandChannelInline();
+          }
+        } else {
+          if (block.__typename === "Channel") {
+            retractChannelInline();
+          }
+        }
+      }}
+
       onResizeStop={(e, direction, ref, delta, position) => {
+        console.log(spatialState.width + delta.width)
         setSpatialState({
           ...spatialState,
-          width: ref.style.width,
-          height: ref.style.height,
+          width: spatialState.width + delta.width,
+          height: spatialState.height + delta.height,
         });
       }}
       style={{
@@ -170,14 +178,11 @@ const DraggableBlock = ({
         className={`draggable-block-container ${
           block.__typename ? block.__typename : ""
         }`}
-        onClick={() => {
-          if (block.__typename === "Channel") {
-            expandChannelInline();
-          }
-        }}
       >
         {blockLocalState.isExpanded ? (
-          <div className="block">
+          <div
+            className={`block block--${block.__typename.toLowerCase()} block--expanded`}
+          >
             <p>{block.title}</p>
             <InlineExpandedChannel
               channel={block}
@@ -188,7 +193,7 @@ const DraggableBlock = ({
             />
           </div>
         ) : (
-          <div className="block">
+          <div className={`block block--${block.__typename.toLowerCase()}`}>
             <BlockRepresentation block={block} />
           </div>
         )}
