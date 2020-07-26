@@ -1,8 +1,7 @@
 import { Fragment } from "react";
 import parse from "html-react-parser";
 
-export default (props) => {
-  const block = props.block;
+export default ({ block }) => {
 
   if (block.__typename === "Image") {
     return (
@@ -14,7 +13,7 @@ export default (props) => {
     return (
       <Fragment>
         <p className="block--title">{block.title || null}</p>
-        {parse(block.content)}
+        {parse(`${block.content}`)}
       </Fragment>
     );
   } else if (block.__typename === "Link") {
@@ -60,8 +59,6 @@ export default (props) => {
       <Fragment>
         <a target="_blank" rel="noopener noreferrer" href={block.href}>
           <p className="title">{block.title}</p>
-          {/* <p>{block.user.full_name}</p> */}
-          {/* <p>{block.length} blocks</p> */}
         </a>
       </Fragment>
     );

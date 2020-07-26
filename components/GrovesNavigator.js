@@ -1,26 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Downshift from "downshift";
 import { useSelection } from "../context/selection-context";
 import { useRouter } from "next/router";
 import { useUser } from '../context/user-context'
 
-const GrovesNavigator = (props) => {
+const GrovesNavigator = ({selectedChannel, ...props}) => {
   const router = useRouter();
 
-  const { channels } = useUser()
+  const { channels, index } = useUser()
+  const { initialSelection } = useSelection()
 
-  const {
-    selectedChannel,
-    setSelectedChannel,
-  } = useSelection();
-
-  const [inputItems, setInputItems] = useState(channels);
+  // TODO: think about handling initial selection logic here
+  // rather than in [grove].js itself. I think it would be
+  // pretty nice to have all selection logic in one place,
+  // and actually maybe I can create a state subscription in 
+  // the SelectionProvider so subcomponents can subscribe to
+  // SelectionProvider's state and re-render when selection changes.
+  // This would prevent having to thread the selectedChannel
+  // through to every child component that needs it.
+  
+  const allUserChannels = index.flatMap(channelSet => channelSet.channels.flatMap(c => c));
+  
+  const [inputItems, setInputItems] = useState(allUserChannels);
 
   return (
     <Downshift
       onInputValueChange={(inputValue) => {
         setInputItems(
-          channels.filter((item) =>
+          allUserChannels.filter((item) =>
             item.title
               .toLowerCase()
               .replace(/\W/g, "")
@@ -29,22 +36,14 @@ const GrovesNavigator = (props) => {
         );
       }}
       onChange={(selection) => {
-        if (selection === null) {
-          setSelectedChannel(null);
-        } else {
-          router.push(`/g/[grove]`, `/g/${selection.id}`, { shallow: true });
-        }
+        router.push(`/g/[grove]`, `/g/${selection.id}`, { shallow: true });
       }}
       itemToString={(item) => (item ? item.title : "")}
       initialSelectedItem={
-        selectedChannel && selectedChannel.id
-          ? channels.filter((item) => item.id == selectedChannel.id)
-          : null
+        initialSelection.channel
       }
       initialInputValue={
-        selectedChannel && selectedChannel.id
-          ? channels.filter((item) => item.id == selectedChannel.id).title
-          : null
+        initialSelection.channel.title
       }
     >
       {({

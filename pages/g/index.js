@@ -79,9 +79,6 @@ const Root = (props) => {
             dragStates={dragStates}
             setDragStates={setDragStates}
             key={blokk.id}
-            ref={(ref) => {
-              refsArray[i] = ref;
-            }}
             onDrag={() => {
               setIsDragging(true);
             }}
