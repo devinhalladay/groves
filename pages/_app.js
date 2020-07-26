@@ -1,4 +1,5 @@
 import "../public/style.scss";
+import "../public/slider.scss";
 
 import React, { useEffect } from "react";
 import { AuthProvider } from "../context/auth-context";

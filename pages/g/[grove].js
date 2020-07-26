@@ -1,3 +1,4 @@
+import React from "react";
 import { useRouter } from "next/router";
 import { useSelection } from "../../context/selection-context";
 import GrovesCanvas from "../../components/GrovesCanvas";
@@ -29,6 +30,7 @@ const Grove = (props) => {
     <WorkspaceProvider>
       <Layout {...props}>
         {selectedConnection && <SelectionPanel />}
+
         <GrovesCanvas {...props}>
           {selectedChannel && selectedChannel.channel
             ? selectedChannel.channel.initial_contents.map((blokk, i) => {
