@@ -18,6 +18,7 @@ const DraggableBlock = ({
   height,
   ...props
 }) => {
+  const description = JSON.parse(block.description.replace("\n", ""));
   const [zIndex, setZIndex] = useState(1000);
   const [blockLocalState, setBlockLocalState] = useState({
     ...block,
@@ -25,8 +26,8 @@ const DraggableBlock = ({
     draggingEnabled: true,
   });
   const [spatialState, setSpatialState] = useState({
-    x: 200,
-    y: 200,
+    x: description.x || Math.random(window.innerWidth),
+    y: description.y || Math.random(window.innerHeight),
     width: width || 200,
     height: height || 200,
     isBeingDragged: false,
@@ -92,7 +93,7 @@ const DraggableBlock = ({
       ref={rndEl}
       key={block.id}
       size={{ width: spatialState.width, height: spatialState.height }}
-      position={{ x: spatialState.x, y: spatialState.y }}
+      position={{ x: block.description.x || spatialState.x, y: block.description.y || spatialState.y }}
       onDragStart={(e) => {
         if (spatialState.isBeingDragged) {
           props.setDragStates({

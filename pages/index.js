@@ -75,7 +75,6 @@ const Root = (props) => {
           <DraggableBlock
             title={blokk.title ? blokk.title : null}
             type={blokk.image_url ? "image" : "text"}
-            positionOffset={{ x: description.x, y: description.y }}
             block={blokk}
             dragStates={dragStates}
             setDragStates={setDragStates}

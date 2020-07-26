@@ -94,6 +94,7 @@ const CHANNEL_SKELETON = gql`
     channel(id: $channelId) {
       id
       title
+      description
       initial_contents: blokks(
         page: 1
         per: 10
