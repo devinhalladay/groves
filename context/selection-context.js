@@ -33,7 +33,7 @@ const SelectionProvider = withApollo((props) => {
   if (networkStatus === NetworkStatus.refetch) return "Refetching!";
 
   if (loading) {
-    return <Loading />
+    return <Loading description={"Loading your Grove :)"} />
   } else if (error) {
     console.error(error);
     return `Error: ${error}`;

@@ -183,7 +183,6 @@ const DraggableBlock = ({
           <div
             className={`block block--${block.__typename.toLowerCase()} block--expanded`}
           >
-            <p>{block.title}</p>
             <InlineExpandedChannel
               channel={block}
               dragStates={dragStates}

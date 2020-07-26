@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import GrovesCanvas from "./GrovesCanvas";
 import DraggableBlock from "./DraggableBlock";
 import { CHANNEL_SKELETON } from '../queries'
+import Loading from "./Loading";
 
 export default withApollo(({ channel, apollo, dragStates, setDragStates, ...props }) => {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default withApollo(({ channel, apollo, dragStates, setDragStates, ...prop
   });
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   return (
