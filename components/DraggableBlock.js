@@ -13,6 +13,10 @@ import { useSelection } from "../context/selection-context";
 import { useAuth } from '../context/auth-context'
 import { useWorkspace } from "../context/workspace-context";
 
+// TODO: Need to break up this component, it's all kinds of fucked up
+// and recursively renders itself via InlineExpandedChannel which
+// feels bad and makes it hard to keep track of props
+
 const DraggableBlock = ({
   canvasSpace,
   setCanvasSpace,
@@ -21,6 +25,8 @@ const DraggableBlock = ({
   height,
   dragStates,
   setDragStates,
+  parentDimensions,
+  dragHandleClassName,
   ...props
 }) => {
   let description;
@@ -41,12 +47,24 @@ const DraggableBlock = ({
   });
 
   const [spatialState, setSpatialState] = useState({
-    x: description
-      ? description.x
-      : Math.random(window.innerWidth) * window.innerWidth,
-    y: description
-      ? description.y
-      : Math.random(window.innerHeight) * window.innerHeight,
+    x: (() => {
+      if (description) {
+        return description.x;
+      } else if (parentDimensions) {
+        return Math.random(parentDimensions.width) * parentDimensions.width;
+      } else {
+        return Math.random(window.innerWidth) * window.innerWidth;
+      }
+    }).call(),
+    y: (() => {
+      if (description) {
+        return description.y;
+      } else if (parentDimensions) {
+        return Math.random(parentDimensions.height) * parentDimensions.height;
+      } else {
+        return Math.random(window.innerHeight) * window.innerHeight;
+      }
+    }).call(),
     width: width || 200,
     height: height || 200,
     isBeingDragged: false,
@@ -74,7 +92,6 @@ const DraggableBlock = ({
   };
 
   const expandChannelInline = () => {
-    console.log("expand");
     setBlockLocalState({
       ...blockLocalState,
       isExpanded: true,
@@ -82,7 +99,6 @@ const DraggableBlock = ({
   };
 
   const retractChannelInline = () => {
-    console.log("retract");
     setBlockLocalState({
       ...blockLocalState,
       isExpanded: false,
@@ -158,17 +174,29 @@ const DraggableBlock = ({
     }
   };
 
+  const dismissInlineChannel = () => {
+    setBlockLocalState({
+      ...blockLocalState,
+      isExpanded: false,
+    });
+
+    setSpatialState({
+      ...spatialState,
+      width: 200,
+      height: 200,
+    });
+  };
+
   const handleResize = (delta) => {
-    console.log(delta);
     if (block.__typename === "Channel") {
       if (
-        spatialState.width + delta.width === 500 &&
-        spatialState.height + delta.height === 400
+        spatialState.width + delta.width <= 500 &&
+        spatialState.height + delta.height <= 400
       ) {
         retractChannelInline();
       } else if (
-        spatialState.width + delta.width >= 500 &&
-        spatialState.height + delta.height >= 400
+        spatialState.width + delta.width > 500 &&
+        spatialState.height + delta.height > 400
       ) {
         expandChannelInline();
       }
@@ -183,8 +211,7 @@ const DraggableBlock = ({
     });
   };
 
-  const renderInlineChannel = () => {
-    console.log("rendered inline");
+  const renderChannelInline = () => {
     return (
       <div
         className={`block block--${block.__typename.toLowerCase()} block--expanded`}
@@ -195,6 +222,13 @@ const DraggableBlock = ({
           setDragStates={setDragStates}
           setSpatialState={setSpatialState}
           spatialState={spatialState}
+          parentDimensions={{
+            width: spatialState.width,
+            height: spatialState.height,
+          }}
+          dragHandleClassName="header"
+          dismissInlineChannel={dismissInlineChannel}
+          {...props}
         />
       </div>
     );
@@ -221,13 +255,14 @@ const DraggableBlock = ({
       onDragStart={(e) => {
         handleDragStart(e);
       }}
-      disableDragging={blockLocalState.isExpanded}
+      // disableDragging={blockLocalState.isExpanded}
       onDrag={(e, d) => {
         handleDrag(e, d);
       }}
       onDragStop={(e, d) => {
         handleDragStop(e, d);
       }}
+      dragHandleClassName={dragHandleClassName}
       // TODO: Figure out how to set bounds for DraggableBlocks that are expanded channels
       // Might actually make more sense to completely refactor the block rendering
       // logic, since a good chunk of the work moving forward will rely on it being solid.
@@ -235,7 +270,7 @@ const DraggableBlock = ({
       onResize={(e, direction, ref, delta, position) => {
         handleResize(delta);
       }}
-      onResizeStop={(delta) => {
+      onResizeStop={(e, direction, ref, delta, position) => {
         handleResizeStop(delta);
       }}
       style={{
@@ -254,7 +289,7 @@ const DraggableBlock = ({
         }`}
       >
         {blockLocalState.isExpanded ? (
-          renderInlineChannel()
+          renderChannelInline()
         ) : (
           <div className={`block block--${block.__typename.toLowerCase()}`}>
             <BlockRepresentation block={block} />

@@ -5,7 +5,6 @@ import { useWorkspace } from "../context/workspace-context";
 import withApollo from "../lib/withApollo";
 
 export default withApollo((props) => {
-  const canvas = useRef(null);
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
 
   const [canvasSpace, setCanvasSpace] = useState({

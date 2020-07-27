@@ -40,9 +40,7 @@ export default ({ block }) => {
   } else if (block.__typename === "Channel") {
     return (
       <Fragment>
-        <a target="_blank" rel="noopener noreferrer" href={block.href}>
-          <p className="title">{block.title}</p>
-        </a>
+          <p className="block--title">{block.title}</p>
       </Fragment>
     );
   } else {
