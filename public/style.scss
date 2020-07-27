@@ -476,6 +476,13 @@ header {
   flex-direction: column;
   border-radius: 0.125em;
   margin: auto;
+  
+  .icon-button {
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
 }
 
 .block {
@@ -802,7 +809,7 @@ header {
     opacity: 1;
   }
 
-  &:active {
+  &.isBeingDragged {
     border: 1.5px solid #47a7ff;
     box-sizing: border-box;
     box-shadow: 0px 5.60708px 16.8212px rgba(111, 123, 138, 0.2),
