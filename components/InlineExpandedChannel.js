@@ -8,7 +8,7 @@ import { CHANNEL_SKELETON } from "../queries";
 import Loading from "./Loading";
 
 export default withApollo(
-  ({ channel, apollo, dragStates, setDragStates, parentDimensions,dismissInlineChannel, dragHandleClassName,...props }) => {
+  ({ channel, apollo, dragStates, setDragStates, parentDimensions,dismissInlineChannel,...props }) => {
     const router = useRouter();
 
     const { data, loading, error } = useQuery(CHANNEL_SKELETON, {
@@ -51,8 +51,8 @@ export default withApollo(
                   dragStates={dragStates}
                   setDragStates={setDragStates}
                   key={blokk.id}
-                  dragHandleClassName={dragHandleClassName}
                   block={blokk}
+                  dragHandleClassName={"header"}
                   {...props}
                 ></DraggableBlock>
               );
