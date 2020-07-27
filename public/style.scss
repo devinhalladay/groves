@@ -492,8 +492,8 @@ header {
   display: block;
   background-color: white;
   user-select: none;
-  width: 315px;
-  height: 315px;
+  // width: 315px;
+  // height: 315px;
   margin-bottom: 3em;
   text-decoration: none;
 }
@@ -770,8 +770,11 @@ header {
 }
 
 .draggable-block-container {
+<<<<<<< HEAD
   // width: 100%;
   // height: 100%;
+=======
+>>>>>>> 5d01cff... Minor styling improvements. Bedtime
   background: #ffffff;
   border: 1px solid #bdc3ca;
   color: #6f7b8a;
@@ -782,7 +785,11 @@ header {
   transform: rotate(0deg);
   transition: 0.2s all ease;
 
+<<<<<<< HEAD
   &.Channel {
+=======
+  &.Channel,&.Text {
+>>>>>>> 5d01cff... Minor styling improvements. Bedtime
     width: 100%;
     height: 100%;
   }
@@ -892,8 +899,8 @@ header {
   }
 
   .block {
-    width: 100%;
-    height: 100%;
+    // width: 100%;
+    // height: 100%;
     display: flex;
     flex-direction: column;
     flex-flow: column;
@@ -908,6 +915,13 @@ header {
       overflow-y: scroll;
       width: 100%;
       height: 100%;
+      box-shadow: none;
+    }
+
+    .image {
+      overflow-y: scroll;
+      // width: unset;
+      // height: unset;
       box-shadow: none;
     }
 

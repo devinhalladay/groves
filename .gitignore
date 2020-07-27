@@ -21,6 +21,7 @@ certs/
 .env.development.local
 .env.test.local
 .env.build
+.vscode
 
 *.lock
 yarn.lock
