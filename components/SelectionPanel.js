@@ -45,13 +45,7 @@ export default () => {
     console.log(error);
     return error;
   }
-
-  // if (data && data.block) {
-  //   console.log(data.block);
-  // }
-
-  // console.log(data);
-
+  
   return (
     <div className="selection-panel">
       <div className="header">
