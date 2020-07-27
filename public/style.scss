@@ -1118,3 +1118,26 @@ header {
     }
   }
 }
+
+button, .button {
+  text-decoration: none;
+  color: #6f7b8a;
+  padding: 5px 10px;
+  background-color: white;
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%),
+    #f5f8fa;
+  border: 1px solid #bdc3ca;
+  box-shadow: 0.25px 0.25px 2px rgba(111, 123, 138, 0.19);
+  border-radius: 2px;
+}
+
+.icon-button {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  border-radius: 0;
+  box-shadow: none;
+}
