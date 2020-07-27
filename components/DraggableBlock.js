@@ -87,6 +87,8 @@ const DraggableBlock = ({
     setSpatialState({
       ...spatialState,
       isExpanded: true,
+      width: 800,
+      height: 600
     });
   };
 
@@ -202,13 +204,10 @@ const DraggableBlock = ({
     setSpatialState({
       ...spatialState,
       isExpanded: false,
-    });
-
-    setSpatialState({
-      ...spatialState,
       width: 200,
       height: 200,
     });
+
   };
 
   const renderChannelInline = () => {
@@ -219,6 +218,7 @@ const DraggableBlock = ({
         setDragStates={setDragStates}
         setSpatialState={setSpatialState}
         spatialState={spatialState}
+        dismissInlineChannel={dismissInlineChannel}
         parentDimensions={{
           width: spatialState.width,
           height: spatialState.height,
@@ -284,12 +284,26 @@ const DraggableBlock = ({
             "draggable-block-container--expanded"
           :
             ""
+        } ${
+          spatialState.isBeingDragged ?
+            "isBeingDragged"
+          :
+            ""
         }`}
       >
         {spatialState.isExpanded ? (
           renderChannelInline()
         ) : (
           <div className={`block block--${block.__typename.toLowerCase()}`}>
+            {block.__typename === "Channel" &&
+            <button className="icon-button" onClick={expandChannelInline}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 13L12.9995 13V8" stroke="#BDC3CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.99951 3L3 3L3 8.00001" stroke="#BDC3CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+
+          </button>}
             <BlockRepresentation block={block} />
           </div>
         )}

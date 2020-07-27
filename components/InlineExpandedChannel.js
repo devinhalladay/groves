@@ -26,7 +26,7 @@ export default withApollo(
       <>
       <div className="header">
           <p className="title">{channel.title}</p>
-          <button onClick={dismissInlineChannel}>
+          <button className="icon-button" onClick={dismissInlineChannel}>
           <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0)">
 <path d="M15.0132 10L10.0137 10L10.0137 15" stroke="#BDC3CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
