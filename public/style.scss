@@ -770,8 +770,8 @@ header {
 }
 
 .draggable-block-container {
-  width: 100%;
-  height: 100%;
+  // width: 100%;
+  // height: 100%;
   background: #ffffff;
   border: 1px solid #bdc3ca;
   color: #6f7b8a;
@@ -781,6 +781,11 @@ header {
   border-radius: 2px;
   transform: rotate(0deg);
   transition: 0.2s all ease;
+
+  &.Channel {
+    width: 100%;
+    height: 100%;
+  }
 
   .nested-canvas {
     position: relative;
