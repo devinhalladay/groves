@@ -84,6 +84,11 @@ const AuthenticatedHeader = (props) => {
             </div>
             <p>Groves</p>
           </nav>
+          <div className="grove-actions">
+            <button onClick={() => {}}>
+              <img src="/arrow.svg" />
+            </button>
+          </div>
         </header>
       </Panel>
     );
