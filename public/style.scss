@@ -772,11 +772,6 @@ header {
 }
 
 .draggable-block-container {
-<<<<<<< HEAD
-  // width: 100%;
-  // height: 100%;
-=======
->>>>>>> 5d01cff... Minor styling improvements. Bedtime
   background: #ffffff;
   border: 1px solid #bdc3ca;
   color: #6f7b8a;
@@ -787,11 +782,7 @@ header {
   transform: rotate(0deg);
   transition: 0.2s all ease;
 
-<<<<<<< HEAD
-  &.Channel {
-=======
   &.Channel,&.Text {
->>>>>>> 5d01cff... Minor styling improvements. Bedtime
     width: 100%;
     height: 100%;
   }
