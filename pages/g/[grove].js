@@ -43,17 +43,11 @@ const Grove = (props) => {
   const {
     initialSelection,
     selectedChannel,
-    setSelectedChannel,
     selectedConnection,
   } = useSelection();
 
   const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles);
-
     acceptedFiles.map(async (file) => {
-      console.log(file);
-      const { type } = file
-
       setFiles(
         files.concat(
           Object.assign(file, {
