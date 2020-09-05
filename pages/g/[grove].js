@@ -102,10 +102,6 @@ const Grove = (props) => {
   const {
     getRootProps,
     getInputProps,
-    isDragActive,
-    acceptedFiles,
-    rejectedFiles,
-    inputRef,
   } = useDropzone({
     onDrop,
     noClick: true,

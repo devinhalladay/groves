@@ -13,15 +13,45 @@ const GrovesNavigator = (props) => {
   // TODO: think about handling initial selection logic here
   // rather than in [grove].js itself. I think it would be
   // pretty nice to have all selection logic in one place,
-  // and actually maybe I can create a state subscription in 
+  // and actually maybe I can create a state subscription in
   // the SelectionProvider so subcomponents can subscribe to
   // SelectionProvider's state and re-render when selection changes.
   // This would prevent having to thread the selectedChannel
   // through to every child component that needs it.
-  
+
   const allUserChannels = index.flatMap(channelSet => channelSet.channels.flatMap(c => c));
-  
+
   const [inputItems, setInputItems] = useState(allUserChannels);
+
+  function ChannelSearchAutocompleteMenu({
+    data: { channels, loading },
+    selectedItem,
+    highlightedIndex,
+    getItemProps,
+  }) {
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+    return (
+      <div>
+        {channels.map((channel, index) => (
+          <div
+            {...getItemProps({
+              channel,
+              index,
+              key: channel.id,
+              style: {
+                backgroundColor: highlightedIndex === index ? "gray" : "white",
+                fontWeight: selectedItem === item ? "bold" : "normal",
+              },
+            })}
+          >
+            {channel.title}
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <Downshift
