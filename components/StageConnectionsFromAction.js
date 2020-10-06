@@ -4,6 +4,17 @@ import { useCombobox } from "downshift";
 import { useLazyQuery } from "@apollo/react-hooks";
 import { SEARCH_ALL_CHANNELS } from "../queries";
 
+const renderResult = (inputItem) => {
+  return (
+    <li>
+      <p className="channel-title">{inputItem.title}</p>
+      <p className="meta">
+        {inputItem.user.name} • {inputItem.counts.contents}
+      </p>
+    </li>
+  );
+};
+
 export default () => {
   const [visible, setVisible] = useState(false);
 
@@ -19,7 +30,7 @@ export default () => {
   }, [inputElement.current]);
 
   const DropdownCombobox = () => {
-    const [inputItems, setInputItems] = useState();
+    const [inputItems, setInputItems] = useState([]);
 
     const [loadChannels, { called, loading, data }] = useLazyQuery(
       SEARCH_ALL_CHANNELS
@@ -27,7 +38,7 @@ export default () => {
 
     const {
       isOpen,
-      getToggleButtonProps,
+      defaultIsOpen,
       getLabelProps,
       getMenuProps,
       getInputProps,
@@ -36,29 +47,39 @@ export default () => {
       getItemProps,
     } = useCombobox({
       items: inputItems,
+      itemToString: (item) => (item && item.title ? item.title : ""),
       onInputValueChange: ({ inputValue }) => {
-        setInputItems(
-          items.filter((item) =>
-            item.toLowerCase().startsWith(inputValue.toLowerCase())
-          )
-        );
+        loadChannels({
+          variables: { q: inputValue, per: 10 },
+          diplayName: "Search All Channels",
+        });
+
+        if (data) {
+          let items = data.ssearch;
+          setInputItems(
+            // items.filter((item) => {
+            //   item.title.toLowerCase().startsWith(inputValue.toLowerCase());
+            // })
+            items
+          );
+
+          console.log(inputItems);
+        }
       },
     });
+
     return (
-      <div>
-        <label {...getLabelProps()}>Choose an element:</label>
+      <>
+        <label {...getLabelProps()}>Search public channels:</label>
         <div {...getComboboxProps()}>
-          <input {...getInputProps()} />
-          <button
-            type="button"
-            {...getToggleButtonProps()}
-            aria-label="toggle menu"
-          >
-            &#8595;
-          </button>
+          <input
+            {...getInputProps({
+              placeholder: "Channel title…",
+            })}
+          />
         </div>
         <ul {...getMenuProps()}>
-          {isOpen &&
+          {
             inputItems.map((item, index) => (
               <li
                 style={
@@ -69,13 +90,13 @@ export default () => {
                 key={`${item}${index}`}
                 {...getItemProps({ item, index })}
               >
-                {item}
+                {item.titlea}
               </li>
             ))}
         </ul>
-      </div>
+      </>
     );
-  }
+  };
 
   return (
     <Tippy
@@ -86,27 +107,11 @@ export default () => {
       delay={100}
       content={
         <>
-          <p className="title">Connect a channel</p>
+          <p className="title">Connect to a channel</p>
           <div className="input--inline">
             <DropdownCombobox />
             {/* <label for="channel">Channel Name</label>
             <input type="text" name="channel" ref={inputElement} id="channel" /> */}
-          </div>
-          <div className="results">
-            <ul>
-              <li>
-                <p className="channel-title">
-                  <strong>Liquid</strong> Disintegration
-                </p>
-                <p className="meta">Devin Halladay • 23 Blocks</p>
-              </li>
-              <li>
-                <p className="channel-title">
-                  <strong>Liquid</strong>ation Chronicles
-                </p>
-                <p className="meta">Tanvi Sharma • 47 Blocks</p>
-              </li>
-            </ul>
           </div>
         </>
       }
@@ -114,7 +119,7 @@ export default () => {
       onClickOutside={hide}
     >
       <button className="action" onClick={visible ? hide : show}>
-        <img src="/connect.svg" />
+        <img src="/connect-from.svg" />
       </button>
     </Tippy>
   );
