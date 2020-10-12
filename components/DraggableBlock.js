@@ -92,8 +92,6 @@ const DraggableBlock = ({
     setSpatialState({
       ...spatialState,
       isExpanded: true,
-      width: 800,
-      height: 600
     });
   };
 
