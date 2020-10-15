@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
-    "postinstall": "patch-package"
+    "start": "NODE_ENV=production node server.js"
   },
   "author": "devin@devinhalladay.com",
   "license": "ISC",
@@ -30,7 +29,7 @@
     "react-collapsible": "^2.7.0",
     "react-dom": "^16.12.0",
     "react-draggable": "^4.4.2",
-    "react-easy-panzoom": "^0.4.4",
+    "react-easy-panzoom": "devinhalladay/react-easy-panzoom",
     "react-rnd": "^10.2.0",
     "sass": "^1.26.3"
   },

@@ -1,10 +1,14 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import Slider, { Range } from "rc-slider";
 import { useSelection } from "../context/selection-context";
 import { PanZoom } from "react-easy-panzoom";
+import { useWorkspace } from "../context/workspace-context";
 
 const Layout = (props) => {
   const { selectedConnection } = useSelection();
+  const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
+
+  const panZoomRef = useRef(null)
 
   const preventPan = (event, x, y) => {
     // if the target is the content container then prevent panning
@@ -17,17 +21,18 @@ const Layout = (props) => {
     }
   };
 
-  const onWheel = ({ dx, dy, scale }) => {
-    console.log(scale);
+  const onWheel = () => {
+    panZoomRef.current && setWorkspaceOptions({ ...workspaceOptions, zoomScale: panZoomRef.current.scale})
   }
 
   return (
     <PanZoom
-      autoCenter={true}
-      boundaryRatioVertical={0.8}
-      boundaryRatioHorizontal={0.8}
-      enableBoundingBox
-      realPinch={true}
+      ref={panZoomRef}
+      // autoCenter={true}
+      // boundaryRatioVertical={0.8}
+      // boundaryRatioHorizontal={0.8}
+      // enableBoundingBox
+      // realPinch={true}
       style={{
         width: "100vw",
         height: "100vh",
