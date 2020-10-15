@@ -11,6 +11,7 @@ import InlineExpandedChannel from "./InlineExpandedChannel";
 import withApollo from "../lib/withApollo";
 import { useSelection } from "../context/selection-context";
 import { useAuth } from '../context/auth-context'
+import { useWorkspace } from "../context/workspace-context";
 
 const DraggableBlock = ({
   canvasSpace,
@@ -24,11 +25,13 @@ const DraggableBlock = ({
 }) => {
   let description
 
+  const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
+
   if (block.description && block.description.includes('"x":')) {
     description = JSON.parse(block.description.replace("\n", ""));
   }
   const [zIndex, setZIndex] = useState(dragStates.maxZIndex);
-  
+
   const { selectedConnection, setSelectedConnection, selectedRef, setSelectedRef } = useSelection()
 
   const [blockLocalState, setBlockLocalState] = useState({
@@ -104,6 +107,7 @@ const DraggableBlock = ({
         x: spatialState.x,
         y: spatialState.y,
       }}
+      scale={workspaceOptions.zoomScale}
       onDragStart={(e) => {
         setZIndex(dragStates.maxZIndex + 1);
         setDragStates({
@@ -120,7 +124,7 @@ const DraggableBlock = ({
       onDrag={(e, d) => {
         setSpatialState({
           ...spatialState,
-          isBeingDragged: !(d.x < 5  && d.y < 5),
+          isBeingDragged: !(d.x < 5 && d.y < 5),
           cursor: {
             ...spatialState.cursor,
             movementDirection: getMovementDirection(e, d),
@@ -151,18 +155,18 @@ const DraggableBlock = ({
       onDragStop={(e, d, deltaX, deltaY) => {
         if (spatialState.isBeingDragged) {
           setSpatialState({
-          ...spatialState,
-          isBeingDragged: false,
-          x: d.x,
-          y: d.y,
-        });
+            ...spatialState,
+            isBeingDragged: false,
+            x: d.x,
+            y: d.y,
+          });
 
-        handleDragMetric();
+          handleDragMetric();
         } else {
           setSelectedConnection({
-            ...block
-          })
-          setSelectedRef(rndEl)
+            ...block,
+          });
+          setSelectedRef(rndEl);
         }
       }}
       // bounds="parent"
@@ -195,7 +199,13 @@ const DraggableBlock = ({
       <div
         className={`draggable-block-container ${
           block.__typename ? block.__typename : ""
-        } ${ (selectedConnection && selectedConnection.id) ? ((block.id === selectedConnection.id) ? 'selected' : "") : "" }`}
+        } ${
+          selectedConnection && selectedConnection.id
+            ? block.id === selectedConnection.id
+              ? "selected"
+              : ""
+            : ""
+        }`}
       >
         {blockLocalState.isExpanded ? (
           <div
