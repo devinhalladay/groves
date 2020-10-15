@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { CHANNEL_SKELETON } from "../queries";
 import { useRouter } from "next/router";
 import withApollo from "../lib/withApollo";
-import { NetworkStatus } from "apollo-boost";
+import { NetworkStatus } from "@apollo/client";
 import Loading from "../components/Loading";
 
 const SelectionContext = createContext();

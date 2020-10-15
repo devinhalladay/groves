@@ -5,8 +5,8 @@ import { parseCookies } from "nookies";
 import Layout from "../../components/Layout";
 import { useState, Fragment } from "react";
 import withApollo from "../../lib/withApollo";
-import { gql, NetworkStatus } from "apollo-boost";
-import { useQuery } from "@apollo/react-hooks";
+import { gql, NetworkStatus } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import DraggableBlock from "../../components/DraggableBlock";
 import { WorkspaceProvider } from "../../context/workspace-context";
 
@@ -23,7 +23,7 @@ const Grove = (props) => {
     <WorkspaceProvider>
       <Layout {...props}>
           <GrovesCanvas {...props}>
-        {selectedChannel && selectedChannel.channel ? 
+        {selectedChannel && selectedChannel.channel ?
             selectedChannel.channel.initial_contents.map((blokk, i) => {
               return (
                 <DraggableBlock

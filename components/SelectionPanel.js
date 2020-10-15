@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import { useSelection } from "../context/selection-context";
 import parse from "html-react-parser";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import Loading from "./Loading";
 import { SELECTED_BLOCK, SELECTED_CHANNEL } from "../queries";
-import { NetworkStatus } from "apollo-boost";
+import { NetworkStatus } from "@apollo/client";
 
 export default () => {
   const { selectedConnection, setSelectedConnection } = useSelection();

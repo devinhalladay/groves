@@ -3,7 +3,6 @@ import { useSelection } from "../context/selection-context";
 import MillerPanel from "./MillerPanel";
 import { useWorkspace } from "../context/workspace-context";
 import withApollo from "../lib/withApollo";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 export default withApollo((props) => {
   const canvas = useRef(null);
