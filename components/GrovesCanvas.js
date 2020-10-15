@@ -17,7 +17,7 @@ export default withApollo((props) => {
   });
 
   return React.Children.map(props.children, (child) =>
-      React.cloneElement(child, {
+    React.cloneElement(child, {
       canvasSpace: canvasSpace,
       setCanvasSpace: setCanvasSpace,
     })

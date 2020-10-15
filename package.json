@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server.js",
+    "postinstall": "patch-package"
   },
   "author": "devin@devinhalladay.com",
   "license": "ISC",
@@ -35,6 +36,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
-    "babel-loader": "^8.0.6"
+    "babel-loader": "^8.0.6",
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0"
   }
 }
