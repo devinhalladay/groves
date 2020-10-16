@@ -47,66 +47,66 @@ const Grove = (props) => {
     selectedConnection,
   } = useSelection();
 
-  const onDrop = useCallback((acceptedFiles) => {
-    acceptedFiles.map(async (file) => {
-      setFiles(
-        files.concat(
-          Object.assign(file, {
-            block: {
-              __typename: "Image",
-              description: null,
-              title: file.name,
-              id: router.query.grove,
-              image_url: URL.createObjectURL(file),
-            },
-          })
-        )
-      );
+  // const onDrop = useCallback((acceptedFiles) => {
+  //   acceptedFiles.map(async (file) => {
+  //     setFiles(
+  //       files.concat(
+  //         Object.assign(file, {
+  //           block: {
+  //             __typename: "Image",
+  //             description: null,
+  //             title: file.name,
+  //             id: router.query.grove,
+  //             image_url: URL.createObjectURL(file),
+  //           },
+  //         })
+  //       )
+  //     );
 
-      const res = await fetch(
-        `${process.env.APPLICATION_API_CALLBACK}/${process.env.APPLICATION_API_PATH}/add-block`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify({
-            path: file.path,
-            type: file.type,
-            name: file.name,
-          }),
-        }
-      );
+  //     const res = await fetch(
+  //       `${process.env.APPLICATION_API_CALLBACK}/${process.env.APPLICATION_API_PATH}/add-block`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "Access-Control-Allow-Origin": "*",
+  //         },
+  //         body: JSON.stringify({
+  //           path: file.path,
+  //           type: file.type,
+  //           name: file.name,
+  //         }),
+  //       }
+  //     );
 
-      res.json().then(({ signedRequest, url }) => {
-        fetch(signedRequest, {
-          method: "PUT",
-          body: file,
-          headers: {
-            "Content-Type": file.type,
-          },
-        }).then((res) => {
-          console.log(res);
+  //     res.json().then(({ signedRequest, url }) => {
+  //       fetch(signedRequest, {
+  //         method: "PUT",
+  //         body: file,
+  //         headers: {
+  //           "Content-Type": file.type,
+  //         },
+  //       }).then((res) => {
+  //         console.log(res);
 
-          addBlock({
-            variables: {
-              channelId: router.query.grove,
-              value: url,
-            },
-          });
-        });
-      });
-    });
-  }, []);
+  //         addBlock({
+  //           variables: {
+  //             channelId: router.query.grove,
+  //             value: url,
+  //           },
+  //         });
+  //       });
+  //     });
+  //   });
+  // }, []);
 
-  const {
-    getRootProps,
-    getInputProps,
-  } = useDropzone({
-    onDrop,
-    noClick: true,
-  });
+  // const {
+  //   getRootProps,
+  //   getInputProps,
+  // } = useDropzone({
+  //   onDrop,
+  //   noClick: true,
+  // });
 
   useEffect(
     () => () => {
@@ -129,11 +129,13 @@ const Grove = (props) => {
         draggable={false}
         pauseOnHover={false}
       />
-      <Layout {...getRootProps()} {...props}>
+      {/* <Layout {...getRootProps()} {...props}> */}
+      <Layout {...props}>
+        {selectedConnection && <SelectionPanel />}
         <GrovesCanvas {...props}>
           {selectedChannel && selectedChannel.channel ? (
             <>
-              <input {...getInputProps()} hidden />
+              {/* <input {...getInputProps()} hidden /> */}
               {selectedChannel.channel.initial_contents.map((blokk, i) => {
                 return (
                   <>
