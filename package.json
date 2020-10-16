@@ -33,6 +33,7 @@
     "react-draggable": "^4.4.2",
     "react-easy-panzoom": "devinhalladay/react-easy-panzoom",
     "react-rnd": "^10.2.0",
+    "react-toastify": "^6.0.9",
     "sass": "^1.26.3"
   },
   "devDependencies": {

@@ -1311,3 +1311,17 @@ border-radius: 2px;
     left:0;
     top:0;
   }
+  .inline-combobox {
+    border-top: 1px solid #bdc3ca;
+    padding-top: 10px;
+    margin-top: 5px;
+    font-size: 14px;
+    max-height: 150px;
+    overflow: scroll;
+
+    li {
+      height: 26px;
+      display: flex;
+      align-items: center;
+    }
+  }

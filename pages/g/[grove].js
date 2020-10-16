@@ -14,6 +14,7 @@ import SelectionPanel from "../../components/SelectionPanel";
 import { useDropzone } from "react-dropzone";
 import { ADD_BLOCK } from "../../mutations";
 import { useMutation } from "@apollo/client";
+import { ToastContainer } from "react-toastify";
 
 const Grove = (props) => {
   const router = useRouter();
@@ -117,6 +118,17 @@ const Grove = (props) => {
 
   return (
     <WorkspaceProvider>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover={false}
+      />
       <Layout {...getRootProps()} {...props}>
         <GrovesCanvas {...props}>
           {selectedChannel && selectedChannel.channel ? (
