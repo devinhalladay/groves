@@ -23,7 +23,7 @@ const DraggableBlock = ({
   setDragStates,
   ...props
 }) => {
-  let description
+  let description;
 
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
 
@@ -39,9 +39,14 @@ const DraggableBlock = ({
     isExpanded: false,
     draggingEnabled: true,
   });
+
   const [spatialState, setSpatialState] = useState({
-    x: description ? description.x : (Math.random(window.innerWidth) * window.innerWidth),
-    y: description ? description.y : (Math.random(window.innerHeight) * window.innerHeight),
+    x: description
+      ? description.x
+      : Math.random(window.innerWidth) * window.innerWidth,
+    y: description
+      ? description.y
+      : Math.random(window.innerHeight) * window.innerHeight,
     width: width || 200,
     height: height || 200,
     isBeingDragged: false,
@@ -62,8 +67,6 @@ const DraggableBlock = ({
 
   const rndEl = useRef(null);
 
-  let timeout = null;
-
   let analytics = window.analytics;
 
   let handleDragMetric = () => {
@@ -71,6 +74,7 @@ const DraggableBlock = ({
   };
 
   const expandChannelInline = () => {
+    console.log("expand");
     setBlockLocalState({
       ...blockLocalState,
       isExpanded: true,
@@ -78,6 +82,7 @@ const DraggableBlock = ({
   };
 
   const retractChannelInline = () => {
+    console.log("retract");
     setBlockLocalState({
       ...blockLocalState,
       isExpanded: false,
@@ -97,6 +102,111 @@ const DraggableBlock = ({
       return { x: "left" };
     }
   };
+  const handleDragStart = (e) => {
+    setZIndex(dragStates.maxZIndex + 1);
+    setDragStates({
+      ...dragStates,
+      maxZIndex: dragStates.maxZIndex + 1,
+    });
+    if (spatialState.isBeingDragged) {
+      setSpatialState({ ...spatialState, isBeingDragged: true });
+    } else {
+      return false;
+    }
+  };
+
+  const handleDrag = (e, d) => {
+    setSpatialState({
+      ...spatialState,
+      isBeingDragged: !(d.x < 5 && d.y < 5),
+      cursor: {
+        ...spatialState.cursor,
+        movementDirection: getMovementDirection(e, d),
+        cursorPosition: cursorPositionInViewport(e),
+        edgeBottom: viewportDimensions().height - spatialState.cursor.edgeSize,
+        edgeRight: viewportDimensions().width - spatialState.cursor.edgeSize,
+        isInLeftEdge:
+          spatialState.cursor.cursorPosition.x < spatialState.cursor.edgeLeft,
+        isInRightEdge:
+          spatialState.cursor.cursorPosition.x > spatialState.cursor.edgeRight,
+        isInTopEdge:
+          spatialState.cursor.cursorPosition.y < spatialState.cursor.edgeTop,
+        isInBottomEdge:
+          spatialState.cursor.cursorPosition.y > spatialState.cursor.edgeBottom,
+      },
+    });
+
+    if (shouldScrollAtEdge(spatialState.cursor, e)) {
+      adjustWindowScroll(spatialState.cursor);
+    }
+  };
+
+  const handleDragStop = (e, d) => {
+    if (spatialState.isBeingDragged) {
+      setSpatialState({
+        ...spatialState,
+        isBeingDragged: false,
+        x: d.x,
+        y: d.y,
+      });
+
+      handleDragMetric();
+    } else {
+      setSelectedConnection({
+        ...block,
+      });
+    }
+  };
+
+  const handleResize = (delta) => {
+    console.log(delta);
+    if (block.__typename === "Channel") {
+      if (
+        spatialState.width + delta.width === 500 &&
+        spatialState.height + delta.height === 400
+      ) {
+        retractChannelInline();
+      } else if (
+        spatialState.width + delta.width >= 500 &&
+        spatialState.height + delta.height >= 400
+      ) {
+        expandChannelInline();
+      }
+    }
+  };
+
+  const handleResizeStop = (delta) => {
+    setSpatialState({
+      ...spatialState,
+      width: spatialState.width + delta.width,
+      height: spatialState.height + delta.height,
+    });
+  };
+
+  const renderInlineChannel = () => {
+    console.log("rendered inline");
+    return (
+      <div
+        className={`block block--${block.__typename.toLowerCase()} block--expanded`}
+      >
+        <InlineExpandedChannel
+          channel={block}
+          dragStates={dragStates}
+          setDragStates={setDragStates}
+          setSpatialState={setSpatialState}
+          spatialState={spatialState}
+        />
+      </div>
+    );
+  };
+
+  const blockProps = {
+    block: block,
+    dragStates: dragStates,
+    setDragStates: setDragStates,
+    setSpatialState: setSpatialState,
+    spatialState: spatialState,
+  };
 
   return (
     <Rnd
@@ -109,88 +219,24 @@ const DraggableBlock = ({
       }}
       scale={workspaceOptions.zoomScale}
       onDragStart={(e) => {
-        setZIndex(dragStates.maxZIndex + 1);
-        setDragStates({
-          ...dragStates,
-          maxZIndex: dragStates.maxZIndex + 1,
-        });
-        if (spatialState.isBeingDragged) {
-          setSpatialState({ ...spatialState, isBeingDragged: true });
-        } else {
-          return false;
-        }
+        handleDragStart(e);
       }}
       disableDragging={blockLocalState.isExpanded}
       onDrag={(e, d) => {
-        setSpatialState({
-          ...spatialState,
-          isBeingDragged: !(d.x < 5 && d.y < 5),
-          cursor: {
-            ...spatialState.cursor,
-            movementDirection: getMovementDirection(e, d),
-            cursorPosition: cursorPositionInViewport(e),
-            edgeBottom:
-              viewportDimensions().height - spatialState.cursor.edgeSize,
-            edgeRight:
-              viewportDimensions().width - spatialState.cursor.edgeSize,
-            isInLeftEdge:
-              spatialState.cursor.cursorPosition.x <
-              spatialState.cursor.edgeLeft,
-            isInRightEdge:
-              spatialState.cursor.cursorPosition.x >
-              spatialState.cursor.edgeRight,
-            isInTopEdge:
-              spatialState.cursor.cursorPosition.y <
-              spatialState.cursor.edgeTop,
-            isInBottomEdge:
-              spatialState.cursor.cursorPosition.y >
-              spatialState.cursor.edgeBottom,
-          },
-        });
-
-        if (shouldScrollAtEdge(spatialState.cursor, e)) {
-          adjustWindowScroll(spatialState.cursor);
-        }
+        handleDrag(e, d);
       }}
-      onDragStop={(e, d, deltaX, deltaY) => {
-        if (spatialState.isBeingDragged) {
-          setSpatialState({
-            ...spatialState,
-            isBeingDragged: false,
-            x: d.x,
-            y: d.y,
-          });
-
-          handleDragMetric();
-        } else {
-          setSelectedConnection({
-            ...block,
-          });
-          setSelectedRef(rndEl);
-        }
+      onDragStop={(e, d) => {
+        handleDragStop(e, d);
       }}
-      // bounds="parent"
+      // TODO: Figure out how to set bounds for DraggableBlocks that are expanded channels
+      // Might actually make more sense to completely refactor the block rendering
+      // logic, since a good chunk of the work moving forward will rely on it being solid.
 
       onResize={(e, direction, ref, delta, position) => {
-        if (
-          spatialState.width + delta.width >= 500 &&
-          spatialState.height + delta.height >= 400
-        ) {
-          if (block.__typename === "Channel") {
-            expandChannelInline();
-          }
-        } else {
-          if (block.__typename === "Channel") {
-            retractChannelInline();
-          }
-        }
+        handleResize(delta);
       }}
-      onResizeStop={(e, direction, ref, delta, position) => {
-        setSpatialState({
-          ...spatialState,
-          width: spatialState.width + delta.width,
-          height: spatialState.height + delta.height,
-        });
+      onResizeStop={(delta) => {
+        handleResizeStop(delta);
       }}
       style={{
         zIndex: zIndex,
@@ -208,17 +254,7 @@ const DraggableBlock = ({
         }`}
       >
         {blockLocalState.isExpanded ? (
-          <div
-            className={`block block--${block.__typename.toLowerCase()} block--expanded`}
-          >
-            <InlineExpandedChannel
-              channel={block}
-              dragStates={dragStates}
-              setDragStates={setDragStates}
-              setSpatialState={setSpatialState}
-              spatialState={spatialState}
-            />
-          </div>
+          renderInlineChannel()
         ) : (
           <div className={`block block--${block.__typename.toLowerCase()}`}>
             <BlockRepresentation block={block} />
@@ -227,6 +263,6 @@ const DraggableBlock = ({
       </div>
     </Rnd>
   );
-}
+};
 
 export default DraggableBlock;

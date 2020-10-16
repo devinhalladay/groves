@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import withApollo from "../lib/withApollo";
 import { NetworkStatus } from "@apollo/client";
 import Loading from "../components/Loading";
+import { AuthenticatedHeader } from "../components/Header";
 
 const SelectionContext = createContext();
 
@@ -15,7 +16,7 @@ const SelectionProvider = withApollo((props) => {
 
   const [selectedConnection, setSelectedConnection] = useState(null);
 
-  const [selectedRef, setSelectedRef] = useState(null)
+  const [selectedRef, setSelectedRef] = useState(null);
 
   const getChannelID = () => {
     if (selectedChannel && selectedChannel.id) {
@@ -60,7 +61,8 @@ const SelectionProvider = withApollo((props) => {
         initialSelection,
         selectedConnection,
         setSelectedConnection,
-        selectedRef, setSelectedRef
+        selectedRef,
+        setSelectedRef,
       }}
       {...props}
     />
@@ -69,8 +71,4 @@ const SelectionProvider = withApollo((props) => {
 
 const useSelection = () => useContext(SelectionContext);
 
-export {
-  useSelection,
-  SelectionProvider,
-  SelectionContext,
-};
+export { useSelection, SelectionProvider, SelectionContext };
