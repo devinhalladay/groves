@@ -34,7 +34,6 @@ s,
 samp,
 small,
 strike,
-strong,
 sub,
 sup,
 tt,
@@ -164,6 +163,8 @@ img {
 header {
   height: 45px;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
 
   p {
     padding: 0 15px;
@@ -438,6 +439,7 @@ header {
     display: flex;
     align-items: center;
     height: 100%;
+    flex: 1 0 auto;
 
     ul {
       li {
@@ -476,7 +478,7 @@ header {
   flex-direction: column;
   border-radius: 0.125em;
   margin: auto;
-  
+
   .icon-button {
     cursor: pointer;
     position: absolute;
@@ -1251,6 +1253,15 @@ button,
   border: 1px solid #bdc3ca;
   box-shadow: 0.25px 0.25px 2px rgba(111, 123, 138, 0.19);
   border-radius: 2px;
+
+  &:focus {
+background: #F1F4F6;
+border: 1px solid #8B959F;
+box-shadow: inset 2.25px -1.75px 1px rgba(111, 123, 138, 0.19), inset -2.75px -2.75px 1px rgba(111, 123, 138, 0.19), inset 0px 2.25px 1px rgba(111, 123, 138, 0.19);
+outline: none;
+border-radius: 2px;
+
+  }
 }
 
 .icon-button {
@@ -1262,4 +1273,24 @@ button,
   outline: none;
   border-radius: 0;
   box-shadow: none;
+}
+
+.grove-actions {
+  height: 100%;
+  border-left: 1px solid #bdc3ca;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    &.action {
+      width: 28px;
+      height: 28px;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }

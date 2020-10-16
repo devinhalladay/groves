@@ -1,13 +1,13 @@
 import "../public/style.scss";
 import "../public/slider.scss";
+import '../public/tippy.scss'
 
-import React, { useEffect } from "react";
-import { AuthProvider } from "../context/auth-context";
-import { UserProvider } from "../context/user-context";
-import { parseCookies } from "nookies";
-import Head from "next/head";
-import { AuthenticatedHeader, UnauthenticatedHeader } from "../components/Header";
-import { SelectionProvider } from "../context/selection-context";
+import React, { useEffect } from 'react';
+import { AuthProvider } from '../context/auth-context';
+import { UserProvider } from '../context/user-context';
+import { parseCookies } from 'nookies';
+import Head from 'next/head';
+import { AuthenticatedHeader, UnauthenticatedHeader } from '../components/Header';
 
 const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
   useEffect(() => {

@@ -5,6 +5,7 @@ import Menu from "./Menu";
 import { useAuth } from "../context/auth-context";
 import { useUser } from "../context/user-context";
 import { useSelection } from "../context/selection-context";
+import ConnectAction from './ConnectAction'
 
 const UnauthenticatedHeader = (props) => {
   return (
@@ -84,11 +85,6 @@ const AuthenticatedHeader = (props) => {
             </div>
             <p>Groves</p>
           </nav>
-          <div className="grove-actions">
-            <button onClick={() => {}}>
-              <img src="/arrow.svg" />
-            </button>
-          </div>
         </header>
       </Panel>
     );
@@ -124,6 +120,9 @@ const AuthenticatedHeader = (props) => {
             </div>
             <GrovesNavigator />
           </nav>
+          <div className="grove-actions">
+            <ConnectAction />
+          </div>
         </header>
       </Panel>
     );
