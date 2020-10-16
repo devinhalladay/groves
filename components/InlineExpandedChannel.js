@@ -24,7 +24,7 @@ export default withApollo(
 
     return (
       <>
-        <div className="header">
+      <div className="header">
           <p className="title">{channel.title}</p>
           <button onClick={dismissInlineChannel}>
           <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,6 +41,7 @@ export default withApollo(
 
           </button>
         </div>
+        <div className="nested-canvas">
         <GrovesCanvas>
           {data.channel &&
             data.channel.initial_contents.map((blokk, i) => {
@@ -52,12 +53,12 @@ export default withApollo(
                   setDragStates={setDragStates}
                   key={blokk.id}
                   block={blokk}
-                  dragHandleClassName={"header"}
                   {...props}
                 ></DraggableBlock>
               );
             })}
         </GrovesCanvas>
+</div>
       </>
     );
   }
