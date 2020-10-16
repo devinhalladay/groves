@@ -38,6 +38,7 @@ const UnauthenticatedHeader = (props) => {
             <ul>
               <li>
                 <a
+                  className="button"
                   href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}
                 >
                   Login
@@ -152,6 +153,7 @@ const AuthenticatedHeader = (props) => {
               <ul>
                 <li>
                   <a
+                  className="button"
                     href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}
                   >
                     Login
