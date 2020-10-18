@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client";
 
 export const ADD_BLOCK = gql`
   mutation ConnectBlock($channelId: ID!, $value: String!) {

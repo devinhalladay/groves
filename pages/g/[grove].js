@@ -131,7 +131,6 @@ const Grove = (props) => {
       />
       {/* <Layout {...getRootProps()} {...props}> */}
       <Layout {...props}>
-        {selectedConnection && <SelectionPanel />}
         <GrovesCanvas {...props}>
           {selectedChannel && selectedChannel.channel ? (
             <>

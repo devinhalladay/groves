@@ -488,7 +488,7 @@ header {
 }
 
 .block {
-  border: 1px solid rgb(207, 203, 214);
+  // border: 1px solid rgb(207, 203, 214);
   box-sizing: border-box;
   position: relative;
   display: block;
@@ -784,7 +784,8 @@ header {
   transform: rotate(0deg);
   transition: 0.2s all ease;
 
-  &.Channel,&.Text {
+  &.Channel,
+  &.Text {
     width: 100%;
     height: 100%;
   }
@@ -812,13 +813,11 @@ header {
     opacity: 0;
   }
 
-  &:hover::after {
-    opacity: 1;
-  }
+  // &:hover::after {
+  //   opacity: 1;
+  // }
 
-  &.isBeingDragged {
-    border: 1.5px solid #47a7ff;
-    box-sizing: border-box;
+  &.isBeingDragged, &.selected.isBeingDragged {
     box-shadow: 0px 5.60708px 16.8212px rgba(111, 123, 138, 0.2),
       0px 1.40177px 2.80354px rgba(111, 123, 138, 0.2),
       0px 0px 0px rgba(111, 123, 138, 0.1);
@@ -833,14 +832,33 @@ header {
   }
 
   &.selected {
-      border: 4px solid #ffae64;
+    border: 2px solid #ffae64;
+    color: #6f7b8a;
+    box-sizing: content-box;
+    .block {
+      background: #ffffff;
+      // border: 1px solid #bdc3ca;
       color: #6f7b8a;
-      .block {
-        background: #ffffff;
-        border: 1px solid #bdc3ca;
-        color: #6f7b8a;
+      box-sizing: border-box;
+    }
+  }
+
+  &:active {
+    border: 2px solid #47a7ff;
+        cursor: grabbing;
+        // border: 1.5px solid #47a7ff;
         box-sizing: border-box;
-      }
+        box-shadow: 0px 5.60708px 16.8212px rgba(111, 123, 138, 0.2),
+          0px 1.40177px 2.80354px rgba(111, 123, 138, 0.2),
+          0px 0px 0px rgba(111, 123, 138, 0.1);
+        background: linear-gradient(
+            0deg,
+            rgba(71, 167, 255, 0.15),
+            rgba(71, 167, 255, 0.15)
+          ),
+          rgba(255, 255, 255, 0.6);
+        transform: scale(1.05, 1.05) rotate(-2deg);
+        transition: 0.2s all ease-in-out;
   }
 
   .header {
@@ -928,10 +946,6 @@ header {
     &:not(.block--expanded) {
       cursor: grab;
 
-      &:hover {
-        transform: scale(1.02, 1.02);
-      }
-
       &::after {
         content: "";
         position: absolute;
@@ -944,36 +958,20 @@ header {
         opacity: 0;
       }
 
-      &:hover::after {
-        opacity: 1;
-      }
+      // &:hover::after {
+      //   opacity: 1;
+      // }
 
-      &:active {
-        cursor: grabbing;
-        border: 1.5px solid #47a7ff;
-        box-sizing: border-box;
-        box-shadow: 0px 5.60708px 16.8212px rgba(111, 123, 138, 0.2),
-          0px 1.40177px 2.80354px rgba(111, 123, 138, 0.2),
-          0px 0px 0px rgba(111, 123, 138, 0.1);
-        background: linear-gradient(
-            0deg,
-            rgba(71, 167, 255, 0.15),
-            rgba(71, 167, 255, 0.15)
-          ),
-          rgba(255, 255, 255, 0.6);
-        transform: scale(1.05, 1.05) rotate(-2deg);
-        transition: 0.2s all ease-in-out;
-      }
+
     }
   }
 
   &.selected {
     .block {
-      border: 4px solid #ffae64;
+      box-sizing: content-box;
       color: #6f7b8a;
       .block {
         background: #ffffff;
-        border: 1px solid #bdc3ca;
         color: #6f7b8a;
         box-sizing: border-box;
       }
@@ -1255,12 +1253,13 @@ button,
   border-radius: 2px;
 
   &:focus {
-background: #F1F4F6;
-border: 1px solid #8B959F;
-box-shadow: inset 2.25px -1.75px 1px rgba(111, 123, 138, 0.19), inset -2.75px -2.75px 1px rgba(111, 123, 138, 0.19), inset 0px 2.25px 1px rgba(111, 123, 138, 0.19);
-outline: none;
-border-radius: 2px;
-
+    background: #f1f4f6;
+    border: 1px solid #8b959f;
+    box-shadow: inset 2.25px -1.75px 1px rgba(111, 123, 138, 0.19),
+      inset -2.75px -2.75px 1px rgba(111, 123, 138, 0.19),
+      inset 0px 2.25px 1px rgba(111, 123, 138, 0.19);
+    outline: none;
+    border-radius: 2px;
   }
 }
 
@@ -1299,29 +1298,31 @@ border-radius: 2px;
   }
 }
 
+.dropZoneModal {
+  opacity: 0.5;
+  background: #fff;
+  width: 100%;
+  height: 100%;
+  z-index: 100000;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+.inline-combobox {
+  border-top: 1px solid #bdc3ca;
+  padding-top: 10px;
+  margin-top: 5px;
+  font-size: 14px;
+  max-height: 150px;
+  overflow: scroll;
 
-
-.dropZoneModal{
-    opacity:    0.5;
-    background: #fff;
-    width:      100%;
-    height:     100%;
-    z-index:    100000;
-    position: fixed;
-    left:0;
-    top:0;
+  li {
+    height: 26px;
+    display: flex;
+    align-items: center;
   }
-  .inline-combobox {
-    border-top: 1px solid #bdc3ca;
-    padding-top: 10px;
-    margin-top: 5px;
-    font-size: 14px;
-    max-height: 150px;
-    overflow: scroll;
+}
 
-    li {
-      height: 26px;
-      display: flex;
-      align-items: center;
-    }
-  }
+// .draggable-block-container.isBeingDragged .block {
+//   border: 1.5px solid #47a7ff;
+// }

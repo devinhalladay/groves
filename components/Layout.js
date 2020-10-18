@@ -3,10 +3,17 @@ import Slider, { Range } from "rc-slider";
 import { useSelection } from "../context/selection-context";
 import { PanZoom } from "react-easy-panzoom";
 import { useWorkspace } from "../context/workspace-context";
+import SelectionPanel from "./SelectionPanel";
 
 const Layout = (props) => {
   const { selectedConnection } = useSelection();
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
+
+  // const {
+  //   initialSelection,
+  //   selectedChannel,
+  //   selectedConnection,
+  // } = useSelection();
 
   const panZoomRef = useRef(null)
 
@@ -26,6 +33,8 @@ const Layout = (props) => {
   }
 
   return (
+    <>
+    {selectedConnection && <SelectionPanel />}
     <PanZoom
       ref={panZoomRef}
       // autoCenter={true}
@@ -125,6 +134,7 @@ const Layout = (props) => {
         {props.children}
       </div>
     </PanZoom>
+    </>
   );
 };
 

@@ -52,11 +52,9 @@ export default () => {
     }}>
       <div className="header">
         <p className="title">Selection</p>
-        <button
         <button className="icon-button" onClick={() => {
             setSelectedConnection(null)
           }}>
-        >
           <svg
             width="17"
             height="17"

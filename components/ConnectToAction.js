@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import { useState, useRef, useEffect } from "react";
 import { useCombobox } from "downshift";
-import { useLazyQuery, useMutation } from "@apollo/react-hooks";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { SEARCH_ALL_CHANNELS } from "../queries";
 import { useUser } from "../context/user-context";
 import { useRouter } from "next/router";
