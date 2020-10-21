@@ -14,13 +14,13 @@ import SelectionPanel from "./SelectionPanel";
 const Layout = (props) => {
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
 
+  const panZoomRef = useRef(null);
+
   // const {
   //   initialSelection,
   //   selectedChannel,
   //   selectedConnection,
   // } = useSelection();
-
-  const panZoomRef = useRef(null);
 
   const {
     selectedConnection,
@@ -164,9 +164,9 @@ const Layout = (props) => {
       </div>
       <PanZoom
         ref={panZoomRef}
-        boundaryRatioVertical={0.8}
-        boundaryRatioHorizontal={0.8}
-        enableBoundingBox
+        // boundaryRatioVertical={0.8}
+        // boundaryRatioHorizontal={0.8}
+        // enableBoundingBox
         preventPan={preventPan}
         className="canvas"
         onZoom={onZoom}
