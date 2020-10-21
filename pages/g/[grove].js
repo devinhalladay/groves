@@ -141,6 +141,9 @@ const Grove = (props) => {
                       key={blokk.id}
                       block={blokk}
                       bounds=".canvas"
+                      style={{
+                        WebkitFilter: "blur(0)",
+                      }}
                       {...props}
                     />
                   </>

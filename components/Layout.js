@@ -173,7 +173,9 @@ const Layout = (props) => {
         minZoom={0.4}
         style={{
           width: '100vw',
-          height: '100vh'
+          height: '100vh',
+          WebkitFilter: "blur(0)",
+          willChange: 'unset'
         }}
         maxZoom={3}
         onPanStart={(e) => {
