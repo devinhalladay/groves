@@ -5,6 +5,8 @@ import Menu from "./Menu";
 import { useAuth } from "../context/auth-context";
 import { useUser } from "../context/user-context";
 import { useSelection } from "../context/selection-context";
+import ConnectToAction from './ConnectToAction'
+import StageConnectionsFromAction from "./StageConnectionsFromAction";
 
 const UnauthenticatedHeader = (props) => {
   return (
@@ -119,6 +121,10 @@ const AuthenticatedHeader = (props) => {
             </div>
             <GrovesNavigator />
           </nav>
+          <div className="grove-actions">
+            <StageConnectionsFromAction />
+            <ConnectToAction />
+          </div>
         </header>
       </Panel>
     );

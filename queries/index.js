@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client";
 
 const CURRENT_USER = gql`
   {
@@ -150,4 +150,28 @@ const SELECTED_BLOCK = gql`
   ${grovePageFragments.channelContentsConnectable}
 `;
 
-export { CHANNEL_SKELETON, CURRENT_USER, SELECTED_BLOCK, SELECTED_CHANNEL };
+const SEARCH_ALL_CHANNELS = gql`
+  query SearchALlChannels($q: String!, $per: Int!) {
+    ssearch(q: $q, type: CHANNEL, per: $per) {
+      ... on Channel {
+        title
+        id
+        slug
+        user {
+          name
+        }
+        counts {
+          contents
+        }
+      }
+    }
+  }
+`;
+
+export {
+  CHANNEL_SKELETON,
+  CURRENT_USER,
+  SELECTED_BLOCK,
+  SELECTED_CHANNEL,
+  SEARCH_ALL_CHANNELS,
+};

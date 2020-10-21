@@ -9,6 +9,8 @@ import {
 } from "../utils/canvas";
 import InlineExpandedChannel from "./InlineExpandedChannel";
 import { useSelection } from "../context/selection-context";
+import { useAuth } from '../context/auth-context'
+import { useWorkspace } from "../context/workspace-context";
 
 // TODO: Need to break up this component, it's all kinds of fucked up
 // and recursively renders itself via InlineExpandedChannel which
@@ -24,9 +26,12 @@ const DraggableBlock = ({
   setDragStates,
   parentDimensions,
   dragHandleClassName,
+  zoomScale,
   ...props
 }) => {
   let description;
+
+  const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
 
   if (block.description && block.description.includes('"x":')) {
     description = JSON.parse(block.description.replace("\n", ""));
@@ -245,6 +250,7 @@ const DraggableBlock = ({
         x: spatialState.x,
         y: spatialState.y,
       }}
+      scale={workspaceOptions.zoomScale}
       onDragStart={(e) => {
         handleDragStart(e);
       }}

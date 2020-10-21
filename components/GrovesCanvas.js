@@ -1,4 +1,4 @@
-import { useRef, useState, Fragment } from "react";
+import React, { useRef, useState, Fragment } from "react";
 import { useSelection } from "../context/selection-context";
 import MillerPanel from "./MillerPanel";
 import { useWorkspace } from "../context/workspace-context";
@@ -13,16 +13,14 @@ export default withApollo((props) => {
     maxHeight: null,
     maxWidth: null,
     timer: null,
+    workspaceOptions,
+    setWorkspaceOptions,
   });
 
-  return (
-    <Fragment>
-      {React.Children.map(props.children, (child) =>
-        React.cloneElement(child, {
-          canvasSpace: canvasSpace,
-          setCanvasSpace: setCanvasSpace,
-        })
-      )}
-    </Fragment>
+  return React.Children.map(props.children, (child) =>
+    React.cloneElement(child, {
+      canvasSpace: canvasSpace,
+      setCanvasSpace: setCanvasSpace,
+    })
   );
 });

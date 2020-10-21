@@ -1,6 +1,6 @@
 import React, { useContext, createContext } from "react";
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
 import withApollo from "../lib/withApollo";
 import { SelectionProvider } from "./selection-context";
 import { CURRENT_USER } from '../queries'
