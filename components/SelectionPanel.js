@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/client";
 import Loading from "./Loading";
 import { SELECTED_BLOCK, SELECTED_CHANNEL } from "../queries";
 import { NetworkStatus } from "@apollo/client";
+import { EditableText, Intent } from "@blueprintjs/core";
 
 export default () => {
   const { selectedConnection, setSelectedConnection } = useSelection();
@@ -46,14 +47,20 @@ export default () => {
     return error;
   }
   return (
-    <div className="selection-panel" style={{
-      right: selectedConnection ? '15px' : '-315px'
-    }}>
+    <div
+      className="selection-panel"
+      style={{
+        right: selectedConnection ? "15px" : "-315px",
+      }}
+    >
       <div className="header">
         <p className="title">Selection</p>
-        <button className="icon-button" onClick={() => {
-            setSelectedConnection(null)
-          }}>
+        <button
+          className="icon-button"
+          onClick={() => {
+            setSelectedConnection(null);
+          }}
+        >
           <svg
             width="17"
             height="17"
@@ -87,9 +94,16 @@ export default () => {
           <p
             style={{
               marginRight: 40,
+              fontSize: 18,
             }}
           >
-            <strong>{selectedConnection.title}</strong>
+            <EditableText
+              intent={Intent.PRIMARY}
+              maxLength={45}
+              placeholder="Edit title..."
+              value={selectedConnection.title}
+              selectAllOnFocus={true}
+            />
           </p>
           <a
             style={{
@@ -119,10 +133,28 @@ export default () => {
         </div>
         <div className="section">
           <p className="section__title">Description</p>
-          <p>
-            {selectedConnection &&
+          <EditableText
+            intent={Intent.PRIMARY}
+            maxLines={24}
+            minLines={2}
+            className="description-field"
+            style={{
+              height: 60,
+            }}
+            multiline={true}
+            placeholder="Add a description to this block…"
+            value={
+              selectedConnection &&
               selectedConnection.description &&
-              parse(`${selectedConnection.description}`)}
+              parse(`${selectedConnection.description}`)
+            }
+          />
+        </div>
+        <div className="section">
+          <p className="meta">
+            {selectedConnection && (
+              `Added ${selectedConnection.created_at} by ${selectedConnection.user.name}`
+            )}
           </p>
         </div>
       </div>

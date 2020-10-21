@@ -33,6 +33,7 @@ const grovePageFragments = {
       ...KonnectableEmbed
       ...KonnectableAttachment
       ...KonnectableMetadata
+      ...KonnectableModel
     }
 
     fragment KonnectableChannel on Channel {
@@ -70,6 +71,10 @@ const grovePageFragments = {
       image_url(size: DISPLAY)
     }
 
+    fragment KonnectableModel on Model {
+      created_at(relative: true)
+    }
+
     fragment KonnectableAttachment on Attachment {
       id
       title
@@ -79,6 +84,7 @@ const grovePageFragments = {
     }
 
     fragment KonnectableMetadata on Konnectable {
+      # TODO - Implement Deed in graphql
       ... on ConnectableInterface {
         __typename
         description

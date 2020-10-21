@@ -1,4 +1,7 @@
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+
 $primary-color: #47a7ff;
+
 
 html,
 body,
@@ -1349,4 +1352,8 @@ button,
 
 .canvas div {
   filter: blur(0);
+}
+
+.description-field {
+  height: 150px;
 }
