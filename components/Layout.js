@@ -1,4 +1,10 @@
-import React, { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  Fragment,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import Slider, { Range } from "rc-slider";
 import { useSelection } from "../context/selection-context";
 import { PanZoom } from "react-easy-panzoom";
@@ -14,15 +20,14 @@ const Layout = (props) => {
   //   selectedConnection,
   // } = useSelection();
 
-  const panZoomRef = useRef(null)
+  const panZoomRef = useRef(null);
 
-
-const {
-  selectedConnection,
-  setSelectedConnection,
-  selectedRef,
-  setSelectedRef,
-} = useSelection();
+  const {
+    selectedConnection,
+    setSelectedConnection,
+    selectedRef,
+    setSelectedRef,
+  } = useSelection();
 
   // useLayoutEffect(() => {
   //   setWorkspaceOptions({
@@ -34,7 +39,8 @@ const {
   const preventPan = (event, x, y) => {
     // if the target is the content container then prevent panning
     if (
-      event.target.className && event.target.className.includes(
+      event.target.className &&
+      event.target.className.includes(
         "block" || "draggable" || "react-draggable"
       )
     ) {
@@ -51,12 +57,11 @@ const {
         zoomScale: panZoomRef.current.scale,
       });
     }
-  }
+  };
 
   const onScaleUp = (scale) => {
-    panZoomRef.current &&
-      panZoomRef.current.setScale(scale + 0.1);
-  }
+    panZoomRef.current && panZoomRef.current.setScale(scale + 0.1);
+  };
 
   const onScaleDown = (scale) => {
     panZoomRef.current && panZoomRef.current.setScale(scale - 0.1);
@@ -64,7 +69,9 @@ const {
 
   const onScale = (value) => {
     panZoomRef.current && panZoomRef.current.setScale(value);
-  }
+  };
+
+  let dragging = false;
 
   return (
     <>
@@ -169,10 +176,22 @@ const {
         onZoom={onZoom}
         minZoom={0.2}
         maxZoom={3}
-        onClick={(e) => {
-          if (!(e.target.className && e.target.className.includes("block"))) {
-            setSelectedConnection(null)
+        onPanStart={(e) => {
+          console.log("start");
+          dragging = false;
+        }}
+        onPan={() => {
+          dragging = true;
+        }}
+        onPanEnd={(e) => {
+          if (
+            !(e.target.className && e.target.className.includes("block")) &&
+            !dragging
+          ) {
+            setSelectedConnection(null);
           }
+
+          dragging = false;
         }}
       >
         {/* <div className="canvas" style={{ WebkitFilter: "blur(0)" }}> */}
