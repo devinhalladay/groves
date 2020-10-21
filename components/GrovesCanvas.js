@@ -13,6 +13,8 @@ export default withApollo((props) => {
     maxHeight: null,
     maxWidth: null,
     timer: null,
+    workspaceOptions,
+    setWorkspaceOptions,
   });
 
   return React.Children.map(props.children, (child) =>

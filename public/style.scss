@@ -1326,3 +1326,7 @@ button,
 // .draggable-block-container.isBeingDragged .block {
 //   border: 1.5px solid #47a7ff;
 // }
+
+.canvas div {
+  filter: blur(0);
+}

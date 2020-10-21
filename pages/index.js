@@ -9,6 +9,7 @@ import Panel from "../components/Panel";
 import Loading from "../components/Loading";
 import { SelectionProvider } from "../context/selection-context";
 import { ToastContainer } from "react-toastify";
+import { WorkspaceProvider } from "../context/workspace-context";
 
 const GET_LANDING_BLOCKS = gql`
   {
@@ -53,44 +54,50 @@ const Root = (props) => {
 
   return (
     <SelectionProvider>
-      <Layout>
-        <Panel
-          style={{
-            width: "350px",
-          }}
-          canCollapse={false}
-          className={"newsletter-panel"}
-          defaultPosition={{ x: 25, y: 520 }}
-          panelTitle={"Subscribe to updates"}
-          {...props}
-        >
-          <p>
-            Get very occasional updates on development, beta testing, and launch
-            dates.
-          </p>
-          <form
-            action="https://network.us18.list-manage.com/subscribe/post?u=488634612d3795996b128e2ba&amp;id=d3ad9e4e39"
-            method="post"
+      <WorkspaceProvider>
+        <Layout>
+          <Panel
+            style={{
+              width: "350px",
+            }}
+            canCollapse={false}
+            className={"newsletter-panel"}
+            defaultPosition={{ x: 25, y: 520 }}
+            panelTitle={"Subscribe to updates"}
+            {...props}
           >
-            <label htmlFor="EMAIL">Email address</label>
-            <input name="EMAIL" type="email" placeholder="dev@groves.network" />
-            <input type="submit" value="Submit" />
-          </form>
-        </Panel>
-        {data.channel.blokks.map((blokk, i) => {
-          return (
-            <DraggableBlock
-              title={blokk.title ? blokk.title : null}
-              type={blokk.__typename}
-              dragStates={dragStates}
-              setDragStates={setDragStates}
-              key={blokk.id}
-              block={blokk}
-              {...props}
-            />
-          );
-        })}
-      </Layout>
+            <p>
+              Get very occasional updates on development, beta testing, and
+              launch dates.
+            </p>
+            <form
+              action="https://network.us18.list-manage.com/subscribe/post?u=488634612d3795996b128e2ba&amp;id=d3ad9e4e39"
+              method="post"
+            >
+              <label htmlFor="EMAIL">Email address</label>
+              <input
+                name="EMAIL"
+                type="email"
+                placeholder="dev@groves.network"
+              />
+              <input type="submit" value="Submit" />
+            </form>
+          </Panel>
+          {data.channel.blokks.map((blokk, i) => {
+            return (
+              <DraggableBlock
+                title={blokk.title ? blokk.title : null}
+                type={blokk.__typename}
+                dragStates={dragStates}
+                setDragStates={setDragStates}
+                key={blokk.id}
+                block={blokk}
+                {...props}
+              />
+            );
+          })}
+        </Layout>
+      </WorkspaceProvider>
     </SelectionProvider>
   );
 };

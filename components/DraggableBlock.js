@@ -27,6 +27,7 @@ const DraggableBlock = ({
   setDragStates,
   parentDimensions,
   dragHandleClassName,
+  zoomScale,
   ...props
 }) => {
   let description;

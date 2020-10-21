@@ -118,19 +118,19 @@ const Grove = (props) => {
 
   return (
     <WorkspaceProvider>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover={false}
-      />
-      {/* <Layout {...getRootProps()} {...props}> */}
       <Layout {...props}>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable={false}
+          pauseOnHover={false}
+        />
+
         <GrovesCanvas {...props}>
           {selectedChannel && selectedChannel.channel ? (
             <>
@@ -145,6 +145,7 @@ const Grove = (props) => {
                       setDragStates={setDragStates}
                       key={blokk.id}
                       block={blokk}
+                      bounds=".canvas"
                       {...props}
                     />
                   </>
@@ -154,28 +155,34 @@ const Grove = (props) => {
           ) : (
             initialSelection.channel.initial_contents.map((blokk, i) => {
               return (
-                <DraggableBlock
-                  title={blokk.title ? blokk.title : null}
-                  type={blokk.__typename}
-                  dragStates={dragStates}
-                  setDragStates={setDragStates}
-                  key={blokk.id}
-                  block={blokk}
-                  {...props}
-                />
+                <>
+                  <DraggableBlock
+                    title={blokk.title ? blokk.title : null}
+                    type={blokk.__typename}
+                    dragStates={dragStates}
+                    setDragStates={setDragStates}
+                    key={blokk.id}
+                    block={blokk}
+                    bounds=".canvas"
+                    {...props}
+                  />
+                </>
               );
             })
           )}
           {files.map((file) => (
-            <DraggableBlock
-              title={file.block.title}
-              type={file.block.__typename}
-              dragStates={dragStates}
-              setDragStates={setDragStates}
-              key={file.block.id}
-              block={file.block}
-              {...props}
-            />
+            <>
+              <DraggableBlock
+                title={file.block.title}
+                type={file.block.__typename}
+                dragStates={dragStates}
+                setDragStates={setDragStates}
+                key={file.block.id}
+                block={file.block}
+                bounds=".canvas"
+                {...props}
+              />
+            </>
           ))}
         </GrovesCanvas>
       </Layout>
