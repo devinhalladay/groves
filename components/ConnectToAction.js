@@ -35,8 +35,8 @@ export default (props) => {
   const inputElement = useRef(null);
 
   const connectedToast = (connectable) => {
-    toast(`Connected to ${connectable.title}`)
-  }
+    toast(`Connected to ${connectable.title}`);
+  };
 
   const [
     connectTo,
@@ -86,9 +86,19 @@ export default (props) => {
       onSelectedItemChange: ({ selectedItem }) => {
         connectTo({
           variables: {
-            connectable_id: selectedConnection ? selectedConnection.id : router.query.grove,
+            connectable_id: selectedConnection
+              ? selectedConnection.id
+              : router.query.grove,
             connectable_type: selectedConnection ? "BLOCK" : "CHANNEL",
             channel_ids: [selectedItem.id],
+          },
+        });
+
+        connectTo({
+          variables: {
+            connectable_id: selectedItem ? selectedItem.id : router.query.grove,
+            connectable_type: "CHANNEL",
+            channel_ids: [router.query.grove],
           },
         });
 
@@ -131,23 +141,20 @@ export default (props) => {
             })}
           />
         </div>
-        <ul {...getMenuProps()}
-          className="inline-combobox"
-        >
-          {
-            inputItems.map((item, index) => (
-              <li
-                style={
-                  highlightedIndex === index
-                    ? { backgroundColor: "#bde4ff" }
-                    : {}
-                }
-                key={`${item}${index}`}
-                {...getItemProps({ item, index })}
-              >
-                {item.title}
-              </li>
-            ))}
+        <ul {...getMenuProps()} className="inline-combobox">
+          {inputItems.map((item, index) => (
+            <li
+              style={
+                highlightedIndex === index
+                  ? { backgroundColor: "#e2e6ea" }
+                  : {}
+              }
+              key={`${item}${index}`}
+              {...getItemProps({ item, index })}
+            >
+              {item.title}
+            </li>
+          ))}
         </ul>
       </>
     );
@@ -162,7 +169,7 @@ export default (props) => {
       delay={100}
       content={
         <>
-          <p className="title">Connect to a Grove</p>
+          <p className="title">Link with another Grove</p>
           <div className="input--inline">
             <DropdownCombobox />
             {/* <label for="channel">Channel Name</label>
@@ -174,7 +181,7 @@ export default (props) => {
       onClickOutside={hide}
     >
       <button className="action" onClick={visible ? hide : show}>
-        <img src="/connect-to.svg" />
+        <img src="/link-groves.svg" />
       </button>
     </Tippy>
   );
