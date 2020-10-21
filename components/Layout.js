@@ -164,20 +164,19 @@ const Layout = (props) => {
       </div>
       <PanZoom
         ref={panZoomRef}
-        style={{
-          width: "100vw",
-          height: "100vh",
-        }}
+        boundaryRatioVertical={0.8}
+        boundaryRatioHorizontal={0.8}
+        enableBoundingBox
         preventPan={preventPan}
-        // boundaryRatioVertical={1.2}
         className="canvas"
-        // boundaryRatioHorizontal={1.2}
-        // enableBoundingBox
         onZoom={onZoom}
-        minZoom={0.2}
+        minZoom={0.4}
+        style={{
+          width: '100vw',
+          height: '100vh'
+        }}
         maxZoom={3}
         onPanStart={(e) => {
-          console.log("start");
           dragging = false;
         }}
         onPan={() => {
@@ -194,9 +193,7 @@ const Layout = (props) => {
           dragging = false;
         }}
       >
-        {/* <div className="canvas" style={{ WebkitFilter: "blur(0)" }}> */}
         {props.children}
-        {/* </div> */}
       </PanZoom>
     </>
   );
