@@ -6,7 +6,6 @@ import { useWorkspace } from "../context/workspace-context";
 import SelectionPanel from "./SelectionPanel";
 
 const Layout = (props) => {
-  const { selectedConnection } = useSelection();
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
 
   // const {
@@ -16,6 +15,14 @@ const Layout = (props) => {
   // } = useSelection();
 
   const panZoomRef = useRef(null)
+
+
+const {
+  selectedConnection,
+  setSelectedConnection,
+  selectedRef,
+  setSelectedRef,
+} = useSelection();
 
   // useLayoutEffect(() => {
   //   setWorkspaceOptions({
@@ -162,6 +169,11 @@ const Layout = (props) => {
         onZoom={onZoom}
         minZoom={0.2}
         maxZoom={3}
+        onClick={(e) => {
+          if (!(e.target.className && e.target.className.includes("block"))) {
+            setSelectedConnection(null)
+          }
+        }}
       >
         {/* <div className="canvas" style={{ WebkitFilter: "blur(0)" }}> */}
         {props.children}

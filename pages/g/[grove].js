@@ -25,6 +25,8 @@ const Grove = (props) => {
 
   const { apollo } = props;
 
+  const { selectedConnection, setSelectedConnection, selectedRef, setSelectedRef, selectedChannel, initialSelection } = useSelection()
+
   const [files, setFiles] = useState([]);
 
   const [
@@ -40,12 +42,6 @@ const Grove = (props) => {
       console.log(error);
     },
   });
-
-  const {
-    initialSelection,
-    selectedChannel,
-    selectedConnection,
-  } = useSelection();
 
   // const onDrop = useCallback((acceptedFiles) => {
   //   acceptedFiles.map(async (file) => {
