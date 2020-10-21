@@ -45,11 +45,6 @@ export default () => {
     console.log(error);
     return error;
   }
-<<<<<<< HEAD
-  
-=======
-
->>>>>>> feature/actions-connect
   return (
     <div className="selection-panel" style={{
       right: selectedConnection ? '15px' : '-315px'
