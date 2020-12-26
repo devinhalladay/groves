@@ -87,6 +87,12 @@ const grovePageFragments = {
       # TODO - Implement Deed in graphql
       ... on ConnectableInterface {
         __typename
+        current_user_channels {
+          __typename
+          id
+          title
+          href
+        }
         description
         user {
           id

@@ -50,7 +50,7 @@ const SelectionPanel = React.memo(() => {
     <div
       className="selection-panel"
       style={{
-        right: (selectedConnection !== null) ? "15px" : "-315px",
+        right: selectedConnection !== null ? "15px" : "-315px",
       }}
     >
       <div className="header">
@@ -152,10 +152,20 @@ const SelectionPanel = React.memo(() => {
         </div>
         <div className="section">
           <p className="meta">
-            {selectedConnection && (
-              `Added ${selectedConnection.created_at} by ${selectedConnection.user.name}`
-            )}
+            {selectedConnection &&
+              `Added ${selectedConnection.created_at} by ${selectedConnection.user.name}`}
           </p>
+        </div>
+        <div className="section">
+          <p className="section__title">Connected to</p>
+          <ul>
+            {selectedConnection &&
+              selectedConnection.current_user_channels.map((channel) => (
+                <li>
+                  <a href={`${channel.href}`}>{channel.title}</a>
+                </li>
+              ))}
+          </ul>
         </div>
       </div>
     </div>
