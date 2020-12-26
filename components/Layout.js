@@ -33,6 +33,8 @@ const Layout = (props) => {
 
   let [zoomScale, setZoomScale] = useState(1);
 
+  const { workSpaceOptions, setWorkspaceOptions } = useWorkspace();
+
   const preventPan = (event, x, y) => {
     console.log(event.target.parentElement);
     // event.preventDefault()
@@ -65,9 +67,13 @@ const Layout = (props) => {
 
   const onZoomEnd = (e) => {
     if (panZoomRef.current) {
-      setZoomScale(panZoomRef.current.scale);
+      // setZoomScale(panZoomRef.current.scale);
+      setWorkspaceOptions({
+        ...workSpaceOptions,
+        zoomScale: panZoomRef.current.scale,
+      });
     }
-  }
+  };
 
   const onScaleUp = (scale) => {
     panZoomRef.current && panZoomRef.current.setScale(scale + 0.1);
@@ -179,6 +185,7 @@ const Layout = (props) => {
         onZoom={onZoom}
         onZoomEnd={onZoomEnd}
         panZoomRef={panZoomRef}
+        scale={zoomScale}
         state
         minZoom={0.4}
         style={{
@@ -205,7 +212,9 @@ const Layout = (props) => {
           dragging = false;
         }}
       >
-        {props.children}
+        {React.cloneElement(props.children, {
+          panZoomRef: panZoomRef,
+        })}
       </PanZoom>
     </>
   );

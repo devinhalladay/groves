@@ -4658,7 +4658,7 @@ react-dropzone@^11.2.0:
 
 react-easy-panzoom@devinhalladay/react-easy-panzoom:
   version "0.4.6"
-  resolved "https://codeload.github.com/devinhalladay/react-easy-panzoom/tar.gz/27714e553257fcc3e3d312f89cfe9ee58e27069c"
+  resolved "https://codeload.github.com/devinhalladay/react-easy-panzoom/tar.gz/acd40280d2a2ec6b2880167e250207bcc94977b9"
   dependencies:
     warning "4.0.3"
 

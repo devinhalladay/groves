@@ -28,11 +28,12 @@ const DraggableBlock = ({
   parentDimensions,
   dragHandleClassName,
   panZoomRef,
+  scale,
   ...props
 }) => {
   let description;
 
-  // const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
+  const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
 
   if (block.description && block.description.includes('"x":')) {
     description = JSON.parse(block.description.replace("\n", ""));
@@ -246,7 +247,7 @@ const DraggableBlock = ({
       ref={rndEl}
       key={block.id}
       size={{ width: spatialState.width, height: spatialState.height }}
-      scale={panZoomRef}
+      scale={workspaceOptions.zoomScale}
       position={{
         x: spatialState.x,
         y: spatialState.y,
@@ -255,6 +256,7 @@ const DraggableBlock = ({
         handleDragStart(e);
       }}
       // disableDragging={spatialState.isExpanded}
+      bounds={'window'}
       onDrag={(e, d) => {
         handleDrag(e, d);
       }}

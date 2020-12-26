@@ -141,7 +141,7 @@ const Grove = (props) => {
                       setDragStates={setDragStates}
                       key={blokk.id}
                       block={blokk}
-                      bounds=".canvas"
+                      bounds="window"
                       panZoomRef={props.panZoomRef}
                       style={{
                         WebkitFilter: "blur(0)",
@@ -164,7 +164,7 @@ const Grove = (props) => {
                     panZoomRef={props.panZoomRef}
                     key={blokk.id}
                     block={blokk}
-                    bounds=".canvas"
+                    bounds="window"
                     {...props}
                   />
                 </>
@@ -180,7 +180,7 @@ const Grove = (props) => {
                 setDragStates={setDragStates}
                 key={file.block.id}
                 block={file.block}
-                bounds=".canvas"
+                bounds="window"
                 {...props}
               />
             </>
