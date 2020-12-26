@@ -122,7 +122,7 @@ const CHANNEL_SKELETON = gql`
       description
       initial_contents: blokks(
         page: 1
-        per: 10
+        per: 40
         sort_by: POSITION
         direction: DESC
       ) {

@@ -12,9 +12,11 @@ import { useWorkspace } from "../context/workspace-context";
 import SelectionPanel from "./SelectionPanel";
 
 const Layout = (props) => {
-  const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
+  // const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
 
   const panZoomRef = useRef(null);
+
+  let isScrolling;
 
   // const {
   //   initialSelection,
@@ -29,35 +31,43 @@ const Layout = (props) => {
     setSelectedRef,
   } = useSelection();
 
-  // useLayoutEffect(() => {
-  //   setWorkspaceOptions({
-  //     ...workspaceOptions,
-  //     zoomScale: panZoomRef.current.scale,
-  //   });
-  // }, [panZoomRef.current.scale]);
+  let [zoomScale, setZoomScale] = useState(1);
 
   const preventPan = (event, x, y) => {
+    console.log(event.target.parentElement);
+    // event.preventDefault()
     // if the target is the content container then prevent panning
+    console.log(event.target);
     if (
-      event.target.className &&
-      event.target.className.includes(
-        "block" || "draggable" || "react-draggable"
+      event.target &&
+      event.target.parentElement &&
+      event.target.parentElement.className.includes(
+        "block" ||
+          "draggable" ||
+          "react-draggable" ||
+          "header" ||
+          "nested-canvas" ||
+          "draggable-block-container--expanded" ||
+          "draggable-block-container" ||
+          "block"
       )
     ) {
+      console.log("true");
       return true;
     }
   };
 
-  // let zoomScale = workspaceOptions.zoomScale
-
   const onZoom = (e) => {
     if (panZoomRef.current) {
-      setWorkspaceOptions({
-        ...workspaceOptions,
-        zoomScale: panZoomRef.current.scale,
-      });
+      setZoomScale(panZoomRef.current.scale);
     }
   };
+
+  const onZoomEnd = (e) => {
+    if (panZoomRef.current) {
+      setZoomScale(panZoomRef.current.scale);
+    }
+  }
 
   const onScaleUp = (scale) => {
     panZoomRef.current && panZoomRef.current.setScale(scale + 0.1);
@@ -127,7 +137,7 @@ const Layout = (props) => {
             max={1.5}
             defaultValue={1}
             step={0.1}
-            value={workspaceOptions.zoomScale}
+            value={zoomScale}
           />
         </div>
         <button
@@ -164,18 +174,18 @@ const Layout = (props) => {
       </div>
       <PanZoom
         ref={panZoomRef}
-        // boundaryRatioVertical={0.8}
-        // boundaryRatioHorizontal={0.8}
-        // enableBoundingBox
         preventPan={preventPan}
         className="canvas"
         onZoom={onZoom}
+        onZoomEnd={onZoomEnd}
+        panZoomRef={panZoomRef}
+        state
         minZoom={0.4}
         style={{
-          width: '100vw',
-          height: '100vh',
+          width: "100vw",
+          height: "100vh",
           WebkitFilter: "blur(0)",
-          willChange: 'unset'
+          willChange: "unset",
         }}
         maxZoom={3}
         onPanStart={(e) => {

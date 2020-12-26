@@ -16,6 +16,7 @@ import { useWorkspace } from "../context/workspace-context";
 // and recursively renders itself via InlineExpandedChannel which
 // feels bad and makes it hard to keep track of props
 
+
 const DraggableBlock = ({
   canvasSpace,
   setCanvasSpace,
@@ -26,12 +27,12 @@ const DraggableBlock = ({
   setDragStates,
   parentDimensions,
   dragHandleClassName,
-  zoomScale,
+  panZoomRef,
   ...props
 }) => {
   let description;
 
-  const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
+  // const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
 
   if (block.description && block.description.includes('"x":')) {
     description = JSON.parse(block.description.replace("\n", ""));
@@ -93,7 +94,7 @@ const DraggableBlock = ({
       ...spatialState,
       isExpanded: true,
       width: 800,
-      height: 600
+      height: 600,
     });
   };
 
@@ -212,7 +213,6 @@ const DraggableBlock = ({
       width: 200,
       height: 200,
     });
-
   };
 
   const renderChannelInline = () => {
@@ -246,11 +246,11 @@ const DraggableBlock = ({
       ref={rndEl}
       key={block.id}
       size={{ width: spatialState.width, height: spatialState.height }}
+      scale={panZoomRef}
       position={{
         x: spatialState.x,
         y: spatialState.y,
       }}
-      scale={workspaceOptions.zoomScale}
       onDragStart={(e) => {
         handleDragStart(e);
       }}
@@ -286,30 +286,39 @@ const DraggableBlock = ({
               : ""
             : ""
         } ${
-          spatialState.isExpanded ?
-            "draggable-block-container--expanded"
-          :
-            ""
-        } ${
-          spatialState.isBeingDragged ?
-            "isBeingDragged"
-          :
-            ""
-        }`}
+          spatialState.isExpanded ? "draggable-block-container--expanded" : ""
+        } ${spatialState.isBeingDragged ? "isBeingDragged" : ""}`}
       >
         {spatialState.isExpanded ? (
           renderChannelInline()
         ) : (
           <div className={`block block--${block.__typename.toLowerCase()}`}>
-            {block.__typename === "Channel" &&
-            <button className="icon-button" onClick={expandChannelInline}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8 13L12.9995 13V8" stroke="#BDC3CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M7.99951 3L3 3L3 8.00001" stroke="#BDC3CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
-
-          </button>}
+            {block.__typename === "Channel" && (
+              <button className="icon-button" onClick={expandChannelInline}>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 13L12.9995 13V8"
+                    stroke="#BDC3CA"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M7.99951 3L3 3L3 8.00001"
+                    stroke="#BDC3CA"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            )}
             <BlockRepresentation block={block} />
           </div>
         )}
@@ -318,4 +327,4 @@ const DraggableBlock = ({
   );
 };
 
-export default DraggableBlock;
+export default DraggableBlock

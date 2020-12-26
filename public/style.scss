@@ -1172,7 +1172,7 @@ header {
   position: fixed;
   width: 300px;
   transition: all ease-in-out 0.1s;
-  right: -315px;
+  right: 15px;
   top: 75px;
   bottom: 15px;
   height: calc(100% - 90px);
@@ -1364,6 +1364,7 @@ button,
   }
 }
 
-.description-field {
-  height: 150px;
+.bp3-editable-text-content {
+    line-height: 140% !important;
+    font-size: 0.95rem !important;
 }

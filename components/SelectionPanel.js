@@ -7,7 +7,7 @@ import { SELECTED_BLOCK, SELECTED_CHANNEL } from "../queries";
 import { NetworkStatus } from "@apollo/client";
 import { EditableText, Intent } from "@blueprintjs/core";
 
-export default () => {
+const SelectionPanel = React.memo(() => {
   const { selectedConnection, setSelectedConnection } = useSelection();
 
   const query =
@@ -50,7 +50,7 @@ export default () => {
     <div
       className="selection-panel"
       style={{
-        right: selectedConnection ? "15px" : "-315px",
+        right: (selectedConnection !== null) ? "15px" : "-315px",
       }}
     >
       <div className="header">
@@ -160,4 +160,6 @@ export default () => {
       </div>
     </div>
   );
-};
+});
+
+export default SelectionPanel

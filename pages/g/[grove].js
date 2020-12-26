@@ -125,6 +125,7 @@ const Grove = (props) => {
         draggable={false}
         pauseOnHover={false}
       />
+
       <Layout {...props}>
         <GrovesCanvas {...props}>
           {selectedChannel && selectedChannel.channel ? (
@@ -141,6 +142,7 @@ const Grove = (props) => {
                       key={blokk.id}
                       block={blokk}
                       bounds=".canvas"
+                      panZoomRef={props.panZoomRef}
                       style={{
                         WebkitFilter: "blur(0)",
                       }}
@@ -159,6 +161,7 @@ const Grove = (props) => {
                     type={blokk.__typename}
                     dragStates={dragStates}
                     setDragStates={setDragStates}
+                    panZoomRef={props.panZoomRef}
                     key={blokk.id}
                     block={blokk}
                     bounds=".canvas"
