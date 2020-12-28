@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import parse from 'html-react-parser';
 
-export default ({ block }) => {
+const BlockRepresentation = ({ block }) => {
   if (block.__typename === 'Image') {
     return (
       <Fragment>
@@ -47,3 +47,5 @@ export default ({ block }) => {
     return <p>unknown block type</p>;
   }
 };
+
+export default BlockRepresentation;

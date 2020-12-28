@@ -1,4 +1,4 @@
-export default ({ description, fullScreen }) => {
+const Index = ({ description, fullScreen }) => {
   return (
     <div className={`loading-screen ${!!fullScreen && 'fullscreen'}`}>
       <div className="lds-grid">
@@ -16,3 +16,5 @@ export default ({ description, fullScreen }) => {
     </div>
   );
 };
+
+export default Index;

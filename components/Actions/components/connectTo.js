@@ -20,7 +20,7 @@ const renderResult = (inputItem) => {
   );
 };
 
-export default (props) => {
+const ConnectTo = (props) => {
   const [visible, setVisible] = useState(false);
 
   const { apollo } = props;
@@ -176,3 +176,5 @@ export default (props) => {
     </Tippy>
   );
 };
+
+export default ConnectTo;

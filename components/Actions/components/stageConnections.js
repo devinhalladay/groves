@@ -15,7 +15,7 @@ const renderResult = (inputItem) => {
   );
 };
 
-export default () => {
+const StageConnections = () => {
   const [visible, setVisible] = useState(false);
 
   const show = () => setVisible(true);
@@ -115,3 +115,5 @@ export default () => {
     </Tippy>
   );
 };
+
+export default StageConnections;

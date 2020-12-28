@@ -8,10 +8,10 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "lint": "eslint --fix .",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc -ignore-path .gitignore"
   },
   "author": "devin@devinhalladay.com",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "dependencies": {
     "@apollo/client": "^3.0.0-beta.39",
     "@apollo/react-hooks": "^3.1.5",
