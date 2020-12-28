@@ -1,12 +1,12 @@
-import React from "react";
-import Panel from "./Panel";
-import GrovesNavigator from "./GrovesNavigator";
-import Menu from "./Menu";
-import { useAuth } from "../context/auth-context";
-import { useUser } from "../context/user-context";
-import { useSelection } from "../context/selection-context";
-import StageConnectionsFromAction from "./StageConnectionsFromAction";
-import GroveActions from "./GroveActions"
+import React from 'react';
+import Panel from '~/components/Panel';
+import GrovesNavigator from '~/components/Header/components/Navigator';
+import Menu from '~/components/Header/components/Menu';
+import { useAuth } from '~/context/auth-context';
+import { useUser } from '~/context/user-context';
+import { useSelection } from '~/context/selection-context';
+import StageConnectionsFromAction from '~/components/Actions/components/stageConnections';
+import GroveActions from '~/components//Actions';
 
 const UnauthenticatedHeader = (props) => {
   return (
@@ -19,8 +19,7 @@ const UnauthenticatedHeader = (props) => {
               height="45"
               viewBox="0 0 50 45"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+              xmlns="http://www.w3.org/2000/svg">
               <path
                 fillRule="evenodd"
                 clipRule="evenodd"
@@ -41,8 +40,7 @@ const UnauthenticatedHeader = (props) => {
               <li>
                 <a
                   className="button"
-                  href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}
-                >
+                  href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}>
                   Login
                 </a>
               </li>
@@ -68,8 +66,7 @@ const AuthenticatedHeader = (props) => {
                 height="45"
                 viewBox="0 0 50 45"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -103,8 +100,7 @@ const AuthenticatedHeader = (props) => {
                   height="45"
                   viewBox="0 0 50 45"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                  xmlns="http://www.w3.org/2000/svg">
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -138,8 +134,7 @@ const AuthenticatedHeader = (props) => {
                 height="45"
                 viewBox="0 0 50 45"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -158,9 +153,8 @@ const AuthenticatedHeader = (props) => {
               <ul>
                 <li>
                   <a
-                  className="button"
-                    href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}
-                  >
+                    className="button"
+                    href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}>
                     Login
                   </a>
                 </li>

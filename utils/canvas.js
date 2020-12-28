@@ -101,32 +101,26 @@ const adjustWindowScroll = (windowData) => {
 
   // Should we scroll left?
   if (windowData.isInLeftEdge && canScrollLeft) {
-    let intensity =
-      (windowData.edgeLeft - windowData.cursorPosition.x) / windowData.edgeSize;
+    let intensity = (windowData.edgeLeft - windowData.cursorPosition.x) / windowData.edgeSize;
 
     nextScrollX = nextScrollX - maxStep * intensity;
 
     // Should we scroll right?
   } else if (windowData.isInRightEdge && canScrollRight) {
-    let intensity =
-      (windowData.cursorPosition.x - windowData.edgeRight) /
-      windowData.edgeSize;
+    let intensity = (windowData.cursorPosition.x - windowData.edgeRight) / windowData.edgeSize;
 
     nextScrollX = nextScrollX + maxStep * intensity;
   }
 
   // Should we scroll up?
   if (windowData.isInTopEdge && canScrollUp) {
-    let intensity =
-      (windowData.edgeTop - windowData.cursorPosition.y) / windowData.edgeSize;
+    let intensity = (windowData.edgeTop - windowData.cursorPosition.y) / windowData.edgeSize;
 
     nextScrollY = nextScrollY - maxStep * intensity;
 
     // Should we scroll down?
   } else if (windowData.isInBottomEdge && canScrollDown) {
-    let intensity =
-      (windowData.cursorPosition.y - windowData.edgeBottom) /
-      windowData.edgeSize;
+    let intensity = (windowData.cursorPosition.y - windowData.edgeBottom) / windowData.edgeSize;
 
     nextScrollY = nextScrollY + maxStep * intensity;
   }
@@ -151,5 +145,5 @@ export {
   cursorPositionInPage,
   viewportDimensions,
   shouldScrollAtEdge,
-  adjustWindowScroll,
+  adjustWindowScroll
 };

@@ -1,7 +1,7 @@
 // TODO: Remove react-draggable dependency
-import Draggable from "react-draggable";
-import Collapsible from "react-collapsible";
-import { useState } from "react";
+import { useState } from 'react';
+import Collapsible from 'react-collapsible';
+import Draggable from 'react-draggable';
 
 const PanelHeader = (props) => (
   // TODO: Factor icon version out into DraggablePanel; turn this one into StaticPanel.
@@ -14,8 +14,7 @@ const PanelHeader = (props) => (
         height="2"
         viewBox="0 0 11 2"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+        xmlns="http://www.w3.org/2000/svg">
         <path d="M0 1H11" stroke="black" />
       </svg>
       <svg
@@ -24,8 +23,7 @@ const PanelHeader = (props) => (
         viewBox="0 0 11 2"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`rotator ${props.isOpen ? "vertical" : ""}`}
-      >
+        className={`rotator ${props.isOpen ? 'vertical' : ''}`}>
         <path d="M0 1H11" stroke="black" />
       </svg>
     </div>
@@ -67,31 +65,21 @@ const Panel = (props) => {
       onDrag={handleDrag}
       onStop={handleDragStop}
       className={props.className}
-      {...props}
-    >
+      {...props}>
       <div
-        className={`panel ${
-          props.panelType ? "panel--" + props.panelType : null
-        } panel--pin-${props.pinSide ? props.pinSide : "center"} ${
-          props.pinBottom ? "panel--pin-bottom" : ""
-        } ${props.className ? props.className : ""}`}
-        style={props.style}
-      >
+        className={`panel ${props.panelType ? 'panel--' + props.panelType : null} panel--pin-${
+          props.pinSide ? props.pinSide : 'center'
+        } ${props.pinBottom ? 'panel--pin-bottom' : ''} ${props.className ? props.className : ''}`}
+        style={props.style}>
         {props.panelTitle ? (
           <Collapsible
-            trigger={
-              <PanelHeader
-                panelTitle={props.panelTitle}
-                isOpen={isOpen}
-              ></PanelHeader>
-            }
+            trigger={<PanelHeader panelTitle={props.panelTitle} isOpen={isOpen}></PanelHeader>}
             onOpening={onOpening}
             onClosing={onClosing}
             open={isOpen}
             transitionTime={300}
-            easing={"ease-in-out"}
-            triggerDisabled={!props.canCollapse || !isCollapsibleEnabled}
-          >
+            easing={'ease-in-out'}
+            triggerDisabled={!props.canCollapse || !isCollapsibleEnabled}>
             {props.children}
           </Collapsible>
         ) : (

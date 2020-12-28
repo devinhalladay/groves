@@ -1,11 +1,9 @@
-import React, { useContext, createContext, useState } from "react";
-import { useQuery } from "@apollo/client";
-import { CHANNEL_SKELETON } from "../queries";
-import { useRouter } from "next/router";
-import withApollo from "../lib/withApollo";
-import { NetworkStatus } from "@apollo/client";
-import Loading from "../components/Loading";
-import { AuthenticatedHeader } from "../components/Header";
+import { NetworkStatus, useQuery } from '@apollo/client';
+import { useRouter } from 'next/router';
+import React, { createContext, useContext, useState } from 'react';
+import Loading from '~/components/Loader';
+import withApollo from '~/lib/withApollo';
+import { CHANNEL_SKELETON } from '~/queries';
 
 const SelectionContext = createContext();
 
@@ -24,28 +22,25 @@ const SelectionProvider = withApollo((props) => {
     } else if (router.query.grove) {
       return router.query.grove;
     } else {
-      return "757665";
+      return '757665';
     }
   };
 
-  const {
-    loading,
-    error,
-    data: channelSkeleton,
-    refetch,
-    networkStatus,
-  } = useQuery(CHANNEL_SKELETON, {
-    variables: {
-      channelId: getChannelID(),
-    },
-    fetchPolicy: "no-cache",
-    client: props.apollo,
-  });
+  const { loading, error, data: channelSkeleton, refetch, networkStatus } = useQuery(
+    CHANNEL_SKELETON,
+    {
+      variables: {
+        channelId: getChannelID()
+      },
+      fetchPolicy: 'no-cache',
+      client: props.apollo
+    }
+  );
 
-  if (networkStatus === NetworkStatus.refetch) return "Refetching!";
+  if (networkStatus === NetworkStatus.refetch) return 'Refetching!';
 
   if (loading) {
-    return <Loading fullScreen="true" description={"Loading your Grove :)"} />;
+    return <Loading fullScreen="true" description={'Loading your Grove :)'} />;
   } else if (error) {
     console.error(error);
     return `Error: ${error}`;
@@ -62,7 +57,7 @@ const SelectionProvider = withApollo((props) => {
         selectedConnection,
         setSelectedConnection,
         selectedRef,
-        setSelectedRef,
+        setSelectedRef
       }}
       {...props}
     />

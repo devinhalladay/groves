@@ -1,8 +1,8 @@
-import Tippy from "@tippyjs/react";
-import { useState, useRef, useEffect } from "react";
-import { useCombobox } from "downshift";
-import { useLazyQuery } from "@apollo/client";
-import { SEARCH_ALL_CHANNELS } from "../queries";
+import Tippy from '@tippyjs/react';
+import { useState, useRef, useEffect } from 'react';
+import { useCombobox } from 'downshift';
+import { useLazyQuery } from '@apollo/client';
+import { SEARCH_ALL_CHANNELS } from '../../../queries';
 
 const renderResult = (inputItem) => {
   return (
@@ -32,9 +32,7 @@ export default () => {
   const DropdownCombobox = () => {
     const [inputItems, setInputItems] = useState([]);
 
-    const [loadChannels, { called, loading, data }] = useLazyQuery(
-      SEARCH_ALL_CHANNELS
-    );
+    const [loadChannels, { called, loading, data }] = useLazyQuery(SEARCH_ALL_CHANNELS);
 
     const {
       isOpen,
@@ -44,14 +42,14 @@ export default () => {
       getInputProps,
       getComboboxProps,
       highlightedIndex,
-      getItemProps,
+      getItemProps
     } = useCombobox({
       items: inputItems,
-      itemToString: (item) => (item && item.title ? item.title : ""),
+      itemToString: (item) => (item && item.title ? item.title : ''),
       onInputValueChange: ({ inputValue }) => {
         loadChannels({
           variables: { q: inputValue, per: 10 },
-          diplayName: "Search All Channels",
+          diplayName: 'Search All Channels'
         });
 
         if (data) {
@@ -65,7 +63,7 @@ export default () => {
 
           console.log(inputItems);
         }
-      },
+      }
     });
 
     return (
@@ -74,25 +72,19 @@ export default () => {
         <div {...getComboboxProps()}>
           <input
             {...getInputProps({
-              placeholder: "Channel title…",
+              placeholder: 'Channel title…'
             })}
           />
         </div>
         <ul {...getMenuProps()}>
-          {
-            inputItems.map((item, index) => (
-              <li
-                style={
-                  highlightedIndex === index
-                    ? { backgroundColor: "#bde4ff" }
-                    : {}
-                }
-                key={`${item}${index}`}
-                {...getItemProps({ item, index })}
-              >
-                {item.titlea}
-              </li>
-            ))}
+          {inputItems.map((item, index) => (
+            <li
+              style={highlightedIndex === index ? { backgroundColor: '#bde4ff' } : {}}
+              key={`${item}${index}`}
+              {...getItemProps({ item, index })}>
+              {item.titlea}
+            </li>
+          ))}
         </ul>
       </>
     );
@@ -116,8 +108,7 @@ export default () => {
         </>
       }
       visible={visible}
-      onClickOutside={hide}
-    >
+      onClickOutside={hide}>
       <button className="action" onClick={visible ? hide : show}>
         <img src="/connect-from.svg" />
       </button>

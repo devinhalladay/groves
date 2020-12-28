@@ -17,11 +17,11 @@ function classNames() {
 
     var argType = typeof arg;
 
-    if (argType === "string" || argType === "number") {
+    if (argType === 'string' || argType === 'number') {
       classes.push(arg);
     } else if (Array.isArray(arg)) {
       classes.push(classNames.apply(null, arg));
-    } else if (argType === "object") {
+    } else if (argType === 'object') {
       for (var key in arg) {
         if (hasOwn.call(arg, key) && arg[key]) {
           classes.push(key);
@@ -30,7 +30,7 @@ function classNames() {
     }
   }
 
-  return classes.join(" ");
+  return classes.join(' ');
 }
 
 export default classNames;

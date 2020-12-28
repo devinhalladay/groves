@@ -1,25 +1,24 @@
-import React from "react";
-import Layout from "../../components/Layout";
-import { parseCookies } from "nookies";
-import GrovesCanvas from "../../components/GrovesCanvas";
-import { useSelection } from "../../context/selection-context";
-import { useAuth } from "../../context/auth-context";
+import React from 'react';
+import Layout from '~/components/Layout';
+import { parseCookies } from 'nookies';
+import GrovesCanvas from '~/components/Canvas';
+import { useSelection } from '~/context/selection-context';
+import { useAuth } from '~/context/auth-context';
 
 const GrovesApp = (props) => {
   const { selectedChannel } = useSelection();
-  const { accessToken } = useAuth()
+  const { accessToken } = useAuth();
 
   if (!accessToken) {
-    return <p>Loading</p>
+    return <p>Loading</p>;
   }
 
   return <Layout {...props}>{selectedChannel && <GrovesCanvas />}</Layout>;
-
 };
 
 export async function getServerSideProps(context) {
-  if (!parseCookies(context)["access_token"]) {
-    context.res.writeHead(301, { Location: "/" });
+  if (!parseCookies(context)['access_token']) {
+    context.res.writeHead(301, { Location: '/' });
     context.res.end();
   }
 

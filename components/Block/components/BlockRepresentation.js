@@ -1,34 +1,33 @@
-import { Fragment } from "react";
-import parse from "html-react-parser";
+import { Fragment } from 'react';
+import parse from 'html-react-parser';
 
 export default ({ block }) => {
-
-  if (block.__typename === "Image") {
+  if (block.__typename === 'Image') {
     return (
       <Fragment>
         <img draggable={false} src={block.image_url} />
       </Fragment>
     );
-  } else if (block.__typename === "Text") {
+  } else if (block.__typename === 'Text') {
     return (
       <Fragment>
         <p className="title">{block.title || null}</p>
         {parse(`${block.content}`)}
       </Fragment>
     );
-  } else if (block.__typename === "Link") {
+  } else if (block.__typename === 'Link') {
     return (
       <Fragment>
-            <img src={block.image_url} />
+        <img src={block.image_url} />
       </Fragment>
     );
-  } else if (block.__typename === "Attachment") {
+  } else if (block.__typename === 'Attachment') {
     return (
       <Fragment>
-            <img src={block.image_url ? block.image_url : ""} />
+        <img src={block.image_url ? block.image_url : ''} />
       </Fragment>
     );
-  } else if (block.__typename === "Embed") {
+  } else if (block.__typename === 'Embed') {
     return (
       <Fragment>
         <p>
@@ -37,14 +36,14 @@ export default ({ block }) => {
         </p>
       </Fragment>
     );
-  } else if (block.__typename === "Channel") {
+  } else if (block.__typename === 'Channel') {
     return (
       <Fragment>
-          <p className="block--title">{block.title}</p>
+        <p className="block--title">{block.title}</p>
       </Fragment>
     );
   } else {
-    console.error("unknown block type");
+    console.error('unknown block type');
     return <p>unknown block type</p>;
   }
 };

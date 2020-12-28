@@ -1,7 +1,7 @@
 export default ({ description, fullScreen }) => {
   return (
     <div className={`loading-screen ${!!fullScreen && 'fullscreen'}`}>
-      <div class="lds-grid">
+      <div className="lds-grid">
         <div></div>
         <div></div>
         <div></div>

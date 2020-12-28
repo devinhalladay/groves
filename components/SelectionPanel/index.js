@@ -1,26 +1,22 @@
-import React, { Fragment } from "react";
-import { useSelection } from "../context/selection-context";
-import parse from "html-react-parser";
-import { useQuery } from "@apollo/client";
-import Loading from "./Loading";
-import { SELECTED_BLOCK, SELECTED_CHANNEL } from "../queries";
-import { NetworkStatus } from "@apollo/client";
-import { EditableText, Intent } from "@blueprintjs/core";
+import { useQuery } from '@apollo/client';
+import { EditableText, Intent } from '@blueprintjs/core';
+import parse from 'html-react-parser';
+import React from 'react';
+import Loading from '~/components/Loader';
+import { useSelection } from '~/context/selection-context';
+import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/queries';
 
 const SelectionPanel = React.memo(() => {
   const { selectedConnection, setSelectedConnection } = useSelection();
 
-  const query =
-    selectedConnection.__typename === "Channel"
-      ? SELECTED_CHANNEL
-      : SELECTED_BLOCK;
+  const query = selectedConnection.__typename === 'Channel' ? SELECTED_CHANNEL : SELECTED_BLOCK;
 
   const { data, loading, error, networkStatus } = useQuery(query, {
     // notifyOnNetworkStatusChange: true,
-    fetchPolicy: "no-cache",
+    fetchPolicy: 'no-cache',
     variables: {
-      id: selectedConnection.id,
-    },
+      id: selectedConnection.id
+    }
   });
 
   if (loading) {
@@ -28,12 +24,31 @@ const SelectionPanel = React.memo(() => {
       <div className="selection-panel">
         <div className="header">
           <p className="title">Selection</p>
-          <button className="icon-button" onClick={() => {
-            setSelectedConnection(null)
-          }}>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12.6211 4.04367L4.62109 12.0437" stroke="#BDC3CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M4.62109 4.04367L12.6211 12.0437" stroke="#BDC3CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <button
+            className="icon-button"
+            onClick={() => {
+              setSelectedConnection(null);
+            }}>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12.6211 4.04367L4.62109 12.0437"
+                stroke="#BDC3CA"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M4.62109 4.04367L12.6211 12.0437"
+                stroke="#BDC3CA"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </button>
         </div>
@@ -50,36 +65,29 @@ const SelectionPanel = React.memo(() => {
     <div
       className="selection-panel"
       style={{
-        right: selectedConnection !== null ? "15px" : "-315px",
-      }}
-    >
+        right: selectedConnection !== null ? '15px' : '-315px'
+      }}>
       <div className="header">
         <p className="title">Selection</p>
         <button
           className="icon-button"
           onClick={() => {
             setSelectedConnection(null);
-          }}
-        >
-          <svg
-            width="17"
-            height="17"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          }}>
+          <svg width="17" height="17" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M12.6211 4.04367L4.62109 12.0437"
               stroke="#BDC3CA"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M4.62109 4.04367L12.6211 12.0437"
               stroke="#BDC3CA"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </button>
@@ -88,15 +96,13 @@ const SelectionPanel = React.memo(() => {
         <div
           className="section"
           style={{
-            position: "relative",
-          }}
-        >
+            position: 'relative'
+          }}>
           <p
             style={{
               marginRight: 40,
-              fontSize: 18,
-            }}
-          >
+              fontSize: 18
+            }}>
             <EditableText
               intent={Intent.PRIMARY}
               maxLength={45}
@@ -107,13 +113,12 @@ const SelectionPanel = React.memo(() => {
           </p>
           <a
             style={{
-              position: "absolute",
+              position: 'absolute',
               top: 0,
-              right: 0,
+              right: 0
             }}
             href={`https://are.na${selectedConnection.href}`}
-            target="_blank"
-          >
+            target="_blank">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -123,8 +128,7 @@ const SelectionPanel = React.memo(() => {
               stroke="#707B8A"
               strokeWidth="2"
               strokeLinecap="round"
-              strokeLinejoin="round"
-            >
+              strokeLinejoin="round">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
               <polyline points="15 3 21 3 21 9" />
               <line x1="10" y1="14" x2="21" y2="3" />
@@ -139,7 +143,7 @@ const SelectionPanel = React.memo(() => {
             minLines={2}
             className="description-field"
             style={{
-              height: 60,
+              height: 60
             }}
             multiline={true}
             placeholder="Add a description to this block…"
@@ -172,4 +176,4 @@ const SelectionPanel = React.memo(() => {
   );
 });
 
-export default SelectionPanel
+export default SelectionPanel;

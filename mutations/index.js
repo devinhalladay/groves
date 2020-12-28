@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const ADD_BLOCK = gql`
   mutation ConnectBlock($channelId: ID!, $value: String!) {
@@ -26,7 +26,6 @@ export const ADD_BLOCK = gql`
     }
   }
 `;
-
 
 export const CREATE_CONNECTION = gql`
   mutation createConnectionMutation(
@@ -132,4 +131,3 @@ export const CREATE_CONNECTION = gql`
     }
   }
 `;
-

@@ -1,4 +1,4 @@
-const axios = require("axios");
+const axios = require('axios');
 
 export default async (req, res) => {
   const { auth_code } = await req.body;

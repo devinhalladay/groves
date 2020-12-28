@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 const CURRENT_USER = gql`
   {
@@ -117,7 +117,7 @@ const grovePageFragments = {
         }
       }
     }
-  `,
+  `
 };
 
 const CHANNEL_SKELETON = gql`
@@ -126,12 +126,7 @@ const CHANNEL_SKELETON = gql`
       id
       title
       description
-      initial_contents: blokks(
-        page: 1
-        per: 40
-        sort_by: POSITION
-        direction: DESC
-      ) {
+      initial_contents: blokks(page: 1, per: 40, sort_by: POSITION, direction: DESC) {
         ...ChannelContentsConnectable
       }
       skeleton {
@@ -158,7 +153,7 @@ const SELECTED_BLOCK = gql`
     block: blokk(id: $id) {
       ...ChannelContentsConnectable
     }
-  },
+  }
   ${grovePageFragments.channelContentsConnectable}
 `;
 
@@ -180,10 +175,4 @@ const SEARCH_ALL_CHANNELS = gql`
   }
 `;
 
-export {
-  CHANNEL_SKELETON,
-  CURRENT_USER,
-  SELECTED_BLOCK,
-  SELECTED_CHANNEL,
-  SEARCH_ALL_CHANNELS,
-};
+export { CHANNEL_SKELETON, CURRENT_USER, SELECTED_BLOCK, SELECTED_CHANNEL, SEARCH_ALL_CHANNELS };

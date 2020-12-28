@@ -1,10 +1,9 @@
-import React, { useContext, createContext } from "react";
-import { useQuery } from "@apollo/client";
-import { gql } from "@apollo/client";
-import withApollo from "../lib/withApollo";
-import { SelectionProvider } from "./selection-context";
-import { CURRENT_USER } from '../queries'
-import Loading from "../components/Loading";
+import { useQuery } from '@apollo/client';
+import React, { createContext, useContext } from 'react';
+import Loading from '~/components/Loader';
+import { SelectionProvider } from '~/context/selection-context';
+import withApollo from '~/lib/withApollo';
+import { CURRENT_USER } from '~/queries';
 
 const UserContext = createContext();
 
@@ -12,18 +11,18 @@ export const UserProvider = withApollo((props) => {
   const {
     loading: loadingCurrentUser,
     error: errorLoadingCurrentUser,
-    data: currentUser,
+    data: currentUser
   } = useQuery(CURRENT_USER);
 
   if (loadingCurrentUser) {
-    return <Loading fullScreen="true" description="Logging in..." />
+    return <Loading fullScreen="true" description="Logging in..." />;
   } else if (errorLoadingCurrentUser) {
     console.error(errorLoadingCurrentUser);
     return `Error: ${errorLoadingCurrentUser}`;
   }
 
   const channels = currentUser.me.channels;
-  const index = currentUser.me.channels_index
+  const index = currentUser.me.channels_index;
 
   return (
     <UserContext.Provider value={{ currentUser, channels, index }} {...props}>

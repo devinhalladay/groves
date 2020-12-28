@@ -1,22 +1,21 @@
-import Panel from "./Panel";
-import { useState } from "react";
-import { initialData } from "./initialData";
-import Finder from "./Finder";
+import Panel from '~/components/Panel';
+import { useState } from 'react';
+import { initialData } from '~/components/initialData';
+import Finder from '~/components/Finder';
 
 const MillerPanel = (props) => {
   const [data, setData] = useState(initialData);
   const [selectedIndexes, setSelectedIndexes] = useState([]);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const [isEnd, setIsEnd] = useState(true);
 
   return (
     <Panel
       pinSide="left"
-      panelTitle={"Miller Columns"}
+      panelTitle={'Miller Columns'}
       panelType="wide"
       defaultPosition={{ x: 0, y: 60 }}
-      {...props}
-    >
+      {...props}>
       <div className="finder-demo">
         <Finder
           value={value}
@@ -30,7 +29,7 @@ const MillerPanel = (props) => {
       </div>
 
       <ul className="value-list">
-        <li>selectedIndexes: {selectedIndexes.join(",")}</li>
+        <li>selectedIndexes: {selectedIndexes.join(',')}</li>
         <li>
           value:
           <input value={value} onChange={(e) => setValue(e.target.value)} />

@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import Layout from "../components/Layout";
-import DraggableBlock from "../components/DraggableBlock";
-import { gql } from "@apollo/client";
-import { useQuery } from "@apollo/client";
-import withApollo from "../lib/withApollo";
-import Panel from "../components/Panel";
-import Loading from "../components/Loading";
-import { SelectionProvider } from "../context/selection-context";
-import { ToastContainer } from "react-toastify";
-import { WorkspaceProvider } from "../context/workspace-context";
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import Layout from '~/components/Layout';
+import DraggableBlock from '~/components/Block';
+import { gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import withApollo from '~/lib/withApollo';
+import Panel from '~/components/Panel';
+import Loading from '~/components/Loader';
+import { SelectionProvider } from '~/context/selection-context';
+import { ToastContainer } from 'react-toastify';
+import { WorkspaceProvider } from '~/context/workspace-context';
 
 const GET_LANDING_BLOCKS = gql`
   {
@@ -36,17 +36,12 @@ const Root = (props) => {
   const router = useRouter();
   const { loading, error, data } = useQuery(GET_LANDING_BLOCKS);
   const [dragStates, setDragStates] = useState({
-    maxZIndex: 1000,
+    maxZIndex: 1000
   });
   const [isDragging, setIsDragging] = useState(false);
 
   if (loading) {
-    return (
-      <Loading
-        fullScreen="true"
-        description="Loading landing page channel..."
-      />
-    );
+    return <Loading fullScreen="true" description="Loading landing page channel..." />;
   } else if (error) {
     console.error(error);
     return `Error: ${error}`;
@@ -58,28 +53,19 @@ const Root = (props) => {
         <Layout>
           <Panel
             style={{
-              width: "350px",
+              width: '350px'
             }}
             canCollapse={false}
-            className={"newsletter-panel"}
+            className={'newsletter-panel'}
             defaultPosition={{ x: 25, y: 520 }}
-            panelTitle={"Subscribe to updates"}
-            {...props}
-          >
-            <p>
-              Get very occasional updates on development, beta testing, and
-              launch dates.
-            </p>
+            panelTitle={'Subscribe to updates'}
+            {...props}>
+            <p>Get very occasional updates on development, beta testing, and launch dates.</p>
             <form
               action="https://network.us18.list-manage.com/subscribe/post?u=488634612d3795996b128e2ba&amp;id=d3ad9e4e39"
-              method="post"
-            >
+              method="post">
               <label htmlFor="EMAIL">Email address</label>
-              <input
-                name="EMAIL"
-                type="email"
-                placeholder="dev@groves.network"
-              />
+              <input name="EMAIL" type="email" placeholder="dev@groves.network" />
               <input type="submit" value="Submit" />
             </form>
           </Panel>

@@ -1,8 +1,6 @@
-import React, { useRef, useState, Fragment } from "react";
-import { useSelection } from "../context/selection-context";
-import MillerPanel from "./MillerPanel";
-import { useWorkspace } from "../context/workspace-context";
-import withApollo from "../lib/withApollo";
+import React, { useState } from 'react';
+import { useWorkspace } from '~/context/workspace-context';
+import withApollo from '~/lib/withApollo';
 
 export default withApollo((props) => {
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
@@ -14,13 +12,13 @@ export default withApollo((props) => {
     maxWidth: null,
     timer: null,
     workspaceOptions,
-    setWorkspaceOptions,
+    setWorkspaceOptions
   });
 
   return React.Children.map(props.children, (child) =>
     React.cloneElement(child, {
       canvasSpace: canvasSpace,
-      setCanvasSpace: setCanvasSpace,
+      setCanvasSpace: setCanvasSpace
     })
   );
 });

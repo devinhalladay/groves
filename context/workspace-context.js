@@ -1,4 +1,4 @@
-import React, { useContext, createContext, useState } from "react";
+import React, { useContext, createContext, useState } from 'react';
 
 const WorkspaceContext = createContext();
 
@@ -7,12 +7,7 @@ const WorkspaceProvider = (props) => {
     zoomScale: 1
   });
 
-  return (
-    <WorkspaceContext.Provider
-      value={{ workspaceOptions, setWorkspaceOptions }}
-      {...props}
-    />
-  );
+  return <WorkspaceContext.Provider value={{ workspaceOptions, setWorkspaceOptions }} {...props} />;
 };
 
 const useWorkspace = () => useContext(WorkspaceContext);

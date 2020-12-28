@@ -1,3 +1,3 @@
-import Finder from "./components/Finder";
+import Finder from './components/Finder';
 
 export default Finder;

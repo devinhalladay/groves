@@ -1,38 +1,42 @@
-import React from "react";
-import { useRouter } from "next/router";
-import { useSelection } from "../../context/selection-context";
-import GrovesCanvas from "../../components/GrovesCanvas";
-import { parseCookies } from "nookies";
-import Layout from "../../components/Layout";
-import { useState, useCallback, useEffect } from "react";
-import withApollo from "../../lib/withApollo";
-import { gql, NetworkStatus } from "@apollo/client";
-import { useQuery } from "@apollo/client";
-import DraggableBlock from "../../components/DraggableBlock";
-import { WorkspaceProvider } from "../../context/workspace-context";
-import SelectionPanel from "../../components/SelectionPanel";
-import { useDropzone } from "react-dropzone";
-import { ADD_BLOCK } from "../../mutations";
-import { useMutation } from "@apollo/client";
-import { ToastContainer } from "react-toastify";
+import React from 'react';
+import { useRouter } from 'next/router';
+import { useSelection } from '~/context/selection-context';
+import GrovesCanvas from '~/components/Canvas';
+import { parseCookies } from 'nookies';
+import Layout from '~/components/Layout';
+import { useState, useCallback, useEffect } from 'react';
+import withApollo from '~/lib/withApollo';
+import { gql, NetworkStatus } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import DraggableBlock from '~/components/Block';
+import { WorkspaceProvider } from '~/context/workspace-context';
+import SelectionPanel from '~/components/SelectionPanel';
+import { useDropzone } from 'react-dropzone';
+import { ADD_BLOCK } from '~/mutations';
+import { useMutation } from '@apollo/client';
+import { ToastContainer } from 'react-toastify';
 
 const Grove = (props) => {
   const router = useRouter();
 
   const [dragStates, setDragStates] = useState({
-    maxZIndex: 1000,
+    maxZIndex: 1000
   });
 
   const { apollo } = props;
 
-  const { selectedConnection, setSelectedConnection, selectedRef, setSelectedRef, selectedChannel, initialSelection } = useSelection()
+  const {
+    selectedConnection,
+    setSelectedConnection,
+    selectedRef,
+    setSelectedRef,
+    selectedChannel,
+    initialSelection
+  } = useSelection();
 
   const [files, setFiles] = useState([]);
 
-  const [
-    addBlock,
-    { loading: mutationLoading, error: mutationError },
-  ] = useMutation(ADD_BLOCK, {
+  const [addBlock, { loading: mutationLoading, error: mutationError }] = useMutation(ADD_BLOCK, {
     client: apollo,
     onCompleted: (data) => {
       console.log(data);
@@ -40,7 +44,7 @@ const Grove = (props) => {
     },
     onError: (error) => {
       console.log(error);
-    },
+    }
   });
 
   // const onDrop = useCallback((acceptedFiles) => {
@@ -144,7 +148,7 @@ const Grove = (props) => {
                       bounds="window"
                       panZoomRef={props.panZoomRef}
                       style={{
-                        WebkitFilter: "blur(0)",
+                        WebkitFilter: 'blur(0)'
                       }}
                       {...props}
                     />
@@ -192,13 +196,13 @@ const Grove = (props) => {
 };
 
 export async function getServerSideProps(context) {
-  if (!parseCookies(context)["access_token"]) {
-    context.res.writeHead(301, { Location: "/" });
+  if (!parseCookies(context)['access_token']) {
+    context.res.writeHead(301, { Location: '/' });
     context.res.end();
   }
 
   return {
-    props: {},
+    props: {}
   };
 }
 

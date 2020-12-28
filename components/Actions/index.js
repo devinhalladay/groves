@@ -1,8 +1,7 @@
-import React from 'react'
-import ConnectToAction from './ConnectToAction';
-import CreateGroveAction from './CreateGroveAction';
-import Panel from './Panel';
-import StageConnectionsFromAction from './StageConnectionsFromAction';
+import React from 'react';
+import ConnectToAction from './components/connectTo';
+import CreateGroveAction from './components/createGrove';
+import Panel from '~/components/Panel';
 
 export default function GroveActions() {
   return (

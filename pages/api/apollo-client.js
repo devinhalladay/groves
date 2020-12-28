@@ -1,4 +1,4 @@
-const axios = require("axios");
+const axios = require('axios');
 
 export default async (req, res) => {
   let { query, variables } = await req.body;
@@ -12,13 +12,13 @@ export default async (req, res) => {
       .post(
         authURL,
         {
-          ...req.body,
+          ...req.body
         },
         {
           headers: {
-            authorization: `${req.headers["authorization"]}`,
-            "X-APP-TOKEN": process.env.GRAPHQL_TOKEN,
-          },
+            authorization: `${req.headers['authorization']}`,
+            'X-APP-TOKEN': process.env.GRAPHQL_TOKEN
+          }
         }
       )
       .then((response) => {

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { useAuth } from "../../context/auth-context";
-import Loading from "../../components/Loading";
+import React, { useEffect } from 'react';
+import { useAuth } from '../../context/auth-context';
+import Loading from '../../components/Loader';
 
 const Callback = ({ ctx, query: { code }, ...props }) => {
   const { login, logout } = useAuth();
@@ -18,7 +18,7 @@ const Callback = ({ ctx, query: { code }, ...props }) => {
 
 export async function getServerSideProps({ query }) {
   return {
-    props: { query },
+    props: { query }
   };
 }
 

@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import Downshift from "downshift";
-import { useSelection } from "../context/selection-context";
-import { useRouter } from "next/router";
-import { useUser } from '../context/user-context'
+import Downshift from 'downshift';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { useSelection } from '~/context/selection-context';
+import { useUser } from '~/context/user-context';
 
 const GrovesNavigator = (props) => {
   const router = useRouter();
 
-  const { channels, index } = useUser()
-  const { selectedChannel, setSelectedChannel, initialSelection } = useSelection()
+  const { channels, index } = useUser();
+  const { selectedChannel, setSelectedChannel, initialSelection } = useSelection();
 
   // TODO: think about handling initial selection logic here
   // rather than in [grove].js itself. I think it would be
@@ -19,7 +19,7 @@ const GrovesNavigator = (props) => {
   // This would prevent having to thread the selectedChannel
   // through to every child component that needs it.
 
-  const allUserChannels = index.flatMap(channelSet => channelSet.channels.flatMap(c => c));
+  const allUserChannels = index.flatMap((channelSet) => channelSet.channels.flatMap((c) => c));
 
   const [inputItems, setInputItems] = useState(allUserChannels);
 
@@ -27,7 +27,7 @@ const GrovesNavigator = (props) => {
     data: { channels, loading },
     selectedItem,
     highlightedIndex,
-    getItemProps,
+    getItemProps
   }) {
     if (loading) {
       return <div>Loading...</div>;
@@ -41,11 +41,10 @@ const GrovesNavigator = (props) => {
               index,
               key: channel.id,
               style: {
-                backgroundColor: highlightedIndex === index ? "gray" : "white",
-                fontWeight: selectedItem === item ? "bold" : "normal",
-              },
-            })}
-          >
+                backgroundColor: highlightedIndex === index ? 'gray' : 'white',
+                fontWeight: selectedItem === item ? 'bold' : 'normal'
+              }
+            })}>
             {channel.title}
           </div>
         ))}
@@ -60,22 +59,17 @@ const GrovesNavigator = (props) => {
           allUserChannels.filter((item) =>
             item.title
               .toLowerCase()
-              .replace(/\W/g, "")
-              .startsWith(inputValue.toLowerCase().replace(/\W/g, ""))
+              .replace(/\W/g, '')
+              .startsWith(inputValue.toLowerCase().replace(/\W/g, ''))
           )
         );
       }}
       onChange={(selection) => {
         router.push(`/g/[grove]`, `/g/${selection.id}`, { shallow: true });
       }}
-      itemToString={(item) => (item ? item.title : "")}
-      initialSelectedItem={
-        initialSelection.channel
-      }
-      initialInputValue={
-        initialSelection.channel.title
-      }
-    >
+      itemToString={(item) => (item ? item.title : '')}
+      initialSelectedItem={initialSelection.channel}
+      initialInputValue={initialSelection.channel.title}>
       {({
         getInputProps,
         getItemProps,
@@ -87,23 +81,17 @@ const GrovesNavigator = (props) => {
         selectedItem,
         isOpen,
         clearSelection,
-        openMenu,
+        openMenu
       }) => (
         <>
-          <div
-            {...getRootProps({}, { suppressRefError: true })}
-            className="grove-navigation"
-          >
+          <div {...getRootProps({}, { suppressRefError: true })} className="grove-navigation">
             <input
               {...getInputProps({
-                onFocus: openMenu,
+                onFocus: openMenu
               })}
               placeholder="Enter a channel title..."
             />
-            <ul
-              {...getMenuProps()}
-              className={`groves-dropdown panel ${isOpen ? "open" : ""}`}
-            >
+            <ul {...getMenuProps()} className={`groves-dropdown panel ${isOpen ? 'open' : ''}`}>
               {isOpen &&
                 [...inputItems]
                   .sort((a, b) => a.title.localeCompare(b.title))
@@ -114,13 +102,11 @@ const GrovesNavigator = (props) => {
                         item,
                         index,
                         style: {
-                          cursor: "pointer",
-                          backgroundColor:
-                            highlightedIndex === index ? "lightgray" : "white",
-                          fontWeight: selectedItem === item ? "bold" : "normal",
-                        },
-                      })}
-                    >
+                          cursor: 'pointer',
+                          backgroundColor: highlightedIndex === index ? 'lightgray' : 'white',
+                          fontWeight: selectedItem === item ? 'bold' : 'normal'
+                        }
+                      })}>
                       {item.title}
                     </li>
                   ))}

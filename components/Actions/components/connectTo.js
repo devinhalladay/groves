@@ -1,13 +1,13 @@
-import Tippy from "@tippyjs/react";
-import { useState, useRef, useEffect } from "react";
-import { useCombobox } from "downshift";
-import { useLazyQuery, useMutation } from "@apollo/client";
-import { SEARCH_ALL_CHANNELS } from "../queries";
-import { useUser } from "../context/user-context";
-import { useRouter } from "next/router";
-import { CREATE_CONNECTION } from "../mutations";
-import { ToastContainer, toast } from "react-toastify";
-import { useSelection } from "../context/selection-context";
+import Tippy from '@tippyjs/react';
+import { useState, useRef, useEffect } from 'react';
+import { useCombobox } from 'downshift';
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { SEARCH_ALL_CHANNELS } from '~/queries';
+import { useUser } from '../../../context/user-context';
+import { useRouter } from 'next/router';
+import { CREATE_CONNECTION } from '~/mutations';
+import { ToastContainer, toast } from 'react-toastify';
+import { useSelection } from '../../../context/selection-context';
 
 const renderResult = (inputItem) => {
   return (
@@ -38,18 +38,18 @@ export default (props) => {
     toast(`Connected to ${connectable.title}`);
   };
 
-  const [
-    connectTo,
-    { loading: mutationLoading, error: mutationError },
-  ] = useMutation(CREATE_CONNECTION, {
-    client: apollo,
-    onCompleted: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  const [connectTo, { loading: mutationLoading, error: mutationError }] = useMutation(
+    CREATE_CONNECTION,
+    {
+      client: apollo,
+      onCompleted: (data) => {
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
+    }
+  );
 
   useEffect(() => {
     if (inputElement.current) {
@@ -60,9 +60,7 @@ export default (props) => {
   const DropdownCombobox = () => {
     const { channels, index } = useUser();
 
-    const allUserChannels = index.flatMap((channelSet) =>
-      channelSet.channels.flatMap((c) => c)
-    );
+    const allUserChannels = index.flatMap((channelSet) => channelSet.channels.flatMap((c) => c));
 
     const [inputItems, setInputItems] = useState(allUserChannels);
 
@@ -79,27 +77,25 @@ export default (props) => {
       getInputProps,
       getComboboxProps,
       highlightedIndex,
-      getItemProps,
+      getItemProps
     } = useCombobox({
       items: inputItems,
-      itemToString: (item) => (item && item.title ? item.title : ""),
+      itemToString: (item) => (item && item.title ? item.title : ''),
       onSelectedItemChange: ({ selectedItem }) => {
         connectTo({
           variables: {
-            connectable_id: selectedConnection
-              ? selectedConnection.id
-              : router.query.grove,
-            connectable_type: selectedConnection ? "BLOCK" : "CHANNEL",
-            channel_ids: [selectedItem.id],
-          },
+            connectable_id: selectedConnection ? selectedConnection.id : router.query.grove,
+            connectable_type: selectedConnection ? 'BLOCK' : 'CHANNEL',
+            channel_ids: [selectedItem.id]
+          }
         });
 
         connectTo({
           variables: {
             connectable_id: selectedItem ? selectedItem.id : router.query.grove,
-            connectable_type: "CHANNEL",
-            channel_ids: [router.query.grove],
-          },
+            connectable_type: 'CHANNEL',
+            channel_ids: [router.query.grove]
+          }
         });
 
         connectedToast(selectedItem);
@@ -124,11 +120,11 @@ export default (props) => {
           allUserChannels.filter((item) =>
             item.title
               .toLowerCase()
-              .replace(/\W/g, "")
-              .startsWith(inputValue.toLowerCase().replace(/\W/g, ""))
+              .replace(/\W/g, '')
+              .startsWith(inputValue.toLowerCase().replace(/\W/g, ''))
           )
         );
-      },
+      }
     });
 
     return (
@@ -137,21 +133,16 @@ export default (props) => {
         <div {...getComboboxProps()}>
           <input
             {...getInputProps({
-              placeholder: "Type here...",
+              placeholder: 'Type here...'
             })}
           />
         </div>
         <ul {...getMenuProps()} className="inline-combobox">
           {inputItems.map((item, index) => (
             <li
-              style={
-                highlightedIndex === index
-                  ? { backgroundColor: "#e2e6ea" }
-                  : {}
-              }
+              style={highlightedIndex === index ? { backgroundColor: '#e2e6ea' } : {}}
               key={`${item}${index}`}
-              {...getItemProps({ item, index })}
-            >
+              {...getItemProps({ item, index })}>
               {item.title}
             </li>
           ))}
@@ -178,8 +169,7 @@ export default (props) => {
         </>
       }
       visible={visible}
-      onClickOutside={hide}
-    >
+      onClickOutside={hide}>
       <button className="action" onClick={visible ? hide : show}>
         <img src="/link-groves.svg" />
       </button>
