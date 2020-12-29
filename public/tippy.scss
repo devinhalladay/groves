@@ -29,13 +29,11 @@
   width: 300px;
 
   .title {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 21px;
     letter-spacing: 0.02em;
-    font-weight: 600;
-    color: #6f7b8a;
     padding: 0;
-    padding-bottom: 0.4rem;
+    padding-bottom: 0.8rem;
   }
 
   .results {
@@ -43,6 +41,10 @@
     ul {
       list-style: none;
       li {
+        padding: 8px 6px;
+        border-radius: 3px;
+        margin-bottom: 6px;
+
         &:not(:last-child) {
           padding-bottom: 0.35rem;
         border-bottom: 1px solid #bdc3ca;

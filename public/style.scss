@@ -331,7 +331,8 @@ header {
     bottom: 15px;
   }
 
-  &--nav, &--actions {
+  &--nav,
+  &--actions {
     top: 15px;
     z-index: 999999;
   }
@@ -1171,7 +1172,7 @@ header {
   position: fixed;
   width: 300px;
   transition: all ease-in-out 0.1s;
-  right: -315px;
+  right: 15px;
   top: 75px;
   bottom: 15px;
   height: calc(100% - 90px);
@@ -1189,7 +1190,7 @@ header {
     height: 35px;
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1340,9 +1341,12 @@ button,
   overflow: scroll;
 
   li {
-    height: 26px;
+    cursor: pointer;
     display: flex;
     align-items: center;
+    padding: 8px 8px;
+    border-radius: 3px;
+    margin-bottom: 6px;
   }
 }
 
@@ -1350,10 +1354,17 @@ button,
 //   border: 1.5px solid #47a7ff;
 // }
 
-.canvas div {
-  filter: blur(0);
+.canvas {
+  &:focus {
+    outline: none;
+  }
+
+  div {
+    filter: blur(0);
+  }
 }
 
-.description-field {
-  height: 150px;
+.bp3-editable-text-content {
+    line-height: 140% !important;
+    font-size: 0.95rem !important;
 }
