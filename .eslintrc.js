@@ -23,6 +23,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier/@typescript-eslint',
+    'nextjs',
     'plugin:prettier/recommended' // Make this the last element so prettier config overrides other formatting rules
   ],
   plugins: ['simple-import-sort'],

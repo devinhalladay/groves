@@ -1,7 +1,6 @@
 import Router from 'next/router';
-import { parseCookies, setCookie, destroyCookie } from 'nookies';
+import { parseCookies, setCookie } from 'nookies';
 import { useEffect, useContext } from 'react';
-import UserContext from '../context/user-context';
 
 export const login = ({ ctx, access_token }) => {
   setCookie(ctx, 'access_token', access_token, {

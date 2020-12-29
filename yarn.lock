@@ -3022,6 +3022,11 @@ escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
+eslint-config-nextjs@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/eslint-config-nextjs/-/eslint-config-nextjs-1.0.6.tgz#21c4498494a770e1b23fa3777153cd807f8a3c71"
+  integrity sha512-dVLdh6Ep9xkFHys+HBirBBf2CbPsdO3Ew7kXAd5URbWQVPa4uvzj4cOEX4pzu0EH7oLdxX5z7i4wxmu5AOM2Mg==
+
 eslint-plugin-react@^7.21.5:
   version "7.21.5"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.21.5.tgz#50b21a412b9574bfe05b21db176e8b7b3b15bff3"
