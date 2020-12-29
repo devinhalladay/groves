@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "lint": "eslint --fix --ext .jsx --ext .js",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc -ignore-path .gitignore"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc --ignore-path .gitignore"
   },
   "author": "devin@devinhalladay.com",
   "license": "GPL-3.0",
@@ -23,6 +23,7 @@
     "dotenv": "^8.2.0",
     "downshift": "^5.0.3",
     "es6-promise": "^4.2.8",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.21.5",
     "graphql": "^15.0.0",
     "html-react-parser": "^0.10.3",
@@ -53,10 +54,13 @@
     "babel-loader": "^8.0.6",
     "eslint": "^7.16.0",
     "eslint-config-nextjs": "^1.0.6",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "husky": "^4.3.6",
     "patch-package": "^6.2.2",
-    "postinstall-postinstall": "^2.1.0",
-    "undefined": "^0.1.0"
+    "postinstall-postinstall": "^2.1.0"
+  },
+  "peerDependencies": {
+    "eslint-config-airbnb": "^18.2.1"
   }
 }

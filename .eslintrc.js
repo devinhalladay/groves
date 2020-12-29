@@ -21,10 +21,19 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint',
-    'nextjs',
     'plugin:prettier/recommended' // Make this the last element so prettier config overrides other formatting rules
+  ],
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      extends: [
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+        'prettier/@typescript-eslint'
+      ],
+      parser: '@typescript-eslint/parser',
+      plugins: ['@typescript-eslint']
+    }
   ],
   plugins: ['simple-import-sort'],
   rules: {
