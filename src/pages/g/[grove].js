@@ -1,18 +1,18 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { useSelection } from '~/context/selection-context';
-import GrovesCanvas from '~/components/Canvas';
+import { useSelection } from '@context/selection-context';
+import GrovesCanvas from '~/src/components/Canvas';
 import { parseCookies } from 'nookies';
-import Layout from '~/components/Layout';
+import Layout from '~/src/components/Layout';
 import { useState, useCallback, useEffect } from 'react';
-import withApollo from '~/lib/withApollo';
+import withApollo from '~/src/lib/withApollo';
 import { gql, NetworkStatus } from '@apollo/client';
 import { useQuery } from '@apollo/client';
-import DraggableBlock from '~/components/Block';
-import { WorkspaceProvider } from '~/context/workspace-context';
-import SelectionPanel from '~/components/SelectionPanel';
+import DraggableBlock from '~/src/components/Block';
+import { WorkspaceProvider } from '@context/workspace-context';
+import SelectionPanel from '~/src/components/SelectionPanel';
 import { useDropzone } from 'react-dropzone';
-import { ADD_BLOCK } from '~/mutations';
+import { ADD_BLOCK } from '~/src/mutations';
 import { useMutation } from '@apollo/client';
 import { ToastContainer } from 'react-toastify';
 

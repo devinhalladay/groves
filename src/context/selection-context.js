@@ -1,9 +1,9 @@
 import { NetworkStatus, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { createContext, useContext, useState } from 'react';
-import Loading from '~/components/Loader';
-import withApollo from '~/lib/withApollo';
-import { CHANNEL_SKELETON } from '~/queries';
+import Loading from '~/src/components/Loader';
+import withApollo from '~/src/lib/withApollo';
+import { CHANNEL_SKELETON } from '~/src/queries';
 
 const SelectionContext = createContext();
 

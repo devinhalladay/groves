@@ -1,9 +1,9 @@
 import React from 'react';
-import Layout from '~/components/Layout';
+import Layout from '~/src/components/Layout';
 import { parseCookies } from 'nookies';
-import GrovesCanvas from '~/components/Canvas';
-import { useSelection } from '~/context/selection-context';
-import { useAuth } from '~/context/auth-context';
+import GrovesCanvas from '~/src/components/Canvas';
+import { useSelection } from '@context/selection-context';
+import { useAuth } from '@context/auth-context';
 
 const GrovesApp = (props) => {
   const { selectedChannel } = useSelection();

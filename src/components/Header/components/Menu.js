@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useAuth } from '~/context/auth-context';
-import { useUser } from '~/context/user-context';
+import { useAuth } from '@context/auth-context';
+import { useUser } from '@context/user-context';
 
 const Dropdown = (props) => {
   const { logout } = useAuth();

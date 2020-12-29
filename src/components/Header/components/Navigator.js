@@ -1,8 +1,8 @@
 import Downshift from 'downshift';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useSelection } from '~/context/selection-context';
-import { useUser } from '~/context/user-context';
+import { useSelection } from '@context/selection-context';
+import { useUser } from '@context/user-context';
 
 const GrovesNavigator = (props) => {
   const router = useRouter();

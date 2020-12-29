@@ -1,12 +1,12 @@
 import React from 'react';
-import Panel from '~/components/Panel';
-import GrovesNavigator from '~/components/Header/components/Navigator';
-import Menu from '~/components/Header/components/Menu';
-import { useAuth } from '~/context/auth-context';
-import { useUser } from '~/context/user-context';
-import { useSelection } from '~/context/selection-context';
-import StageConnectionsFromAction from '~/components/Actions/components/stageConnections';
-import GroveActions from '~/components//Actions';
+import Panel from '~/src/components/Panel';
+import GrovesNavigator from '~/src/components/Header/components/Navigator';
+import Menu from '~/src/components/Header/components/Menu';
+import { useAuth } from '@context/auth-context';
+import { useUser } from '@context/user-context';
+import { useSelection } from '@context/selection-context';
+import StageConnectionsFromAction from '~/src/components/Actions/components/stageConnections';
+import GroveActions from '~/src/components//Actions';
 
 const UnauthenticatedHeader = (props) => {
   return (

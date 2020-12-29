@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
-import { useSelection } from '~/context/selection-context';
-import GrovesCanvas from '~/components/Canvas';
+import { useSelection } from '@context/selection-context';
+import GrovesCanvas from '~/src/components/Canvas';
 import { parseCookies } from 'nookies';
-import Layout from '~/components/Layout';
+import Layout from '~/src/components/Layout';
 import { useState, Fragment } from 'react';
-import withApollo from '~/lib/withApollo';
+import withApollo from '~/src/lib/withApollo';
 import { gql, NetworkStatus } from '@apollo/client';
 import { useQuery } from '@apollo/client';
-import DraggableBlock from '~/components/Block';
-import { WorkspaceProvider } from '~/context/workspace-context';
+import DraggableBlock from '~/src/components/Block';
+import { WorkspaceProvider } from '@context/workspace-context';
 import { ToastContainer } from 'react-toastify';
 
 const Grove = (props) => {

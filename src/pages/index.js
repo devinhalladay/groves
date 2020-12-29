@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '~/components/Layout';
-import DraggableBlock from '~/components/Block';
+import Layout from '~/src/components/Layout';
+import DraggableBlock from '~/src/components/Block';
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client';
-import withApollo from '~/lib/withApollo';
-import Panel from '~/components/Panel';
-import Loading from '~/components/Loader';
-import { SelectionProvider } from '~/context/selection-context';
+import withApollo from '~/src/lib/withApollo';
+import Panel from '~/src/components/Panel';
+import Loading from '~/src/components/Loader';
+import { SelectionProvider } from '@context/selection-context';
 import { ToastContainer } from 'react-toastify';
-import { WorkspaceProvider } from '~/context/workspace-context';
+import { WorkspaceProvider } from '@context/workspace-context';
 
 const GET_LANDING_BLOCKS = gql`
   {

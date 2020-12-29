@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/client';
 import React, { createContext, useContext } from 'react';
-import Loading from '~/components/Loader';
-import { SelectionProvider } from '~/context/selection-context';
-import withApollo from '~/lib/withApollo';
-import { CURRENT_USER } from '~/queries';
+import Loading from '~/src/components/Loader';
+import { SelectionProvider } from '@context/selection-context';
+import withApollo from '~/src/lib/withApollo';
+import { CURRENT_USER } from '~/src/queries';
 
 const UserContext = createContext();
 

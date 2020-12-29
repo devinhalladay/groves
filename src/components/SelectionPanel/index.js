@@ -2,9 +2,9 @@ import { useQuery } from '@apollo/client';
 import { EditableText, Intent } from '@blueprintjs/core';
 import parse from 'html-react-parser';
 import React from 'react';
-import Loading from '~/components/Loader';
-import { useSelection } from '~/context/selection-context';
-import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/queries';
+import Loading from '~/src/components/Loader';
+import { useSelection } from '@context/selection-context';
+import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/queries';
 
 const SelectionPanel = React.memo(() => {
   const { selectedConnection, setSelectedConnection } = useSelection();

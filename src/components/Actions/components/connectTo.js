@@ -2,10 +2,10 @@ import Tippy from '@tippyjs/react';
 import { useState, useRef, useEffect } from 'react';
 import { useCombobox } from 'downshift';
 import { useLazyQuery, useMutation } from '@apollo/client';
-import { SEARCH_ALL_CHANNELS } from '~/queries';
+import { SEARCH_ALL_CHANNELS } from '~/src/queries';
 import { useUser } from '../../../context/user-context';
 import { useRouter } from 'next/router';
-import { CREATE_CONNECTION } from '~/mutations';
+import { CREATE_CONNECTION } from '~/src/mutations';
 import { ToastContainer, toast } from 'react-toastify';
 import { useSelection } from '../../../context/selection-context';
 

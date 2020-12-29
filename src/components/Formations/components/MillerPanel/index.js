@@ -1,7 +1,7 @@
-import Panel from '~/components/Panel';
+import Panel from '~/src/components/Panel';
 import { useState } from 'react';
-import { initialData } from '~/components/initialData';
-import Finder from '~/components/Finder';
+import { initialData } from './initialData';
+import Finder from '~/src/components/Finder';
 
 const MillerPanel = (props) => {
   const [data, setData] = useState(initialData);
