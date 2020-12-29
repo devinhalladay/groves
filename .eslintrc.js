@@ -1,8 +1,9 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   root: true, // Make sure eslint picks up the config at the root of the directory
+  project: './tsconfig.json',
   parserOptions: {
-    ecmaVersion: 2020, // Use the latest ecmascript standard
+    ecmaVersion: 6, // Use the latest ecmascript standard
     sourceType: 'module', // Allows using import/export statements
     ecmaFeatures: {
       jsx: true // Enable JSX since we're using React
@@ -14,6 +15,7 @@ module.exports = {
     }
   },
   env: {
+    es6: true,
     browser: true, // Enables browser globals like window and document
     amd: true, // Enables require() and define() as global variables as per the amd spec.
     node: true // Enables Node.js global variables and Node.js scoping.
@@ -21,7 +23,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:prettier/recommended' // Make this the last element so prettier config overrides other formatting rules
+    'prettier' // Make this the last element so prettier config overrides other formatting rules
   ],
   overrides: [
     {
@@ -35,7 +37,7 @@ module.exports = {
       plugins: ['@typescript-eslint']
     }
   ],
-  plugins: ['simple-import-sort'],
+  plugins: ['@typescript-eslint', 'react-hooks'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': ['error', {}, { usePrettierrc: true }] // Use our .prettierrc file as source

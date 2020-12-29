@@ -7,7 +7,7 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "lint": "eslint --fix --ext .jsx --ext .js",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc --ignore-path .gitignore"
   },
   "author": "devin@devinhalladay.com",
