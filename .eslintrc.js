@@ -1,7 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   root: true, // Make sure eslint picks up the config at the root of the directory
-  project: './tsconfig.json',
   parserOptions: {
     ecmaVersion: 6, // Use the latest ecmascript standard
     sourceType: 'module', // Allows using import/export statements
@@ -34,10 +33,10 @@ module.exports = {
         'prettier/@typescript-eslint'
       ],
       parser: '@typescript-eslint/parser',
-      plugins: ['@typescript-eslint']
+      plugins: ['@typescript-eslint', 'prettier']
     }
   ],
-  plugins: ['@typescript-eslint', 'react-hooks'],
+  plugins: ['@typescript-eslint', 'react-hooks', 'prettier'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': ['error', {}, { usePrettierrc: true }] // Use our .prettierrc file as source

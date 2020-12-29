@@ -7,7 +7,7 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --fix",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./ --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc --ignore-path .gitignore"
   },
   "author": "devin@devinhalladay.com",
@@ -54,6 +54,8 @@
     "babel-loader": "^8.0.6",
     "eslint": "^7.16.0",
     "eslint-config-nextjs": "^1.0.6",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "husky": "^4.3.6",
