@@ -1,0 +1,24 @@
+# Convert an Are.na Block into the Groves format
+schemaName: Block
+
+lens:
+  - hoist:
+      host: data
+      name: blokk
+  - remove:
+      name: data
+  - rename:
+      source: blokk
+      destination: block
+  - in:
+      name: block
+      lens:
+        - rename:
+            source: id
+            destination: arena
+        - add:
+            name: id
+            type: object
+        - plunge:
+            name: arena
+            host: id

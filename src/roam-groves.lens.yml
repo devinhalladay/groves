@@ -1,0 +1,21 @@
+# Convert an Roam Block into the Groves format
+schemaName: Block
+
+lens:
+  - rename:
+      source: success
+      destination: block
+  - head:
+      name: block
+  - in:
+      name: block
+      lens:
+        - rename:
+            source: string
+            destination: content
+        # - add:
+        #     name: id
+        #     type: object
+        - rename:
+            source: uid
+            destination: roam
