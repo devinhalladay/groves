@@ -161,7 +161,6 @@ const Layout = (props) => {
         onZoomEnd={onZoomEnd}
         panZoomRef={panZoomRef}
         scale={zoomScale}
-        state
         minZoom={0.4}
         style={{
           width: '100vw',

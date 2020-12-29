@@ -26,7 +26,7 @@ export default async (req, res) => {
       });
   } catch (error) {
     console.log(error);
-    return error;
     res.status(400).json({ message: error });
+    return error;
   }
 };
