@@ -4,18 +4,23 @@ schemaName: Block
 lens:
   - rename:
       source: success
-      destination: block
-  - head:
-      name: block
+      destination: data
   - in:
-      name: block
+      name: data
       lens:
+        - remove: { name: uid }
         - rename:
             source: string
             destination: content
-        # - add:
-        #     name: id
-        #     type: object
-        - rename:
-            source: uid
-            destination: roam
+        - add:
+            name: blokk
+            type: object
+        - plunge:
+            name: content
+            host: blokk
+        - in:
+            name: blokk
+            lens:
+              - add:
+                  name: title
+                  type: string
