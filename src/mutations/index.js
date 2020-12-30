@@ -1,5 +1,107 @@
 import { gql } from '@apollo/client';
 
+const grovePageFragments = {
+  channelContentsConnectable: gql`
+    fragment ChannelContentsConnectable on Konnectable {
+      ...KonnectableDisplay
+    }
+
+    fragment KonnectableDisplay on Konnectable {
+      ...KonnectableChannel
+      ...KonnectableText
+      ...KonnectableImage
+      ...KonnectableLink
+      ...KonnectableEmbed
+      ...KonnectableAttachment
+      ...KonnectableMetadata
+      ...KonnectableModel
+    }
+
+    fragment KonnectableChannel on Channel {
+      id
+      title
+      description
+      href
+    }
+
+    fragment KonnectableText on Text {
+      id
+      title
+      href
+      content(format: HTML)
+    }
+
+    fragment KonnectableImage on Image {
+      id
+      title
+      href
+      image_url(size: DISPLAY)
+    }
+
+    fragment KonnectableLink on Link {
+      id
+      href
+      title
+      image_url(size: DISPLAY)
+      source_url
+    }
+
+    fragment KonnectableEmbed on Embed {
+      id
+      title
+      href
+      image_url(size: DISPLAY)
+    }
+
+    fragment KonnectableModel on Model {
+      created_at(relative: true)
+    }
+
+    fragment KonnectableAttachment on Attachment {
+      id
+      title
+      href
+      image_url(size: DISPLAY)
+      file_extension
+    }
+
+    fragment KonnectableMetadata on Konnectable {
+      # TODO - Implement Deed in graphql
+      ... on ConnectableInterface {
+        __typename
+        current_user_channels {
+          __typename
+          id
+          title
+          href
+        }
+        description
+        user {
+          id
+          name
+        }
+      }
+    }
+  `,
+  connectableMetadataPanel: gql`
+    fragment ConnectableMetadataPanel on Konnectable {
+      ... on Model {
+        created_at(relative: true)
+        updated_at(relative: true)
+      }
+      ... on ConnectableInterface {
+        title
+        description(format: HTML)
+        user {
+          id
+          name
+          href
+        }
+      }
+    }
+  `
+};
+
 export const ADD_BLOCK = gql`
   mutation ConnectBlock($channelId: ID!, $value: String!) {
     create_block(
@@ -29,6 +131,37 @@ export const ADD_BLOCK = gql`
       }
     }
   }
+`;
+
+export const UPDATE_CHANNEL = gql`
+  mutation updateChannelMutation(
+    $id: ID!
+    $title: String
+    $description: String
+  ) {
+    update_channel(
+      input: { id: $id, title: $title, description: $description }
+    ) {
+      ...ChannelContentsConnectable
+    }
+  }
+  ${grovePageFragments.channelContentsConnectable}
+`;
+
+export const UPDATE_CONNECTION = gql`
+  mutation updateConnectionMutation(
+    $connectable_id: ID!
+    $title: String
+    $description: String
+    $content: String
+  ) {
+    update_block(
+      input: { id: $connectable_id, title: $title, content: $content, description: $description }
+    ) {
+      ...ChannelContentsConnectable
+    }
+  }
+  ${grovePageFragments.channelContentsConnectable}
 `;
 
 export const CREATE_CONNECTION = gql`
@@ -66,72 +199,5 @@ export const CREATE_CONNECTION = gql`
     }
     ...KonnectableDisplay
   }
-
-  fragment KonnectableDisplay on Konnectable {
-    ... on Model {
-      id
-    }
-    ...KonnectableChannel
-    ...KonnectableText
-    ...KonnectableImage
-    ...KonnectableLink
-    ...KonnectableEmbed
-    ...KonnectableAttachment
-    ...KonnectableMetadata
-  }
-
-  fragment KonnectableChannel on Channel {
-    id
-    href
-  }
-
-  fragment KonnectableText on Text {
-    id
-    title
-    href
-    content(format: HTML)
-  }
-
-  fragment KonnectableImage on Image {
-    id
-    title
-    href
-    image_url(size: DISPLAY)
-  }
-
-  fragment KonnectableLink on Link {
-    href
-    title
-    image_url(size: DISPLAY)
-    source_url
-  }
-
-  fragment KonnectableEmbed on Embed {
-    id
-    title
-    href
-    image_url(size: DISPLAY)
-  }
-
-  fragment KonnectableAttachment on Attachment {
-    id
-    title
-    href
-    image_url(size: DISPLAY)
-    file_extension
-  }
-
-  fragment KonnectableMetadata on Konnectable {
-    ... on ConnectableInterface {
-      title
-      user {
-        id
-        name
-      }
-
-      ... on Attachment {
-        file_extension
-      }
-    }
-  }
 `;
+

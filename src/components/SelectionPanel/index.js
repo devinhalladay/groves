@@ -1,15 +1,80 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { EditableText, Intent } from '@blueprintjs/core';
 import parse from 'html-react-parser';
 import React from 'react';
 import Loading from '~/src/components/Loader';
 import { useSelection } from '@context/selection-context';
 import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/queries';
+import { UPDATE_CONNECTION, UPDATE_CHANNEL } from '~/src/mutations';
+import { Router } from 'next/router';
 
-const SelectionPanel = React.memo(() => {
+const SelectionPanel = React.memo((props) => {
+  const { apollo } = props;
   const { selectedConnection, setSelectedConnection } = useSelection();
 
   const query = selectedConnection.__typename === 'Channel' ? SELECTED_CHANNEL : SELECTED_BLOCK;
+
+  const [
+    updateConnection,
+    { loading: updatingConnection, error: errorUpdatingConnection }
+  ] = useMutation(UPDATE_CONNECTION, {
+    client: apollo,
+    onCompleted: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    }
+  });
+
+  const [updateChannel, { loading: updatingChannel, error: errorUpdatingChannel }] = useMutation(
+    UPDATE_CHANNEL,
+    {
+      client: apollo,
+      onCompleted: (data) => {
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
+    }
+  );
+
+  const handleTitleChange = (e, connectable) => {
+    if (connectable.__typename === 'Channel') {
+      updateChannel({
+        variables: {
+          id: connectable.id,
+          title: e
+        }
+      });
+    } else {
+      updateConnection({
+        variables: {
+          connectable_id: connectable.id,
+          title: e
+        }
+      });
+    }
+  };
+
+  const handleDescriptionChange = (e, connectable) => {
+    if (connectable.__typename === 'Channel') {
+      updateChannel({
+        variables: {
+          id: connectable.id,
+          description: e
+        }
+      });
+    } else {
+      updateConnection({
+        variables: {
+          connectable_id: connectable.id,
+          description: e
+        }
+      });
+    }
+  };
 
   const { data, loading, error, networkStatus } = useQuery(query, {
     // notifyOnNetworkStatusChange: true,
@@ -101,13 +166,16 @@ const SelectionPanel = React.memo(() => {
           <p
             style={{
               marginRight: 40,
-              fontSize: 18
+              fontSize: 18,
+              width: '100%'
             }}>
             <EditableText
+              onChange={(e) => handleTitleChange(e, selectedConnection)}
+              fill={true}
               intent={Intent.PRIMARY}
               maxLength={45}
               placeholder="Edit title..."
-              value={selectedConnection.title}
+              defaultValue={selectedConnection.title}
               selectAllOnFocus={true}
             />
           </p>
@@ -142,12 +210,13 @@ const SelectionPanel = React.memo(() => {
             maxLines={24}
             minLines={2}
             className="description-field"
+            onChange={(e) => handleDescriptionChange(e, selectedConnection)}
             style={{
               height: 60
             }}
             multiline={true}
             placeholder="Add a description to this block…"
-            value={
+            defaultValue={
               selectedConnection &&
               selectedConnection.description &&
               parse(`${selectedConnection.description}`)
