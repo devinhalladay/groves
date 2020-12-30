@@ -134,14 +134,8 @@ export const ADD_BLOCK = gql`
 `;
 
 export const UPDATE_CHANNEL = gql`
-  mutation updateChannelMutation(
-    $id: ID!
-    $title: String
-    $description: String
-  ) {
-    update_channel(
-      input: { id: $id, title: $title, description: $description }
-    ) {
+  mutation updateChannelMutation($id: ID!, $title: String, $description: String) {
+    update_channel(input: { id: $id, title: $title, description: $description }) {
       ...ChannelContentsConnectable
     }
   }
@@ -200,4 +194,3 @@ export const CREATE_CONNECTION = gql`
     ...KonnectableDisplay
   }
 `;
-

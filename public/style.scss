@@ -1,7 +1,6 @@
-@import "~@blueprintjs/core/lib/css/blueprint.css";
+@import '~@blueprintjs/core/lib/css/blueprint.css';
 
 $primary-color: #47a7ff;
-
 
 html,
 body,
@@ -119,7 +118,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: "";
+  content: '';
   content: none;
 }
 table {
@@ -131,7 +130,7 @@ body,
 html {
   padding: 0;
   margin: 0;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
   font-size: 16px;
   color: #000000;
   background-color: #f8f8f8;
@@ -204,8 +203,7 @@ header {
       top: 55px;
       border-radius: 10px;
       left: 0;
-      box-shadow: 0px 8px 24px rgba(111, 123, 138, 0.2),
-        0px 2px 4px rgba(111, 123, 138, 0.2),
+      box-shadow: 0px 8px 24px rgba(111, 123, 138, 0.2), 0px 2px 4px rgba(111, 123, 138, 0.2),
         0px 0px 0px rgba(111, 123, 138, 0.1);
       z-index: 1;
 
@@ -222,12 +220,7 @@ header {
             color: #6f7b8a;
             padding: 5px 10px;
             background-color: white;
-            background: linear-gradient(
-                180deg,
-                #ffffff 0%,
-                rgba(255, 255, 255, 0) 100%
-              ),
-              #f5f8fa;
+            background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%), #f5f8fa;
             border: 1px solid #bdc3ca;
             box-shadow: 0.25px 0.25px 2px rgba(111, 123, 138, 0.19);
             border-radius: 2px;
@@ -332,7 +325,8 @@ header {
   }
 
   &--nav,
-  &--actions {
+  &--actions,
+  &--formations {
     top: 15px;
     z-index: 999999;
   }
@@ -340,6 +334,13 @@ header {
   &--actions {
     right: 15px;
     left: unset;
+    width: fit-content;
+    height: 45px;
+  }
+
+  &--formations {
+    left: unset;
+    right: 240px;
     width: fit-content;
     height: 45px;
   }
@@ -354,6 +355,12 @@ header {
 
   &--wide {
     width: calc(100vw - 30px);
+  }
+
+  &--medium {
+    width: calc(70vw - 30px);
+    max-height: 86vh;
+    overflow: scroll;
   }
 
   .panel-header {
@@ -514,7 +521,7 @@ header {
 .block.block--text {
   overflow-y: scroll;
   border-color: rgb(207, 203, 214);
-  font-family: "Times New Roman", serif;
+  font-family: 'Times New Roman', serif;
   font-size: 1rem;
   line-height: 1.5;
   color: rgb(88, 88, 88);
@@ -635,7 +642,7 @@ header {
   .block--title {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
     font-size: 1.5rem;
     line-height: 1.33;
     margin: 0;
@@ -813,7 +820,7 @@ header {
 
   &::after {
     top: 0;
-    content: "";
+    content: '';
     position: absolute;
     z-index: -1;
     width: 100%;
@@ -833,13 +840,8 @@ header {
     border: 1.5px solid #47a7ff;
     box-sizing: border-box;
     box-shadow: 0px 5.60708px 16.8212px rgba(111, 123, 138, 0.2),
-      0px 1.40177px 2.80354px rgba(111, 123, 138, 0.2),
-      0px 0px 0px rgba(111, 123, 138, 0.1);
-    background: linear-gradient(
-        0deg,
-        rgba(71, 167, 255, 0.15),
-        rgba(71, 167, 255, 0.15)
-      ),
+      0px 1.40177px 2.80354px rgba(111, 123, 138, 0.2), 0px 0px 0px rgba(111, 123, 138, 0.1);
+    background: linear-gradient(0deg, rgba(71, 167, 255, 0.15), rgba(71, 167, 255, 0.15)),
       rgba(255, 255, 255, 0.6);
     transform: scale(1.05, 1.05) rotate(-2deg);
     transition: 0.2s all ease-in-out;
@@ -864,13 +866,8 @@ header {
     // border: 1.5px solid #47a7ff;
     box-sizing: border-box;
     box-shadow: 0px 5.60708px 16.8212px rgba(111, 123, 138, 0.2),
-      0px 1.40177px 2.80354px rgba(111, 123, 138, 0.2),
-      0px 0px 0px rgba(111, 123, 138, 0.1);
-    background: linear-gradient(
-        0deg,
-        rgba(71, 167, 255, 0.15),
-        rgba(71, 167, 255, 0.15)
-      ),
+      0px 1.40177px 2.80354px rgba(111, 123, 138, 0.2), 0px 0px 0px rgba(111, 123, 138, 0.1);
+    background: linear-gradient(0deg, rgba(71, 167, 255, 0.15), rgba(71, 167, 255, 0.15)),
       rgba(255, 255, 255, 0.6);
     transform: scale(1.05, 1.05) rotate(-2deg);
     transition: 0.2s all ease-in-out;
@@ -963,7 +960,7 @@ header {
     cursor: grab;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       z-index: -1;
       width: 100%;
@@ -1001,7 +998,7 @@ header {
 
     &.title {
       padding: 15px 0 0 10px;
-      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
       font-style: normal;
       font-weight: normal;
       font-size: 14px;
@@ -1058,7 +1055,7 @@ header {
     padding-left: 10px;
   }
 
-  input[type="submit"] {
+  input[type='submit'] {
     border: none;
     background-color: $primary-color;
     font-size: 16px;
@@ -1259,8 +1256,7 @@ button,
   color: #6f7b8a;
   padding: 5px 10px;
   background-color: white;
-  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%),
-    #f5f8fa;
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%), #f5f8fa;
   border: 1px solid #bdc3ca;
   box-shadow: 0.25px 0.25px 2px rgba(111, 123, 138, 0.19);
   border-radius: 2px;
@@ -1322,6 +1318,14 @@ button,
   }
 }
 
+.grove-formations {
+  height: 100%;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .dropZoneModal {
   opacity: 0.5;
   background: #fff;
@@ -1364,8 +1368,31 @@ button,
   }
 }
 
-.bp3-editable-text-content, .bp3-editable-text-input {
-    line-height: 140% !important;
-    font-size: 0.95rem !important;
-    color: black !important;
+.bp3-editable-text-content,
+.bp3-editable-text-input {
+  line-height: 140% !important;
+  font-size: 0.95rem !important;
+  color: black !important;
+}
+
+.grid {
+  box-sizing: border-box;
+  margin-left: -10px;
+  margin-right: -10px;
+  display: flex;
+  flex-flow: row wrap;
+  padding: 15px;
+  padding-top: 90px;
+}
+
+.grid > * {
+  box-sizing: border-box;
+  width: calc(100vw / 6 - 25px) !important;
+  height: calc(100vw / 6 - 25px) !important;
+  position: relative;
+  margin: unset;
+  margin: 0px 10px 40px !important;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #d7dde4;
 }

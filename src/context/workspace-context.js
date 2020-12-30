@@ -4,10 +4,17 @@ const WorkspaceContext = createContext();
 
 const WorkspaceProvider = (props) => {
   const [workspaceOptions, setWorkspaceOptions] = useState({
-    zoomScale: 1
+    formation: 'canvas'
   });
 
-  return <WorkspaceContext.Provider value={{ workspaceOptions, setWorkspaceOptions }} {...props} />;
+  const [zoomScale, setZoomScale] = useState(1);
+
+  return (
+    <WorkspaceContext.Provider
+      value={{ workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale }}
+      {...props}
+    />
+  );
 };
 
 const useWorkspace = () => useContext(WorkspaceContext);
