@@ -15,6 +15,7 @@ import { useDropzone } from 'react-dropzone';
 import { ADD_BLOCK } from '~/src/mutations';
 import { useMutation } from '@apollo/client';
 import { ToastContainer } from 'react-toastify';
+import { roamToArena } from '~/src/components/convert';
 
 const Grove = (props) => {
   const router = useRouter();
@@ -46,6 +47,16 @@ const Grove = (props) => {
       console.log(error);
     }
   });
+
+  const addToArenaFromRoam = () => {
+    const val = roamToArena().data.blokk.content;
+    addBlock({
+      variables: {
+        channelId: router.query.grove,
+        value: val
+      }
+    });
+  };
 
   // const onDrop = useCallback((acceptedFiles) => {
   //   acceptedFiles.map(async (file) => {
@@ -89,12 +100,12 @@ const Grove = (props) => {
   //       }).then((res) => {
   //         console.log(res);
 
-  //         addBlock({
-  //           variables: {
-  //             channelId: router.query.grove,
-  //             value: url,
-  //           },
-  //         });
+  // addBlock({
+  //   variables: {
+  //     channelId: router.query.grove,
+  //     value: url,
+  //   },
+  // });
   //       });
   //     });
   //   });
@@ -118,6 +129,7 @@ const Grove = (props) => {
 
   return (
     <WorkspaceProvider>
+      <button onClick={addToArenaFromRoam}>Roam to Arena</button>
       <ToastContainer
         position="bottom-center"
         autoClose={2000}
@@ -134,6 +146,7 @@ const Grove = (props) => {
         <GrovesCanvas {...props}>
           {selectedChannel && selectedChannel.channel ? (
             <>
+              {/* <button onClick={arenaToRoam}>Arena to Roam</button> */}
               {/* <input {...getInputProps()} hidden /> */}
               {selectedChannel.channel.initial_contents.map((blokk, i) => {
                 return (
