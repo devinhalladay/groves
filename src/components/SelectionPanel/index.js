@@ -172,6 +172,7 @@ const SelectionPanel = React.memo((props) => {
             <EditableText
               onChange={(e) => handleTitleChange(e, selectedConnection)}
               fill={true}
+              autoFocus
               intent={Intent.PRIMARY}
               maxLength={45}
               placeholder="Edit title..."
@@ -186,21 +187,9 @@ const SelectionPanel = React.memo((props) => {
               right: 0
             }}
             href={`https://are.na${selectedConnection.href}`}
-            target="_blank">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#707B8A"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-              <polyline points="15 3 21 3 21 9" />
-              <line x1="10" y1="14" x2="21" y2="3" />
-            </svg>
+            target="_blank"
+            rel="noreferrer">
+            <img src="/open.svg" alt="" />
           </a>
         </div>
         <div className="section">
@@ -229,17 +218,19 @@ const SelectionPanel = React.memo((props) => {
               `Added ${selectedConnection.created_at} by ${selectedConnection.user.name}`}
           </p>
         </div>
-        <div className="section">
-          <p className="section__title">Connected to</p>
-          <ul>
-            {selectedConnection &&
-              selectedConnection.current_user_channels.map((channel) => (
-                <li>
-                  <a href={`${channel.href}`}>{channel.title}</a>
-                </li>
-              ))}
-          </ul>
-        </div>
+        {selectedConnection.current_user_channels.length !== 0 && (
+          <div className="section">
+            <p className="section__title">Connected to</p>
+            <ul>
+              {selectedConnection &&
+                selectedConnection.current_user_channels.map((channel) => (
+                  <li key={channel.id}>
+                    <a href={`${channel.href}`}>{channel.title}</a>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
