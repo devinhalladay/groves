@@ -13,6 +13,10 @@ export const ADD_BLOCK = gql`
       clientMutationId
       ... on CreateBlockPayload {
         blokk {
+          ... on Text {
+            content
+            id
+          }
           ... on Image {
             id
             image_url
