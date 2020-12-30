@@ -180,6 +180,11 @@ const SelectionPanel = React.memo((props) => {
               selectAllOnFocus={true}
             />
           </p>
+          <p className="small"></p>
+          <p className="meta small">{selectedConnection.__typename}</p>
+          <p className="meta small">
+            {`Added ${selectedConnection.created_at} by ${selectedConnection.user.name}`}
+          </p>
           <a
             style={{
               position: 'absolute',
@@ -211,12 +216,6 @@ const SelectionPanel = React.memo((props) => {
               parse(`${selectedConnection.description}`)
             }
           />
-        </div>
-        <div className="section">
-          <p className="meta">
-            {selectedConnection &&
-              `Added ${selectedConnection.created_at} by ${selectedConnection.user.name}`}
-          </p>
         </div>
         {selectedConnection.current_user_channels.length !== 0 && (
           <div className="section">
