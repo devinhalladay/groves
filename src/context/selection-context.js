@@ -12,6 +12,8 @@ const SelectionProvider = withApollo((props) => {
 
   const [selectedChannel, setSelectedChannel] = useState(null);
 
+  const [canvasBlocks, setCanvasBlocks] = useState([]);
+
   const [selectedConnection, setSelectedConnection] = useState(null);
 
   const [selectedRef, setSelectedRef] = useState(null);
@@ -57,7 +59,9 @@ const SelectionProvider = withApollo((props) => {
         selectedConnection,
         setSelectedConnection,
         selectedRef,
-        setSelectedRef
+        setSelectedRef,
+        canvasBlocks,
+        setCanvasBlocks
       }}
       {...props}
     />

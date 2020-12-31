@@ -4,7 +4,7 @@ import Grid from './components/grid';
 import { HTMLSelect } from '@blueprintjs/core';
 import { useWorkspace } from '@context/workspace-context';
 
-export default function GroveActions() {
+export default function GroveFormations() {
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
 
   const handleChangeFormation = (e) => {
@@ -29,7 +29,7 @@ export default function GroveActions() {
               value: 'grid'
             }
           ]}
-          defaultValue="canvas"
+          defaultValue="grid"
         />
       </div>
     </Panel>

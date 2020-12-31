@@ -24,6 +24,8 @@ const Grove = (props) => {
     maxZIndex: 1000
   });
 
+  const { canvasBlocks, setCanvasBlocks } = useSelection();
+
   const { apollo } = props;
 
   const { workspaceOptions } = useWorkspace();
@@ -125,49 +127,23 @@ const Grove = (props) => {
       return (
         <Layout {...props}>
           <GrovesCanvas {...props}>
-            {selectedChannel && selectedChannel.channel ? (
-              <>
-                {/* <input {...getInputProps()} hidden /> */}
-                {selectedChannel.channel.initial_contents.map((blokk, i) => {
-                  return (
-                    <>
-                      <DraggableBlock
-                        title={blokk.title ? blokk.title : null}
-                        type={blokk.__typename}
-                        dragStates={dragStates}
-                        setDragStates={setDragStates}
-                        key={blokk.id}
-                        block={blokk}
-                        bounds="window"
-                        panZoomRef={props.panZoomRef}
-                        style={{
-                          WebkitFilter: 'blur(0)'
-                        }}
-                        {...props}
-                      />
-                    </>
-                  );
-                })}
-              </>
-            ) : (
-              initialSelection.channel.initial_contents.map((blokk, i) => {
-                return (
-                  <>
-                    <DraggableBlock
-                      title={blokk.title ? blokk.title : null}
-                      type={blokk.__typename}
-                      dragStates={dragStates}
-                      setDragStates={setDragStates}
-                      panZoomRef={props.panZoomRef}
-                      key={blokk.id}
-                      block={blokk}
-                      bounds="window"
-                      {...props}
-                    />
-                  </>
-                );
-              })
-            )}
+            {canvasBlocks.length &&
+              canvasBlocks.map((blokk, i) => (
+                <>
+                  <DraggableBlock
+                    title={blokk.title ? blokk.title : null}
+                    type={blokk.__typename}
+                    dragStates={dragStates}
+                    setDragStates={setDragStates}
+                    panZoomRef={props.panZoomRef}
+                    key={blokk.id}
+                    block={blokk}
+                    bounds="window"
+                    {...props}
+                  />
+                </>
+              ))}
+
             {files.map((file) => (
               <>
                 <DraggableBlock

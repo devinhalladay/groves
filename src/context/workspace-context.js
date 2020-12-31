@@ -4,7 +4,7 @@ const WorkspaceContext = createContext();
 
 const WorkspaceProvider = (props) => {
   const [workspaceOptions, setWorkspaceOptions] = useState({
-    formation: 'canvas'
+    formation: 'grid'
   });
 
   const [zoomScale, setZoomScale] = useState(1);
