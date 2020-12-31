@@ -199,9 +199,11 @@ const SelectionPanel = React.memo((props) => {
   };
 
   const handleTagSelect = (tag) => {
-    // if (!isTagSelected(tag)) {
+    if (!isTagSelected(tag)) {
     selectTag(tag);
-    // }
+    } else {
+      handleTagRemove(tag)
+    }
   };
 
   const handleTagRemove = (tag) => {
@@ -399,7 +401,8 @@ const SelectionPanel = React.memo((props) => {
               boundary: 'clippingParents',
               style: {
                 width: 300
-              }
+              },
+              fill: true
             }}
             // itemsEqual={areFilmsEqual}
             // we may customize the default filmSelectProps.items by
