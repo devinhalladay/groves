@@ -6,11 +6,17 @@ import React, { useState } from 'react';
 import Loading from '~/src/components/Loader';
 import { useSelection } from '@context/selection-context';
 import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/queries';
-import { UPDATE_CONNECTION, UPDATE_CHANNEL } from '~/src/mutations';
-import { Router } from 'next/router';
+import {
+  UPDATE_CONNECTION,
+  UPDATE_CHANNEL,
+  CREATE_CONNECTION,
+  REMOVE_CONNECTION
+} from '~/src/mutations';
+import { Router, useRouter } from 'next/router';
 import { useUser } from '~/src/context/user-context';
 
 const SelectionPanel = React.memo((props) => {
+  const router = useRouter();
   const { apollo } = props;
   const { selectedConnection, setSelectedConnection } = useSelection();
   const { index } = useUser();
@@ -18,13 +24,44 @@ const SelectionPanel = React.memo((props) => {
   const query = selectedConnection.__typename === 'Channel' ? SELECTED_CHANNEL : SELECTED_BLOCK;
 
   const [tagState, setTagState] = useState({
-    tags: []
+    tags: selectedConnection.current_user_channels.map((channel) => channel)
   });
+
+  const filterTags = (query, tag) => {
+    const text = `${tag.title}`;
+    return text.toLowerCase().indexOf(query.toLowerCase()) >= 0;
+  };
 
   const [
     updateConnection,
     { loading: updatingConnection, error: errorUpdatingConnection }
   ] = useMutation(UPDATE_CONNECTION, {
+    client: apollo,
+    onCompleted: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    }
+  });
+
+  const [
+    createConnection,
+    { loading: creatingConnection, error: errorCreatingConnection }
+  ] = useMutation(CREATE_CONNECTION, {
+    client: apollo,
+    onCompleted: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    }
+  });
+
+  const [
+    removeConnection,
+    { loading: removingConnection, error: errorRemovingConnection }
+  ] = useMutation(REMOVE_CONNECTION, {
     client: apollo,
     onCompleted: (data) => {
       console.log(data);
@@ -84,23 +121,7 @@ const SelectionPanel = React.memo((props) => {
   };
 
   const renderTag = (tag) => {
-    tag.title;
-  };
-
-  const renderTagOption = (tag, { modifiers, handleClick }) => (
-    <MenuItem
-      active={modifiers.active}
-      // icon={this.isFilmSelected(film) ? 'tick' : 'blank'}
-      key={tag.id}
-      label={tag.title}
-      onClick={handleClick}
-      text={tag.title}
-      shouldDismissPopover={false}
-    />
-  );
-
-  const handleTagRemove = (tag, index) => {
-    deselectTag(index);
+    return tag.title;
   };
 
   const getSelectedTagIndex = (tag) => {
@@ -128,6 +149,14 @@ const SelectionPanel = React.memo((props) => {
       // Item" option will be shown even if it matches an already selected
       // item).
       nextTags = !nextTags.includes(tag) ? [...nextTags, tag] : nextTags;
+
+      createConnection({
+        variables: {
+          connectable_id: selectedConnection.id,
+          connectable_type: 'BLOCK',
+          channel_ids: [tag.id]
+        }
+      });
     });
 
     setTagState({
@@ -136,21 +165,50 @@ const SelectionPanel = React.memo((props) => {
     });
   };
 
-  let deselectTag = (index) => {
+  const flatItems = index.flatMap((channelSet) => channelSet.channels.flatMap((c) => c));
+
+  let deselectTag = (tag) => {
     const { tags } = tagState;
 
     // Delete the item if the user manually created it.
     setTagState({
-      tags: tags.filter((_tag, i) => i !== index)
+      tags: tags.filter((t) => t.id !== tag.id)
+    });
+
+    removeConnection({
+      variables: {
+        connectable_id: selectedConnection.id,
+        connectable_type: 'BLOCK',
+        channel_id: tag.id
+      }
     });
   };
 
   const handleTagSelect = (tag) => {
-    if (!isTagSelected(tag)) {
-      selectTag(tag);
-    } else {
-      deselectTag(getSelectedTagIndex(tag));
+    // if (!isTagSelected(tag)) {
+    selectTag(tag);
+    // }
+  };
+
+  const handleTagRemove = (tag) => {
+    deselectTag(tag);
+  };
+
+  const renderTagOption = (tag, { handleClick, modifiers, query }) => {
+    if (!modifiers.matchesPredicate) {
+      return null;
     }
+    return (
+      <MenuItem
+        active={modifiers.active}
+        icon={isTagSelected(tag) ? 'tick' : 'blank'}
+        key={tag.id}
+        label={tag.title}
+        onClick={handleClick}
+        text={tag.title}
+        shouldDismissPopover={false}
+      />
+    );
   };
 
   const { data, loading, error, networkStatus } = useQuery(query, {
@@ -299,20 +357,22 @@ const SelectionPanel = React.memo((props) => {
           <MultiSelect
             // createNewItemFromQuery={maybeCreateNewItemFromQuery}
             // createNewItemRenderer={maybeCreateNewItemRenderer}
-            // initialContent={initialContent}
+            selectedItems={tagState.tags}
+            itemPredicate={filterTags}
             itemRenderer={renderTagOption}
             // itemsEqual={areFilmsEqual}
             // we may customize the default filmSelectProps.items by
             // adding newly created items to the list, so pass our own
-            items={index.flatMap((channelSet) => channelSet.channels.flatMap((c) => c))}
+            items={flatItems}
             noResults={<MenuItem disabled={true} text="No results." />}
             onItemSelect={handleTagSelect}
+            onRemove={handleTagRemove}
             fill={true}
             // onItemsPaste={this.handleFilmsPaste}
             // popoverProps={{ minimal: true }}
             tagRenderer={renderTag}
             tagInputProps={{
-              onRemove: handleTagRemove,
+              // onRemove: handleTagRemove,
               // rightElement: clearButton,
               tagProps: {
                 minimal: true
