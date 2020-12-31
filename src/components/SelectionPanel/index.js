@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { EditableText, Intent, MenuItem } from '@blueprintjs/core';
+import { EditableText, Icon, Intent, MenuItem, Position } from '@blueprintjs/core';
 import { ItemRenderer, MultiSelect } from '@blueprintjs/select';
 import parse from 'html-react-parser';
 import React, { useState } from 'react';
@@ -10,7 +10,8 @@ import {
   UPDATE_CONNECTION,
   UPDATE_CHANNEL,
   CREATE_CONNECTION,
-  REMOVE_CONNECTION
+  REMOVE_CONNECTION,
+  CREATE_CHANNEL
 } from '~/src/mutations';
 import { Router, useRouter } from 'next/router';
 import { useUser } from '~/src/context/user-context';
@@ -36,6 +37,19 @@ const SelectionPanel = React.memo((props) => {
     updateConnection,
     { loading: updatingConnection, error: errorUpdatingConnection }
   ] = useMutation(UPDATE_CONNECTION, {
+    client: apollo,
+    onCompleted: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    }
+  });
+
+  const [
+    createChannel,
+    { loading: creatingChannel, error: errorCreatingChannel }
+  ] = useMutation(CREATE_CHANNEL, {
     client: apollo,
     onCompleted: (data) => {
       console.log(data);
@@ -201,9 +215,10 @@ const SelectionPanel = React.memo((props) => {
     return (
       <MenuItem
         active={modifiers.active}
-        icon={isTagSelected(tag) ? 'tick' : 'blank'}
+        // icon={isTagSelected(tag) ? 'tick' : 'blank'}
         key={tag.id}
-        label={tag.title}
+        // label={tag.title}
+        labelElement={isTagSelected(tag) ? <Icon icon='tick' /> : null}
         onClick={handleClick}
         text={tag.title}
         shouldDismissPopover={false}
@@ -218,6 +233,24 @@ const SelectionPanel = React.memo((props) => {
       id: selectedConnection.id
     }
   });
+
+  const createNewTagFromQuery = (query) => {
+    return createChannel({
+      variables: {
+        title: query.toString()
+      }
+    });
+  }
+
+  const createNewTagRenderer = (query, active, handleClick) => (
+    <MenuItem
+      icon="add"
+      text={`Create "${query}"`}
+      active={active}
+      onClick={handleClick}
+      shouldDismissPopover={false}
+    />
+  );
 
   if (loading) {
     return (
@@ -355,11 +388,19 @@ const SelectionPanel = React.memo((props) => {
         <div className="section">
           <div className="section__title">Tags</div>
           <MultiSelect
-            // createNewItemFromQuery={maybeCreateNewItemFromQuery}
-            // createNewItemRenderer={maybeCreateNewItemRenderer}
+            createNewItemFromQuery={createNewTagFromQuery}
+            createNewItemRenderer={createNewTagRenderer}
             selectedItems={tagState.tags}
             itemPredicate={filterTags}
             itemRenderer={renderTagOption}
+            popoverProps={{
+              className: 'testset',
+              minimal: true,
+              boundary: 'clippingParents',
+              style: {
+                width: 300
+              }
+            }}
             // itemsEqual={areFilmsEqual}
             // we may customize the default filmSelectProps.items by
             // adding newly created items to the list, so pass our own
@@ -369,7 +410,7 @@ const SelectionPanel = React.memo((props) => {
             onRemove={handleTagRemove}
             fill={true}
             // onItemsPaste={this.handleFilmsPaste}
-            // popoverProps={{ minimal: true }}
+            // popoverProps={{ minimal: true,  }}
             tagRenderer={renderTag}
             tagInputProps={{
               // onRemove: handleTagRemove,
@@ -379,21 +420,9 @@ const SelectionPanel = React.memo((props) => {
               }
             }}
             selectedItems={tagState.tags}
+            resetOnSelect={true}
           />
         </div>
-        {selectedConnection.current_user_channels.length !== 0 && (
-          <div className="section">
-            <p className="section__title">Connected to</p>
-            <ul>
-              {selectedConnection &&
-                selectedConnection.current_user_channels.map((channel) => (
-                  <li key={channel.id}>
-                    <a href={`${channel.href}`}>{channel.title}</a>
-                  </li>
-                ))}
-            </ul>
-          </div>
-        )}
       </div>
     </div>
   );

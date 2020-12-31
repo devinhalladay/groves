@@ -214,3 +214,15 @@ export const REMOVE_CONNECTION = gql`
     }
   }
 `;
+
+
+export const CREATE_CHANNEL = gql`
+  mutation createChannelMutation($title: String!) {
+    create_channel(input: { title: $title }) {
+      channel {
+        title
+        id
+      }
+    }
+  }
+`;
