@@ -32,7 +32,7 @@ const DraggableBlock = ({
 }) => {
   let description;
 
-  const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
+  const { workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale } = useWorkspace();
 
   if (block.description && block.description.includes('"x":')) {
     description = JSON.parse(block.description.replace('\n', ''));
@@ -242,7 +242,7 @@ const DraggableBlock = ({
       ref={rndEl}
       key={block.id}
       size={{ width: spatialState.width, height: spatialState.height }}
-      scale={workspaceOptions.zoomScale}
+      scale={zoomScale}
       position={{
         x: spatialState.x,
         y: spatialState.y

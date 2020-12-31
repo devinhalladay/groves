@@ -6,7 +6,8 @@ import { useAuth } from '@context/auth-context';
 import { useUser } from '@context/user-context';
 import { useSelection } from '@context/selection-context';
 import StageConnectionsFromAction from '~/src/components/Actions/components/stageConnections';
-import GroveActions from '~/src/components//Actions';
+import GroveActions from '~/src/components/Actions';
+import GroveFormations from '~/src/components/Formations';
 
 const UnauthenticatedHeader = (props) => {
   return (
@@ -120,6 +121,7 @@ const AuthenticatedHeader = (props) => {
             </nav>
           </header>
         </Panel>
+        <GroveFormations />
         <GroveActions />
       </>
     );

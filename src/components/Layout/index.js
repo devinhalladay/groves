@@ -20,9 +20,8 @@ const Layout = (props) => {
 
   const { selectedConnection, setSelectedConnection, selectedRef, setSelectedRef } = useSelection();
 
-  let [zoomScale, setZoomScale] = useState(1);
-
-  const { workSpaceOptions, setWorkspaceOptions } = useWorkspace();
+  const { workSpaceOptions, setWorkspaceOptions, zoomScale, setZoomScale } = useWorkspace();
+  const [localZoomScale, setLocalZoomScale] = useState(1);
 
   const preventPan = (event, x, y) => {
     console.log(event.target.parentElement);
@@ -50,17 +49,14 @@ const Layout = (props) => {
 
   const onZoom = (e) => {
     if (panZoomRef.current) {
-      setZoomScale(panZoomRef.current.scale);
+      setLocalZoomScale(panZoomRef.current.scale);
     }
   };
 
   const onZoomEnd = (e) => {
     if (panZoomRef.current) {
       // setZoomScale(panZoomRef.current.scale);
-      setWorkspaceOptions({
-        ...workSpaceOptions,
-        zoomScale: panZoomRef.current.scale
-      });
+      setZoomScale(localZoomScale);
     }
   };
 

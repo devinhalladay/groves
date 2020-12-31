@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useSelection } from '@context/selection-context';
 import GrovesCanvas from '~/src/components/Canvas';
@@ -9,12 +9,13 @@ import withApollo from '~/src/lib/withApollo';
 import { gql, NetworkStatus } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import DraggableBlock from '~/src/components/Block';
-import { WorkspaceProvider } from '@context/workspace-context';
+import { useWorkspace, WorkspaceContext, WorkspaceProvider } from '@context/workspace-context';
 import SelectionPanel from '~/src/components/SelectionPanel';
 import { useDropzone } from 'react-dropzone';
 import { ADD_BLOCK } from '~/src/mutations';
 import { useMutation } from '@apollo/client';
 import { ToastContainer } from 'react-toastify';
+import Grid from '~/src/components/Formations/components/Grid';
 
 const Grove = (props) => {
   const router = useRouter();
@@ -23,7 +24,12 @@ const Grove = (props) => {
     maxZIndex: 1000
   });
 
+  const { canvasBlocks, setCanvasBlocks } = useSelection();
+
   const { apollo } = props;
+
+  const { workspaceOptions } = useWorkspace();
+  const { formation } = workspaceOptions;
 
   const {
     selectedConnection,
@@ -116,49 +122,13 @@ const Grove = (props) => {
     [files]
   );
 
-  return (
-    <WorkspaceProvider>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={2000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover={false}
-      />
-
-      <Layout {...props}>
-        <GrovesCanvas {...props}>
-          {selectedChannel && selectedChannel.channel ? (
-            <>
-              {/* <input {...getInputProps()} hidden /> */}
-              {selectedChannel.channel.initial_contents.map((blokk, i) => {
-                return (
-                  <>
-                    <DraggableBlock
-                      title={blokk.title ? blokk.title : null}
-                      type={blokk.__typename}
-                      dragStates={dragStates}
-                      setDragStates={setDragStates}
-                      key={blokk.id}
-                      block={blokk}
-                      bounds="window"
-                      panZoomRef={props.panZoomRef}
-                      style={{
-                        WebkitFilter: 'blur(0)'
-                      }}
-                      {...props}
-                    />
-                  </>
-                );
-              })}
-            </>
-          ) : (
-            initialSelection.channel.initial_contents.map((blokk, i) => {
-              return (
+  const renderFormation = (formation) => {
+    if (formation === 'canvas') {
+      return (
+        <Layout {...props}>
+          <GrovesCanvas {...props}>
+            {canvasBlocks.length &&
+              canvasBlocks.map((blokk, i) => (
                 <>
                   <DraggableBlock
                     title={blokk.title ? blokk.title : null}
@@ -172,26 +142,50 @@ const Grove = (props) => {
                     {...props}
                   />
                 </>
-              );
-            })
-          )}
-          {files.map((file) => (
-            <>
-              <DraggableBlock
-                title={file.block.title}
-                type={file.block.__typename}
-                dragStates={dragStates}
-                setDragStates={setDragStates}
-                key={file.block.id}
-                block={file.block}
-                bounds="window"
-                {...props}
-              />
-            </>
-          ))}
-        </GrovesCanvas>
-      </Layout>
-    </WorkspaceProvider>
+              ))}
+
+            {files.map((file) => (
+              <>
+                <DraggableBlock
+                  title={file.block.title}
+                  type={file.block.__typename}
+                  dragStates={dragStates}
+                  setDragStates={setDragStates}
+                  key={file.block.id}
+                  block={file.block}
+                  bounds="window"
+                  {...props}
+                />
+              </>
+            ))}
+          </GrovesCanvas>
+        </Layout>
+      );
+    } else if (formation === 'grid') {
+      if (selectedChannel && selectedChannel.channel) {
+        return <Grid blocks={selectedChannel.channel.initial_contents} />;
+      } else {
+        return <Grid blocks={initialSelection.channel.initial_contents} />;
+      }
+    }
+  };
+
+  return (
+    <>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover={false}
+      />
+
+      {renderFormation(formation)}
+    </>
   );
 };
 
