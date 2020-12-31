@@ -1,18 +1,25 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { EditableText, Intent } from '@blueprintjs/core';
+import { EditableText, Intent, MenuItem } from '@blueprintjs/core';
+import { ItemRenderer, MultiSelect } from '@blueprintjs/select';
 import parse from 'html-react-parser';
-import React from 'react';
+import React, { useState } from 'react';
 import Loading from '~/src/components/Loader';
 import { useSelection } from '@context/selection-context';
 import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/queries';
 import { UPDATE_CONNECTION, UPDATE_CHANNEL } from '~/src/mutations';
 import { Router } from 'next/router';
+import { useUser } from '~/src/context/user-context';
 
 const SelectionPanel = React.memo((props) => {
   const { apollo } = props;
   const { selectedConnection, setSelectedConnection } = useSelection();
+  const { index } = useUser();
 
   const query = selectedConnection.__typename === 'Channel' ? SELECTED_CHANNEL : SELECTED_BLOCK;
+
+  const [tagState, setTagState] = useState({
+    tags: []
+  });
 
   const [
     updateConnection,
@@ -73,6 +80,76 @@ const SelectionPanel = React.memo((props) => {
           description: e
         }
       });
+    }
+  };
+
+  const renderTag = (tag) => {
+    tag.title;
+  };
+
+  const renderTagOption = (tag, { modifiers, handleClick }) => (
+    <MenuItem
+      active={modifiers.active}
+      // icon={this.isFilmSelected(film) ? 'tick' : 'blank'}
+      key={tag.id}
+      label={tag.title}
+      onClick={handleClick}
+      text={tag.title}
+      shouldDismissPopover={false}
+    />
+  );
+
+  const handleTagRemove = (tag, index) => {
+    deselectTag(index);
+  };
+
+  const getSelectedTagIndex = (tag) => {
+    return tagState.tags.indexOf(tag);
+  };
+
+  const isTagSelected = (tag) => {
+    return getSelectedTagIndex(tag) !== -1;
+  };
+
+  const selectTag = (tag) => {
+    selectTags([tag]);
+  };
+
+  const selectTags = (tagsToSelect) => {
+    const { tags } = tagState;
+
+    let nextTags = tags.slice();
+    // let nextItems = items.slice();
+
+    tagsToSelect.forEach((tag) => {
+      // const results = nextItems;
+      // nextItems = results.items;
+      // Avoid re-creating an item that is already selected (the "Create
+      // Item" option will be shown even if it matches an already selected
+      // item).
+      nextTags = !nextTags.includes(tag) ? [...nextTags, tag] : nextTags;
+    });
+
+    setTagState({
+      tags: nextTags
+      // items: nextItems
+    });
+  };
+
+  let deselectTag = (index) => {
+    const { tags } = tagState;
+
+    // Delete the item if the user manually created it.
+    setTagState({
+      tags: tags.filter((_tag, i) => i !== index)
+    });
+  };
+
+  const handleTagSelect = (tag) => {
+    if (!isTagSelected(tag)) {
+      selectTag(tag);
+    } else {
+      deselectTag(getSelectedTagIndex(tag));
     }
   };
 
@@ -215,6 +292,33 @@ const SelectionPanel = React.memo((props) => {
               selectedConnection.description &&
               parse(`${selectedConnection.description}`)
             }
+          />
+        </div>
+        <div className="section">
+          <div className="section__title">Tags</div>
+          <MultiSelect
+            // createNewItemFromQuery={maybeCreateNewItemFromQuery}
+            // createNewItemRenderer={maybeCreateNewItemRenderer}
+            // initialContent={initialContent}
+            itemRenderer={renderTagOption}
+            // itemsEqual={areFilmsEqual}
+            // we may customize the default filmSelectProps.items by
+            // adding newly created items to the list, so pass our own
+            items={index.flatMap((channelSet) => channelSet.channels.flatMap((c) => c))}
+            noResults={<MenuItem disabled={true} text="No results." />}
+            onItemSelect={handleTagSelect}
+            fill={true}
+            // onItemsPaste={this.handleFilmsPaste}
+            // popoverProps={{ minimal: true }}
+            tagRenderer={renderTag}
+            tagInputProps={{
+              onRemove: handleTagRemove,
+              // rightElement: clearButton,
+              tagProps: {
+                minimal: true
+              }
+            }}
+            selectedItems={tagState.tags}
           />
         </div>
         {selectedConnection.current_user_channels.length !== 0 && (

@@ -293,7 +293,7 @@ header {
 
 .panel {
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid #6ab8ff;
   backdrop-filter: blur(44px);
   z-index: 100;
@@ -850,7 +850,7 @@ header {
   &.selected {
     border: 2px solid #ffae64;
     color: #6f7b8a;
-    box-sizing: content-box;
+    box-sizing: border-box;
     .block {
       background: #ffffff;
       // border: 1px solid #bdc3ca;

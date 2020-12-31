@@ -8,7 +8,6 @@ export default function GroveActions() {
   return (
     <Panel panelType="actions">
       <div className="grove-actions">
-        <div className="label">Actions</div>
         <CreateBlock />
         <ConnectTo />
         <CreateGroveAction />
