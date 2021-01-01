@@ -51,8 +51,6 @@ const DraggableBlock = ({
     x: (() => {
       if (description) {
         return description.x;
-      } else if (parentDimensions) {
-        return Math.random(parentDimensions.width) * parentDimensions.width;
       } else {
         return Math.random(window.innerWidth) * window.innerWidth;
       }
@@ -96,8 +94,8 @@ const DraggableBlock = ({
     setSpatialState({
       ...spatialState,
       isExpanded: true,
-      width: 800,
-      height: 600
+      width: 400,
+      height: 300
     });
   };
 
@@ -256,7 +254,7 @@ const DraggableBlock = ({
         handleDragStart(e);
       }}
       // disableDragging={spatialState.isExpanded}
-      bounds={'window'}
+      // bounds={'window'}
       onDrag={(e, d) => {
         handleDrag(e, d);
       }}

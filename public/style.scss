@@ -134,7 +134,7 @@ html {
   font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
   font-size: 16px;
   color: $pt-text-color;
-  background-color: #f8f8f8;
+  background-color: $light-gray3;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -293,7 +293,7 @@ header {
       -webkit-appearance: none;
       border-radius: 0 10px 10px 0;
       background-color: $light-gray4;
-      color: $pt-text-color
+      color: $pt-text-color;
     }
   }
 }
@@ -484,7 +484,10 @@ header {
   height: 45px;
 }
 
-.block.block--image { align-items: center; justify-content: center;}
+.block.block--image {
+  align-items: center;
+  justify-content: center;
+}
 
 .block.block--channel {
   box-sizing: border-box;
@@ -805,7 +808,7 @@ header {
   color: #6f7b8a;
   box-sizing: border-box;
   // box-shadow: 0px 1px 1px rgba(111, 123, 138, 0.2), 0px 0px 0px #6f7b8a,
-    // 0px 0px 0px rgba(111, 123, 138, 0.1);
+  // 0px 0px 0px rgba(111, 123, 138, 0.1);
   border-radius: 2px;
   transform: rotate(0deg);
   transition: 0.2s all ease;
@@ -1195,6 +1198,7 @@ header {
   right: 15px;
   top: 75px;
   bottom: 15px;
+  background-color: $pt-app-background-color;
   height: calc(100% - 90px);
   overflow: hidden;
   border: 1px solid #d7dde4;
@@ -1337,11 +1341,9 @@ button,
     align-items: center;
   }
 
-  button {
-    &.action {
-      &:not(:last-child) {
-        margin-right: 8px;
-      }
+  * {
+    &:not(:last-child) {
+      margin-right: 8px;
     }
   }
 }
@@ -1415,8 +1417,10 @@ button,
 
 .grid > * {
   box-sizing: border-box;
-  width: calc(100vw / 6 - 22px) !important;
-  height: calc(100vw / 6 - 22px) !important;
+  // width: calc(25% - 20px) !important;
+  flex: calc(25% - 20px) !important;
+  // height: calc(25% - 20px) !important;
+  // padding-top: 100%;
   position: relative;
   margin: unset;
   margin: 0px 10px 40px !important;
@@ -1441,9 +1445,9 @@ button,
   }
 
   .grove-navigation input {
-      background-color: $dark-gray4;
-      color: $pt-dark-text-color
-    }
+    background-color: $dark-gray4;
+    color: $pt-dark-text-color;
+  }
 
   .selection-panel {
     border: 1px solid $dark-gray1;
@@ -1472,14 +1476,15 @@ button,
 }
 
 .theme-container {
-      position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: scroll;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
 }
 
 .block-card {
   padding: 0;
+  // padding-top: 100%;
 }

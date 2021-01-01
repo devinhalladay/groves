@@ -27,6 +27,6 @@ export default async (req, res) => {
       url: `https://s3.amazonaws.com/${process.env.S3_BUCKET_NAME}/${name}`
     };
 
-    res.status(200).json(results);
+    return res.status(200).json(results);
   });
 };

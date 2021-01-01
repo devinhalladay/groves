@@ -1,7 +1,7 @@
 import React from 'react';
 import Panel from '~/src/components/Panel';
-import Grid from './components/grid';
-import { HTMLSelect } from '@blueprintjs/core';
+import Grid from './components/Grid';
+import { ControlGroup, HTMLSelect } from '@blueprintjs/core';
 import { useWorkspace } from '@context/workspace-context';
 
 export default function GroveFormations() {
@@ -15,8 +15,17 @@ export default function GroveFormations() {
   };
 
   return (
-    <Panel panelType="formations">
-      <div className="grove-formations">
+    <div className="grove-formations">
+      <ControlGroup
+        fill={true}
+        vertical={false}
+        style={{
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+        <div className="label">
+          <span>Views</span>
+        </div>
         <HTMLSelect
           onChange={handleChangeFormation}
           options={[
@@ -31,7 +40,7 @@ export default function GroveFormations() {
           ]}
           defaultValue="grid"
         />
-      </div>
-    </Panel>
+      </ControlGroup>
+    </div>
   );
 }

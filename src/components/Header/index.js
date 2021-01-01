@@ -1,13 +1,9 @@
-import React from 'react';
-import Panel from '~/src/components/Panel';
-import GrovesNavigator from '~/src/components/Header/components/Navigator';
-import Menu from '~/src/components/Header/components/Menu';
 import { useAuth } from '@context/auth-context';
-import { useUser } from '@context/user-context';
-import { useSelection } from '@context/selection-context';
-import StageConnectionsFromAction from '~/src/components/Actions/components/stageConnections';
+import React from 'react';
 import GroveActions from '~/src/components/Actions';
-import GroveFormations from '~/src/components/Formations';
+import Menu from '~/src/components/Header/components/Menu';
+import GrovesNavigator from '~/src/components/Header/components/Navigator';
+import Panel from '~/src/components/Panel';
 
 const UnauthenticatedHeader = (props) => {
   return (
@@ -121,7 +117,6 @@ const AuthenticatedHeader = (props) => {
             </nav>
           </header>
         </Panel>
-        <GroveFormations />
         <GroveActions />
       </>
     );
