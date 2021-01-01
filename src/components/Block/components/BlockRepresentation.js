@@ -11,7 +11,7 @@ const BlockRepresentation = ({ block }) => {
   } else if (block.__typename === 'Text') {
     return (
       <Fragment>
-        <p className="title">{block.title || null}</p>
+        {block.title && <p className="title">{block.title}</p>}
         {parse(`${block.content}`)}
       </Fragment>
     );

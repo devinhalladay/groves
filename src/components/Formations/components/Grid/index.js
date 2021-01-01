@@ -3,6 +3,7 @@ import Panel from '~/src/components/Panel';
 import BlockRepresentation from '~/src/components/Block/components/BlockRepresentation';
 import { useSelection } from '~/src/context/selection-context';
 import ContextMenu from '~/src/components/ContextMenu';
+import { Card } from '@blueprintjs/core';
 
 const Grid = (props) => {
   const { blocks } = props;
@@ -27,11 +28,17 @@ const Grid = (props) => {
         {blocks ? (
           blocks.map((block) => {
             return (
-              <ContextMenu key={block.id} handleBlockClick={(e) => {handleBlockClick(e, block)}}>
-                <div className={`block block--${block.__typename.toLowerCase()}`}>
-                  {' '}
-                  <BlockRepresentation block={block} />
-                </div>
+              <ContextMenu
+                key={block.id}
+                handleBlockClick={(e) => {
+                  handleBlockClick(e, block);
+                }}>
+                <Card interactive={false} className="block-card">
+                  <div className={`block block--${block.__typename.toLowerCase()}`}>
+                    {' '}
+                    <BlockRepresentation block={block} />
+                  </div>
+                </Card>
               </ContextMenu>
             );
           })

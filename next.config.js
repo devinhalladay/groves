@@ -8,5 +8,21 @@ module.exports = {
     SERVER_AUTH_CALLBACK: process.env.SERVER_AUTH_CALLBACK,
     GRAPHQL_TOKEN: process.env.GRAPHQL_TOKEN,
     AUTHENTICATION_ENABLED: process.env.NODE_ENV === 'production' ? false : true
+  },
+
+  webpack: (config, options) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: '@svgr/webpack',
+          options: {
+            svgo: false
+          }
+        }
+      ]
+    });
+
+    return config;
   }
 };

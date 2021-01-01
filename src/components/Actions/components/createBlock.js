@@ -1,5 +1,5 @@
 import Tippy from '@tippyjs/react';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, forwardRef } from 'react';
 import { useCombobox } from 'downshift';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { SEARCH_ALL_CHANNELS } from '~/src/queries';
@@ -9,11 +9,15 @@ import { CREATE_CONNECTION, ADD_BLOCK } from '~/src/mutations';
 import { ToastContainer, toast } from 'react-toastify';
 import { useSelection } from '../../../context/selection-context';
 import { useDropzone } from 'react-dropzone';
-import { TextArea } from '@blueprintjs/core';
+import { Button, Colors, TextArea } from '@blueprintjs/core';
+import ActionIcon from '~/public/create-block.svg';
+import { useTheme } from '~/src/context/theme-provider';
 
 const CreateBlock = (props) => {
   const [visible, setVisible] = useState(false);
   const [files, setFiles] = useState([]);
+
+  const { theme } = useTheme()
 
   const { apollo } = props;
 
@@ -24,6 +28,16 @@ const CreateBlock = (props) => {
   };
 
   const router = useRouter();
+
+
+  const ActionButton = forwardRef((props, ref) => (
+    <Button className="action" onClick={visible ? hide : show}>
+      <ActionIcon
+        fill={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
+        stroke={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
+      />
+    </Button>
+  ));
 
   // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -165,9 +179,7 @@ const CreateBlock = (props) => {
       }
       visible={visible}
       onClickOutside={hide}>
-      <button className="action" onClick={visible ? hide : show}>
-        <img src="/create-block.svg" />
-      </button>
+      <ActionButton />
     </Tippy>
   );
 };

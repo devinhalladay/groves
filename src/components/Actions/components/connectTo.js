@@ -1,5 +1,5 @@
 import Tippy from '@tippyjs/react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, forwardRef } from 'react';
 import { useCombobox } from 'downshift';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { SEARCH_ALL_CHANNELS } from '~/src/queries';
@@ -8,6 +8,9 @@ import { useRouter } from 'next/router';
 import { CREATE_CONNECTION } from '~/src/mutations';
 import { ToastContainer, toast } from 'react-toastify';
 import { useSelection } from '../../../context/selection-context';
+import { Button, Colors } from '@blueprintjs/core';
+import LinkGrovesIcon from '~/public/link-groves.svg';
+import { useTheme } from '~/src/context/theme-provider';
 
 const renderResult = (inputItem) => {
   return (
@@ -23,6 +26,7 @@ const renderResult = (inputItem) => {
 const ConnectTo = (props) => {
   const [visible, setVisible] = useState(false);
 
+const { theme } = useTheme();
   const { apollo } = props;
 
   const show = () => setVisible(true);
@@ -37,6 +41,15 @@ const ConnectTo = (props) => {
   const connectedToast = (connectable) => {
     toast(`Connected to ${connectable.title}`);
   };
+
+  const ActionButton = forwardRef((props, ref) => (
+    <Button className="action" onClick={visible ? hide : show}>
+      <LinkGrovesIcon
+        fill={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
+        stroke={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
+      />
+    </Button>
+  ));
 
   const [connectTo, { loading: mutationLoading, error: mutationError }] = useMutation(
     CREATE_CONNECTION,
@@ -170,9 +183,7 @@ const ConnectTo = (props) => {
       }
       visible={visible}
       onClickOutside={hide}>
-      <button className="action" onClick={visible ? hide : show}>
-        <img src="/link-groves.svg" />
-      </button>
+      <ActionButton />
     </Tippy>
   );
 };

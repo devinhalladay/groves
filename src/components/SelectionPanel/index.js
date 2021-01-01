@@ -1,14 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
-import {
-  EditableText,
-  Icon,
-  Intent,
-  MenuItem,
-
-
-
-  Tooltip
-} from '@blueprintjs/core';
+import { EditableText, Icon, Intent, MenuItem, Tooltip } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 import { MultiSelect } from '@blueprintjs/select';
 import { useSelection } from '@context/selection-context';
@@ -18,8 +9,11 @@ import React, { useState } from 'react';
 import Loading from '~/src/components/Loader';
 import { useUser } from '~/src/context/user-context';
 import {
-  CREATE_CHANNEL, CREATE_CONNECTION,
-  REMOVE_CONNECTION, UPDATE_CHANNEL, UPDATE_CONNECTION
+  CREATE_CHANNEL,
+  CREATE_CONNECTION,
+  REMOVE_CONNECTION,
+  UPDATE_CHANNEL,
+  UPDATE_CONNECTION
 } from '~/src/mutations';
 import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/queries';
 
@@ -262,24 +256,24 @@ const SelectionPanel = React.memo((props) => {
   );
 
   const explainElement = () => (
-      <Tooltip
-        content="Add tags to connect blocks to an are.na channel! Creating a tag creates a new channel."
-        targetProps={{
+    <Tooltip
+      content="Add tags to connect blocks to an are.na channel! Creating a tag creates a new channel."
+      targetProps={{
+        width: 16,
+        height: 16
+      }}
+      // boundary="scrollParent"
+      usePortal={false}>
+      <div
+        style={{
           width: 16,
-          height: 16
-        }}
-        // boundary="scrollParent"
-        usePortal={false}>
-        <div
-          style={{
-            width: 16,
-            height: 16,
-            marginTop: 5,
-            marginRight: 5
-          }}>
-          <Icon icon={IconNames.INFO_SIGN} />
-        </div>
-      </Tooltip>
+          height: 16,
+          marginTop: 5,
+          marginRight: 5
+        }}>
+        <Icon icon={IconNames.INFO_SIGN} />
+      </div>
+    </Tooltip>
   );
 
   if (loading) {
@@ -326,7 +320,7 @@ const SelectionPanel = React.memo((props) => {
   }
   return (
     <div
-      className="selection-panel"
+      className="panel selection-panel"
       style={{
         right: selectedConnection !== null ? '15px' : '-315px'
       }}>

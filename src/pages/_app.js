@@ -10,6 +10,7 @@ import { parseCookies } from 'nookies';
 import Head from 'next/head';
 import { AuthenticatedHeader, UnauthenticatedHeader } from '~/src/components/Header';
 import { WorkspaceProvider } from '../context/workspace-context';
+import { ThemeProvider } from '../context/theme-provider';
 
 const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
   useEffect(() => {
@@ -59,10 +60,12 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
         </Head>
         <AuthProvider>
           <UserProvider>
-            <WorkspaceProvider>
-              <AuthenticatedHeader {...pageProps} />
-              <Component {...pageProps} />
-            </WorkspaceProvider>
+            <ThemeProvider>
+              <WorkspaceProvider>
+                <AuthenticatedHeader {...pageProps} />
+                <Component {...pageProps} />
+              </WorkspaceProvider>
+            </ThemeProvider>
           </UserProvider>
         </AuthProvider>
       </div>

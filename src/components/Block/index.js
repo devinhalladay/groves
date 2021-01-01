@@ -11,6 +11,7 @@ import InlineExpandedChannel from '../ChannelEmbed';
 import { useSelection } from '../../context/selection-context';
 import { useAuth } from '../../context/auth-context';
 import { useWorkspace } from '../../context/workspace-context';
+import { Card, Elevation } from '@blueprintjs/core';
 
 // TODO: Need to break up this component, it's all kinds of fucked up
 // and recursively renders itself via InlineExpandedChannel which
@@ -272,8 +273,7 @@ const DraggableBlock = ({
       style={{
         zIndex: spatialState.zIndex
       }}>
-      <div
-        className={`draggable-block-container ${block.__typename ? block.__typename : ''} ${
+          <Card interactive={true} className={`draggable-block-container ${block.__typename ? block.__typename : ''} ${
           selectedConnection && selectedConnection.id
             ? block.id === selectedConnection.id
               ? 'selected'
@@ -285,36 +285,37 @@ const DraggableBlock = ({
         {spatialState.isExpanded ? (
           renderChannelInline()
         ) : (
-          <div className={`block block--${block.__typename.toLowerCase()}`}>
-            {block.__typename === 'Channel' && (
-              <button className="icon-button" onClick={expandChannelInline}>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M8 13L12.9995 13V8"
-                    stroke="#BDC3CA"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M7.99951 3L3 3L3 8.00001"
-                    stroke="#BDC3CA"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            )}
-            <BlockRepresentation block={block} />
-          </div>
+            <div className={`block block--${block.__typename.toLowerCase()}`}>
+              {block.__typename === 'Channel' && (
+                <button className="icon-button" onClick={expandChannelInline}>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M8 13L12.9995 13V8"
+                      stroke="#BDC3CA"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M7.99951 3L3 3L3 8.00001"
+                      stroke="#BDC3CA"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              )}
+              <BlockRepresentation block={block} />
+            </div>
         )}
-      </div>
+          </Card>
+
     </Rnd>
   );
 };

@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useCombobox } from 'downshift';
 import { useLazyQuery } from '@apollo/client';
 import { SEARCH_ALL_CHANNELS } from '../../../queries';
+import { Button } from '@blueprintjs/core';
 
 const renderResult = (inputItem) => {
   return (
@@ -109,9 +110,9 @@ const StageConnections = () => {
       }
       visible={visible}
       onClickOutside={hide}>
-      <button className="action" onClick={visible ? hide : show}>
+      <Button className="action" onClick={visible ? hide : show}>
         <img src="/connect-from.svg" />
-      </button>
+      </Button>
     </Tippy>
   );
 };
