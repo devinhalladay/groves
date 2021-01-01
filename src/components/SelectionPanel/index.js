@@ -1,20 +1,27 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { EditableText, Icon, Intent, MenuItem, Position } from '@blueprintjs/core';
-import { ItemRenderer, MultiSelect } from '@blueprintjs/select';
+import {
+  EditableText,
+  Icon,
+  Intent,
+  MenuItem,
+
+
+
+  Tooltip
+} from '@blueprintjs/core';
+import { IconNames } from '@blueprintjs/icons';
+import { MultiSelect } from '@blueprintjs/select';
+import { useSelection } from '@context/selection-context';
 import parse from 'html-react-parser';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import Loading from '~/src/components/Loader';
-import { useSelection } from '@context/selection-context';
-import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/queries';
-import {
-  UPDATE_CONNECTION,
-  UPDATE_CHANNEL,
-  CREATE_CONNECTION,
-  REMOVE_CONNECTION,
-  CREATE_CHANNEL
-} from '~/src/mutations';
-import { Router, useRouter } from 'next/router';
 import { useUser } from '~/src/context/user-context';
+import {
+  CREATE_CHANNEL, CREATE_CONNECTION,
+  REMOVE_CONNECTION, UPDATE_CHANNEL, UPDATE_CONNECTION
+} from '~/src/mutations';
+import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/queries';
 
 const SelectionPanel = React.memo((props) => {
   const router = useRouter();
@@ -46,18 +53,18 @@ const SelectionPanel = React.memo((props) => {
     }
   });
 
-  const [
-    createChannel,
-    { loading: creatingChannel, error: errorCreatingChannel }
-  ] = useMutation(CREATE_CHANNEL, {
-    client: apollo,
-    onCompleted: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
+  const [createChannel, { loading: creatingChannel, error: errorCreatingChannel }] = useMutation(
+    CREATE_CHANNEL,
+    {
+      client: apollo,
+      onCompleted: (data) => {
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
     }
-  });
+  );
 
   const [
     createConnection,
@@ -200,9 +207,9 @@ const SelectionPanel = React.memo((props) => {
 
   const handleTagSelect = (tag) => {
     if (!isTagSelected(tag)) {
-    selectTag(tag);
+      selectTag(tag);
     } else {
-      handleTagRemove(tag)
+      handleTagRemove(tag);
     }
   };
 
@@ -220,7 +227,7 @@ const SelectionPanel = React.memo((props) => {
         // icon={isTagSelected(tag) ? 'tick' : 'blank'}
         key={tag.id}
         // label={tag.title}
-        labelElement={isTagSelected(tag) ? <Icon icon='tick' /> : null}
+        labelElement={isTagSelected(tag) ? <Icon icon="tick" /> : null}
         onClick={handleClick}
         text={tag.title}
         shouldDismissPopover={false}
@@ -242,7 +249,7 @@ const SelectionPanel = React.memo((props) => {
         title: query.toString()
       }
     });
-  }
+  };
 
   const createNewTagRenderer = (query, active, handleClick) => (
     <MenuItem
@@ -252,6 +259,27 @@ const SelectionPanel = React.memo((props) => {
       onClick={handleClick}
       shouldDismissPopover={false}
     />
+  );
+
+  const explainElement = () => (
+      <Tooltip
+        content="Add tags to connect blocks to an are.na channel! Creating a tag creates a new channel."
+        targetProps={{
+          width: 16,
+          height: 16
+        }}
+        // boundary="scrollParent"
+        usePortal={false}>
+        <div
+          style={{
+            width: 16,
+            height: 16,
+            marginTop: 5,
+            marginRight: 5
+          }}>
+          <Icon icon={IconNames.INFO_SIGN} />
+        </div>
+      </Tooltip>
   );
 
   if (loading) {
@@ -333,12 +361,7 @@ const SelectionPanel = React.memo((props) => {
           style={{
             position: 'relative'
           }}>
-          <p
-            style={{
-              marginRight: 40,
-              fontSize: 18,
-              width: '100%'
-            }}>
+          <div className="inline-wrapper">
             <EditableText
               onChange={(e) => handleTitleChange(e, selectedConnection)}
               fill={true}
@@ -349,23 +372,24 @@ const SelectionPanel = React.memo((props) => {
               defaultValue={selectedConnection.title}
               selectAllOnFocus={true}
             />
-          </p>
-          <p className="small"></p>
+            <a
+              style={{
+                // width: 40,
+                paddingLeft: 20
+                // display: 'flex',
+                // justifyContent: 'flex-end',
+                // flex: 0
+              }}
+              href={`https://are.na${selectedConnection.href}`}
+              target="_blank"
+              rel="noreferrer">
+              <img src="/open.svg" alt="" />
+            </a>
+          </div>
           <p className="meta small">{selectedConnection.__typename}</p>
           <p className="meta small">
             {`Added ${selectedConnection.created_at} by ${selectedConnection.user.name}`}
           </p>
-          <a
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0
-            }}
-            href={`https://are.na${selectedConnection.href}`}
-            target="_blank"
-            rel="noreferrer">
-            <img src="/open.svg" alt="" />
-          </a>
         </div>
         <div className="section">
           <p className="section__title">Description</p>
@@ -390,15 +414,14 @@ const SelectionPanel = React.memo((props) => {
         <div className="section">
           <div className="section__title">Tags</div>
           <MultiSelect
+            className="position-relative"
             createNewItemFromQuery={createNewTagFromQuery}
             createNewItemRenderer={createNewTagRenderer}
             selectedItems={tagState.tags}
             itemPredicate={filterTags}
             itemRenderer={renderTagOption}
             popoverProps={{
-              className: 'testset',
               minimal: true,
-              boundary: 'clippingParents',
               style: {
                 width: 300
               },
@@ -417,7 +440,8 @@ const SelectionPanel = React.memo((props) => {
             tagRenderer={renderTag}
             tagInputProps={{
               // onRemove: handleTagRemove,
-              // rightElement: clearButton,
+              rightElement: explainElement(),
+              leftIcon: IconNames.TAG,
               tagProps: {
                 minimal: true
               }

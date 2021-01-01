@@ -1193,6 +1193,18 @@ header {
   backdrop-filter: blur(44px);
   border-radius: 5px;
 
+  .bp3-editable-text {
+    width: 100%;
+  }
+
+  .inline-wrapper {
+    display: flex;
+
+    .bp3-editable-text {
+      flex: 1;
+    }
+  }
+
   > .header {
     background: #f8fafc;
     border-bottom: 1px solid #d7dde4;
@@ -1407,4 +1419,8 @@ button,
   display: flex;
   justify-content: center;
   border: 1px solid #d7dde4;
+}
+
+.position-relative {
+  position: relative;
 }
