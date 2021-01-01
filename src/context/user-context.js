@@ -22,13 +22,6 @@ export const UserProvider = withApollo((props) => {
   }
 
   const channels = currentUser.me.channels;
-  // let index = () => {
-  //   let mergedIndices;
-  //   for (const item in currentUser.me.channels_index) {
-  //     mergedIndices.push(...currentUser.me.channels_index[item].channels);
-  //   }
-  //   return mergedIndices;
-  // };
 
   let index = currentUser.me.channels_index;
 

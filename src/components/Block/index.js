@@ -33,6 +33,8 @@ const DraggableBlock = ({
 }) => {
   let description;
 
+  let { staticBlock } = props;
+
   const { workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale } = useWorkspace();
 
   if (block.description && block.description.includes('"x":')) {
@@ -165,9 +167,11 @@ const DraggableBlock = ({
 
       handleDragMetric();
     } else {
-      setSelectedConnection({
-        ...block
-      });
+      if (!staticBlock) {
+        setSelectedConnection({
+          ...block
+        });
+      }
     }
   };
 
