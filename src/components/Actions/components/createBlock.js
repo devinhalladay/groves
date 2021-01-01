@@ -2,10 +2,11 @@ import Tippy from '@tippyjs/react';
 import { useState, useRef, useEffect, useCallback, forwardRef } from 'react';
 import { useCombobox } from 'downshift';
 import { useLazyQuery, useMutation } from '@apollo/client';
-import { SEARCH_ALL_CHANNELS } from '~/src/queries';
+import { SEARCH_ALL_CHANNELS } from '~/src/graphql/queries';
 import { useUser } from '../../../context/user-context';
 import { useRouter } from 'next/router';
-import { CREATE_CONNECTION, ADD_BLOCK } from '~/src/mutations';
+import { CREATE_CONNECTION } from '~/src/graphql/mutations';
+import createBlock from '~/src/components/Block/mutations/createBlock';
 import { ToastContainer, toast } from 'react-toastify';
 import { useSelection } from '../../../context/selection-context';
 import { useDropzone } from 'react-dropzone';
@@ -84,7 +85,7 @@ const CreateBlock = (props) => {
         }).then((res) => {
           console.log(res);
 
-          createBlock({
+          newBlock({
             variables: {
               channelId: router.query.grove,
               value: url
@@ -117,15 +118,18 @@ const CreateBlock = (props) => {
     toast(`Connected to ${connectable.title}`);
   };
 
-  const [createBlock, { loading: mutationLoading, error: mutationError }] = useMutation(ADD_BLOCK, {
-    client: apollo,
-    onCompleted: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
+  const [newBlock, { loading: mutationLoading, error: mutationError }] = useMutation(
+    createBlock,
+    {
+      client: apollo,
+      onCompleted: (data) => {
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
     }
-  });
+  );
 
   const replaceWithTextbox = () => {
     setCreateState('text');

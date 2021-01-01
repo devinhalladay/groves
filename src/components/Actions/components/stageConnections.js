@@ -2,7 +2,7 @@ import Tippy from '@tippyjs/react';
 import { useState, useRef, useEffect } from 'react';
 import { useCombobox } from 'downshift';
 import { useLazyQuery } from '@apollo/client';
-import { SEARCH_ALL_CHANNELS } from '../../../queries';
+import { SEARCH_ALL_CHANNELS } from '../../../graphql/queries';
 import { Button } from '@blueprintjs/core';
 
 const renderResult = (inputItem) => {

@@ -3,7 +3,7 @@ import React, { createContext, useContext } from 'react';
 import Loading from '~/src/components/Loader';
 import { SelectionProvider } from '@context/selection-context';
 import withApollo from '~/src/lib/withApollo';
-import { CURRENT_USER } from '~/src/queries';
+import { CURRENT_USER } from '~/src/graphql/queries';
 
 const UserContext = createContext();
 

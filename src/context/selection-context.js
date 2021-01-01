@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { createContext, useContext, useState } from 'react';
 import Loading from '~/src/components/Loader';
 import withApollo from '~/src/lib/withApollo';
-import { CHANNEL_SKELETON } from '~/src/queries';
+import { CHANNEL_SKELETON } from '~/src/graphql/queries';
 
 const SelectionContext = createContext();
 

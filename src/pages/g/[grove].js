@@ -12,7 +12,8 @@ import DraggableBlock from '~/src/components/Block';
 import { useWorkspace, WorkspaceContext, WorkspaceProvider } from '@context/workspace-context';
 import SelectionPanel from '~/src/components/SelectionPanel';
 import { useDropzone } from 'react-dropzone';
-import { ADD_BLOCK } from '~/src/mutations';
+// import { ADD_BLOCK } from '~/src/graphql/mutations';
+import createBlock from '~/src/components/Block/mutations/createBlock'
 import { useMutation } from '@apollo/client';
 import { ToastContainer } from 'react-toastify';
 import Grid from '~/src/components/Formations/components/Grid';
@@ -42,16 +43,19 @@ const Grove = (props) => {
 
   const [files, setFiles] = useState([]);
 
-  const [addBlock, { loading: mutationLoading, error: mutationError }] = useMutation(ADD_BLOCK, {
-    client: apollo,
-    onCompleted: (data) => {
-      console.log(data);
-      setFiles([]);
-    },
-    onError: (error) => {
-      console.log(error);
+  const [connectBlock, { loading: mutationLoading, error: mutationError }] = useMutation(
+    createBlock,
+    {
+      client: apollo,
+      onCompleted: (data) => {
+        console.log(data);
+        setFiles([]);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
     }
-  });
+  );
 
   // const onDrop = useCallback((acceptedFiles) => {
   //   acceptedFiles.map(async (file) => {
@@ -95,7 +99,7 @@ const Grove = (props) => {
   //       }).then((res) => {
   //         console.log(res);
 
-  //         addBlock({
+  //         connectBlock({
   //           variables: {
   //             channelId: router.query.grove,
   //             value: url,

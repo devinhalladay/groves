@@ -1,8 +1,6 @@
-import React, { useContext, useState } from 'react';
-import { createContext } from 'react';
-import { setCookie, parseCookies, destroyCookie } from 'nookies';
 import { useRouter } from 'next/router';
-import withApollo from '~/src/lib/withApollo';
+import { destroyCookie, parseCookies, setCookie } from 'nookies';
+import React, { createContext, useContext } from 'react';
 
 const AuthContext = createContext();
 
