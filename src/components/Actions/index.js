@@ -3,7 +3,7 @@ import ConnectTo from './components/connectTo';
 import CreateGroveAction from './components/createGrove';
 import Panel from '~/src/components/Panel';
 import CreateBlock from './components/createBlock';
-import DarkModeAction from './components/darkMode'
+import DarkModeAction from './components/darkMode';
 
 export default function GroveActions() {
   return (

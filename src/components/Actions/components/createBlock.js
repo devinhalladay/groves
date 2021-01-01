@@ -17,7 +17,7 @@ const CreateBlock = (props) => {
   const [visible, setVisible] = useState(false);
   const [files, setFiles] = useState([]);
 
-  const { theme } = useTheme()
+  const { theme } = useTheme();
 
   const { apollo } = props;
 
@@ -28,7 +28,6 @@ const CreateBlock = (props) => {
   };
 
   const router = useRouter();
-
 
   const ActionButton = forwardRef((props, ref) => (
     <Button className="action" onClick={visible ? hide : show}>

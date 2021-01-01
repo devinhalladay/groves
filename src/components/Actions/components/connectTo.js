@@ -26,7 +26,7 @@ const renderResult = (inputItem) => {
 const ConnectTo = (props) => {
   const [visible, setVisible] = useState(false);
 
-const { theme } = useTheme();
+  const { theme } = useTheme();
   const { apollo } = props;
 
   const show = () => setVisible(true);

@@ -12,7 +12,8 @@ const WorkspaceProvider = (props) => {
   return (
     <WorkspaceContext.Provider
       value={{ workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale }}
-      {...props} />
+      {...props}
+    />
   );
 };
 

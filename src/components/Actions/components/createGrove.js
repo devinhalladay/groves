@@ -1,6 +1,6 @@
 import { Button, Colors } from '@blueprintjs/core';
 import React from 'react';
-import CreateGrove from '~/public/create-grove.svg'
+import CreateGrove from '~/public/create-grove.svg';
 import { useTheme } from '~/src/context/theme-provider';
 
 export default function CreateGroveAction() {

@@ -127,7 +127,7 @@ const Grove = (props) => {
       return (
         <Layout {...props}>
           <GrovesCanvas {...props}>
-            {canvasBlocks.length ?
+            {canvasBlocks.length ? (
               canvasBlocks.map((blokk, i) => (
                 <>
                   <DraggableBlock
@@ -142,9 +142,10 @@ const Grove = (props) => {
                     {...props}
                   />
                 </>
-              )) : (
-                <div>not found</div>
-              )}
+              ))
+            ) : (
+              <div>not found</div>
+            )}
 
             {files.map((file) => (
               <>
