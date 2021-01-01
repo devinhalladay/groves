@@ -4,7 +4,7 @@ import GrovesCanvas from '~/src/components/Canvas';
 import { parseCookies } from 'nookies';
 import Layout from '~/src/components/Layout';
 import { useState, Fragment } from 'react';
-import withApollo from '~/src/lib/withApollo';
+import withApollo from '~/src/hooks/withApollo';
 import { gql, NetworkStatus } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import DraggableBlock from '~/src/components/Block';

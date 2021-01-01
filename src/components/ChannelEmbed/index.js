@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Loading from '~/src/components/Loader';
 import DraggableBlock from '~/src/components/Block';
 import GrovesCanvas from '~/src/components/Canvas';
-import withApollo from '~/src/lib/withApollo';
+import withApollo from '~/src/hooks/withApollo';
 import { CHANNEL_SKELETON } from '~/src/graphql/queries';
 
 export default withApollo(

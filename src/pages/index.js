@@ -4,7 +4,7 @@ import Layout from '~/src/components/Layout';
 import DraggableBlock from '~/src/components/Block';
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client';
-import withApollo from '~/src/lib/withApollo';
+import withApollo from '~/src/hooks/withApollo';
 import Panel from '~/src/components/Panel';
 import Loading from '~/src/components/Loader';
 import { SelectionProvider } from '@context/selection-context';
