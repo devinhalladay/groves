@@ -172,7 +172,11 @@ const Layout = (props) => {
           dragging = true;
         }}
         onPanEnd={(e) => {
-          if (!(e.target.className && e.target.className.includes('block')) && !dragging) {
+          if (
+            !(e.target && e.target.className) &&
+            e.target.className.includes('block') &&
+            !dragging
+          ) {
             setSelectedConnection(null);
           }
 

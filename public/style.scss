@@ -293,7 +293,7 @@ header {
 
 .panel {
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid #6ab8ff;
   backdrop-filter: blur(44px);
   z-index: 100;
@@ -850,7 +850,7 @@ header {
   &.selected {
     border: 2px solid #ffae64;
     color: #6f7b8a;
-    box-sizing: content-box;
+    box-sizing: border-box;
     .block {
       background: #ffffff;
       // border: 1px solid #bdc3ca;
@@ -1164,8 +1164,20 @@ header {
   }
 }
 
+.bp3-overlay,
+.bp3-transition-container {
+  z-index: 10000 !important;
+}
+
+.bp3-multi-select-popover {
+  max-width: 300px;
+  max-height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 .selection-panel {
-  z-index: 10000;
+  z-index: 3000;
   position: fixed;
   width: 300px;
   transition: all ease-in-out 0.1s;
@@ -1180,6 +1192,18 @@ header {
     0px 0px 0px rgba(111, 123, 138, 0.1);
   backdrop-filter: blur(44px);
   border-radius: 5px;
+
+  .bp3-editable-text {
+    width: 100%;
+  }
+
+  .inline-wrapper {
+    display: flex;
+
+    .bp3-editable-text {
+      flex: 1;
+    }
+  }
 
   > .header {
     background: #f8fafc;
@@ -1395,4 +1419,8 @@ button,
   display: flex;
   justify-content: center;
   border: 1px solid #d7dde4;
+}
+
+.position-relative {
+  position: relative;
 }

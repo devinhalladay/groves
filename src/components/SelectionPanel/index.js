@@ -1,23 +1,88 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { EditableText, Intent } from '@blueprintjs/core';
-import parse from 'html-react-parser';
-import React from 'react';
-import Loading from '~/src/components/Loader';
+import {
+  EditableText,
+  Icon,
+  Intent,
+  MenuItem,
+
+
+
+  Tooltip
+} from '@blueprintjs/core';
+import { IconNames } from '@blueprintjs/icons';
+import { MultiSelect } from '@blueprintjs/select';
 import { useSelection } from '@context/selection-context';
+import parse from 'html-react-parser';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import Loading from '~/src/components/Loader';
+import { useUser } from '~/src/context/user-context';
+import {
+  CREATE_CHANNEL, CREATE_CONNECTION,
+  REMOVE_CONNECTION, UPDATE_CHANNEL, UPDATE_CONNECTION
+} from '~/src/mutations';
 import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/queries';
-import { UPDATE_CONNECTION, UPDATE_CHANNEL } from '~/src/mutations';
-import { Router } from 'next/router';
 
 const SelectionPanel = React.memo((props) => {
+  const router = useRouter();
   const { apollo } = props;
   const { selectedConnection, setSelectedConnection } = useSelection();
+  const { index } = useUser();
 
   const query = selectedConnection.__typename === 'Channel' ? SELECTED_CHANNEL : SELECTED_BLOCK;
+
+  const [tagState, setTagState] = useState({
+    tags: selectedConnection.current_user_channels.map((channel) => channel)
+  });
+
+  const filterTags = (query, tag) => {
+    const text = `${tag.title}`;
+    return text.toLowerCase().indexOf(query.toLowerCase()) >= 0;
+  };
 
   const [
     updateConnection,
     { loading: updatingConnection, error: errorUpdatingConnection }
   ] = useMutation(UPDATE_CONNECTION, {
+    client: apollo,
+    onCompleted: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    }
+  });
+
+  const [createChannel, { loading: creatingChannel, error: errorCreatingChannel }] = useMutation(
+    CREATE_CHANNEL,
+    {
+      client: apollo,
+      onCompleted: (data) => {
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
+    }
+  );
+
+  const [
+    createConnection,
+    { loading: creatingConnection, error: errorCreatingConnection }
+  ] = useMutation(CREATE_CONNECTION, {
+    client: apollo,
+    onCompleted: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    }
+  });
+
+  const [
+    removeConnection,
+    { loading: removingConnection, error: errorRemovingConnection }
+  ] = useMutation(REMOVE_CONNECTION, {
     client: apollo,
     onCompleted: (data) => {
       console.log(data);
@@ -76,6 +141,100 @@ const SelectionPanel = React.memo((props) => {
     }
   };
 
+  const renderTag = (tag) => {
+    return tag.title;
+  };
+
+  const getSelectedTagIndex = (tag) => {
+    return tagState.tags.indexOf(tag);
+  };
+
+  const isTagSelected = (tag) => {
+    return getSelectedTagIndex(tag) !== -1;
+  };
+
+  const selectTag = (tag) => {
+    selectTags([tag]);
+  };
+
+  const selectTags = (tagsToSelect) => {
+    const { tags } = tagState;
+
+    let nextTags = tags.slice();
+    // let nextItems = items.slice();
+
+    tagsToSelect.forEach((tag) => {
+      // const results = nextItems;
+      // nextItems = results.items;
+      // Avoid re-creating an item that is already selected (the "Create
+      // Item" option will be shown even if it matches an already selected
+      // item).
+      nextTags = !nextTags.includes(tag) ? [...nextTags, tag] : nextTags;
+
+      createConnection({
+        variables: {
+          connectable_id: selectedConnection.id,
+          connectable_type: 'BLOCK',
+          channel_ids: [tag.id]
+        }
+      });
+    });
+
+    setTagState({
+      tags: nextTags
+      // items: nextItems
+    });
+  };
+
+  const flatItems = index.flatMap((channelSet) => channelSet.channels.flatMap((c) => c));
+
+  let deselectTag = (tag) => {
+    const { tags } = tagState;
+
+    // Delete the item if the user manually created it.
+    setTagState({
+      tags: tags.filter((t) => t.id !== tag.id)
+    });
+
+    removeConnection({
+      variables: {
+        connectable_id: selectedConnection.id,
+        connectable_type: 'BLOCK',
+        channel_id: tag.id
+      }
+    });
+  };
+
+  const handleTagSelect = (tag) => {
+    if (!isTagSelected(tag)) {
+      selectTag(tag);
+    } else {
+      handleTagRemove(tag);
+    }
+  };
+
+  const handleTagRemove = (tag) => {
+    deselectTag(tag);
+  };
+
+  const renderTagOption = (tag, { handleClick, modifiers, query }) => {
+    if (!modifiers.matchesPredicate) {
+      return null;
+    }
+    return (
+      <MenuItem
+        active={modifiers.active}
+        // icon={isTagSelected(tag) ? 'tick' : 'blank'}
+        key={tag.id}
+        // label={tag.title}
+        labelElement={isTagSelected(tag) ? <Icon icon="tick" /> : null}
+        onClick={handleClick}
+        text={tag.title}
+        shouldDismissPopover={false}
+      />
+    );
+  };
+
   const { data, loading, error, networkStatus } = useQuery(query, {
     // notifyOnNetworkStatusChange: true,
     fetchPolicy: 'no-cache',
@@ -83,6 +242,45 @@ const SelectionPanel = React.memo((props) => {
       id: selectedConnection.id
     }
   });
+
+  const createNewTagFromQuery = (query) => {
+    return createChannel({
+      variables: {
+        title: query.toString()
+      }
+    });
+  };
+
+  const createNewTagRenderer = (query, active, handleClick) => (
+    <MenuItem
+      icon="add"
+      text={`Create "${query}"`}
+      active={active}
+      onClick={handleClick}
+      shouldDismissPopover={false}
+    />
+  );
+
+  const explainElement = () => (
+      <Tooltip
+        content="Add tags to connect blocks to an are.na channel! Creating a tag creates a new channel."
+        targetProps={{
+          width: 16,
+          height: 16
+        }}
+        // boundary="scrollParent"
+        usePortal={false}>
+        <div
+          style={{
+            width: 16,
+            height: 16,
+            marginTop: 5,
+            marginRight: 5
+          }}>
+          <Icon icon={IconNames.INFO_SIGN} />
+        </div>
+      </Tooltip>
+  );
 
   if (loading) {
     return (
@@ -163,12 +361,7 @@ const SelectionPanel = React.memo((props) => {
           style={{
             position: 'relative'
           }}>
-          <p
-            style={{
-              marginRight: 40,
-              fontSize: 18,
-              width: '100%'
-            }}>
+          <div className="inline-wrapper">
             <EditableText
               onChange={(e) => handleTitleChange(e, selectedConnection)}
               fill={true}
@@ -179,23 +372,24 @@ const SelectionPanel = React.memo((props) => {
               defaultValue={selectedConnection.title}
               selectAllOnFocus={true}
             />
-          </p>
-          <p className="small"></p>
+            <a
+              style={{
+                // width: 40,
+                paddingLeft: 20
+                // display: 'flex',
+                // justifyContent: 'flex-end',
+                // flex: 0
+              }}
+              href={`https://are.na${selectedConnection.href}`}
+              target="_blank"
+              rel="noreferrer">
+              <img src="/open.svg" alt="" />
+            </a>
+          </div>
           <p className="meta small">{selectedConnection.__typename}</p>
           <p className="meta small">
             {`Added ${selectedConnection.created_at} by ${selectedConnection.user.name}`}
           </p>
-          <a
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0
-            }}
-            href={`https://are.na${selectedConnection.href}`}
-            target="_blank"
-            rel="noreferrer">
-            <img src="/open.svg" alt="" />
-          </a>
         </div>
         <div className="section">
           <p className="section__title">Description</p>
@@ -217,19 +411,45 @@ const SelectionPanel = React.memo((props) => {
             }
           />
         </div>
-        {selectedConnection.current_user_channels.length !== 0 && (
-          <div className="section">
-            <p className="section__title">Connected to</p>
-            <ul>
-              {selectedConnection &&
-                selectedConnection.current_user_channels.map((channel) => (
-                  <li key={channel.id}>
-                    <a href={`${channel.href}`}>{channel.title}</a>
-                  </li>
-                ))}
-            </ul>
-          </div>
-        )}
+        <div className="section">
+          <div className="section__title">Tags</div>
+          <MultiSelect
+            className="position-relative"
+            createNewItemFromQuery={createNewTagFromQuery}
+            createNewItemRenderer={createNewTagRenderer}
+            selectedItems={tagState.tags}
+            itemPredicate={filterTags}
+            itemRenderer={renderTagOption}
+            popoverProps={{
+              minimal: true,
+              style: {
+                width: 300
+              },
+              fill: true
+            }}
+            // itemsEqual={areFilmsEqual}
+            // we may customize the default filmSelectProps.items by
+            // adding newly created items to the list, so pass our own
+            items={flatItems}
+            noResults={<MenuItem disabled={true} text="No results." />}
+            onItemSelect={handleTagSelect}
+            onRemove={handleTagRemove}
+            fill={true}
+            // onItemsPaste={this.handleFilmsPaste}
+            // popoverProps={{ minimal: true,  }}
+            tagRenderer={renderTag}
+            tagInputProps={{
+              // onRemove: handleTagRemove,
+              rightElement: explainElement(),
+              leftIcon: IconNames.TAG,
+              tagProps: {
+                minimal: true
+              }
+            }}
+            selectedItems={tagState.tags}
+            resetOnSelect={true}
+          />
+        </div>
       </div>
     </div>
   );

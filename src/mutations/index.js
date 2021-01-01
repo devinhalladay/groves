@@ -191,6 +191,38 @@ export const CREATE_CONNECTION = gql`
     ... on ConnectableInterface {
       href
     }
-    ...KonnectableDisplay
+    ...ChannelContentsConnectable
+  }
+
+  ${grovePageFragments.channelContentsConnectable}
+`;
+
+export const REMOVE_CONNECTION = gql`
+  mutation removeConnectionMutation(
+    $channel_id: ID!
+    $connectable_id: ID!
+    $connectable_type: BaseConnectableTypeEnum!
+  ) {
+    remove_connection(
+      input: {
+        channel_id: $channel_id
+        connectable_type: $connectable_type
+        connectable_id: $connectable_id
+      }
+    ) {
+      status
+    }
+  }
+`;
+
+
+export const CREATE_CHANNEL = gql`
+  mutation createChannelMutation($title: String!) {
+    create_channel(input: { title: $title }) {
+      channel {
+        title
+        id
+      }
+    }
   }
 `;
