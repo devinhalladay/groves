@@ -10,9 +10,10 @@ import createBlock from '~/src/components/Block/mutations/createBlock';
 import { ToastContainer, toast } from 'react-toastify';
 import { useSelection } from '../../../context/selection-context';
 import { useDropzone } from 'react-dropzone';
-import { Button, Colors, Popover, TextArea } from '@blueprintjs/core';
+import { Button, Colors, Intent, Popover, TextArea } from '@blueprintjs/core';
 import ActionIcon from '~/public/create-block.svg';
 import { useTheme } from '~/src/context/theme-provider';
+import { IconNames } from '@blueprintjs/icons';
 
 const CreateBlock = (props) => {
   const [visible, setVisible] = useState(false);
@@ -98,11 +99,14 @@ const CreateBlock = (props) => {
     });
   }, []);
 
+
+const inputElement = useRef(null);
   const onSubmit = (value) => {
-    createBlock({
+    console.log(inputElement.current);
+    newBlock({
       variables: {
         channelId: router.query.grove,
-        value: value
+        value: inputElement.current.textareaRef.value
       }
     });
   };
@@ -112,7 +116,7 @@ const CreateBlock = (props) => {
     noClick: true
   });
 
-  const inputElement = useRef(null);
+
 
   const [createState, setCreateState] = useState('omni');
 
@@ -135,20 +139,6 @@ const CreateBlock = (props) => {
   };
 
   return (
-    // <Tippy
-    //   interactive={true}
-    //   interactiveBorder={20}
-    //   arrow={false}
-    //   placement="bottom-end"
-    //   delay={100}
-    //   content={
-
-    //   }
-    //   visible={visible}
-    //   onClickOutside={hide}>
-
-    // </Tippy>
-
     <Popover
       position="bottom"
       modifiers={{
@@ -158,25 +148,47 @@ const CreateBlock = (props) => {
         padding: 15
       }}>
       <ActionButton />
-      <section>
-        <p className="section__title">Create a new block</p>
+      <section style={{ padding: 15, width: 280, paddingTop: 25 }}>
+        <p style={{ marginBottom: 15 }}>
+          <strong>Create a new block</strong>
+        </p>
         <div {...getRootProps()} onClick={replaceWithTextbox}>
           {createState === 'text' ? (
-            <TextArea
-              onSubmit={() => onSubmit}
-              fill={true}
-              placeholder="Type here in Markdown…"
+            <div
               style={{
-                height: 200
-              }}
-              autoFocus
-            />
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+              <TextArea
+                fill={true}
+                placeholder="Type here in Markdown…"
+                style={{
+                  height: 250,
+                  resize: 'none',
+                  marginBottom: 15
+                }}
+                autoFocus
+                ref={inputElement}
+              />
+              <div
+                style={{
+                  display: 'flex',
+                  flex: 0,
+                  justifyContent: 'space-between'
+                }}>
+                <Button>Cancel</Button>
+                <Button intent={Intent.PRIMARY} icon={IconNames.ADD} onClick={onSubmit}>
+                  Create Block
+                </Button>
+              </div>
+            </div>
           ) : (
             <>
               <input {...getInputProps()} />
               <div
                 style={{
-                  height: 200,
+                  height: 250,
+                  width: 250,
                   display: 'flex',
                   alignItems: 'center',
                   textAlign: 'center',
@@ -187,7 +199,7 @@ const CreateBlock = (props) => {
                 {isDragActive ? (
                   <p>Drop the files here ...</p>
                 ) : (
-                  <p>Drag 'n' drop some files here, or click to select files</p>
+                  <p>Drag a file here, or click to write some text.</p>
                 )}
               </div>
             </>
