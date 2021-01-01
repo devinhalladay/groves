@@ -134,7 +134,7 @@ html {
   font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
   font-size: 16px;
   color: $pt-text-color;
-  background-color: #f8f8f8;
+  background-color: $light-gray3;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -1337,12 +1337,10 @@ button,
     align-items: center;
   }
 
-  button {
-    &.action {
+  * {
       &:not(:last-child) {
         margin-right: 8px;
       }
-    }
   }
 }
 

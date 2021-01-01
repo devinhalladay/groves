@@ -16,7 +16,7 @@ import { useDropzone } from 'react-dropzone';
 import createBlock from '~/src/components/Block/mutations/createBlock'
 import { useMutation } from '@apollo/client';
 import { ToastContainer } from 'react-toastify';
-import Grid from '~/src/components/Formations/components/Grid';
+import Grid from '@components/Formations/components/Grid';
 
 const Grove = (props) => {
   const router = useRouter();
@@ -131,6 +131,7 @@ const Grove = (props) => {
       return (
         <Layout {...props}>
           <GrovesCanvas {...props}>
+          <div className="canvas-container">
             {canvasBlocks.length ? (
               canvasBlocks.map((blokk, i) => (
                 <>
@@ -165,6 +166,7 @@ const Grove = (props) => {
                 />
               </>
             ))}
+            </div>
           </GrovesCanvas>
         </Layout>
       );
@@ -178,7 +180,7 @@ const Grove = (props) => {
   };
 
   return (
-    <>
+    <div>
       <ToastContainer
         position="bottom-center"
         autoClose={2000}
@@ -192,7 +194,7 @@ const Grove = (props) => {
       />
 
       {renderFormation(formation)}
-    </>
+    </div>
   );
 };
 

@@ -238,11 +238,13 @@ const SelectionPanel = React.memo((props) => {
   });
 
   const createNewTagFromQuery = (query) => {
-    return createChannel({
-      variables: {
-        title: query.toString()
-      }
-    });
+    if (query !== '') {
+      return createChannel({
+        variables: {
+          title: query.toString()
+        }
+      });
+    }
   };
 
   const createNewTagRenderer = (query, active, handleClick) => (

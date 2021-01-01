@@ -31,14 +31,14 @@ const CreateBlock = (props) => {
   const router = useRouter();
 
   const ActionButton = forwardRef((props, ref) => (
-    <div>
+
       <Button ref={ref} className="action" onClick={visible ? hide : show}>
         <ActionIcon
           fill={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
           stroke={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
         />
       </Button>
-    </div>
+
   ));
 
   // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
