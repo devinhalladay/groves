@@ -102,36 +102,36 @@ const grovePageFragments = {
   `
 };
 
-export const ADD_BLOCK = gql`
-  mutation ConnectBlock($channelId: ID!, $value: String!) {
-    create_block(
-      input: {
-        clientMutationId: "groves"
-        channel_ids: [$channelId]
-        value: $value
-        description: "Added by groves"
-      }
-    ) {
-      clientMutationId
-      ... on CreateBlockPayload {
-        blokk {
-          ... on Text {
-            content
-            id
-          }
-          ... on Image {
-            id
-            image_url
-          }
-          ... on PendingBlock {
-            remote_source_url
-            id
-          }
-        }
-      }
-    }
-  }
-`;
+// export const ADD_BLOCK = gql`
+//   mutation ConnectBlock($channelId: ID!, $value: String!) {
+//     create_block(
+//       input: {
+//         clientMutationId: "groves"
+//         channel_ids: [$channelId]
+//         value: $value
+//         description: "Added by groves"
+//       }
+//     ) {
+//       clientMutationId
+//       ... on CreateBlockPayload {
+//         blokk {
+//           ... on Text {
+//             content
+//             id
+//           }
+//           ... on Image {
+//             id
+//             image_url
+//           }
+//           ... on PendingBlock {
+//             remote_source_url
+//             id
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
 
 export const UPDATE_CHANNEL = gql`
   mutation updateChannelMutation($id: ID!, $title: String, $description: String) {
@@ -214,7 +214,6 @@ export const REMOVE_CONNECTION = gql`
     }
   }
 `;
-
 
 export const CREATE_CHANNEL = gql`
   mutation createChannelMutation($title: String!) {

@@ -56,7 +56,7 @@ const Layout = (props) => {
   const onZoomEnd = (e) => {
     if (panZoomRef.current) {
       // setZoomScale(panZoomRef.current.scale);
-      setZoomScale(localZoomScale);
+      setZoomScale(panZoomRef.current.scale);
     }
   };
 
@@ -153,9 +153,9 @@ const Layout = (props) => {
         ref={panZoomRef}
         preventPan={preventPan}
         className="canvas"
-        onZoom={onZoom}
+        // onZoom={onZoom}
         onZoomEnd={onZoomEnd}
-        panZoomRef={panZoomRef}
+        // panZoomRef={panZoomRef}
         scale={zoomScale}
         minZoom={0.4}
         style={{

@@ -14,8 +14,8 @@ import {
   REMOVE_CONNECTION,
   UPDATE_CHANNEL,
   UPDATE_CONNECTION
-} from '~/src/mutations';
-import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/queries';
+} from '~/src/graphql/mutations';
+import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/graphql/queries';
 
 const SelectionPanel = React.memo((props) => {
   const router = useRouter();

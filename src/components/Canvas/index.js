@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useWorkspace } from '@context/workspace-context';
-import withApollo from '~/src/lib/withApollo';
+import withApollo from '~/src/hooks/withApollo';
 
 export default withApollo((props) => {
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();

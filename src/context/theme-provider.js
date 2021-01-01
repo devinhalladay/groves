@@ -6,9 +6,7 @@ const ThemeProvider = (props) => {
   const [theme, setTheme] = useState('light');
 
   return (
-    <ThemeContext.Provider
-      value={{ theme, setTheme }}
-      {...props}>
+    <ThemeContext.Provider value={{ theme, setTheme }} {...props}>
       <div className={`theme-container bp3-${theme}`}>{props.children}</div>
     </ThemeContext.Provider>
   );

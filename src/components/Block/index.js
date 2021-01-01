@@ -33,6 +33,8 @@ const DraggableBlock = ({
 }) => {
   let description;
 
+  let { staticBlock } = props;
+
   const { workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale } = useWorkspace();
 
   if (block.description && block.description.includes('"x":')) {
@@ -165,9 +167,11 @@ const DraggableBlock = ({
 
       handleDragMetric();
     } else {
-      setSelectedConnection({
-        ...block
-      });
+      if (!staticBlock) {
+        setSelectedConnection({
+          ...block
+        });
+      }
     }
   };
 
@@ -273,7 +277,9 @@ const DraggableBlock = ({
       style={{
         zIndex: spatialState.zIndex
       }}>
-          <Card interactive={true} className={`draggable-block-container ${block.__typename ? block.__typename : ''} ${
+      <Card
+        interactive={true}
+        className={`draggable-block-container ${block.__typename ? block.__typename : ''} ${
           selectedConnection && selectedConnection.id
             ? block.id === selectedConnection.id
               ? 'selected'
@@ -285,37 +291,36 @@ const DraggableBlock = ({
         {spatialState.isExpanded ? (
           renderChannelInline()
         ) : (
-            <div className={`block block--${block.__typename.toLowerCase()}`}>
-              {block.__typename === 'Channel' && (
-                <button className="icon-button" onClick={expandChannelInline}>
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M8 13L12.9995 13V8"
-                      stroke="#BDC3CA"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M7.99951 3L3 3L3 8.00001"
-                      stroke="#BDC3CA"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              )}
-              <BlockRepresentation block={block} />
-            </div>
+          <div className={`block block--${block.__typename.toLowerCase()}`}>
+            {block.__typename === 'Channel' && (
+              <button className="icon-button" onClick={expandChannelInline}>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M8 13L12.9995 13V8"
+                    stroke="#BDC3CA"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M7.99951 3L3 3L3 8.00001"
+                    stroke="#BDC3CA"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            )}
+            <BlockRepresentation block={block} />
+          </div>
         )}
-          </Card>
-
+      </Card>
     </Rnd>
   );
 };

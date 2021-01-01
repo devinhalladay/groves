@@ -2,10 +2,10 @@ import Tippy from '@tippyjs/react';
 import { useState, useRef, useEffect, forwardRef } from 'react';
 import { useCombobox } from 'downshift';
 import { useLazyQuery, useMutation } from '@apollo/client';
-import { SEARCH_ALL_CHANNELS } from '~/src/queries';
+import { SEARCH_ALL_CHANNELS } from '~/src/graphql/queries';
 import { useUser } from '../../../context/user-context';
 import { useRouter } from 'next/router';
-import { CREATE_CONNECTION } from '~/src/mutations';
+import { CREATE_CONNECTION } from '~/src/graphql/mutations';
 import { ToastContainer, toast } from 'react-toastify';
 import { useSelection } from '../../../context/selection-context';
 import { Button, Colors } from '@blueprintjs/core';
@@ -26,7 +26,7 @@ const renderResult = (inputItem) => {
 const ConnectTo = (props) => {
   const [visible, setVisible] = useState(false);
 
-const { theme } = useTheme();
+  const { theme } = useTheme();
   const { apollo } = props;
 
   const show = () => setVisible(true);

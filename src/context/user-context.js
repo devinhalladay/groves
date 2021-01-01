@@ -2,8 +2,8 @@ import { useQuery } from '@apollo/client';
 import React, { createContext, useContext } from 'react';
 import Loading from '~/src/components/Loader';
 import { SelectionProvider } from '@context/selection-context';
-import withApollo from '~/src/lib/withApollo';
-import { CURRENT_USER } from '~/src/queries';
+import withApollo from '~/src/hooks/withApollo';
+import { CURRENT_USER } from '~/src/graphql/queries';
 
 const UserContext = createContext();
 
@@ -22,13 +22,6 @@ export const UserProvider = withApollo((props) => {
   }
 
   const channels = currentUser.me.channels;
-  // let index = () => {
-  //   let mergedIndices;
-  //   for (const item in currentUser.me.channels_index) {
-  //     mergedIndices.push(...currentUser.me.channels_index[item].channels);
-  //   }
-  //   return mergedIndices;
-  // };
 
   let index = currentUser.me.channels_index;
 

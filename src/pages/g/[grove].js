@@ -5,14 +5,15 @@ import GrovesCanvas from '~/src/components/Canvas';
 import { parseCookies } from 'nookies';
 import Layout from '~/src/components/Layout';
 import { useState, useCallback, useEffect } from 'react';
-import withApollo from '~/src/lib/withApollo';
+import withApollo from '~/src/hooks/withApollo';
 import { gql, NetworkStatus } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import DraggableBlock from '~/src/components/Block';
 import { useWorkspace, WorkspaceContext, WorkspaceProvider } from '@context/workspace-context';
 import SelectionPanel from '~/src/components/SelectionPanel';
 import { useDropzone } from 'react-dropzone';
-import { ADD_BLOCK } from '~/src/mutations';
+// import { ADD_BLOCK } from '~/src/graphql/mutations';
+import createBlock from '~/src/components/Block/mutations/createBlock'
 import { useMutation } from '@apollo/client';
 import { ToastContainer } from 'react-toastify';
 import Grid from '~/src/components/Formations/components/Grid';
@@ -42,16 +43,19 @@ const Grove = (props) => {
 
   const [files, setFiles] = useState([]);
 
-  const [addBlock, { loading: mutationLoading, error: mutationError }] = useMutation(ADD_BLOCK, {
-    client: apollo,
-    onCompleted: (data) => {
-      console.log(data);
-      setFiles([]);
-    },
-    onError: (error) => {
-      console.log(error);
+  const [connectBlock, { loading: mutationLoading, error: mutationError }] = useMutation(
+    createBlock,
+    {
+      client: apollo,
+      onCompleted: (data) => {
+        console.log(data);
+        setFiles([]);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
     }
-  });
+  );
 
   // const onDrop = useCallback((acceptedFiles) => {
   //   acceptedFiles.map(async (file) => {
@@ -95,7 +99,7 @@ const Grove = (props) => {
   //       }).then((res) => {
   //         console.log(res);
 
-  //         addBlock({
+  //         connectBlock({
   //           variables: {
   //             channelId: router.query.grove,
   //             value: url,
@@ -127,7 +131,7 @@ const Grove = (props) => {
       return (
         <Layout {...props}>
           <GrovesCanvas {...props}>
-            {canvasBlocks.length ?
+            {canvasBlocks.length ? (
               canvasBlocks.map((blokk, i) => (
                 <>
                   <DraggableBlock
@@ -142,9 +146,10 @@ const Grove = (props) => {
                     {...props}
                   />
                 </>
-              )) : (
-                <div>not found</div>
-              )}
+              ))
+            ) : (
+              <div>not found</div>
+            )}
 
             {files.map((file) => (
               <>
