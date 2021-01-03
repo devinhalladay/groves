@@ -1433,47 +1433,6 @@ button,
   position: relative;
 }
 
-.bp3-dark {
-  background-color: $black;
-  .panel {
-    background-color: $pt-dark-app-background-color;
-  }
-
-  .bp3-editable-text-content,
-  .bp3-editable-text-input {
-    color: $pt-dark-text-color !important;
-  }
-
-  .grove-navigation input {
-    background-color: $dark-gray4;
-    color: $pt-dark-text-color;
-  }
-
-  .selection-panel {
-    border: 1px solid $dark-gray1;
-
-    > .header {
-      background: $dark-gray4;
-      border-bottom: 1px solid $dark-gray3;
-      .title {
-        color: $pt-dark-text-color-muted;
-      }
-    }
-
-    .contents {
-      .section {
-        &__title {
-          color: $pt-dark-text-color;
-          border-bottom: 1px solid $dark-gray2;
-        }
-
-        p:not(:first-child) {
-          color: $pt-dark-text-color-muted;
-        }
-      }
-    }
-  }
-}
 
 .theme-container {
   position: absolute;
@@ -1515,4 +1474,64 @@ button,
 .formation.formation--channelIndex .workspace {
   /* align-items: ; */
   flex: 1;
+}
+
+.bp3-control input {
+  box-sizing: border-box;
+}
+
+.bp3-control input ~ .bp3-card {
+    // background-color: $dark-gray2;
+    box-sizing: border-box;
+    // transition: 0.2s border;
+    // background-color: $pt-app-background-color;
+    // color: $pt-text-color;
+}
+
+.bp3-control input:checked ~ .bp3-card {
+    border: 2px solid $blue4;
+    border-radius: 4px;
+    margin: -2px;
+}
+
+.bp3-dark {
+  background-color: $black;
+  .panel {
+    background-color: $pt-dark-app-background-color;
+  }
+
+  .bp3-editable-text-content,
+  .bp3-editable-text-input {
+    color: $pt-dark-text-color !important;
+  }
+
+  .grove-navigation input {
+    background-color: $dark-gray4;
+    color: $pt-dark-text-color;
+  }
+
+  .selection-panel {
+    border: 1px solid $dark-gray1;
+
+    > .header {
+      background: $dark-gray4;
+      border-bottom: 1px solid $dark-gray3;
+      .title {
+        color: $pt-dark-text-color-muted;
+      }
+    }
+
+    .contents {
+      .section {
+        &__title {
+          color: $pt-dark-text-color;
+          border-bottom: 1px solid $dark-gray2;
+        }
+
+        p:not(:first-child) {
+          color: $pt-dark-text-color-muted;
+        }
+      }
+    }
+  }
 }

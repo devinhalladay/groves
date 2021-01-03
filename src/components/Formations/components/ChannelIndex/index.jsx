@@ -51,33 +51,33 @@ const ChannelIndex = (props) => {
           {currentList.map((channel, i) => {
             return (
               <li key={channel.id}>
-                <Card
-                  onClick={(e) => {
-                    if (e.shiftKey) {
-                      handleMultiSelect(channel, i);
-                    }
-                  }}
+                <Checkbox
+                  checked={selection.findIndex((c) => c.id === channel.id) > -1}
                   style={{
                     display: 'flex',
-                    alignItems: 'center'
-                  }}>
-                  <Checkbox
-                    checked={selection.findIndex((c) => c.id === channel.id) > -1}
-                    style={{
-                      flex: '60%',
-                      textOverflow: 'ellipsis',
-                      display: 'flex',
-                      alignItems: 'center',
-                      marginBottom: 0
+                    alignItems: 'center',
+                    marginBottom: 0,
+                    flex: 1
+                  }}
+                  // onChange={(e) => {
+                  //   console.log(e);
+                  //   if (e.shiftKey) {
+                  //     console.log(e);
+                  //     handleChannelCheckbox(e, channel);
+                  //   }
+                  // }}
+                  onChange={(e) => handleChannelCheckbox(e, channel)}>
+                  <Card
+                    onClick={(e) => {
+                      if (e.shiftKey) {
+                        handleMultiSelect(channel, i);
+                      }
                     }}
-                    // onChange={(e) => {
-                    //   console.log(e);
-                    //   if (e.shiftKey) {
-                    //     console.log(e);
-                    //     handleChannelCheckbox(e, channel);
-                    //   }
-                    // }}
-                    onChange={(e) => handleChannelCheckbox(e, channel)}>
+                    style={{
+                      display: 'flex',
+                      flex: 1,
+                      alignItems: 'center'
+                    }}>
                     <div
                       style={{
                         display: 'flex',
@@ -86,7 +86,9 @@ const ChannelIndex = (props) => {
                       <p
                         style={{
                           textOverflow: 'ellipsis',
-                          marginBottom: 5
+                          marginBottom: 5,
+                          flex: '60%',
+                          fontWeight: 'bold'
                         }}>
                         {channel.title}
                       </p>
@@ -99,18 +101,21 @@ const ChannelIndex = (props) => {
                         {channel.counts.contents} blocks
                       </small>
                     </div>
-                  </Checkbox>
-                  <div
-                    className="channel-actions"
-                    style={{
-                      flex: '40%',
-                      display: 'inline-flex',
-                      alignSelf: 'flex-end',
-                      justifyContent: 'flex-end'
-                    }}>
-                    <Button icon={IconNames.TRASH} onClick={() => handleDeleteChannels(channel)} />
-                  </div>
-                </Card>
+                    <div
+                      className="channel-actions"
+                      style={{
+                        flex: '40%',
+                        display: 'inline-flex',
+                        alignSelf: 'flex-end',
+                        justifyContent: 'flex-end'
+                      }}>
+                      <Button
+                        icon={IconNames.TRASH}
+                        onClick={() => handleDeleteChannels(channel)}
+                      />
+                    </div>
+                  </Card>
+                </Checkbox>
               </li>
             );
           })}
