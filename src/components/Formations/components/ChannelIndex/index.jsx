@@ -12,12 +12,18 @@ const ChannelIndex = (props) => {
   // const { selection, setSelection } = useSelection();
   const [selection, setSelection] = useState([]);
 
-  const handleChannelCheckbox = (channel) => {
+  let currentList = flatIndex;
+
+  const handleChannelCheckbox = (e, channel) => {
+    if (e) {
+      console.log(e.nativeEvent.shiftKey);
+    }
     if (selection.includes(channel)) {
       const channels = selection.filter((c) => c.id !== channel.id);
+      // const idx = selection.findIndex(c => c.id !== channel.id)
       setSelection(channels);
     } else {
-      setSelection(selection.concat(channel));
+      setSelection([...selection, channel]);
     }
   };
 
@@ -27,6 +33,7 @@ const ChannelIndex = (props) => {
       deleteChannel(c, (data) => {
         toast(`Deleted block ${channel.title} (ID ${channel.id})`);
       });
+      currentList = currentList.filter((chan) => chan.id !== channel.id);
     });
   };
 
@@ -50,7 +57,15 @@ const ChannelIndex = (props) => {
                       alignItems: 'center',
                       marginBottom: 0
                     }}
-                    onClick={() => handleChannelCheckbox(channel)}>
+                    onChange={(e) => {
+                      console.log(e);
+                      if (e.nativeEvent.shiftKey) {
+                        console.log(e);
+                        handleChannelCheckbox(e, channel);
+                      }
+                    }}
+                    // onChange={() => handleChannelCheckbox(null, channel)}
+                  >
                     <p
                       style={{
                         textOverflow: 'ellipsis'
