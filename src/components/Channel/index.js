@@ -1,6 +1,7 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { CREATE_CHANNEL, DELETE_CHANNEL, UPDATE_CHANNEL } from '~/src/graphql/mutations';
 import React from 'react';
+import getSkeleton from './queries/getSkeleton';
 
 const withChannel = (props) => (WrappedComponent) => () => {
   // const { apollo } = props;
@@ -93,6 +94,7 @@ const withChannel = (props) => (WrappedComponent) => () => {
       createChannel={createChannel}
       updateChannel={updateChannel}
       deleteChannel={deleteChannel}
+      // getChannelSkeleton={getChannelSkeleton}
       {...props}
     />
   );
