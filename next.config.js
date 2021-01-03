@@ -10,7 +10,7 @@ module.exports = {
     AUTHENTICATION_ENABLED: process.env.NODE_ENV === 'production' ? false : true
   },
 
-  webpack: (config, options) => {
+  webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,
       use: [
