@@ -19,7 +19,7 @@ const withChannel = (props) => (WrappedComponent) => () => {
   });
 
   const createChannel = async (channel, onSuccess, onError) => {
-    await crPfoeateChannelMutation({
+    await createChannelMutation({
       variables: {
         title: channel.title
       }

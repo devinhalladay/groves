@@ -11,17 +11,12 @@ const ChannelIndex = (props) => {
   const { flatIndex } = useUser();
   // const { selection, setSelection } = useSelection();
   const [selection, setSelection] = useState([]);
-
-  let currentList = flatIndex;
+  const [currentList, setCurrentList] = useState(flatIndex);
 
   const handleChannelCheckbox = (e, channel) => {
-    if (e) {
-      console.log(e.nativeEvent.shiftKey);
-    }
-    if (selection.includes(channel)) {
-      const channels = selection.filter((c) => c.id !== channel.id);
-      // const idx = selection.findIndex(c => c.id !== channel.id)
-      setSelection(channels);
+    if (selection.length && selection.findIndex((c) => c.id === channel.id) !== -1) {
+      const newChannels = selection.filter((c) => c.id !== channel.id);
+      setSelection(newChannels);
     } else {
       setSelection([...selection, channel]);
     }
@@ -31,25 +26,43 @@ const ChannelIndex = (props) => {
     selection.forEach((c) => {
       console.log(c);
       deleteChannel(c, (data) => {
-        toast(`Deleted block ${channel.title} (ID ${channel.id})`);
+        toast(`Deleted channel ID ${c.id}`);
+        const newList = currentList.filter((chan) => chan.id !== c.id);
+        setCurrentList(newList);
       });
-      currentList = currentList.filter((chan) => chan.id !== channel.id);
     });
+    setSelection([]);
+  };
+
+  const handleMultiSelect = (channel, i) => {
+    const start = flatIndex.findIndex((c) => c.id === selection[selection.length - 1].id);
+    // console.log(start);
+    const end = i + 1;
+    // console.log(end);
+    const intermediateItems = currentList.slice(start, end);
+    // console.log(intermediateItems);
+    setSelection([...selection, ...intermediateItems]);
   };
 
   return (
     <div className="formation formation--channelIndex">
       <div className="workspace">
         <ul>
-          {flatIndex.map((channel) => {
+          {currentList.map((channel, i) => {
             return (
               <li key={channel.id}>
                 <Card
+                  onClick={(e) => {
+                    if (e.shiftKey) {
+                      handleMultiSelect(channel, i);
+                    }
+                  }}
                   style={{
                     display: 'flex',
                     alignItems: 'center'
                   }}>
                   <Checkbox
+                    checked={selection.findIndex((c) => c.id === channel.id) > -1}
                     style={{
                       flex: '60%',
                       textOverflow: 'ellipsis',
@@ -57,21 +70,35 @@ const ChannelIndex = (props) => {
                       alignItems: 'center',
                       marginBottom: 0
                     }}
-                    onChange={(e) => {
-                      console.log(e);
-                      if (e.nativeEvent.shiftKey) {
-                        console.log(e);
-                        handleChannelCheckbox(e, channel);
-                      }
-                    }}
-                    // onChange={() => handleChannelCheckbox(null, channel)}
-                  >
-                    <p
+                    // onChange={(e) => {
+                    //   console.log(e);
+                    //   if (e.shiftKey) {
+                    //     console.log(e);
+                    //     handleChannelCheckbox(e, channel);
+                    //   }
+                    // }}
+                    onChange={(e) => handleChannelCheckbox(e, channel)}>
+                    <div
                       style={{
-                        textOverflow: 'ellipsis'
+                        display: 'flex',
+                        flexDirection: 'column'
                       }}>
-                      {channel.title}
-                    </p>
+                      <p
+                        style={{
+                          textOverflow: 'ellipsis',
+                          marginBottom: 5
+                        }}>
+                        {channel.title}
+                      </p>
+                      <small
+                        className="metadata"
+                        style={{
+                          fontSize: '14px',
+                          color: 'darkgray'
+                        }}>
+                        {channel.counts.contents} blocks
+                      </small>
+                    </div>
                   </Checkbox>
                   <div
                     className="channel-actions"
