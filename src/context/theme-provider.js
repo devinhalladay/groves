@@ -1,9 +1,14 @@
-import React, { useContext, createContext, useState } from 'react';
+import React, { useContext, createContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext();
 
 const ThemeProvider = (props) => {
-  const [theme, setTheme] = useState('light');
+  let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
+  const [theme, setTheme] = useState(isDarkMode ? 'dark' : 'light');
+
+  useEffect(() => {
+    isDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }} {...props}>
