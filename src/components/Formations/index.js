@@ -36,9 +36,13 @@ export default function GroveFormations() {
             {
               label: 'Grid',
               value: 'grid'
+            },
+            {
+              label: 'Channel Index',
+              value: 'channelIndex'
             }
           ]}
-          defaultValue="grid"
+          defaultValue="channelIndex"
         />
       </ControlGroup>
     </div>

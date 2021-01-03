@@ -4,7 +4,7 @@ import withApollo from '~/src/hooks/withApollo';
 import { PanZoom } from 'react-easy-panzoom';
 import { useSelection } from '~/src/context/selection-context';
 import Slider from 'rc-slider';
-import ZoomInIcon from '~/public/zoom-in.svg'
+import ZoomInIcon from '~/public/zoom-in.svg';
 import SelectionPanel from '../SelectionPanel';
 
 export default withApollo((props) => {

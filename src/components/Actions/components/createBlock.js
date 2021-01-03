@@ -32,14 +32,12 @@ const CreateBlock = (props) => {
   const router = useRouter();
 
   const ActionButton = forwardRef((props, ref) => (
-
-      <Button ref={ref} className="action" onClick={visible ? hide : show}>
-        <ActionIcon
-          fill={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
-          stroke={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
-        />
-      </Button>
-
+    <Button ref={ref} className="action" onClick={visible ? hide : show}>
+      <ActionIcon
+        fill={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
+        stroke={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
+      />
+    </Button>
   ));
 
   // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -99,8 +97,7 @@ const CreateBlock = (props) => {
     });
   }, []);
 
-
-const inputElement = useRef(null);
+  const inputElement = useRef(null);
   const onSubmit = (value) => {
     console.log(inputElement.current);
     newBlock({
@@ -115,8 +112,6 @@ const inputElement = useRef(null);
     onDrop,
     noClick: true
   });
-
-
 
   const [createState, setCreateState] = useState('omni');
 

@@ -4,7 +4,7 @@ const WorkspaceContext = createContext();
 
 const WorkspaceProvider = (props) => {
   const [workspaceOptions, setWorkspaceOptions] = useState({
-    formation: 'grid'
+    formation: 'channelIndex'
   });
 
   const [zoomScale, setZoomScale] = useState(1);

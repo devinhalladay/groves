@@ -13,10 +13,11 @@ import { useWorkspace, WorkspaceContext, WorkspaceProvider } from '@context/work
 import SelectionPanel from '~/src/components/SelectionPanel';
 import { useDropzone } from 'react-dropzone';
 // import { ADD_BLOCK } from '~/src/graphql/mutations';
-import createBlock from '~/src/components/Block/mutations/createBlock'
+import createBlock from '~/src/components/Block/mutations/createBlock';
 import { useMutation } from '@apollo/client';
 import { ToastContainer } from 'react-toastify';
 import Grid from '@components/Formations/components/Grid';
+import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
 
 const Grove = (props) => {
   const router = useRouter();
@@ -131,41 +132,41 @@ const Grove = (props) => {
       return (
         <Layout {...props}>
           <GrovesCanvas {...props}>
-          <div className="canvas-container">
-            {canvasBlocks.length ? (
-              canvasBlocks.map((blokk, i) => (
+            <div className="canvas-container">
+              {canvasBlocks.length ? (
+                canvasBlocks.map((blokk, i) => (
+                  <>
+                    <DraggableBlock
+                      title={blokk.title ? blokk.title : null}
+                      type={blokk.__typename}
+                      dragStates={dragStates}
+                      setDragStates={setDragStates}
+                      panZoomRef={props.panZoomRef}
+                      key={blokk.id}
+                      block={blokk}
+                      bounds="window"
+                      {...props}
+                    />
+                  </>
+                ))
+              ) : (
+                <div>not found</div>
+              )}
+
+              {files.map((file) => (
                 <>
                   <DraggableBlock
-                    title={blokk.title ? blokk.title : null}
-                    type={blokk.__typename}
+                    title={file.block.title}
+                    type={file.block.__typename}
                     dragStates={dragStates}
                     setDragStates={setDragStates}
-                    panZoomRef={props.panZoomRef}
-                    key={blokk.id}
-                    block={blokk}
+                    key={file.block.id}
+                    block={file.block}
                     bounds="window"
                     {...props}
                   />
                 </>
-              ))
-            ) : (
-              <div>not found</div>
-            )}
-
-            {files.map((file) => (
-              <>
-                <DraggableBlock
-                  title={file.block.title}
-                  type={file.block.__typename}
-                  dragStates={dragStates}
-                  setDragStates={setDragStates}
-                  key={file.block.id}
-                  block={file.block}
-                  bounds="window"
-                  {...props}
-                />
-              </>
-            ))}
+              ))}
             </div>
           </GrovesCanvas>
         </Layout>
@@ -176,7 +177,11 @@ const Grove = (props) => {
       } else {
         return <Grid blocks={initialSelection.channel.initial_contents} />;
       }
+    } else if (formation === 'channelIndex') {
+      return <ChannelIndex />;
     }
+
+    return 'test';
   };
 
   return (

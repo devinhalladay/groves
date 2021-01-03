@@ -6,7 +6,7 @@ import { useSelection } from '@context/selection-context';
 import { useWorkspace } from '@context/workspace-context';
 
 const Layout = (props) => {
-  return props.children
+  return props.children;
 };
 
 export const Container = (props) => {

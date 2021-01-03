@@ -11,7 +11,7 @@ import { SelectionProvider } from '@context/selection-context';
 import { ThemeProvider } from '@context/theme-provider';
 import { ToastContainer } from 'react-toastify';
 import { WorkspaceProvider } from '@context/workspace-context';
-import Canvas from "@components/Canvas";
+import Canvas from '@components/Canvas';
 
 const GET_LANDING_BLOCKS = gql`
   {

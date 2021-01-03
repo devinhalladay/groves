@@ -25,8 +25,10 @@ export const UserProvider = withApollo((props) => {
 
   let index = currentUser.me.channels_index;
 
+  let flatIndex = index.flatMap((channelSet) => channelSet.channels.flatMap((c) => c));
+
   return (
-    <UserContext.Provider value={{ currentUser, channels, index }} {...props}>
+    <UserContext.Provider value={{ currentUser, channels, index, flatIndex }} {...props}>
       <SelectionProvider>{props.children}</SelectionProvider>
     </UserContext.Provider>
   );

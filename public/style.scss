@@ -1488,3 +1488,31 @@ button,
   padding: 0;
   // padding-top: 100%;
 }
+
+/* Inline #7 | https://localhost:8000/g/922086 */
+
+.formation.formation--channelIndex ul {
+  max-width: 60vw;
+}
+
+.formation.formation--channelIndex .workspace {
+  /* align-items: flex-start; */
+  display: flex;
+
+  justify-content: center;
+  padding-top: 6rem;
+}
+
+.formation.formation--channelIndex ul li {
+  margin-bottom: 0.75rem;
+}
+
+.formation.formation--channelIndex ul {
+  /* max-width: 60vw; */
+  width: 50vw;
+}
+
+.formation.formation--channelIndex .workspace {
+  /* align-items: ; */
+  flex: 1;
+}

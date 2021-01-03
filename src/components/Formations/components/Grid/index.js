@@ -9,7 +9,12 @@ import SelectionPanel from '~/src/components/SelectionPanel';
 const Grid = (props) => {
   const { blocks } = props;
 
-  const { selectedConnection, setSelectedConnection, canvasBlocks, setCanvasBlocks } = useSelection();
+  const {
+    selectedConnection,
+    setSelectedConnection,
+    canvasBlocks,
+    setCanvasBlocks
+  } = useSelection();
 
   const handleBlockClick = (event, block) => {
     if (canvasBlocks.some((b) => b.id === block.id)) {

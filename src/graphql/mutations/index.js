@@ -142,6 +142,14 @@ export const UPDATE_CHANNEL = gql`
   ${grovePageFragments.channelContentsConnectable}
 `;
 
+export const DELETE_CHANNEL = gql`
+  mutation deleteChannelMutation($id: ID!) {
+    delete_channel(input: { id: $id }) {
+      status
+    }
+  }
+`;
+
 export const UPDATE_CONNECTION = gql`
   mutation updateConnectionMutation(
     $connectable_id: ID!
