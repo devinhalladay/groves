@@ -6,6 +6,7 @@ import { GET_SKELETON } from '@components/Channel/queries/getSkeleton';
 import React, { useEffect, useState } from 'react';
 import { useSelection } from '~/src/context/selection-context';
 import { CREATE_CONNECTION } from '~/src/graphql/mutations';
+import { toast } from 'react-toastify';
 
 const ChannelMenuItem = (props) => {
   const { selection, active, onClick } = props;
@@ -23,6 +24,8 @@ const ChannelMenuItem = (props) => {
 
 const MergeChannelsAction = (props) => {
   const { selections, setSelections } = useSelection();
+
+  const { deleteChannel } = props;
 
   const [destination, setDestination] = useState(selections[0]);
 
@@ -73,7 +76,7 @@ const MergeChannelsAction = (props) => {
     }
   }, [selections, destination]);
 
-  const handleMerge = () => {
+  const handleSafeMerge = () => {
     mergeList.forEach((connectable) => {
       connectTo({
         variables: {
@@ -83,6 +86,25 @@ const MergeChannelsAction = (props) => {
         }
       });
     });
+  };
+
+  const handleDangerousMerge = () => {
+    mergeList.forEach((connectable) => {
+      connectTo({
+        variables: {
+          connectable_id: connectable.id,
+          connectable_type: connectable.type.toUpperCase(),
+          channel_ids: destination.id
+        }
+      });
+    });
+
+    selections
+      .filter((channel) => channel.id !== destination.id)
+      .forEach((channel) => {
+        // deleteChannel(channel.id);
+        toast(`Deleted channel "${channel.title}"`);
+      });
   };
 
   if (selections.length > 1) {
@@ -135,14 +157,23 @@ const MergeChannelsAction = (props) => {
               </Menu>
             </Popover>
           </ControlGroup>
-          <Button
-            large={true}
-            fill={true}
-            leftIcon="caret-down"
-            intent="primary"
-            onClick={handleMerge}>
-            Merge channels
-          </Button>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button
+              large={true}
+              icon={IconNames.REMOVE}
+              intent="danger"
+              onClick={handleDangerousMerge}>
+              Merge and delete
+            </Button>
+
+            <Button
+              large={true}
+              icon={IconNames.GIT_MERGE}
+              intent="primary"
+              onClick={handleSafeMerge}>
+              Safe merge
+            </Button>
+          </div>
         </section>
       </Popover>
     );
