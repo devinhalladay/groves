@@ -5,6 +5,7 @@ import Panel from '~/src/components/Panel';
 import CreateBlock from './components/createBlock';
 import DarkModeAction from './components/darkMode';
 import GroveFormations from '../Formations';
+import MergeChannelsAction from './components/mergeChannels';
 
 export default function GroveActions() {
   return (
@@ -15,6 +16,7 @@ export default function GroveActions() {
         <ConnectTo />
         <CreateGroveAction />
         <DarkModeAction />
+        <MergeChannelsAction />
       </div>
     </Panel>
   );

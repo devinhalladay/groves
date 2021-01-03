@@ -9,21 +9,21 @@ import { useUser } from '~/src/context/user-context';
 const ChannelIndex = (props) => {
   const { deleteChannel } = props;
   const { flatIndex } = useUser();
-  // const { selection, setSelection } = useSelection();
-  const [selection, setSelection] = useState([]);
+  // const { selection, setSelections } = useSelection();
+  const { selections, setSelections } = useSelection();
   const [currentList, setCurrentList] = useState(flatIndex);
 
   const handleChannelCheckbox = (e, channel) => {
-    if (selection.length && selection.findIndex((c) => c.id === channel.id) !== -1) {
-      const newChannels = selection.filter((c) => c.id !== channel.id);
-      setSelection(newChannels);
+    if (selections.length && selections.findIndex((c) => c.id === channel.id) !== -1) {
+      const newChannels = selections.filter((c) => c.id !== channel.id);
+      setSelections(newChannels);
     } else {
-      setSelection([...selection, channel]);
+      setSelections([...selections, channel]);
     }
   };
 
   const handleDeleteChannels = (channel) => {
-    selection.forEach((c) => {
+    selections.forEach((c) => {
       console.log(c);
       deleteChannel(c, (data) => {
         toast(`Deleted channel ID ${c.id}`);
@@ -31,17 +31,17 @@ const ChannelIndex = (props) => {
         setCurrentList(newList);
       });
     });
-    setSelection([]);
+    setSelections([]);
   };
 
   const handleMultiSelect = (channel, i) => {
-    const start = flatIndex.findIndex((c) => c.id === selection[selection.length - 1].id);
+    const start = flatIndex.findIndex((c) => c.id === selections[selections.length - 1].id);
     // console.log(start);
     const end = i + 1;
     // console.log(end);
     const intermediateItems = currentList.slice(start, end);
     // console.log(intermediateItems);
-    setSelection([...selection, ...intermediateItems]);
+    setSelections([...selections, ...intermediateItems]);
   };
 
   return (
@@ -52,7 +52,7 @@ const ChannelIndex = (props) => {
             return (
               <li key={channel.id}>
                 <Checkbox
-                  checked={selection.findIndex((c) => c.id === channel.id) > -1}
+                  checked={selections.findIndex((c) => c.id === channel.id) > -1}
                   style={{
                     display: 'flex',
                     alignItems: 'center',

@@ -1494,8 +1494,17 @@ button,
     margin: -2px;
 }
 
+.merge-input-disabled .bp3-input[type="text"] {
+  color: $dark-gray4 !important;
+}
+
 .bp3-dark {
   background-color: $black;
+
+  .merge-input-disabled .bp3-input[type="text"] {
+  color: $gray4 !important;
+}
+
   .panel {
     background-color: $pt-dark-app-background-color;
   }
@@ -1504,6 +1513,7 @@ button,
   .bp3-editable-text-input {
     color: $pt-dark-text-color !important;
   }
+
 
   .grove-navigation input {
     background-color: $dark-gray4;
@@ -1535,3 +1545,4 @@ button,
     }
   }
 }
+
