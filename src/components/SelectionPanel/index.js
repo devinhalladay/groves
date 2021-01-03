@@ -201,11 +201,23 @@ const SelectionPanel = React.memo((props) => {
       });
     };
 
-    const handleTagSelect = (tag) => {
-      if (!isTagSelected(tag)) {
-        selectTag(tag);
+    const handleTagSelect = async (tag) => {
+      if (flatItems.filter((t) => t.title == tag.title).length > 0) {
+        if (!isTagSelected(tag)) {
+          selectTag(tag);
+        } else {
+          handleTagRemove(tag);
+        }
       } else {
-        handleTagRemove(tag);
+        await createChannel({
+          variables: {
+            title: tag.title
+          }
+        }).then((data) => {
+          console.log('data');
+          console.log(data.data.create_channel.channel);
+          selectTag(data.data.create_channel.channel);
+        });
       }
     };
 
@@ -240,13 +252,9 @@ const SelectionPanel = React.memo((props) => {
     });
 
     const createNewTagFromQuery = (query) => {
-      if (query !== '') {
-        return createChannel({
-          variables: {
-            title: query.toString()
-          }
-        });
-      }
+      return {
+        title: query
+      };
     };
 
     const createNewTagRenderer = (query, active, handleClick) => (
@@ -459,7 +467,8 @@ const SelectionPanel = React.memo((props) => {
           right: '15px'
         }}>
         <div className="header">
-          <p className="title">Selection</p> </div>
+          <p className="title">Selection</p>{' '}
+        </div>
         <div className="contents">
           <div className="section">
             <p className="section__title">Description</p>

@@ -36,7 +36,7 @@ module.exports = {
       plugins: ['@typescript-eslint', 'prettier']
     }
   ],
-  plugins: ['@typescript-eslint', 'react-hooks', 'prettier', 'transform-decorators-legacy'],
+  plugins: ['@typescript-eslint', 'react-hooks', 'prettier'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': ['error', {}, { usePrettierrc: true }] // Use our .prettierrc file as source
