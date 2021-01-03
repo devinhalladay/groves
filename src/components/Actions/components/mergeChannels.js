@@ -86,25 +86,38 @@ const MergeChannelsAction = (props) => {
         }
       });
     });
+    setSelections([]);
   };
 
   const handleDangerousMerge = () => {
-    mergeList.forEach((connectable) => {
-      connectTo({
-        variables: {
-          connectable_id: connectable.id,
-          connectable_type: connectable.type.toUpperCase(),
-          channel_ids: destination.id
-        }
+    if (mergeList.length) {
+      mergeList.forEach((connectable) => {
+        connectTo({
+          variables: {
+            connectable_id: connectable.id,
+            connectable_type: connectable.type.toUpperCase(),
+            channel_ids: destination.id
+          }
+        });
       });
+    }
+
+    console.log(selections);
+
+    selections.forEach((channel) => {
+      if (channel.id !== destination.id) {
+        deleteChannel({
+          variables: {
+            id: channel.id
+          }
+        });
+        deleteChannel(channel, (data) => {
+          toast(`Deleted channel "${channel.title}"`);
+        });
+      }
     });
 
-    selections
-      .filter((channel) => channel.id !== destination.id)
-      .forEach((channel) => {
-        // deleteChannel(channel.id);
-        toast(`Deleted channel "${channel.title}"`);
-      });
+    setSelections([]);
   };
 
   if (selections.length > 1) {
