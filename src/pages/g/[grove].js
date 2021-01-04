@@ -1,23 +1,19 @@
-import React, { useContext } from 'react';
-import { useRouter } from 'next/router';
+import { useMutation } from '@apollo/client';
+import Grid from '@components/Formations/components/Grid';
 import { useSelection } from '@context/selection-context';
-import GrovesCanvas from '~/src/components/Canvas';
+import { useWorkspace } from '@context/workspace-context';
+import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
-import Layout from '~/src/components/Layout';
-import { useState, useCallback, useEffect } from 'react';
-import withApollo from '~/src/hooks/withApollo';
-import { gql, NetworkStatus } from '@apollo/client';
-import { useQuery } from '@apollo/client';
+import React, { useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import DraggableBlock from '~/src/components/Block';
-import { useWorkspace, WorkspaceContext, WorkspaceProvider } from '@context/workspace-context';
-import SelectionPanel from '~/src/components/SelectionPanel';
-import { useDropzone } from 'react-dropzone';
 // import { ADD_BLOCK } from '~/src/graphql/mutations';
 import createBlock from '~/src/components/Block/mutations/createBlock';
-import { useMutation } from '@apollo/client';
-import { ToastContainer } from 'react-toastify';
-import Grid from '@components/Formations/components/Grid';
+import GrovesCanvas from '~/src/components/Canvas';
 import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
+import KeyMapDialog from '~/src/components/KeyMapDialog';
+import Layout from '~/src/components/Layout';
+import withApollo from '~/src/hooks/withApollo';
 
 const Grove = (props) => {
   const router = useRouter();
@@ -197,6 +193,7 @@ const Grove = (props) => {
       />
 
       {renderFormation(formation)}
+      <KeyMapDialog />
     </div>
   );
 };

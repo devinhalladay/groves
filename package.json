@@ -44,6 +44,7 @@
     "react-draggable": "^4.4.2",
     "react-dropzone": "^11.2.0",
     "react-easy-panzoom": "devinhalladay/react-easy-panzoom",
+    "react-hotkeys": "^2.0.0",
     "react-query": "^3.5.9",
     "react-rnd": "^10.2.0",
     "react-toastify": "^6.0.9",
