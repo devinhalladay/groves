@@ -18,6 +18,7 @@ import { useMutation } from '@apollo/client';
 import { ToastContainer } from 'react-toastify';
 import Grid from '@components/Formations/components/Grid';
 import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
+import KeyMapDialog from '~/src/components/KeyMapDialog';
 
 const Grove = (props) => {
   const router = useRouter();
@@ -197,6 +198,7 @@ const Grove = (props) => {
       />
 
       {renderFormation(formation)}
+      <KeyMapDialog />
     </div>
   );
 };

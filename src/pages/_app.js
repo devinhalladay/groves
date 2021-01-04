@@ -11,6 +11,7 @@ import Head from 'next/head';
 import { AuthenticatedHeader, UnauthenticatedHeader } from '~/src/components/Header';
 import { WorkspaceProvider } from '../context/workspace-context';
 import { ThemeProvider } from '../context/theme-provider';
+import { HotKeys } from 'react-hotkeys';
 
 const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
   useEffect(() => {
