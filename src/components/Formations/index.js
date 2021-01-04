@@ -1,50 +1,44 @@
 import React from 'react';
 import Panel from '~/src/components/Panel';
 import Grid from './components/Grid';
-import { ControlGroup, HTMLSelect } from '@blueprintjs/core';
+import { ControlGroup, HTMLSelect, MenuItem, Button } from '@blueprintjs/core';
 import { useWorkspace } from '@context/workspace-context';
+import { Select } from '@blueprintjs/select';
 
 export default function GroveFormations() {
-  const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
+  const { workspaceOptions, setWorkspaceOptions, formations } = useWorkspace();
+  const { formation } = workspaceOptions;
 
-  const handleChangeFormation = (e) => {
+  const handleChangeFormation = (f) => {
     setWorkspaceOptions({
       ...workspaceOptions,
-      formation: e.currentTarget.value
+      formation: f
     });
   };
 
+  const formationOptionRenderer = (formationOption) => {
+    const that = formations[formationOption];
+    return (
+      <MenuItem
+        icon={that.icon}
+        text={that.title}
+        active={formation === that}
+        onClick={() => handleChangeFormation(that)}
+        shouldDismissPopover={false}
+      />
+    );
+  };
+
   return (
-    <div className="grove-formations">
-      <ControlGroup
-        fill={true}
-        vertical={false}
-        style={{
-          display: 'flex',
-          alignItems: 'center'
-        }}>
-        <div className="label">
-          <span>Views</span>
-        </div>
-        <HTMLSelect
-          onChange={handleChangeFormation}
-          options={[
-            {
-              label: 'Canvas',
-              value: 'canvas'
-            },
-            {
-              label: 'Grid',
-              value: 'grid'
-            },
-            {
-              label: 'Channel Index',
-              value: 'channelIndex'
-            }
-          ]}
-          defaultValue="channelIndex"
-        />
-      </ControlGroup>
-    </div>
+    <Select
+      itemRenderer={formationOptionRenderer}
+      items={Object.keys(formations)}
+      filterable={false}>
+      <Button
+        text={workspaceOptions.formation.title}
+        rightIcon="double-caret-vertical"
+        icon={formation.icon}
+      />
+    </Select>
   );
 }

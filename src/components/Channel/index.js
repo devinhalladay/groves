@@ -10,7 +10,6 @@ const withChannel = (props) => (WrappedComponent) => () => {
     createChannelMutation,
     { loading: creatingChannel, error: errorCreatingChannel }
   ] = useMutation(CREATE_CHANNEL, {
-    // client: apollo,
     onCompleted: (data) => {
       console.log(data);
     },
@@ -20,9 +19,10 @@ const withChannel = (props) => (WrappedComponent) => () => {
   });
 
   const createChannel = async (channel, onSuccess, onError) => {
+    console.log(channel);
     await createChannelMutation({
       variables: {
-        title: channel.title
+        ...channel
       }
     })
       .then((data) => {

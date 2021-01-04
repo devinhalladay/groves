@@ -30,7 +30,7 @@ const Grove = (props) => {
 
   const { apollo } = props;
 
-  const { workspaceOptions } = useWorkspace();
+  const { workspaceOptions, formations } = useWorkspace();
   const { formation } = workspaceOptions;
 
   const {
@@ -128,7 +128,7 @@ const Grove = (props) => {
   );
 
   const renderFormation = (formation) => {
-    if (formation === 'canvas') {
+    if (formation.key === formations.CANVAS.key) {
       return (
         <Layout {...props}>
           <GrovesCanvas {...props}>
@@ -171,17 +171,15 @@ const Grove = (props) => {
           </GrovesCanvas>
         </Layout>
       );
-    } else if (formation === 'grid') {
+    } else if (formation.key === formations.GRID.key) {
       if (selectedChannel && selectedChannel.channel) {
         return <Grid blocks={selectedChannel.channel.initial_contents} />;
       } else {
         return <Grid blocks={initialSelection.channel.initial_contents} />;
       }
-    } else if (formation === 'channelIndex') {
+    } else if (formation.key === formations.CHANNEL_INDEX.key) {
       return <ChannelIndex />;
     }
-
-    return 'test';
   };
 
   return (

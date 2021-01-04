@@ -1,5 +1,13 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { EditableText, Icon, Intent, MenuItem, Tooltip } from '@blueprintjs/core';
+import {
+  AnchorButton,
+  Button,
+  EditableText,
+  Icon,
+  Intent,
+  MenuItem,
+  Tooltip
+} from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 import { MultiSelect } from '@blueprintjs/select';
 import { useSelection } from '@context/selection-context';
@@ -378,24 +386,30 @@ const SelectionPanel = React.memo((props) => {
                 defaultValue={selectedConnection.title}
                 selectAllOnFocus={true}
               />
-              <a
-                style={{
-                  // width: 40,
-                  paddingLeft: 20
-                  // display: 'flex',
-                  // justifyContent: 'flex-end',
-                  // flex: 0
-                }}
-                href={`https://are.na${selectedConnection.href}`}
-                target="_blank"
-                rel="noreferrer">
-                <img src="/open.svg" alt="" />
-              </a>
             </div>
-            <p className="meta small">{selectedConnection.__typename}</p>
             <p className="meta small">
-              {`Added ${selectedConnection.created_at} by ${selectedConnection.user.name}`}
+              {selectedConnection.__typename} •{' '}
+              {`${selectedConnection.created_at} by ${selectedConnection.user.name}`}
             </p>
+            <div
+              style={{
+                display: 'flex',
+                marginTop: 15
+              }}>
+              {selectedConnection.source_url && (
+                <AnchorButton
+                  href={selectedConnection.source_url}
+                  icon={IconNames.LINK}
+                  style={{ marginRight: 10 }}>
+                  Source
+                </AnchorButton>
+              )}
+              <AnchorButton
+                href={`https://are.na${selectedConnection.href}`}
+                icon={<img src="/open.svg" alt="" />}>
+                Open in Are.na
+              </AnchorButton>
+            </div>
           </div>
           <div className="section">
             <p className="section__title">Description</p>

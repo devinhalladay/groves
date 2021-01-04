@@ -484,7 +484,7 @@ header {
   height: 45px;
 }
 
-.block.block--image {
+.block.block--image, .block.block--embed {
   align-items: center;
   justify-content: center;
 }
@@ -1419,6 +1419,7 @@ button,
   box-sizing: border-box;
   // width: calc(25% - 20px) !important;
   flex: calc(25% - 20px) !important;
+  max-height: 250px;
   // height: calc(25% - 20px) !important;
   // padding-top: 100%;
   position: relative;
@@ -1522,6 +1523,7 @@ button,
 
   .selection-panel {
     border: 1px solid $dark-gray1;
+    background-color: $pt-dark-app-background-color;
 
     > .header {
       background: $dark-gray4;
@@ -1546,3 +1548,10 @@ button,
   }
 }
 
+.action {
+  .bp3-button-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

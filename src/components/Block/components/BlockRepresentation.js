@@ -30,10 +30,7 @@ const BlockRepresentation = ({ block }) => {
   } else if (block.__typename === 'Embed') {
     return (
       <Fragment>
-        <p>
-          TODO: EMBED
-          {block.title}
-        </p>
+        <img src={block.image_url ? block.image_url : ''} />
       </Fragment>
     );
   } else if (block.__typename === 'Channel') {
