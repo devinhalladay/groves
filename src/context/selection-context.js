@@ -26,7 +26,8 @@ const SelectionProvider = withApollo((props) => {
     } else if (router.query.grove) {
       return router.query.grove;
     } else {
-      return '757665';
+      console.log('landing');
+      return '924348';
     }
   };
 
