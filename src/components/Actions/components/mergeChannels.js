@@ -1,5 +1,14 @@
 import { useLazyQuery, useMutation } from '@apollo/client';
-import { Button, ControlGroup, Icon, InputGroup, Menu, MenuItem, Popover } from '@blueprintjs/core';
+import {
+  Button,
+  ControlGroup,
+  Icon,
+  InputGroup,
+  Menu,
+  MenuItem,
+  Navbar,
+  Popover
+} from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 import withChannel from '@components/Channel';
 import { GET_SKELETON } from '@components/Channel/queries/getSkeleton';
@@ -122,73 +131,76 @@ const MergeChannelsAction = (props) => {
 
   if (selections.length > 1) {
     return (
-      <Popover position="bottom-right">
-        <Button className="action" minimal={true}>
-          <Icon icon={IconNames.GIT_MERGE} />
-        </Button>
-        <section style={{ padding: 15, width: 450, paddingTop: 25 }}>
-          <p style={{ marginBottom: 15 }}>
-            <span style={{ paddingRight: 6 }}>
-              <Icon icon={IconNames.GIT_MERGE} />
-            </span>
-            <strong>Merging {selections.length} channels</strong>
-          </p>
-          <ControlGroup
-            vertical={true}
-            style={{ display: 'flex', alignItems: 'center', marginBottom: 15 }}>
-            <InputGroup
-              disabled={true}
-              large={true}
-              fill={true}
-              value={`Merge ${selections.length - 1} of ${selections.length} channels into`}
-              style={{ textAlign: 'center', justifyContent: 'center' }}
-              className="merge-input-disabled"
-            />
-            <Popover position="bottom" fill={true} captureDismiss={true}>
+      <>
+        <Navbar.Divider />
+        <Popover position="bottom-right">
+          <Button className="action" minimal={true}>
+            <Icon icon={IconNames.GIT_MERGE} />
+          </Button>
+          <section style={{ padding: 15, width: 450, paddingTop: 25 }}>
+            <p style={{ marginBottom: 15 }}>
+              <span style={{ paddingRight: 6 }}>
+                <Icon icon={IconNames.GIT_MERGE} />
+              </span>
+              <strong>Merging {selections.length} channels</strong>
+            </p>
+            <ControlGroup
+              vertical={true}
+              style={{ display: 'flex', alignItems: 'center', marginBottom: 15 }}>
+              <InputGroup
+                disabled={true}
+                large={true}
+                fill={true}
+                value={`Merge ${selections.length - 1} of ${selections.length} channels into`}
+                style={{ textAlign: 'center', justifyContent: 'center' }}
+                className="merge-input-disabled"
+              />
+              <Popover position="bottom" fill={true} captureDismiss={true}>
+                <Button
+                  large={true}
+                  // minimal={true}
+                  fill={true}
+                  rightIcon="caret-down"
+                  // intent="primary"
+                  style={{ textOverflow: 'ellipsis' }}>
+                  {destination ? destination.title : selections[0].title}
+                </Button>
+                <Menu fill={true} large={true}>
+                  {selections.map((selection, i) => (
+                    <ChannelMenuItem
+                      key={i}
+                      selection={selection}
+                      active={
+                        destination
+                          ? destination.id === selection.id
+                          : selection.id === selections[0].id
+                      }
+                      onClick={() => setDestination(selection)}
+                    />
+                  ))}
+                </Menu>
+              </Popover>
+            </ControlGroup>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <Button
                 large={true}
-                // minimal={true}
-                fill={true}
-                rightIcon="caret-down"
-                // intent="primary"
-                style={{ textOverflow: 'ellipsis' }}>
-                {destination ? destination.title : selections[0].title}
+                icon={IconNames.REMOVE}
+                intent="danger"
+                onClick={handleDangerousMerge}>
+                Merge and delete
               </Button>
-              <Menu fill={true} large={true}>
-                {selections.map((selection, i) => (
-                  <ChannelMenuItem
-                    key={i}
-                    selection={selection}
-                    active={
-                      destination
-                        ? destination.id === selection.id
-                        : selection.id === selections[0].id
-                    }
-                    onClick={() => setDestination(selection)}
-                  />
-                ))}
-              </Menu>
-            </Popover>
-          </ControlGroup>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button
-              large={true}
-              icon={IconNames.REMOVE}
-              intent="danger"
-              onClick={handleDangerousMerge}>
-              Merge and delete
-            </Button>
 
-            <Button
-              large={true}
-              icon={IconNames.GIT_MERGE}
-              intent="primary"
-              onClick={handleSafeMerge}>
-              Safe merge
-            </Button>
-          </div>
-        </section>
-      </Popover>
+              <Button
+                large={true}
+                icon={IconNames.GIT_MERGE}
+                intent="primary"
+                onClick={handleSafeMerge}>
+                Safe merge
+              </Button>
+            </div>
+          </section>
+        </Popover>
+      </>
     );
   }
 

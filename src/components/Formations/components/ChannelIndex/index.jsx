@@ -76,7 +76,8 @@ const ChannelIndex = (props) => {
                     style={{
                       display: 'flex',
                       flex: 1,
-                      alignItems: 'center'
+                      alignItems: 'center',
+                      userSelect: 'none'
                     }}>
                     <div
                       style={{
