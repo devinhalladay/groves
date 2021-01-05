@@ -5,6 +5,7 @@ import { Code, KeyCombo } from '@blueprintjs/core';
 import { useState } from 'react';
 import { useSelection } from '@context/selection-context';
 import { useWorkspace } from '@context/workspace-context';
+import KeyMaps from '~/src/constants/KeyMaps';
 
 const KeyMapDialog = () => {
   const globalKeyMap = getApplicationKeyMap();
@@ -13,14 +14,6 @@ const KeyMapDialog = () => {
   const { formation } = workspaceOptions;
 
   console.log(globalKeyMap);
-
-  const keyMap = {
-    VIEW_SHORTCUTS: {
-      name: 'View keyboard shortcuts',
-      sequence: 'shift+?',
-      group: 'Global Shortcuts'
-    }
-  };
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -32,7 +25,7 @@ const KeyMapDialog = () => {
   };
   return (
     <>
-      <GlobalHotKeys keyMap={keyMap} handlers={hotkeyHandlers} />
+      <GlobalHotKeys keyMap={KeyMaps} handlers={hotkeyHandlers} />
       <div
         style={{
           position: 'fixed',

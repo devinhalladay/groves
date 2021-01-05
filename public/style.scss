@@ -335,7 +335,7 @@ header {
   &--actions,
   &--formations {
     top: 15px;
-    z-index: 999999;
+    z-index: 9999;
   }
 
   &--actions {
@@ -357,7 +357,7 @@ header {
     left: 15px;
     width: auto;
     overflow: hidden;
-    z-index: 999999;
+    z-index: 9999;
   }
 
   &--wide {
@@ -1034,7 +1034,7 @@ header {
 }
 
 .newsletter-panel {
-  z-index: 99999;
+  z-index: 9999;
   position: relative;
 
   form {
@@ -1554,4 +1554,7 @@ button,
     align-items: center;
     justify-content: center;
   }
+}
+.bp3-popover {
+  z-index: 999999
 }

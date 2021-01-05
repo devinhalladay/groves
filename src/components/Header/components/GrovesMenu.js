@@ -2,38 +2,19 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useAuth } from '@context/auth-context';
 import { useUser } from '@context/user-context';
+import { Menu, MenuItem, Popover } from '@blueprintjs/core';
+import { IconNames } from '@blueprintjs/icons';
 
-const Dropdown = (props) => {
-  const { logout } = useAuth();
-
-  return (
-    <div className="groves-dropdown">
-      <ul>
-        <li>Welcome, {props.user.me.name}</li>
-        <li onClick={logout} className="pointer">
-          Logout
-        </li>
-      </ul>
-    </div>
-  );
-};
-
-const Menu = () => {
+const GrovesMenu = () => {
   const router = useRouter();
+  const { logout } = useAuth();
   const { currentUser } = useUser();
 
   const [showMenu, setShowMenu] = useState(false);
   const closeMenu = () => setShowMenu(false);
-
-  const handleMenuClick = (e) => {
-    e.preventDefault();
-
-    setShowMenu(!showMenu);
-  };
-
   return (
-    <div>
-      <button className="groves-menu-button" onClick={handleMenuClick}>
+    <Popover position="bottom-left">
+      <button className="groves-menu-button">
         <div className="icon icon--caret-down">
           <svg
             width="12"
@@ -50,9 +31,12 @@ const Menu = () => {
         </div>
       </button>
 
-      {showMenu ? <Dropdown user={currentUser} /> : null}
-    </div>
+      <Menu>
+        <MenuItem icon={IconNames.CLEAN} text={`Welcome, ${currentUser.me.name}`} />
+        <MenuItem icon={IconNames.LOG_OUT} text="Logout" onClick={logout} />
+      </Menu>
+    </Popover>
   );
 };
 
-export default Menu;
+export default GrovesMenu;

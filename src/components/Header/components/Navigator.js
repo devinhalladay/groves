@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
 import { useSelection } from '@context/selection-context';
 import { useUser } from '@context/user-context';
+import KeyMaps from '~/src/constants/KeyMaps';
 
 const GrovesNavigator = (props) => {
   const router = useRouter();
@@ -31,14 +32,6 @@ const GrovesNavigator = (props) => {
   const handleFocusInput = (e) => {
     e.preventDefault();
     inputRef.current.focus();
-  };
-
-  const keyMap = {
-    FOCUS_NAVIGATOR: {
-      name: 'Focus navigator input',
-      sequence: 'command+u',
-      group: 'Global Shortcuts'
-    }
   };
 
   const keyHandlers = { FOCUS_NAVIGATOR: (e) => handleFocusInput(e) };
@@ -74,7 +67,7 @@ const GrovesNavigator = (props) => {
 
   return (
     <>
-      <GlobalHotKeys handlers={keyHandlers} keyMap={keyMap} />
+      <GlobalHotKeys handlers={keyHandlers} keyMap={KeyMaps} />
       <Downshift
         onInputValueChange={(inputValue) => {
           setInputItems(

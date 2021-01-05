@@ -136,9 +136,6 @@ const CreateBlock = (props) => {
   return (
     <Popover
       position="bottom"
-      modifiers={{
-        arrow: { enabled: false }
-      }}
       style={{
         padding: 15
       }}>

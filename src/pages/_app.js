@@ -11,7 +11,8 @@ import Head from 'next/head';
 import { AuthenticatedHeader, UnauthenticatedHeader } from '~/src/components/Header';
 import { WorkspaceProvider } from '../context/workspace-context';
 import { ThemeProvider } from '../context/theme-provider';
-import { GlobalHotKeys, HotKeys } from 'react-hotkeys';
+import { configure, GlobalHotKeys, HotKeys } from 'react-hotkeys';
+import KeyMaps from '../constants/KeyMaps';
 
 const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
   useEffect(() => {
@@ -19,6 +20,10 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
   }, []);
 
   if (isAuthenticated) {
+    configure({
+      simulateMissingKeyPressEvents: false
+    });
+
     return (
       <div>
         <Head>
@@ -61,7 +66,7 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
         </Head>
         <AuthProvider>
           <UserProvider>
-            <GlobalHotKeys>
+            <GlobalHotKeys keyMap={KeyMaps}>
               <ThemeProvider>
                 <WorkspaceProvider>
                   <AuthenticatedHeader {...pageProps} />

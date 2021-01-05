@@ -1,7 +1,7 @@
 import { useAuth } from '@context/auth-context';
 import React from 'react';
 import GroveActions from '~/src/components/Actions';
-import Menu from '~/src/components/Header/components/Menu';
+import GrovesMenu from '~/src/components/Header/components/GrovesMenu';
 import GrovesNavigator from '~/src/components/Header/components/Navigator';
 import Panel from '~/src/components/Panel';
 
@@ -111,7 +111,7 @@ const AuthenticatedHeader = (props) => {
                     strokeLinecap="round"
                   />
                 </svg>
-                <Menu></Menu>
+                <GrovesMenu />
               </div>
               <GrovesNavigator />
             </nav>

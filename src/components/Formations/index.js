@@ -4,45 +4,12 @@ import Grid from './components/Grid';
 import { ControlGroup, HTMLSelect, MenuItem, Button, Hotkeys } from '@blueprintjs/core';
 import { useWorkspace } from '@context/workspace-context';
 import { Select } from '@blueprintjs/select';
-import { GlobalHotKeys, HotKeys } from 'react-hotkeys';
+import { GlobalHotKeys } from 'react-hotkeys';
+import KeyMaps from '~/src/constants/KeyMaps';
 
 export default function GroveFormations() {
   const { workspaceOptions, setWorkspaceOptions, formations } = useWorkspace();
   const { formation } = workspaceOptions;
-
-  // const keyMap = {
-  //   VIEW_GRID: {
-  //     name: 'Grid view',
-  //   },
-  //   VIEW_CANVAS: {
-  //     name: 'Canvas view',
-  //     sequence: 'w 2',
-  //     action: () => handleChangeFormation(formations.CANVAS)
-  //   },
-  //   VIEW_CHANNEL_INDEX: {
-  //     name: 'Channel Index view',
-  //     sequence: 'w 3',
-  //     action: () => handleChangeFormation(formations.CHANNEL_INDEX)
-  //   }
-  // };
-
-  const keyMap = {
-    VIEW_GRID: {
-      name: 'Grid view',
-      sequence: 'w 1',
-      group: 'Global Shortcuts'
-    },
-    VIEW_CANVAS: {
-      name: 'Canvas view',
-      sequence: 'w 2',
-      group: 'Global Shortcuts'
-    },
-    VIEW_CHANNEL_INDEX: {
-      name: 'Channel Index view',
-      sequence: 'w 3',
-      group: 'Global Shortcuts'
-    }
-  };
 
   const handleChangeFormation = (f) => {
     setWorkspaceOptions({
@@ -72,7 +39,7 @@ export default function GroveFormations() {
 
   return (
     <>
-      <GlobalHotKeys handlers={hotkeyHandlers} keyMap={keyMap} />
+      <GlobalHotKeys handlers={hotkeyHandlers} keyMap={KeyMaps} />
       <Select
         itemRenderer={formationOptionRenderer}
         items={Object.keys(formations)}
