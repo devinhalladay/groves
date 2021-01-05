@@ -9,4 +9,20 @@ module.exports = {
     GRAPHQL_TOKEN: process.env.GRAPHQL_TOKEN,
     AUTHENTICATION_ENABLED: process.env.NODE_ENV === 'production' ? false : true
   },
-}
+
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: '@svgr/webpack',
+          options: {
+            svgo: false
+          }
+        }
+      ]
+    });
+
+    return config;
+  }
+};
