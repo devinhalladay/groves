@@ -21,7 +21,8 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
 
   if (isAuthenticated) {
     configure({
-      simulateMissingKeyPressEvents: false
+      simulateMissingKeyPressEvents: false,
+      ignoreKeymapAndHandlerChangesByDefault: false
     });
 
     return (
