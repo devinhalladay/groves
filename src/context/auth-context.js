@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { destroyCookie, parseCookies, setCookie } from 'nookies';
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
 
@@ -8,6 +8,8 @@ const AuthProvider = (props) => {
   const router = useRouter();
 
   let accessToken = parseCookies()['access_token'] || null;
+
+  const [authWindow, setAuthWindow] = useState(null);
 
   const hasPreviousSession = accessToken !== null;
 
@@ -30,8 +32,12 @@ const AuthProvider = (props) => {
         path: '/'
       });
 
-      router.push('/g');
+      // router.push('/g');
     });
+
+    authWindow.close();
+
+    return;
   };
 
   const logout = (ctx) => {
@@ -46,7 +52,10 @@ const AuthProvider = (props) => {
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, login, logout, hasPreviousSession }} {...props} />
+    <AuthContext.Provider
+      value={{ accessToken, login, logout, hasPreviousSession, authWindow, setAuthWindow }}
+      {...props}
+    />
   );
 };
 
