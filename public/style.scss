@@ -338,6 +338,148 @@ header {
     z-index: 9999;
   }
 
+  &--nav {
+    // width: fit-content;
+
+
+    .bp3-navbar {
+      padding: 0 !important;
+      border-radius: 8px;
+      width: 100%;
+      .bp3-navbar-group {
+        width: 100%;
+      }
+    }
+
+    p {
+      padding: 0 15px;
+      color: #888888;
+      flex: 1;
+    }
+
+    .groves-logo-container {
+      background-color: $primary-color;
+      padding: 0 10px 0 0;
+      border-radius: 8px 0 0 8px;
+      line-height: 100%;
+      align-items: center;
+      display: flex;
+      flex-grow: 0;
+      height: 100%;
+
+      .groves-menu-button {
+        appearance: none;
+        border: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+        outline: none;
+      }
+
+      .groves-dropdown {
+        min-width: 200px;
+        position: relative;
+        display: inline-block;
+        position: absolute;
+        background-color: #f9f9f9;
+        border: 1px solid #bdc3ca;
+        top: 55px;
+        border-radius: 10px;
+        left: 0;
+        box-shadow: 0px 8px 24px rgba(111, 123, 138, 0.2), 0px 2px 4px rgba(111, 123, 138, 0.2),
+          0px 0px 0px rgba(111, 123, 138, 0.1);
+        z-index: 1;
+
+        ul {
+          display: block;
+          margin: 15px;
+          padding: 0;
+          li {
+            padding: 8px;
+            display: block;
+
+            a {
+              text-decoration: none;
+              color: #6f7b8a;
+              padding: 5px 10px;
+              background-color: white;
+              background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%), #f5f8fa;
+              border: 1px solid #bdc3ca;
+              box-shadow: 0.25px 0.25px 2px rgba(111, 123, 138, 0.19);
+              border-radius: 2px;
+            }
+          }
+        }
+      }
+
+      * {
+        display: inline-flex;
+      }
+
+      a {
+        padding-right: 10px;
+        color: #000;
+        text-decoration: none;
+      }
+    }
+
+    .grove-navigation {
+      height: 100%;
+      flex-grow: 2;
+      display: flex;
+      position: relative;
+
+      input {
+        background-color: $dark-gray3;
+      }
+
+      .groves-dropdown {
+        position: absolute;
+        top: 46px;
+        left: 0;
+        right: 0;
+        width: auto;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        max-height: 400px;
+        display: none;
+        margin-top: 15px;
+        flex-direction: column;
+        margin-left: 0;
+        padding-left: 0;
+
+        &.open {
+          display: flex;
+        }
+
+        li {
+          padding: 0 15px;
+          font-size: 100%;
+          line-height: 40px;
+          display: flex;
+          align-items: center;
+          color: #252525;
+          margin-right: 0;
+          width: 100%;
+        }
+      }
+
+      input {
+        border: 0;
+        height: 100%;
+        font-size: 100%;
+        padding: 0;
+        padding-left: 15px;
+        flex: 1;
+        outline: none;
+        -webkit-appearance: none;
+        border-radius: 0 10px 10px 0;
+        background-color: $light-gray4;
+        color: $pt-text-color;
+      }
+    }
+  }
+
   &--actions {
     right: 15px;
     left: unset;
@@ -481,7 +623,7 @@ header {
 }
 
 .header {
-  height: 45px;
+  // height: 45px;
 }
 
 .block.block--image,
@@ -1197,7 +1339,7 @@ header {
   width: 300px;
   transition: all ease-in-out 0.1s;
   right: 15px;
-  top: 75px;
+  top: 80px;
   bottom: 15px;
   background-color: $pt-app-background-color;
   height: calc(100% - 90px);
@@ -1419,7 +1561,7 @@ button,
 .grid > * {
   box-sizing: border-box;
   // width: calc(25% - 20px) !important;
-  flex: calc(25% - 20px) !important;
+  flex: calc(25% - 20px) 0 !important;
   max-height: 250px;
   // height: calc(25% - 20px) !important;
   // padding-top: 100%;

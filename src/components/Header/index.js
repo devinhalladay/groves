@@ -1,4 +1,4 @@
-import { Button } from '@blueprintjs/core';
+import { Button, Navbar } from '@blueprintjs/core';
 import { useAuth } from '@context/auth-context';
 import React from 'react';
 import GroveActions from '~/src/components/Actions';
@@ -89,8 +89,8 @@ const AuthenticatedHeader = (props) => {
     return (
       <>
         <Panel panelType="nav">
-          <header>
-            <nav>
+          <Navbar>
+            <Navbar.Group>
               <div className="groves-logo-container">
                 <svg
                   width="50"
@@ -114,8 +114,8 @@ const AuthenticatedHeader = (props) => {
                 <GrovesMenu />
               </div>
               <GrovesNavigator />
-            </nav>
-          </header>
+            </Navbar.Group>
+          </Navbar>
         </Panel>
         <GroveActions />
       </>
