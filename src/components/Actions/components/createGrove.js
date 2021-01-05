@@ -23,7 +23,7 @@ const CreateGroveAction = (props) => {
 
   return (
     <Popover position="bottom-right">
-      <Button className="action">
+      <Button className="action" minimal={true}>
         <CreateGrove
           fill={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
           stroke={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}

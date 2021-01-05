@@ -110,7 +110,7 @@ const StageConnections = () => {
       }
       visible={visible}
       onClickOutside={hide}>
-      <Button className="action" onClick={visible ? hide : show}>
+      <Button className="action" minimal={true} onClick={visible ? hide : show}>
         <img src="/connect-from.svg" />
       </Button>
     </Tippy>

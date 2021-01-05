@@ -6,18 +6,22 @@ import CreateBlock from './components/createBlock';
 import DarkModeAction from './components/darkMode';
 import GroveFormations from '../Formations';
 import MergeChannelsAction from './components/mergeChannels';
+import { Navbar, Button, Alignment } from '@blueprintjs/core';
 
 export default function GroveActions() {
   return (
-    <Panel panelType="actions">
-      <div className="grove-actions">
+    <Navbar className="panel panel--actions">
+      <Navbar.Group>
         <GroveFormations />
+        <Navbar.Divider />
+      </Navbar.Group>
+      <Navbar.Group>
         <CreateBlock />
         <ConnectTo />
         <CreateGroveAction />
         <DarkModeAction />
         <MergeChannelsAction />
-      </div>
-    </Panel>
+      </Navbar.Group>
+    </Navbar>
   );
 }

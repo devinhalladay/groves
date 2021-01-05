@@ -32,7 +32,7 @@ const CreateBlock = (props) => {
   const router = useRouter();
 
   const ActionButton = forwardRef((props, ref) => (
-    <Button ref={ref} className="action" onClick={visible ? hide : show}>
+    <Button ref={ref} minimal={true} className="action" onClick={visible ? hide : show}>
       <ActionIcon
         fill={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
         stroke={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}

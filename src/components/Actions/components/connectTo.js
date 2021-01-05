@@ -43,7 +43,7 @@ const ConnectTo = (props) => {
   };
 
   const ActionButton = forwardRef((props, ref) => (
-    <Button className="action" onClick={visible ? hide : show}>
+    <Button minimal={true} className="action" onClick={visible ? hide : show}>
       <LinkGrovesIcon
         fill={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
         stroke={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}

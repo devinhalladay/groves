@@ -45,6 +45,7 @@ export default function GroveFormations() {
         items={Object.keys(formations)}
         filterable={false}>
         <Button
+          minimal={true}
           text={workspaceOptions.formation.title}
           rightIcon="double-caret-vertical"
           icon={formation.icon}

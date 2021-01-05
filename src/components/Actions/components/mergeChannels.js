@@ -123,7 +123,7 @@ const MergeChannelsAction = (props) => {
   if (selections.length > 1) {
     return (
       <Popover position="bottom-right">
-        <Button className="action">
+        <Button className="action" minimal={true}>
           <Icon icon={IconNames.GIT_MERGE} />
         </Button>
         <section style={{ padding: 15, width: 450, paddingTop: 25 }}>

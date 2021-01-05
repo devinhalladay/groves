@@ -341,8 +341,8 @@ header {
   &--actions {
     right: 15px;
     left: unset;
+    overflow: hidden;
     width: fit-content;
-    height: 45px;
   }
 
   &--formations {
@@ -484,7 +484,8 @@ header {
   height: 45px;
 }
 
-.block.block--image, .block.block--embed {
+.block.block--image,
+.block.block--embed {
   align-items: center;
   justify-content: center;
 }
@@ -1434,7 +1435,6 @@ button,
   position: relative;
 }
 
-
 .theme-container {
   position: absolute;
   top: 0;
@@ -1482,29 +1482,29 @@ button,
 }
 
 .bp3-control input ~ .bp3-card {
-    // background-color: $dark-gray2;
-    box-sizing: border-box;
-    // transition: 0.2s border;
-    // background-color: $pt-app-background-color;
-    // color: $pt-text-color;
+  // background-color: $dark-gray2;
+  box-sizing: border-box;
+  // transition: 0.2s border;
+  // background-color: $pt-app-background-color;
+  // color: $pt-text-color;
 }
 
 .bp3-control input:checked ~ .bp3-card {
-    border: 2px solid $blue4;
-    border-radius: 4px;
-    margin: -2px;
+  border: 2px solid $blue4;
+  border-radius: 4px;
+  margin: -2px;
 }
 
-.merge-input-disabled .bp3-input[type="text"] {
+.merge-input-disabled .bp3-input[type='text'] {
   color: $dark-gray4 !important;
 }
 
 .bp3-dark {
   background-color: $black;
 
-  .merge-input-disabled .bp3-input[type="text"] {
-  color: $gray4 !important;
-}
+  .merge-input-disabled .bp3-input[type='text'] {
+    color: $gray4 !important;
+  }
 
   .panel {
     background-color: $pt-dark-app-background-color;
@@ -1514,7 +1514,6 @@ button,
   .bp3-editable-text-input {
     color: $pt-dark-text-color !important;
   }
-
 
   .grove-navigation input {
     background-color: $dark-gray4;
@@ -1556,5 +1555,5 @@ button,
   }
 }
 .bp3-popover {
-  z-index: 999999
+  z-index: 999999;
 }
