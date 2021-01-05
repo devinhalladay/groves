@@ -1,7 +1,4 @@
-import { Button } from '@blueprintjs/core';
 import { useAuth } from '@context/auth-context';
-import { useRouter } from 'next/router';
-import { parseCookies } from 'nookies';
 import React from 'react';
 import GroveActions from '~/src/components/Actions';
 import GrovesMenu from '~/src/components/Header/components/GrovesMenu';
@@ -9,24 +6,6 @@ import GrovesNavigator from '~/src/components/Header/components/Navigator';
 import Panel from '~/src/components/Panel';
 
 const UnauthenticatedHeader = (props) => {
-  let { accessToken, setAuthWindow } = useAuth();
-
-  let authWindow;
-
-  const handleOpenAuthWindow = () => {
-    const strWindowFeatures = `toolbar=no, menubar=no, width=600, height=700, top=${
-      window.screenY + (window.outerHeight - 700) / 2.5
-    }, left=${window.screenX + (window.outerWidth - 600) / 2}`;
-
-    authWindow = window.open(
-      `https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`,
-      'Login',
-      strWindowFeatures
-    );
-
-    setAuthWindow(authWindow);
-  };
-
   return (
     <Panel pinSide="center" panelType="nav">
       <header>
@@ -56,7 +35,11 @@ const UnauthenticatedHeader = (props) => {
           {process.env.AUTHENTICATION_ENABLED && (
             <ul>
               <li>
-                <Button onClick={handleOpenAuthWindow}>Login</Button>
+                <a
+                  className="button"
+                  href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}>
+                  Login
+                </a>
               </li>
             </ul>
           )}
@@ -68,10 +51,6 @@ const UnauthenticatedHeader = (props) => {
 
 const AuthenticatedHeader = (props) => {
   const { hasPreviousSession } = useAuth();
-
-  const handleOpenAuthWindow = () => {
-    // https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code
-  };
 
   if (!process.env.AUTHENTICATION_ENABLED) {
     return (

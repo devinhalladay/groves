@@ -3,7 +3,7 @@ import { useAuth } from '../../context/auth-context';
 import Loading from '../../components/Loader';
 
 const Callback = ({ ctx, query: { code }, ...props }) => {
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
 
   useEffect(() => {
     login({ ctx, code });
