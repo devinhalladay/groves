@@ -1,3 +1,4 @@
+import { Button } from '@blueprintjs/core';
 import { useAuth } from '@context/auth-context';
 import React from 'react';
 import GroveActions from '~/src/components/Actions';
@@ -6,6 +7,9 @@ import GrovesNavigator from '~/src/components/Header/components/Navigator';
 import Panel from '~/src/components/Panel';
 
 const UnauthenticatedHeader = (props) => {
+  const handleLoginClick = () => {
+    window.location.href = `https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`;
+  };
   return (
     <Panel pinSide="center" panelType="nav">
       <header>
@@ -35,11 +39,7 @@ const UnauthenticatedHeader = (props) => {
           {process.env.AUTHENTICATION_ENABLED && (
             <ul>
               <li>
-                <a
-                  className="button"
-                  href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}>
-                  Login
-                </a>
+                <Button onClick={handleLoginClick}>Login</Button>
               </li>
             </ul>
           )}

@@ -8,7 +8,7 @@ export const login = ({ ctx, access_token }) => {
     path: '/'
   });
 
-  Router.push('/g');
+  // Router.push('/g');
 };
 
 export const auth = (ctx) => {
@@ -22,8 +22,9 @@ export const auth = (ctx) => {
       ctx.res.end();
     } else {
       // Redirect if on the client
-      Router.push('/');
-      Router.reload();
+      // Router.push('/');
+      // window.location.href = '/';
+      // Router.reload();
     }
   }
 

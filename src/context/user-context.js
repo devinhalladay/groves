@@ -15,7 +15,7 @@ export const UserProvider = withApollo((props) => {
   } = useQuery(CURRENT_USER);
 
   if (loadingCurrentUser) {
-    return <Loading fullScreen="true" description="Logging in..." />;
+    return <Loading fullScreen="true" description="Authenticating..." />;
   } else if (errorLoadingCurrentUser) {
     console.error(errorLoadingCurrentUser);
     return `Error: ${errorLoadingCurrentUser}`;

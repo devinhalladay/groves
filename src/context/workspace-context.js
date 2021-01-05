@@ -26,7 +26,7 @@ const WorkspaceProvider = (props) => {
   };
 
   const [workspaceOptions, setWorkspaceOptions] = useState({
-    formation: formations.CANVAS
+    formation: formations.GRID
   });
 
   const [zoomScale, setZoomScale] = useState(1);

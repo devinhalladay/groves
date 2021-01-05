@@ -30,7 +30,7 @@ const AuthProvider = (props) => {
         path: '/'
       });
 
-      router.push('/g');
+      router.push('/');
     });
   };
 

@@ -41,7 +41,7 @@ const Root = (props) => {
   });
 
   if (loading) {
-    return <Loading fullScreen="true" description="Loading landing page channel..." />;
+    return <Loading fullScreen="true" description="Loading your Grove :)" />;
   } else if (error) {
     console.error(error);
     return `Error: ${error}`;

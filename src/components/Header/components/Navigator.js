@@ -36,35 +36,6 @@ const GrovesNavigator = (props) => {
 
   const keyHandlers = { FOCUS_NAVIGATOR: (e) => handleFocusInput(e) };
 
-  function ChannelSearchAutocompleteMenu({
-    data: { channels, loading },
-    selectedItem,
-    highlightedIndex,
-    getItemProps
-  }) {
-    if (loading) {
-      return <div>Loading...</div>;
-    }
-    return (
-      <div>
-        {channels.map((channel, index) => (
-          <div
-            {...getItemProps({
-              channel,
-              index,
-              key: channel.id,
-              style: {
-                backgroundColor: highlightedIndex === index ? 'gray' : 'white',
-                fontWeight: selectedItem === item ? 'bold' : 'normal'
-              }
-            })}>
-            {channel.title}
-          </div>
-        ))}
-      </div>
-    );
-  }
-
   return (
     <>
       <GlobalHotKeys handlers={keyHandlers} keyMap={KeyMaps} />
