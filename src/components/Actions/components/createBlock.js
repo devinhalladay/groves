@@ -40,6 +40,8 @@ const CreateBlock = (props) => {
     </Button>
   ));
 
+  ActionButton.displayName = 'CreateBlock';
+
   // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   // const { selectedConnection, setSelectedConnection } = useSelection();
@@ -149,7 +151,8 @@ const CreateBlock = (props) => {
             <div
               style={{
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                outline: 'none'
               }}>
               <TextArea
                 fill={true}
@@ -186,7 +189,8 @@ const CreateBlock = (props) => {
                   textAlign: 'center',
                   justifyContent: 'center',
                   padding: 20,
-                  background: 'rgba(211, 211, 211, 0.27)'
+                  background: 'rgba(211, 211, 211, 0.27)',
+                  outline: 'none'
                 }}>
                 {isDragActive ? (
                   <p>Drop the files here ...</p>
