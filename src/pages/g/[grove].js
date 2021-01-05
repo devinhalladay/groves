@@ -14,6 +14,7 @@ import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
 import KeyMapDialog from '~/src/components/KeyMapDialog';
 import Layout from '~/src/components/Layout';
 import withApollo from '~/src/hooks/withApollo';
+import { withAuthSync } from '~/src/utils/auth';
 
 const Grove = (props) => {
   const router = useRouter();
@@ -209,4 +210,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default withApollo(Grove);
+export default withApollo(withAuthSync(Grove));

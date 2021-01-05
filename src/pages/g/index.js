@@ -10,6 +10,7 @@ import { useQuery } from '@apollo/client';
 import DraggableBlock from '~/src/components/Block';
 import { WorkspaceProvider } from '@context/workspace-context';
 import { ToastContainer } from 'react-toastify';
+import { withAuthSync } from '~/src/utils/auth';
 
 const Grove = (props) => {
   const router = useRouter();
@@ -68,4 +69,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default withApollo(Grove);
+export default withApollo(withAuthSync(Grove));

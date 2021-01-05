@@ -12,6 +12,7 @@ import { ThemeProvider } from '@context/theme-provider';
 import { ToastContainer } from 'react-toastify';
 import { WorkspaceProvider } from '@context/workspace-context';
 import GrovesCanvas from '@components/Canvas';
+import { withAuthSync } from '../utils/auth';
 
 const GET_LANDING_BLOCKS = gql`
   {
@@ -91,4 +92,4 @@ const Root = (props) => {
   );
 };
 
-export default withApollo(Root);
+export default withApollo(withAuthSync(Root));

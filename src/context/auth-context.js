@@ -39,7 +39,6 @@ const AuthProvider = (props) => {
       path: '/'
     });
 
-    // TODO: Make sure users logout from all tabs
     window.localStorage.setItem('logout', Date.now());
 
     router.push('/');

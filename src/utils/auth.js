@@ -2,36 +2,7 @@ import Router from 'next/router';
 import { parseCookies, setCookie } from 'nookies';
 import { useEffect } from 'react';
 
-export const login = ({ ctx, access_token }) => {
-  setCookie(ctx, 'access_token', access_token, {
-    maxAge: 30 * 24 * 60 * 60,
-    path: '/'
-  });
-
-  // Router.push('/g');
-};
-
-export const auth = (ctx) => {
-  const access_token = parseCookies()['access_token'];
-
-  // If there's no token, it means the user is not logged in.
-  if (!access_token) {
-    if (typeof window === 'undefined') {
-      // Redirect if on the server
-      ctx.res.writeHead(302, { Location: '/' });
-      ctx.res.end();
-    } else {
-      // Redirect if on the client
-      // Router.push('/');
-      // window.location.href = '/';
-      // Router.reload();
-    }
-  }
-
-  return access_token;
-};
-
-export const withAuthSync = (WrappedComponent) => {
+export const withAuthSync = (Component) => {
   const Wrapper = (props) => {
     const syncLogout = (event) => {
       if (event.key === 'logout') {
@@ -49,16 +20,7 @@ export const withAuthSync = (WrappedComponent) => {
       };
     }, []);
 
-    return <WrappedComponent {...props} />;
-  };
-
-  Wrapper.getInitialProps = async (ctx) => {
-    const access_token = auth(ctx);
-
-    const componentProps =
-      WrappedComponent.getInitialProps && (await WrappedComponent.getInitialProps(ctx));
-
-    return { ...componentProps, access_token };
+    return <Component {...props} />;
   };
 
   return Wrapper;
