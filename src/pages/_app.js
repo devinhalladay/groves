@@ -28,33 +28,25 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
     return (
       <div>
         <Head>
-          <title>Groves — Relational Browsing for Are.na</title>
-          <meta name="title" content="Groves — Relational Browsing for Are.na" />
+          <title>Groves: Your Visual Second Brain.</title>
+          <meta name="title" content="Groves — Your workspace for visual thinking." />
           <meta
             name="description"
-            content="Groves is a relational browsing experience for Are.na that allows users to visualize and explore connections in novel ways, expanding their thinking and creativity."
+            content="A new tool for visual organization and thinking. Create your own digital garden with a workspace for growing, connecting, and visualizing your ideas."
           />
-
+          <link rel="icon" type="image/png" href="/favicon.png" />
           <meta property="og:type" content="website" />
           <meta property="og:url" content="https://groves.network/" />
-          <meta property="og:title" content="Groves — Relational Browsing for Are.na" />
-          <meta
-            property="og:description"
-            content="Groves is a relational browsing experience for Are.na that allows users to visualize and explore connections in novel ways, expanding their thinking and creativity."
-          />
           <meta property="og:image" content="https://groves.network/og-image.png" />
-
           <meta property="twitter:card" content="summary_large_image" />
           <meta property="twitter:url" content="https://groves.network/" />
-          <meta property="twitter:title" content="Groves — Relational Browsing for Are.na" />
+          <meta property="twitter:title" content="Groves — Your workspace for visual thinking." />
           <meta
             property="twitter:description"
-            content="Groves is a relational browsing experience for Are.na that allows users to visualize and explore connections in novel ways, expanding their thinking and creativity."
+            content="A new tool for thought and visual organization. Create your own digital garden with a workspace for connecting, visualizing, and growing your ideas."
           />
           <meta property="twitter:image" content="https://groves.network/og-image.png"></meta>
-
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -84,28 +76,21 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
   return (
     <div>
       <Head>
-        <title>Groves — Relational Browsing for Are.na</title>
-        <meta name="title" content="Groves — Relational Browsing for Are.na" />
+        <title>Groves: Your Visual Second Brain.</title>
+        <meta name="title" content="Groves — Your workspace for visual thinking." />
         <meta
           name="description"
-          content="Groves is a relational browsing experience for Are.na that allows users to visualize and explore connections in novel ways, expanding their thinking and creativity."
+          content="A new tool for visual organization and thinking. Create your own digital garden with a workspace for growing, connecting, and visualizing your ideas."
         />
-
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://groves.network/" />
-        <meta property="og:title" content="Groves — Relational Browsing for Are.na" />
-        <meta
-          property="og:description"
-          content="Groves is a relational browsing experience for Are.na that allows users to visualize and explore connections in novel ways, expanding their thinking and creativity."
-        />
         <meta property="og:image" content="https://groves.network/og-image.png" />
-
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://groves.network/" />
-        <meta property="twitter:title" content="Groves — Relational Browsing for Are.na" />
+        <meta property="twitter:title" content="Groves — Your workspace for visual thinking." />
         <meta
           property="twitter:description"
-          content="Groves is a relational browsing experience for Are.na that allows users to visualize and explore connections in novel ways, expanding their thinking and creativity."
+          content="A new tool for thought and visual organization. Create your own digital garden with a workspace for connecting, visualizing, and growing your ideas."
         />
         <meta property="twitter:image" content="https://groves.network/og-image.png"></meta>
 

@@ -248,7 +248,7 @@ header {
     position: relative;
 
     input {
-      background-color: $dark-gray3;
+      // background-color: $dark-gray3;
     }
 
     .groves-dropdown {
@@ -429,9 +429,9 @@ header {
       display: flex;
       position: relative;
 
-      input {
-        background-color: $dark-gray3;
-      }
+      // input {
+      //   background-color: $dark-gray3;
+      // }
 
       .groves-dropdown {
         position: absolute;
@@ -474,7 +474,7 @@ header {
         outline: none;
         -webkit-appearance: none;
         border-radius: 0 10px 10px 0;
-        background-color: $light-gray4;
+        // background-color: $light-gray4;
         color: $pt-text-color;
       }
     }
@@ -1658,7 +1658,7 @@ button,
   }
 
   .grove-navigation input {
-    background-color: $dark-gray4;
+    // background-color: $dark-gray4;
     color: $pt-dark-text-color;
   }
 
