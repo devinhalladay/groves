@@ -77,7 +77,7 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
     <div>
       <Head>
         <title>Groves: Your Visual Second Brain.</title>
-        <meta name="title" content="Groves — Your workspace for visual thinking." />
+        <meta name="title" content="Groves — Your workspace for visual thinking" />
         <meta
           name="description"
           content="A new tool for visual organization and thinking. Create your own digital garden with a workspace for growing, connecting, and visualizing your ideas."
