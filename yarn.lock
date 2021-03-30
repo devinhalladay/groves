@@ -1351,6 +1351,11 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.6.0.tgz#f022195afdfc942e088ee2101285a1d31c7d727f"
   integrity sha512-cPqjjzuFWNK3BSKLm0abspP0sp/IGOli4p5I5fKFAzdS8fvjdOwDCfZqAaIiXd9lPkOWi3SUUfZof3hEb7J/uw==
 
+"@prisma/engines@2.20.0-26.60ba6551f29b17d7d6ce479e5733c70d9c00860e":
+  version "2.20.0-26.60ba6551f29b17d7d6ce479e5733c70d9c00860e"
+  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-2.20.0-26.60ba6551f29b17d7d6ce479e5733c70d9c00860e.tgz#18f23c4a8a335a93fd338f88c310f5cf120f5591"
+  integrity sha512-zOWETm7DTRvlwf/CekPNSeJe6EC5bn2IFexd74wM9zgBXCZo+1sMDuNGtCqIt4Rzv8CcimEgyzrEFVq0LPV8qg==
+
 "@svgr/babel-plugin-add-jsx-attribute@^5.4.0":
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-5.4.0.tgz#81ef61947bb268eb9d50523446f9c638fb355906"
@@ -5598,6 +5603,13 @@ prettier@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.2.1.tgz#795a1a78dd52f073da0cd42b21f9c91381923ff5"
   integrity sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
+
+prisma@^2.20.0:
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/prisma/-/prisma-2.20.0.tgz#3b7562326f764b4785e92bc83741b91ff2264be7"
+  integrity sha512-z8zCFxOA4rVy49GHzxx886dDMTmM3oh6GPRvatujshTqJeD+znJS4sxekVfjmTp0zX1aO92wBd3J6yon5DE1jg==
+  dependencies:
+    "@prisma/engines" "2.20.0-26.60ba6551f29b17d7d6ce479e5733c70d9c00860e"
 
 process-nextick-args@~2.0.0:
   version "2.0.1"

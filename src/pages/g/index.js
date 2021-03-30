@@ -24,35 +24,7 @@ const Grove = (props) => {
   return (
     <WorkspaceProvider>
       <Layout {...props}>
-        <GrovesCanvas {...props}>
-          {selectedChannel && selectedChannel.channel
-            ? selectedChannel.channel.initial_contents.map((blokk, i) => {
-                return (
-                  <DraggableBlock
-                    title={blokk.title ? blokk.title : null}
-                    type={blokk.__typename}
-                    dragStates={dragStates}
-                    setDragStates={setDragStates}
-                    key={blokk.id}
-                    block={blokk}
-                    {...props}
-                  />
-                );
-              })
-            : initialSelection.channel.initial_contents.map((blokk, i) => {
-                return (
-                  <DraggableBlock
-                    title={blokk.title ? blokk.title : null}
-                    type={blokk.__typename}
-                    dragStates={dragStates}
-                    setDragStates={setDragStates}
-                    key={blokk.id}
-                    block={blokk}
-                    {...props}
-                  />
-                );
-              })}
-        </GrovesCanvas>
+        <button>New grove</button>
       </Layout>
     </WorkspaceProvider>
   );

@@ -36,7 +36,9 @@ const SelectionPanel = React.memo((props) => {
     const query = selectedConnection.__typename === 'Channel' ? SELECTED_CHANNEL : SELECTED_BLOCK;
 
     const [tagState, setTagState] = useState({
-      tags: selectedConnection.current_user_channels.map((channel) => channel)
+      tags: selectedConnection.current_user_channels
+        .map((chanel) => chanel)
+        .filter((channel) => channel.id !== parseInt(router.query.grove))
     });
 
     const filterTags = (query, tag) => {

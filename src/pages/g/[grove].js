@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import DraggableBlock from '~/src/components/Block';
 // import { ADD_BLOCK } from '~/src/graphql/mutations';
+// import { useWorkspace } from '@context/workspace-context';
 import createBlock from '~/src/components/Block/mutations/createBlock';
 import GrovesCanvas from '~/src/components/Canvas';
 import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
@@ -15,6 +16,7 @@ import KeyMapDialog from '~/src/components/KeyMapDialog';
 import Layout from '~/src/components/Layout';
 import withApollo from '~/src/hooks/withApollo';
 import { withAuthSync } from '~/src/utils/auth';
+import { Button } from '@blueprintjs/core';
 
 const Grove = (props) => {
   const router = useRouter();
@@ -27,7 +29,7 @@ const Grove = (props) => {
 
   const { apollo } = props;
 
-  const { workspaceOptions, formations } = useWorkspace();
+  const { workspaceOptions, formations, setWorkspaceOptions } = useWorkspace();
   const { formation } = workspaceOptions;
 
   const {
@@ -124,50 +126,66 @@ const Grove = (props) => {
     [files]
   );
 
-  const renderFormation = (formation) => {
-    if (formation.key === formations.CANVAS.key) {
-      return (
-        <Layout {...props}>
-          <GrovesCanvas {...props}>
-            <div className="canvas-container">
-              {canvasBlocks.length ? (
-                canvasBlocks.map((blokk, i) => (
-                  <>
-                    <DraggableBlock
-                      title={blokk.title ? blokk.title : null}
-                      type={blokk.__typename}
-                      dragStates={dragStates}
-                      setDragStates={setDragStates}
-                      panZoomRef={props.panZoomRef}
-                      key={blokk.id}
-                      block={blokk}
-                      bounds="window"
-                      {...props}
-                    />
-                  </>
-                ))
-              ) : (
-                <div>not found</div>
-              )}
+  const _switchToGridFormation = () => {
+    setWorkspaceOptions({
+      ...workspaceOptions,
+      formation: formations.GRID
+    });
+  };
 
-              {files.map((file) => (
+  // const { workspaceOptions, setWorkspaceOptions, formations } = useWorkspace();
+
+  const renderFormation = (formation) => {
+
+    if (formation.key === formations.CANVAS.key) {
+      if (canvasBlocks.length > 0) {
+        return (
+          <Layout {...props}>
+            <GrovesCanvas {...props}>
+              <div className="canvas-container">
+                ( canvasBlocks.map((blokk, i) => (
                 <>
                   <DraggableBlock
-                    title={file.block.title}
-                    type={file.block.__typename}
+                    title={blokk.title ? blokk.title : null}
+                    type={blokk.__typename}
                     dragStates={dragStates}
                     setDragStates={setDragStates}
-                    key={file.block.id}
-                    block={file.block}
+                    panZoomRef={props.panZoomRef}
+                    key={blokk.id}
+                    block={blokk}
                     bounds="window"
                     {...props}
                   />
                 </>
-              ))}
-            </div>
-          </GrovesCanvas>
-        </Layout>
-      );
+                )) )
+                {files.map((file) => (
+                  <>
+                    <DraggableBlock
+                      title={file.block.title}
+                      type={file.block.__typename}
+                      dragStates={dragStates}
+                      setDragStates={setDragStates}
+                      key={file.block.id}
+                      block={file.block}
+                      bounds="window"
+                      {...props}
+                    />
+                  </>
+                ))}
+              </div>
+            </GrovesCanvas>
+          </Layout>
+        );
+      } else {
+        return (
+          <div className={`loading-screen fullscreen`}>
+            <p style={{
+              marginBottom: 20
+            }}>You can blocks to your canvas using the Grid View.</p>
+            <Button onClick={_switchToGridFormation} icon={formations.GRID.icon}>Switch to Grid View</Button>
+          </div>
+        )
+      }
     } else if (formation.key === formations.GRID.key) {
       if (selectedChannel && selectedChannel.channel) {
         return <Grid blocks={selectedChannel.channel.initial_contents} />;

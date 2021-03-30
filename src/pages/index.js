@@ -13,6 +13,7 @@ import { ToastContainer } from 'react-toastify';
 import { WorkspaceProvider } from '@context/workspace-context';
 import GrovesCanvas from '@components/Canvas';
 import { withAuthSync } from '../utils/auth';
+import { parseCookies } from 'nookies';
 
 const GET_LANDING_BLOCKS = gql`
   {
@@ -91,5 +92,16 @@ const Root = (props) => {
     </SelectionProvider>
   );
 };
+
+export async function getServerSideProps(context) {
+  if (parseCookies(context)['access_token']) {
+    context.res.writeHead(301, { Location: '/g' });
+    context.res.end();
+  }
+
+  return {
+    props: {}
+  };
+}
 
 export default withApollo(withAuthSync(Root));
