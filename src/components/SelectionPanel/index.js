@@ -24,6 +24,8 @@ import {
   UPDATE_CONNECTION
 } from '~/src/graphql/mutations';
 import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/graphql/queries';
+import ChevronDown from '~/public/chevron-down.svg';
+import ChevronUp from '~/public/chevron-up.svg';
 
 const SelectionPanel = React.memo((props) => {
   const router = useRouter();
@@ -110,6 +112,8 @@ const SelectionPanel = React.memo((props) => {
         }
       }
     );
+
+    const [isExpanded, setIsExpanded] = useState(false);
 
     const handleTitleChange = (e, connectable) => {
       if (connectable.__typename === 'Channel') {
@@ -300,7 +304,11 @@ const SelectionPanel = React.memo((props) => {
 
     if (loading) {
       return (
-        <div className="selection-panel">
+        <div
+          className="selection-panel"
+          style={{
+            maxHeight: isExpanded ? 'unset' : '170px'
+          }}>
           <div className="header">
             <p className="title">Selection</p>
             <button
@@ -344,7 +352,8 @@ const SelectionPanel = React.memo((props) => {
       <div
         className="panel selection-panel"
         style={{
-          right: selectedConnection !== null ? '15px' : '-315px'
+          right: selectedConnection !== null ? '15px' : '-315px',
+          maxHeight: isExpanded ? 'unset' : '170px'
         }}>
         <div className="header">
           <p className="title">Selection</p>
@@ -413,6 +422,33 @@ const SelectionPanel = React.memo((props) => {
               </AnchorButton>
             </div>
           </div>
+          <section
+            onClick={() => setIsExpanded(!isExpanded)}
+            style={{
+              position: 'absolute',
+              bottom: '0.3rem',
+              left: '0',
+              right: '0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: '10'
+            }}>
+            <p
+              style={{
+                fontSize: '0.7rem',
+                letterSpacing: '0.6px',
+                color: '#86878a',
+                textTransform: 'uppercase'
+              }}>
+              {isExpanded ? 'Minimize' : 'Expand'}
+            </p>
+            {isExpanded ? (
+              <ChevronUp style={{ color: '#86878a' }} />
+            ) : (
+              <ChevronDown style={{ color: '#86878a' }} />
+            )}
+          </section>
           <div className="section">
             <p className="section__title">Description</p>
             <EditableText

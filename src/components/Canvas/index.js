@@ -71,7 +71,7 @@ export default withApollo((props) => {
   return (
     <>
       {selectedConnection && <SelectionPanel />}
-      <div
+      {/* <div
         className="zoomTools"
         style={{
           right: selectedConnection ? '330px' : '15px'
@@ -112,7 +112,7 @@ export default withApollo((props) => {
             <path d="M5 6.875H8.75" stroke="#6F7B8A" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
-      </div>
+      </div> */}
       <PanZoom
         ref={panZoomRef}
         preventPan={preventPan}

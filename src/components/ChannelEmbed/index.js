@@ -66,20 +66,22 @@ export default withApollo(
         </div>
         <div className="nested-canvas">
           <GrovesCanvas>
-            {data.channel &&
-              data.channel.initial_contents.map((blokk, i) => {
-                return (
-                  <DraggableBlock
-                    title={blokk.title ? blokk.title : null}
-                    type={blokk.__typename}
-                    dragStates={dragStates}
-                    setDragStates={setDragStates}
-                    key={blokk.id}
-                    block={blokk}
-                    {...props}></DraggableBlock>
-                );
-              })}
-          </GrovesCanvas>
+            <div className="canvas-container">
+              {data.channel &&
+                data.channel.initial_contents.map((block, i) => {
+                  return (
+                    <DraggableBlock
+                      title={block.title ? block.title : null}
+                      type={block.__typename}
+                      dragStates={dragStates}
+                      setDragStates={setDragStates}
+                      key={block.id}
+                      block={block}
+                      {...props}></DraggableBlock>
+                  );
+                })}
+          </div>
+            </GrovesCanvas>
         </div>
       </>
     );

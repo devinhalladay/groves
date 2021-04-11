@@ -17,6 +17,7 @@ import Layout from '~/src/components/Layout';
 import withApollo from '~/src/hooks/withApollo';
 import { withAuthSync } from '~/src/utils/auth';
 import { Button } from '@blueprintjs/core';
+import { LookoutVision } from 'aws-sdk';
 
 const Grove = (props) => {
   const router = useRouter();
@@ -136,28 +137,27 @@ const Grove = (props) => {
   // const { workspaceOptions, setWorkspaceOptions, formations } = useWorkspace();
 
   const renderFormation = (formation) => {
-
     if (formation.key === formations.CANVAS.key) {
-      if (canvasBlocks.length > 0) {
+      if (canvasBlocks && canvasBlocks.length > 0) {
         return (
           <Layout {...props}>
             <GrovesCanvas {...props}>
               <div className="canvas-container">
-                ( canvasBlocks.map((blokk, i) => (
-                <>
-                  <DraggableBlock
-                    title={blokk.title ? blokk.title : null}
-                    type={blokk.__typename}
-                    dragStates={dragStates}
-                    setDragStates={setDragStates}
-                    panZoomRef={props.panZoomRef}
-                    key={blokk.id}
-                    block={blokk}
-                    bounds="window"
-                    {...props}
-                  />
-                </>
-                )) )
+                {canvasBlocks.map((block, i) => (
+                            <>
+                              <DraggableBlock
+                                title={block.title ? block.title : null}
+                                type={block.__typename}
+                                dragStates={dragStates}
+                                setDragStates={setDragStates}
+                                panZoomRef={props.panZoomRef}
+                                key={block.id}
+                                block={block}
+                                bounds="window"
+                                {...props}
+                              />
+                            </>
+                ))}
                 {files.map((file) => (
                   <>
                     <DraggableBlock
@@ -179,12 +179,17 @@ const Grove = (props) => {
       } else {
         return (
           <div className={`loading-screen fullscreen`}>
-            <p style={{
-              marginBottom: 20
-            }}>You can blocks to your canvas using the Grid View.</p>
-            <Button onClick={_switchToGridFormation} icon={formations.GRID.icon}>Switch to Grid View</Button>
+            <p
+              style={{
+                marginBottom: 20
+              }}>
+              You can blocks to your canvas using the Grid View.
+            </p>
+            <Button onClick={_switchToGridFormation} icon={formations.GRID.icon}>
+              Switch to Grid View
+            </Button>
           </div>
-        )
+        );
       }
     } else if (formation.key === formations.GRID.key) {
       if (selectedChannel && selectedChannel.channel) {
