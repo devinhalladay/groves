@@ -1,9 +1,9 @@
-import { useMutation } from '@apollo/client';
+import { ApolloClient, useMutation, useQuery } from '@apollo/client';
 import Grid from '@components/Formations/components/Grid';
 import { useSelection } from '@context/selection-context';
 import { useWorkspace } from '@context/workspace-context';
 import { useRouter } from 'next/router';
-import { parseCookies } from 'nookies';
+import nookies, { parseCookies } from 'nookies';
 import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import DraggableBlock from '~/src/components/Block';
@@ -18,8 +18,10 @@ import withApollo from '~/src/hooks/withApollo';
 import { withAuthSync } from '~/src/utils/auth';
 import { Button } from '@blueprintjs/core';
 import { LookoutVision } from 'aws-sdk';
+import { CHANNEL_SKELETON } from '~/src/graphql/queries';
+import { initializeApollo, addApolloState } from '~/src/lib/apolloClient';
 
-const Grove = (props) => {
+const Grove = ({ data, initialSelection, ...props }) => {
   const router = useRouter();
 
   const [dragStates, setDragStates] = useState({
@@ -39,10 +41,21 @@ const Grove = (props) => {
     selectedRef,
     setSelectedRef,
     selectedChannel,
-    initialSelection
+    channelID
   } = useSelection();
 
   const [files, setFiles] = useState([]);
+
+  const { loading, error, data: channelSkeleton, fetchMore, networkStatus } = useQuery(CHANNEL_SKELETON, {
+    variables: { channelId: channelID },
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: 'no-cache',
+    client: apollo,
+    // Setting this value to true will make the component rerender when
+    // the "networkStatus" changes, so we are able to know if it is fetching
+    // more data
+    notifyOnNetworkStatusChange: true
+  });
 
   const [connectBlock, { loading: mutationLoading, error: mutationError }] = useMutation(
     createBlock,
@@ -58,83 +71,12 @@ const Grove = (props) => {
     }
   );
 
-  // const onDrop = useCallback((acceptedFiles) => {
-  //   acceptedFiles.map(async (file) => {
-  //     setFiles(
-  //       files.concat(
-  //         Object.assign(file, {
-  //           block: {
-  //             __typename: "Image",
-  //             description: null,
-  //             title: file.name,
-  //             id: router.query.grove,
-  //             image_url: URL.createObjectURL(file),
-  //           },
-  //         })
-  //       )
-  //     );
-
-  //     const res = await fetch(
-  //       `${process.env.APPLICATION_API_CALLBACK}/${process.env.APPLICATION_API_PATH}/add-block`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           "Access-Control-Allow-Origin": "*",
-  //         },
-  //         body: JSON.stringify({
-  //           path: file.path,
-  //           type: file.type,
-  //           name: file.name,
-  //         }),
-  //       }
-  //     );
-
-  //     res.json().then(({ signedRequest, url }) => {
-  //       fetch(signedRequest, {
-  //         method: "PUT",
-  //         body: file,
-  //         headers: {
-  //           "Content-Type": file.type,
-  //         },
-  //       }).then((res) => {
-  //         console.log(res);
-
-  //         connectBlock({
-  //           variables: {
-  //             channelId: router.query.grove,
-  //             value: url,
-  //           },
-  //         });
-  //       });
-  //     });
-  //   });
-  // }, []);
-
-  // const {
-  //   getRootProps,
-  //   getInputProps,
-  // } = useDropzone({
-  //   onDrop,
-  //   noClick: true,
-  // });
-
-  useEffect(
-    () => () => {
-      // Make sure to revoke the data uris to avoid memory leaks
-      files.forEach((file) => URL.revokeObjectURL(file.block.image_url));
-    },
-    [files]
-  );
-
   const _switchToGridFormation = () => {
     setWorkspaceOptions({
       ...workspaceOptions,
       formation: formations.GRID
     });
   };
-
-  // const { workspaceOptions, setWorkspaceOptions, formations } = useWorkspace();
 
   const renderFormation = (formation) => {
     if (formation.key === formations.CANVAS.key) {
@@ -144,19 +86,19 @@ const Grove = (props) => {
             <GrovesCanvas {...props}>
               <div className="canvas-container">
                 {canvasBlocks.map((block, i) => (
-                            <>
-                              <DraggableBlock
-                                title={block.title ? block.title : null}
-                                type={block.__typename}
-                                dragStates={dragStates}
-                                setDragStates={setDragStates}
-                                panZoomRef={props.panZoomRef}
-                                key={block.id}
-                                block={block}
-                                bounds="window"
-                                {...props}
-                              />
-                            </>
+                  <>
+                    <DraggableBlock
+                      title={block.title ? block.title : null}
+                      type={block.__typename}
+                      dragStates={dragStates}
+                      setDragStates={setDragStates}
+                      panZoomRef={props.panZoomRef}
+                      key={block.id}
+                      block={block}
+                      bounds="window"
+                      {...props}
+                    />
+                  </>
                 ))}
                 {files.map((file) => (
                   <>
@@ -194,8 +136,8 @@ const Grove = (props) => {
     } else if (formation.key === formations.GRID.key) {
       if (selectedChannel && selectedChannel.channel) {
         return <Grid blocks={selectedChannel.channel.initial_contents} />;
-      } else {
-        return <Grid blocks={initialSelection.channel.initial_contents} />;
+      } else if (channelSkeleton && channelSkeleton.channel) {
+        return <Grid blocks={channelSkeleton.channel.initial_contents} />;
       }
     } else if (formation.key === formations.CHANNEL_INDEX.key) {
       return <ChannelIndex />;
@@ -223,14 +165,27 @@ const Grove = (props) => {
 };
 
 export async function getServerSideProps(context) {
-  if (!parseCookies(context)['access_token']) {
+  const cookies = nookies.get(context);
+
+  if (!cookies.access_token) {
     context.res.writeHead(301, { Location: '/' });
     context.res.end();
   }
 
-  return {
-    props: {}
-  };
+  const apolloClient = initializeApollo(cookies.access_token);
+
+  const channelId = context.query.grove;
+
+  const res = await apolloClient.query({
+    query: CHANNEL_SKELETON,
+    variables: {
+      channelId: channelId
+    }
+  });
+
+  return addApolloState(apolloClient, {
+    props: { initialSelection: res.data }
+  });
 }
 
 export default withApollo(withAuthSync(Grove));

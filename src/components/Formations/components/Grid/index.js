@@ -7,7 +7,10 @@ import { Card } from '@blueprintjs/core';
 import SelectionPanel from '~/src/components/SelectionPanel';
 
 const Grid = (props) => {
+  console.log('blocks');
   const { blocks } = props;
+
+  console.log(blocks);
 
   const {
     selectedConnection,

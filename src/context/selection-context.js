@@ -1,4 +1,4 @@
-import { NetworkStatus, useQuery } from '@apollo/client';
+import { NetworkStatus, useLazyQuery, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { createContext, useContext, useState } from 'react';
 import Loading from '~/src/components/Loader';
@@ -26,27 +26,33 @@ const SelectionProvider = withApollo((props) => {
     } else if (router.query.grove) {
       return router.query.grove;
     } else {
-      console.log('landing');
-      return '924348';
+      // console.log('landing');
+      // return '924348';
+      return null;
     }
   };
 
-  const { loading, error, data: channelSkeleton, refetch, networkStatus } = useQuery(
+  const channelID = getChannelID();
+
+  const [loadSkeleton, { called, loading, data: channelSkeleton }] = useLazyQuery(
     CHANNEL_SKELETON,
     {
       variables: {
-        channelId: getChannelID()
+        channelId: channelID
       },
-      fetchPolicy: 'no-cache',
       client: props.apollo
     }
   );
 
-  if (networkStatus === NetworkStatus.refetch) return 'Refetching!';
+  console.log(channelID);
 
-  if (loading) {
+  // if (channelID !== null) {
+  //   loadSkeleton();
+  // }
+
+  if (typeof loading !== 'undefined' && loading == true) {
     return <Loading fullScreen="true" description={'Loading your Grove :)'} />;
-  } else if (error) {
+  } else if (typeof error !== 'undefined' && error !== null) {
     console.error(error);
     return `Error: ${error}`;
   }
@@ -65,6 +71,7 @@ const SelectionProvider = withApollo((props) => {
         setSelectedRef,
         canvasBlocks,
         setCanvasBlocks,
+        channelID,
         selections,
         setSelections
       }}

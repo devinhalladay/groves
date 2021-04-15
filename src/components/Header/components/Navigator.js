@@ -53,14 +53,11 @@ const GrovesNavigator = (props) => {
         onChange={(selection) => {
           if (selection) {
             router.push(`/g/[grove]`, `/g/${selection.id}`, { shallow: true });
-          } else {
-            initialSelection.channel;
           }
         }}
         itemToString={(item) => (item ? item.title : '')}
-        // isOpen={isOpen}
-        initialSelectedItem={initialSelection.channel}
-        initialInputValue={initialSelection.channel.title}>
+        initialSelectedItem={(typeof initialSelection !== 'undefined' && initialSelection !== null) ? initialSelection.channel : null}
+        initialInputValue={(typeof initialSelection !== 'undefined' && initialSelection !== null) ? initialSelection.channel.title : null}>
         {({
           getInputProps,
           getItemProps,
