@@ -49,7 +49,7 @@ const UnauthenticatedHeader = (props) => {
   );
 };
 
-const AuthenticatedHeader = (props) => {
+const AuthenticatedHeader = ({ initialSelection }) => {
   const { hasPreviousSession } = useAuth();
 
   if (!process.env.AUTHENTICATION_ENABLED) {
@@ -113,7 +113,7 @@ const AuthenticatedHeader = (props) => {
                 </svg>
                 <GrovesMenu />
               </div>
-              <GrovesNavigator />
+              <GrovesNavigator initialSelection={initialSelection} />
             </Navbar.Group>
           </Navbar>
         </Panel>

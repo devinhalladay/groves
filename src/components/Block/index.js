@@ -246,6 +246,7 @@ const DraggableBlock = ({
       key={block.id}
       size={{ width: spatialState.width, height: spatialState.height }}
       scale={zoomScale}
+      maxWidth="100%"
       position={{
         x: spatialState.x,
         y: spatialState.y
@@ -254,7 +255,7 @@ const DraggableBlock = ({
         handleDragStart(e);
       }}
       // disableDragging={spatialState.isExpanded}
-      // bounds={'window'}
+      bounds={'window'}
       onDrag={(e, d) => {
         handleDrag(e, d);
       }}

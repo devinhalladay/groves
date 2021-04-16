@@ -127,7 +127,8 @@ export default withApollo((props) => {
           width: '100vw',
           height: '100vh',
           WebkitFilter: 'blur(0)',
-          willChange: 'unset'
+          willChange: 'unset',
+          position: 'relative'
         }}
         maxZoom={3}
         onPanStart={(e) => {

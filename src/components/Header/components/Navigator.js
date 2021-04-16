@@ -6,26 +6,15 @@ import { useSelection } from '@context/selection-context';
 import { useUser } from '@context/user-context';
 import KeyMaps from '~/src/constants/KeyMaps';
 
-const GrovesNavigator = (props) => {
+const GrovesNavigator = ({initialSelection}) => {
   const router = useRouter();
 
   const { channels, index } = useUser();
-  const { selectedChannel, setSelectedChannel, initialSelection } = useSelection();
-
-  // TODO: think about handling initial selection logic here
-  // rather than in [grove].js itself. I think it would be
-  // pretty nice to have all selection logic in one place,
-  // and actually maybe I can create a state subscription in
-  // the SelectionProvider so subcomponents can subscribe to
-  // SelectionProvider's state and re-render when selection changes.
-  // This would prevent having to thread the selectedChannel
-  // through to every child component that needs it.
+  const { selectedChannel, setSelectedChannel } = useSelection();
 
   const allUserChannels = index.flatMap((channelSet) => channelSet.channels.flatMap((c) => c));
 
   const [inputItems, setInputItems] = useState(allUserChannels);
-
-  // const [isOpen, setIsOpen] = useState(false);
 
   const inputRef = useRef(null);
 

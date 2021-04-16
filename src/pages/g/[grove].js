@@ -7,6 +7,8 @@ import nookies, { parseCookies } from 'nookies';
 import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import DraggableBlock from '~/src/components/Block';
+import Loading from '~/src/components/Loader';
+
 // import { ADD_BLOCK } from '~/src/graphql/mutations';
 // import { useWorkspace } from '@context/workspace-context';
 import createBlock from '~/src/components/Block/mutations/createBlock';
@@ -46,16 +48,19 @@ const Grove = ({ data, initialSelection, ...props }) => {
 
   const [files, setFiles] = useState([]);
 
-  const { loading, error, data: channelSkeleton, fetchMore, networkStatus } = useQuery(CHANNEL_SKELETON, {
-    variables: { channelId: channelID },
-    notifyOnNetworkStatusChange: true,
-    fetchPolicy: 'no-cache',
-    client: apollo,
-    // Setting this value to true will make the component rerender when
-    // the "networkStatus" changes, so we are able to know if it is fetching
-    // more data
-    notifyOnNetworkStatusChange: true
-  });
+  const { loading, error, data: channelSkeleton, fetchMore, networkStatus } = useQuery(
+    CHANNEL_SKELETON,
+    {
+      variables: { channelId: channelID },
+      notifyOnNetworkStatusChange: true,
+      fetchPolicy: 'no-cache',
+      client: apollo,
+      // Setting this value to true will make the component rerender when
+      // the "networkStatus" changes, so we are able to know if it is fetching
+      // more data
+      notifyOnNetworkStatusChange: true
+    }
+  );
 
   const [connectBlock, { loading: mutationLoading, error: mutationError }] = useMutation(
     createBlock,
@@ -86,33 +91,17 @@ const Grove = ({ data, initialSelection, ...props }) => {
             <GrovesCanvas {...props}>
               <div className="canvas-container">
                 {canvasBlocks.map((block, i) => (
-                  <>
-                    <DraggableBlock
-                      title={block.title ? block.title : null}
-                      type={block.__typename}
-                      dragStates={dragStates}
-                      setDragStates={setDragStates}
-                      panZoomRef={props.panZoomRef}
-                      key={block.id}
-                      block={block}
-                      bounds="window"
-                      {...props}
-                    />
-                  </>
-                ))}
-                {files.map((file) => (
-                  <>
-                    <DraggableBlock
-                      title={file.block.title}
-                      type={file.block.__typename}
-                      dragStates={dragStates}
-                      setDragStates={setDragStates}
-                      key={file.block.id}
-                      block={file.block}
-                      bounds="window"
-                      {...props}
-                    />
-                  </>
+                  <DraggableBlock
+                    title={block.title ? block.title : null}
+                    type={block.__typename}
+                    dragStates={dragStates}
+                    setDragStates={setDragStates}
+                    panZoomRef={props.panZoomRef}
+                    key={block.id}
+                    block={block}
+                    bounds="parent"
+                    {...props}
+                  />
                 ))}
               </div>
             </GrovesCanvas>
@@ -138,6 +127,8 @@ const Grove = ({ data, initialSelection, ...props }) => {
         return <Grid blocks={selectedChannel.channel.initial_contents} />;
       } else if (channelSkeleton && channelSkeleton.channel) {
         return <Grid blocks={channelSkeleton.channel.initial_contents} />;
+      } else {
+        return <Loading fullScreen="true" description="Loading blocks..." />
       }
     } else if (formation.key === formations.CHANNEL_INDEX.key) {
       return <ChannelIndex />;
