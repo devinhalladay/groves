@@ -12,7 +12,7 @@ import { useSelection } from '../../context/selection-context';
 import { useAuth } from '../../context/auth-context';
 import { useWorkspace } from '../../context/workspace-context';
 import { Card, Elevation } from '@blueprintjs/core';
-import BlockContextMenu from '../ContextMenu';
+import BlockContextMenu from '../BlockContextMenu';
 
 // TODO: Need to break up this component, it's all kinds of fucked up
 // and recursively renders itself via InlineExpandedChannel which

@@ -1,19 +1,13 @@
-import Tippy from '@tippyjs/react';
-import { useState, useRef, useEffect, useCallback, forwardRef } from 'react';
-import { useCombobox } from 'downshift';
-import { useLazyQuery, useMutation } from '@apollo/client';
-import { SEARCH_ALL_CHANNELS } from '~/src/graphql/queries';
-import { useUser } from '../../../context/user-context';
-import { useRouter } from 'next/router';
-import { CREATE_CONNECTION } from '~/src/graphql/mutations';
-import createBlock from '~/src/components/Block/mutations/createBlock';
-import { ToastContainer, toast } from 'react-toastify';
-import { useSelection } from '../../../context/selection-context';
-import { useDropzone } from 'react-dropzone';
+import { useMutation } from '@apollo/client';
 import { Button, Colors, Intent, Popover, TextArea } from '@blueprintjs/core';
-import ActionIcon from '~/public/create-block.svg';
-import { useTheme } from '~/src/context/theme-provider';
 import { Icons } from '@blueprintjs/icons';
+import { useRouter } from 'next/router';
+import { forwardRef, useCallback, useRef, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { toast } from 'react-toastify';
+import ActionIcon from '~/public/create-block.svg';
+import createBlock from '~/src/components/Block/mutations/createBlock';
+import { useTheme } from '~/src/context/theme-provider';
 
 const CreateBlock = (props) => {
   const [visible, setVisible] = useState(false);

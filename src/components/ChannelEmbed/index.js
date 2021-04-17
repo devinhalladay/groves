@@ -5,6 +5,7 @@ import DraggableBlock from '~/src/components/Block';
 import GrovesCanvas from '~/src/components/Canvas';
 import withApollo from '~/src/hooks/withApollo';
 import { CHANNEL_SKELETON } from '~/src/graphql/queries';
+import Grid from '../Formations/components/Grid';
 
 export default withApollo(
   ({
@@ -65,23 +66,7 @@ export default withApollo(
           </button>
         </div>
         <div className="nested-canvas">
-          <GrovesCanvas>
-            <div className="canvas-container">
-              {data.channel &&
-                data.channel.initial_contents.map((block, i) => {
-                  return (
-                    <DraggableBlock
-                      title={block.title ? block.title : null}
-                      type={block.__typename}
-                      dragStates={dragStates}
-                      setDragStates={setDragStates}
-                      key={block.id}
-                      block={block}
-                      {...props}></DraggableBlock>
-                  );
-                })}
-          </div>
-            </GrovesCanvas>
+          {data.channel && <Grid blocks={data.channel.initial_contents} />}
         </div>
       </>
     );

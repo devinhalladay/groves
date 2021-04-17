@@ -1,7 +1,7 @@
 import { Card } from '@blueprintjs/core';
 import React from 'react';
 import BlockRepresentation from '~/src/components/Block/components/BlockRepresentation';
-import BlockContextMenu from '~/src/components/ContextMenu';
+import BlockContextMenu from '~/src/components/BlockContextMenu';
 import SelectionPanel from '~/src/components/SelectionPanel';
 import { useSelection } from '~/src/context/selection-context';
 import { useWorkspace } from '~/src/context/workspace-context';

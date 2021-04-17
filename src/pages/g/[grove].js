@@ -51,7 +51,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
     CHANNEL_SKELETON,
     {
       variables: { channelId: channelID },
-      // fetchPolicy: 'no-cache',
+      fetchPolicy: 'no-cache',
       client: apollo,
       // Setting this value to true will make the component rerender when
       // the "networkStatus" changes, so we are able to know if it is fetching

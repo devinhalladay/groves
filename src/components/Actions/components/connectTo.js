@@ -1,16 +1,14 @@
-import Tippy from '@tippyjs/react';
-import { useState, useRef, useEffect, forwardRef } from 'react';
+import { useMutation } from '@apollo/client';
+import { Button, Colors, Popover } from '@blueprintjs/core';
 import { useCombobox } from 'downshift';
-import { useLazyQuery, useMutation } from '@apollo/client';
-import { SEARCH_ALL_CHANNELS } from '~/src/graphql/queries';
-import { useUser } from '../../../context/user-context';
 import { useRouter } from 'next/router';
-import { CREATE_CONNECTION } from '~/src/graphql/mutations';
-import { ToastContainer, toast } from 'react-toastify';
-import { useSelection } from '../../../context/selection-context';
-import { Button, Colors } from '@blueprintjs/core';
+import { forwardRef, useEffect, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 import LinkGrovesIcon from '~/public/link-groves.svg';
 import { useTheme } from '~/src/context/theme-provider';
+import { CREATE_CONNECTION } from '~/src/graphql/mutations';
+import { useSelection } from '../../../context/selection-context';
+import { useUser } from '../../../context/user-context';
 
 const renderResult = (inputItem) => {
   return (
@@ -165,26 +163,19 @@ const ConnectTo = (props) => {
   };
 
   return (
-    <Tippy
-      interactive={true}
-      interactiveBorder={20}
-      arrow={false}
-      placement="bottom-end"
-      delay={100}
+    <Popover
       content={
         <>
           <p className="title">Link with another Grove</p>
           <div className="input--inline">
             <DropdownCombobox />
             {/* <label for="channel">Channel Name</label>
-            <input type="text" name="channel" ref={inputElement} id="channel" /> */}
+        <input type="text" name="channel" ref={inputElement} id="channel" /> */}
           </div>
         </>
-      }
-      visible={visible}
-      onClickOutside={hide}>
+      }>
       <ActionButton />
-    </Tippy>
+    </Popover>
   );
 };
 

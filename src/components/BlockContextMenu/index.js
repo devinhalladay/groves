@@ -18,7 +18,7 @@ const BlockContextMenu = (props) => {
     <ContextMenu
       content={
         <Menu>
-          {props.formation === Formations.GRID ? (
+          {props.formation.key === Formations.GRID.key ? (
             <MenuItem
               icon='send-to'
               onClick={props.handleBlockClick}
