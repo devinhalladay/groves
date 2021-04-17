@@ -1,6 +1,6 @@
 import { ContextMenu, Menu, MenuItem } from "@blueprintjs/core";
 import { ContextMenu2 } from "@blueprintjs/popover2";
-import { IconNames } from "@blueprintjs/icons";
+import { Icons } from "@blueprintjs/icons";
 import Formations from "~/src/constants/Formations";
 import { useSelection } from "~/src/context/selection-context";
 
@@ -29,19 +29,19 @@ const BlockContextMenu = (props) => {
         <Menu>
           {props.formation === Formations.GRID ? (
             <MenuItem
-              icon={IconNames.SEND_TO}
+              icon={Icons.SendTo}
               onClick={props.handleBlockClick}
               text="Add to canvas"
             />
           ) : (
             <MenuItem
-              icon={IconNames.REMOVE}
+              icon={Icons.Remove}
               onClick={removeFromCanvas}
               text="Remove from canvas"
             />
           )}
           <MenuItem
-            icon={IconNames.TRASH}
+            icon={Icons.Trash}
             onClick={props.handleBlockClick}
             text="Delete connection"
           />

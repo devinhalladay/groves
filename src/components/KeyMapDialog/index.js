@@ -1,12 +1,10 @@
-import { Button, Dialog } from '@blueprintjs/core';
-import { getApplicationKeyMap, GlobalHotKeys } from 'react-hotkeys';
-import { IconNames } from '@blueprintjs/icons';
-import { Code, KeyComboTag } from '@blueprintjs/core';
-import { useState } from 'react';
-import { useSelection } from '@context/selection-context';
+import { Button, Dialog, KeyComboTag } from '@blueprintjs/core';
+import { Icons } from '@blueprintjs/icons';
 import { useWorkspace } from '@context/workspace-context';
-import KeyMaps from '~/src/constants/KeyMaps';
+import { useState } from 'react';
+import { getApplicationKeyMap, GlobalHotKeys } from 'react-hotkeys';
 import Formations from '~/src/constants/Formations';
+import KeyMaps from '~/src/constants/KeyMaps';
 
 const KeyMapDialog = () => {
   const globalKeyMap = getApplicationKeyMap();
@@ -29,17 +27,18 @@ const KeyMapDialog = () => {
         style={{
           position: 'fixed',
           bottom: 15,
-          right: formation.key === Formations.CANVAS.key ? 55 : 15
+          // right: formation.key === Formations.CANVAS.key ? 55 : 15
+          right: 15
         }}>
         <Button
           onClick={() => setIsOpen(true)}
-          icon={IconNames.HELP}
+          icon="help"
           large={true}
-          style={{ borderRadius: '100%' }}></Button>
+          style={{ borderRadius: '100%' }}/>
         {isOpen && (
           <Dialog
             title="Keyboard Shortcuts"
-            icon={IconNames.KEY}
+            icon={Icons.Key}
             isOpen={isOpen}
             onClose={() => setIsOpen(false)}>
             <div style={{ padding: 15 }}>

@@ -8,7 +8,7 @@ import {
   MenuItem,
   Tooltip
 } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
+import { Icons } from '@blueprintjs/icons';
 import { MultiSelect } from '@blueprintjs/select';
 import { useSelection } from '@context/selection-context';
 import parse from 'html-react-parser';
@@ -295,7 +295,7 @@ const SelectionPanel = React.memo((props) => {
             marginTop: 5,
             marginRight: 5
           }}>
-          <Icon icon={IconNames.INFO_SIGN} />
+          <Icon icon={Icons.InfoSign} />
         </div>
       </Tooltip>
     );
@@ -408,7 +408,7 @@ const SelectionPanel = React.memo((props) => {
               {selectedConnection.source_url && (
                 <AnchorButton
                   href={selectedConnection.source_url}
-                  icon={IconNames.LINK}
+                  icon={Icons.Link}
                   style={{ marginRight: 10 }}>
                   Source
                 </AnchorButton>
@@ -498,7 +498,7 @@ const SelectionPanel = React.memo((props) => {
               tagInputProps={{
                 // onRemove: handleTagRemove,
                 rightElement: explainElement(),
-                leftIcon: IconNames.TAG,
+                leftIcon: Icons.Tag,
                 tagProps: {
                   minimal: true
                 }

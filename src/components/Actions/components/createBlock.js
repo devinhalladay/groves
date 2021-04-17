@@ -13,7 +13,7 @@ import { useDropzone } from 'react-dropzone';
 import { Button, Colors, Intent, Popover, TextArea } from '@blueprintjs/core';
 import ActionIcon from '~/public/create-block.svg';
 import { useTheme } from '~/src/context/theme-provider';
-import { IconNames } from '@blueprintjs/icons';
+import { Icons } from '@blueprintjs/icons';
 
 const CreateBlock = (props) => {
   const [visible, setVisible] = useState(false);
@@ -135,11 +135,7 @@ const CreateBlock = (props) => {
   return (
     <Popover
       position="bottom"
-      style={{
-        padding: 15
-      }}>
-      <ActionButton />
-      <section style={{ padding: 15, width: 280, paddingTop: 25 }}>
+      content={<section style={{ padding: 15, width: 280, paddingTop: 25 }}>
         <p style={{ marginBottom: 15 }}>
           <strong>Create a new block</strong>
         </p>
@@ -169,7 +165,7 @@ const CreateBlock = (props) => {
                   justifyContent: 'space-between'
                 }}>
                 <Button>Cancel</Button>
-                <Button intent={Intent.PRIMARY} icon={IconNames.ADD} onClick={onSubmit}>
+                <Button intent={Intent.PRIMARY} icon={Icons.ADD} onClick={onSubmit}>
                   Create Block
                 </Button>
               </div>
@@ -198,7 +194,11 @@ const CreateBlock = (props) => {
             </>
           )}
         </div>
-      </section>
+      </section>}
+      style={{
+        padding: 15
+      }}>
+      <ActionButton />
     </Popover>
   );
 };

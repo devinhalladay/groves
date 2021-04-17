@@ -1,10 +1,7 @@
-import { Button, Icon, Colors } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
-import { useCallback } from 'react';
-import { GlobalHotKeys } from 'react-hotkeys';
-import KeyMaps from '~/src/constants/KeyMaps';
-import { useTheme } from '~/src/context/theme-provider';
+import { Button, Colors, Icon } from '@blueprintjs/core';
+import { Icons } from '@blueprintjs/icons';
 import MoonIcon from '~/public/moon.svg';
+import { useTheme } from '~/src/context/theme-provider';
 
 const DarkModeAction = () => {
   const { theme, setTheme } = useTheme();
@@ -20,7 +17,7 @@ const DarkModeAction = () => {
   return (
     <>
       <Button className="action" onClick={handleThemeSwitch} minimal={true}>
-        {theme === 'dark' ? <MoonIcon fill={Colors.WHITE} /> : <Icon icon={IconNames.FLASH} />}
+        {theme === 'dark' ? <MoonIcon fill={Colors.WHITE} /> : <Icon icon="flash" />}
       </Button>
     </>
   );

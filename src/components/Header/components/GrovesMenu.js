@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useAuth } from '@context/auth-context';
 import { useUser } from '@context/user-context';
 import { Menu, MenuItem, Popover } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
+import { Icons } from '@blueprintjs/icons';
 
 const GrovesMenu = () => {
   const router = useRouter();
@@ -12,8 +12,18 @@ const GrovesMenu = () => {
 
   const [showMenu, setShowMenu] = useState(false);
   const closeMenu = () => setShowMenu(false);
+
+  console.log('nav clicked');
+
   return (
-    <Popover position="bottom-left">
+    <Popover
+      position="bottom-left"
+      content={
+        <Menu>
+          <MenuItem icon={Icons.Clear} text={`Welcome, ${currentUser.me.name}`} />
+          <MenuItem icon={Icons.LogOut} text="Logout" onClick={logout} />
+        </Menu>
+      }>
       <button className="groves-menu-button">
         <div className="icon icon--caret-down">
           <svg
@@ -30,11 +40,6 @@ const GrovesMenu = () => {
           </svg>
         </div>
       </button>
-
-      <Menu>
-        <MenuItem icon={IconNames.CLEAN} text={`Welcome, ${currentUser.me.name}`} />
-        <MenuItem icon={IconNames.LOG_OUT} text="Logout" onClick={logout} />
-      </Menu>
     </Popover>
   );
 };

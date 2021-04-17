@@ -1,24 +1,22 @@
-import { IconNames } from "@blueprintjs/icons";
+import { Icons } from "@blueprintjs/icons";
 
-const Formations = {
+export default {
   GRID: {
     key: 'GRID',
     value: 'grid',
     title: 'Grid',
-    icon: IconNames.GRID_VIEW
+    icon: 'grid-view'
   },
   CANVAS: {
     key: 'CANVAS',
     value: 'canvas',
     title: 'Canvas',
-    icon: IconNames.WIDGET
+    icon: 'widget'
   },
   CHANNEL_INDEX: {
     key: 'CHANNEL_INDEX',
     value: 'channelIndex',
     title: 'Channel Index',
-    icon: IconNames.LIST_DETAIL_VIEW
+    icon: 'list-detail-view'
   }
 };
-
-export default Formations

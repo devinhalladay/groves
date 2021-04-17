@@ -9,7 +9,7 @@ import {
   Navbar,
   Popover
 } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
+import { Tick, GitMerge, Remove } from '@blueprintjs/icons';
 import withChannel from '@components/Channel';
 import { GET_SKELETON } from '@components/Channel/queries/getSkeleton';
 import React, { useEffect, useState } from 'react';
@@ -23,7 +23,7 @@ const ChannelMenuItem = (props) => {
   return (
     <MenuItem
       active={active}
-      icon={active ? IconNames.TICK : 'blank'}
+      icon={active ? Tick : 'blank'}
       text={selection.title}
       key={selection.id}
       onClick={onClick}
@@ -132,12 +132,12 @@ const MergeChannelsAction = (props) => {
         <Navbar.Divider />
         <Popover position="bottom-right">
           <Button className="action" minimal={true}>
-            <Icon icon={IconNames.GIT_MERGE} />
+            <Icon icon={GitMerge} />
           </Button>
           <section style={{ padding: 15, width: 450, paddingTop: 25 }}>
             <p style={{ marginBottom: 15 }}>
               <span style={{ paddingRight: 6 }}>
-                <Icon icon={IconNames.GIT_MERGE} />
+                <Icon icon={GitMerge} />
               </span>
               <strong>Merging {selections.length} channels</strong>
             </p>
@@ -181,7 +181,7 @@ const MergeChannelsAction = (props) => {
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <Button
                 large={true}
-                icon={IconNames.REMOVE}
+                icon={Remove}
                 intent="danger"
                 onClick={handleDangerousMerge}>
                 Merge and delete
@@ -189,7 +189,7 @@ const MergeChannelsAction = (props) => {
 
               <Button
                 large={true}
-                icon={IconNames.GIT_MERGE}
+                icon={GitMerge}
                 intent="primary"
                 onClick={handleSafeMerge}>
                 Safe merge

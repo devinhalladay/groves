@@ -1014,20 +1014,6 @@ header {
       box-sizing: border-box;
     }
   }
-
-  &:active {
-    border: 2px solid #47a7ff;
-    cursor: grabbing;
-    color: #6f7b8a;
-    // border: 1.5px solid #47a7ff;
-    box-sizing: border-box;
-    // box-shadow: 0px 5.60708px 16.8212px rgba(111, 123, 138, 0.2),
-    //   0px 1.40177px 2.80354px rgba(111, 123, 138, 0.2), 0px 0px 0px rgba(111, 123, 138, 0.1);
-    background: linear-gradient(0deg, rgba(71, 167, 255, 0.15), rgba(71, 167, 255, 0.15)),
-      rgba(255, 255, 255, 0.6);
-    transform: scale(1.05, 1.05) rotate(-2deg);
-    transition: 0.2s all ease-in-out;
-  }
 }
 
 .header {
@@ -1701,5 +1687,9 @@ button,
   }
 }
 .bp4-popover {
-  z-index: 999999;
+  z-index: 9999;
+}
+
+.bp4-popover-transition-container  {
+  z-index: 9999;
 }

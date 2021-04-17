@@ -1,5 +1,5 @@
 import { Button, Card, Checkbox } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
+import { Icons } from '@blueprintjs/icons';
 import withChannel from '@components/Channel';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -100,7 +100,7 @@ const ChannelIndex = (props) => {
                         justifyContent: 'flex-end'
                       }}>
                       <Button
-                        icon={IconNames.TRASH}
+                        icon={Icons.Trash}
                         onClick={() => handleDeleteChannels(channel)}
                       />
                     </div>
