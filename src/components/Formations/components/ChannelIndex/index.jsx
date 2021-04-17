@@ -100,7 +100,7 @@ const ChannelIndex = (props) => {
                         justifyContent: 'flex-end'
                       }}>
                       <Button
-                        icon={Icons.Trash}
+                        icon='trash'
                         onClick={() => handleDeleteChannels(channel)}
                       />
                     </div>

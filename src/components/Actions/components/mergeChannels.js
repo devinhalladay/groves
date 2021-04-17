@@ -9,13 +9,12 @@ import {
   Navbar,
   Popover
 } from '@blueprintjs/core';
-import { Tick, GitMerge, Remove } from '@blueprintjs/icons';
 import withChannel from '@components/Channel';
 import { GET_SKELETON } from '@components/Channel/queries/getSkeleton';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { useSelection } from '~/src/context/selection-context';
 import { CREATE_CONNECTION } from '~/src/graphql/mutations';
-import { toast } from 'react-toastify';
 
 const ChannelMenuItem = (props) => {
   const { selection, active, onClick } = props;
@@ -23,7 +22,7 @@ const ChannelMenuItem = (props) => {
   return (
     <MenuItem
       active={active}
-      icon={active ? Tick : 'blank'}
+      icon={active ? 'tick' : 'blank'}
       text={selection.title}
       key={selection.id}
       onClick={onClick}
@@ -130,72 +129,72 @@ const MergeChannelsAction = (props) => {
     return (
       <>
         <Navbar.Divider />
-        <Popover position="bottom-right">
-          <Button className="action" minimal={true}>
-            <Icon icon={GitMerge} />
-          </Button>
-          <section style={{ padding: 15, width: 450, paddingTop: 25 }}>
-            <p style={{ marginBottom: 15 }}>
-              <span style={{ paddingRight: 6 }}>
-                <Icon icon={GitMerge} />
-              </span>
-              <strong>Merging {selections.length} channels</strong>
-            </p>
-            <ControlGroup
-              vertical={true}
-              style={{ display: 'flex', alignItems: 'center', marginBottom: 15 }}>
-              <InputGroup
-                disabled={true}
-                large={true}
-                fill={true}
-                value={`Merge ${selections.length - 1} of ${selections.length} channels into`}
-                style={{ textAlign: 'center', justifyContent: 'center' }}
-                className="merge-input-disabled"
-              />
-              <Popover position="bottom" fill={true} captureDismiss={true}>
-                <Button
+        <Popover
+          position="bottom-right"
+          content={
+            <section style={{ padding: 15, width: 450, paddingTop: 25 }}>
+              <p style={{ marginBottom: 15 }}>
+                <span style={{ paddingRight: 6 }}>
+                  <Icon icon="git-merge" />
+                </span>
+                <strong>Merging {selections.length} channels</strong>
+              </p>
+              <ControlGroup
+                vertical={true}
+                style={{ display: 'flex', alignItems: 'center', marginBottom: 15 }}>
+                <InputGroup
+                  disabled={true}
                   large={true}
-                  // minimal={true}
                   fill={true}
-                  rightIcon="caret-down"
-                  // intent="primary"
-                  style={{ textOverflow: 'ellipsis' }}>
-                  {destination ? destination.title : selections[0].title}
+                  value={`Merge ${selections.length - 1} of ${selections.length} channels into`}
+                  style={{ textAlign: 'center', justifyContent: 'center' }}
+                  className="merge-input-disabled"
+                />
+                <Popover
+                  position="bottom"
+                  fill={true}
+                  captureDismiss={true}
+                  content={
+                    <Menu fill={true} large={true}>
+                      {selections.map((selection, i) => (
+                        <ChannelMenuItem
+                          key={i}
+                          selection={selection}
+                          active={
+                            destination
+                              ? destination.id === selection.id
+                              : selection.id === selections[0].id
+                          }
+                          onClick={() => setDestination(selection)}
+                        />
+                      ))}
+                    </Menu>
+                  }>
+                  <Button
+                    large={true}
+                    // minimal={true}
+                    fill={true}
+                    rightIcon="caret-down"
+                    // intent="primary"
+                    style={{ textOverflow: 'ellipsis' }}>
+                    {destination ? destination.title : selections[0].title}
+                  </Button>
+                </Popover>
+              </ControlGroup>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Button large={true} icon={'remove'} intent="danger" onClick={handleDangerousMerge}>
+                  Merge and delete
                 </Button>
-                <Menu fill={true} large={true}>
-                  {selections.map((selection, i) => (
-                    <ChannelMenuItem
-                      key={i}
-                      selection={selection}
-                      active={
-                        destination
-                          ? destination.id === selection.id
-                          : selection.id === selections[0].id
-                      }
-                      onClick={() => setDestination(selection)}
-                    />
-                  ))}
-                </Menu>
-              </Popover>
-            </ControlGroup>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Button
-                large={true}
-                icon={Remove}
-                intent="danger"
-                onClick={handleDangerousMerge}>
-                Merge and delete
-              </Button>
 
-              <Button
-                large={true}
-                icon={GitMerge}
-                intent="primary"
-                onClick={handleSafeMerge}>
-                Safe merge
-              </Button>
-            </div>
-          </section>
+                <Button large={true} icon="git-merge" intent="primary" onClick={handleSafeMerge}>
+                  Safe merge
+                </Button>
+              </div>
+            </section>
+          }>
+          <Button className="action" minimal={true}>
+            <Icon icon="git-merge" />
+          </Button>
         </Popover>
       </>
     );

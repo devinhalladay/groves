@@ -92,11 +92,13 @@ const CreateBlock = (props) => {
   }, []);
 
   const inputElement = useRef(null);
+
   const onSubmit = (value) => {
+    console.log(inputElement.current);
     newBlock({
       variables: {
         channelId: router.query.grove,
-        value: inputElement.current.textareaRef.value
+        value: inputElement.current.value
       }
     });
   };
@@ -150,7 +152,7 @@ const CreateBlock = (props) => {
                   marginBottom: 15
                 }}
                 autoFocus
-                ref={inputElement}
+                inputRef={inputElement}
               />
               <div
                 style={{
