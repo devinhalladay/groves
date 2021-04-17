@@ -27,7 +27,7 @@ const ThemeProvider = (props) => {
   return (
     <ThemeContext.Provider value={{ theme, setTheme }} {...props}>
       <GlobalHotKeys handlers={keyHandlers} />
-      <div className={`theme-container bp3-${theme}`}>{props.children}</div>
+      <div className={`theme-container bp4-${theme}`}>{props.children}</div>
     </ThemeContext.Provider>
   );
 };

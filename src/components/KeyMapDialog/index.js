@@ -1,16 +1,17 @@
 import { Button, Dialog } from '@blueprintjs/core';
 import { getApplicationKeyMap, GlobalHotKeys } from 'react-hotkeys';
 import { IconNames } from '@blueprintjs/icons';
-import { Code, KeyCombo } from '@blueprintjs/core';
+import { Code, KeyComboTag } from '@blueprintjs/core';
 import { useState } from 'react';
 import { useSelection } from '@context/selection-context';
 import { useWorkspace } from '@context/workspace-context';
 import KeyMaps from '~/src/constants/KeyMaps';
+import Formations from '~/src/constants/Formations';
 
 const KeyMapDialog = () => {
   const globalKeyMap = getApplicationKeyMap();
 
-  const { workspaceOptions, formations } = useWorkspace();
+  const { workspaceOptions } = useWorkspace();
   const { formation } = workspaceOptions;
 
   console.log(globalKeyMap);
@@ -30,7 +31,7 @@ const KeyMapDialog = () => {
         style={{
           position: 'fixed',
           bottom: 15,
-          right: formation.key === formations.CANVAS.key ? 55 : 15
+          right: formation.key === Formations.CANVAS.key ? 55 : 15
         }}>
         <Button
           onClick={() => setIsOpen(true)}
@@ -64,7 +65,7 @@ const KeyMapDialog = () => {
                       }>
                       <p style={{ paddingRight: 15, justifySelf: 'flex-end' }}>
                         {sequences.map(({ sequence }) => (
-                          <KeyCombo key={sequence} combo={sequence} />
+                          <KeyComboTag key={sequence} combo={sequence} />
                         ))}
                       </p>
                     </div>

@@ -1,51 +1,55 @@
-import { ContextMenuTarget, Menu, MenuItem } from '@blueprintjs/core';
-import { Icon, Intent } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
-import { SelectionContext } from '~/src/context/selection-context';
-import React, { Component } from 'react';
+import { ContextMenu, Menu, MenuItem } from "@blueprintjs/core";
+import { ContextMenu2 } from "@blueprintjs/popover2";
+import { IconNames } from "@blueprintjs/icons";
+import Formations from "~/src/constants/Formations";
+import { useSelection } from "~/src/context/selection-context";
 
-const ContextMenu = ContextMenuTarget(
-  class RightClickMeWithContext extends Component {
-    constructor(props) {
-      super(props);
-    }
+const BlockContextMenu = (props) => {
+  const {
+    setSelectedConnection,
+    canvasBlocks,
+    setCanvasBlocks
+  } = useSelection();
 
-    static contextType = SelectionContext;
+  const removeFromCanvas = () => {
+    // let canvasBlocks = [...this.context.canvasBlocks];
+    // var index = canvasBlocks
+    //   .map(function (block) {
+    //     return block.id;
+    //   })
+    //   .indexOf(props.block.id);
+    // canvasBlocks.splice(index, 1);
+    // this.context.setCanvasBlocks([...canvasBlocks]);
+    setCanvasBlocks(canvasBlocks.filter((b) => b.id !== props.block.id));
+  };
 
-    componentDidMount() {
-      const workspace = this.context;
-      console.log(this.props);
-      // console.log(ContextMenuTarget);
-    }
-
-    render() {
-      // root element must support `onContextMenu`
-      return this.props.children;
-    }
-
-    // handleAddToCanvas(...props) {
-    //   console.log(...props);
-    //   this.context.setCanvasBlocks([...this.context.canvasBlocks, props.block]);
-    //   // console.log(this.context.canvasBlocks);
-    // }
-
-    renderContextMenu() {
-      // return a single element, or nothing to use default browser behavior
-      return (
+  return (
+    <ContextMenu
+      content={
         <Menu>
+          {props.formation === Formations.GRID ? (
+            <MenuItem
+              icon={IconNames.SEND_TO}
+              onClick={props.handleBlockClick}
+              text="Add to canvas"
+            />
+          ) : (
+            <MenuItem
+              icon={IconNames.REMOVE}
+              onClick={removeFromCanvas}
+              text="Remove from canvas"
+            />
+          )}
           <MenuItem
-            icon={IconNames.SEND_TO}
-            onClick={this.props.handleBlockClick}
-            text="Add to canvas"
+            icon={IconNames.TRASH}
+            onClick={props.handleBlockClick}
+            text="Delete connection"
           />
         </Menu>
-      );
-    }
+      }>
+      {props.children}
+    </ContextMenu>
+  );
+};
 
-    onContextMenuClose() {
-      // Optional method called once the context menu is closed.
-    }
-  }
-);
-
-export default ContextMenu;
+export default BlockContextMenu;

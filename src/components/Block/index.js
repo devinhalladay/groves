@@ -12,6 +12,7 @@ import { useSelection } from '../../context/selection-context';
 import { useAuth } from '../../context/auth-context';
 import { useWorkspace } from '../../context/workspace-context';
 import { Card, Elevation } from '@blueprintjs/core';
+import BlockContextMenu from '../ContextMenu';
 
 // TODO: Need to break up this component, it's all kinds of fucked up
 // and recursively renders itself via InlineExpandedChannel which
@@ -36,6 +37,7 @@ const DraggableBlock = ({
   let { staticBlock } = props;
 
   const { workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale } = useWorkspace();
+  const { formation } = workspaceOptions;
 
   if (block.description && block.description.includes('"x":')) {
     description = JSON.parse(block.description.replace('\n', ''));
@@ -232,95 +234,92 @@ const DraggableBlock = ({
     );
   };
 
-  const blockProps = {
-    block: block,
-    dragStates: dragStates,
-    setDragStates: setDragStates,
-    setSpatialState: setSpatialState,
-    spatialState: spatialState
-  };
-
   return (
-    <Rnd
-      ref={rndEl}
+    <BlockContextMenu
       key={block.id}
-      size={{ width: spatialState.width, height: spatialState.height }}
-      scale={zoomScale}
-      maxWidth="100%"
-      position={{
-        x: spatialState.x,
-        y: spatialState.y
-      }}
-      onDragStart={(e) => {
-        handleDragStart(e);
-      }}
-      // disableDragging={spatialState.isExpanded}
-      bounds={'window'}
-      onDrag={(e, d) => {
-        handleDrag(e, d);
-      }}
-      onDragStop={(e, d) => {
-        handleDragStop(e, d);
-      }}
-      dragHandleClassName={spatialState.isExpanded ? 'header' : null}
-      // TODO: Figure out how to set bounds for DraggableBlocks that are expanded channels
-      // Might actually make more sense to completely refactor the block rendering
-      // logic, since a good chunk of the work moving forward will rely on it being solid.
+      block={block}
+      formation={formation}>
+      <Rnd
+        ref={rndEl}
+        key={block.id}
+        size={{ width: spatialState.width, height: spatialState.height }}
+        scale={zoomScale}
+        maxWidth="100%"
+        position={{
+          x: spatialState.x,
+          y: spatialState.y
+        }}
+        onDragStart={(e) => {
+          handleDragStart(e);
+        }}
+        // disableDragging={spatialState.isExpanded}
+        bounds={'window'}
+        onDrag={(e, d) => {
+          handleDrag(e, d);
+        }}
+        onDragStop={(e, d) => {
+          handleDragStop(e, d);
+        }}
+        dragHandleClassName={spatialState.isExpanded ? 'header' : null}
+        // TODO: Figure out how to set bounds for DraggableBlocks that are expanded channels
+        // Might actually make more sense to completely refactor the block rendering
+        // logic, since a good chunk of the work moving forward will rely on it being solid.
 
-      onResize={(e, direction, ref, delta, position) => {
-        handleResize(delta);
-      }}
-      onResizeStop={(e, direction, ref, delta, position) => {
-        handleResizeStop(delta);
-      }}
-      style={{
-        zIndex: spatialState.zIndex
-      }}>
-      <Card
-        interactive={true}
-        className={`draggable-block-container ${block.__typename ? block.__typename : ''} ${
-          selectedConnection && selectedConnection.id
-            ? block.id === selectedConnection.id
-              ? 'selected'
+        onResize={(e, direction, ref, delta, position) => {
+          handleResize(delta);
+        }}
+        onResizeStop={(e, direction, ref, delta, position) => {
+          handleResizeStop(delta);
+        }}
+        style={{
+          zIndex: spatialState.zIndex
+        }}>
+        <Card
+          interactive={true}
+          className={`draggable-block-container ${block.__typename ? block.__typename : ''} ${
+            selectedConnection && selectedConnection.id
+              ? block.id === selectedConnection.id
+                ? 'selected'
+                : ''
               : ''
-            : ''
-        } ${spatialState.isExpanded ? 'draggable-block-container--expanded' : ''} ${
-          spatialState.isBeingDragged ? 'isBeingDragged' : ''
-        }`}>
-        {spatialState.isExpanded ? (
-          renderChannelInline()
-        ) : (
-          <div className={`block block--${block.__typename.toLowerCase()}`}>
-            {block.__typename === 'Channel' && (
-              <button className="icon-button" onClick={expandChannelInline}>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M8 13L12.9995 13V8"
-                    stroke="#BDC3CA"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M7.99951 3L3 3L3 8.00001"
-                    stroke="#BDC3CA"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            )}
-            <BlockRepresentation block={block} />
-          </div>
-        )}
-      </Card>
-    </Rnd>
+          } ${spatialState.isExpanded ? 'draggable-block-container--expanded' : ''} ${
+            spatialState.isBeingDragged ? 'isBeingDragged' : ''
+          }`}>
+          {spatialState.isExpanded ? (
+            renderChannelInline()
+          ) : (
+            <div className={`block block--${block.__typename.toLowerCase()}`}>
+              {block.__typename === 'Channel' && (
+                <button className="icon-button" onClick={expandChannelInline}>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M8 13L12.9995 13V8"
+                      stroke="#BDC3CA"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M7.99951 3L3 3L3 8.00001"
+                      stroke="#BDC3CA"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              )}
+              <BlockRepresentation block={block} />
+            </div>
+          )}
+        </Card>
+      </Rnd>
+    </BlockContextMenu>
   );
 };
 

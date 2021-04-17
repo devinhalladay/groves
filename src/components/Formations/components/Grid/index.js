@@ -1,19 +1,18 @@
-import React from 'react';
-import Panel from '~/src/components/Panel';
-import BlockRepresentation from '~/src/components/Block/components/BlockRepresentation';
-import { useSelection } from '~/src/context/selection-context';
-import ContextMenu from '~/src/components/ContextMenu';
 import { Card } from '@blueprintjs/core';
+import React from 'react';
+import BlockRepresentation from '~/src/components/Block/components/BlockRepresentation';
+import BlockContextMenu from '~/src/components/ContextMenu';
 import SelectionPanel from '~/src/components/SelectionPanel';
+import { useSelection } from '~/src/context/selection-context';
+import { useWorkspace } from '~/src/context/workspace-context';
+import Formations from '~/src/constants/Formations';
 
 const Grid = (props) => {
-  console.log('blocks');
   const { blocks } = props;
-
-  console.log(blocks);
+  const { workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale } = useWorkspace();
+  const { formation } = workspaceOptions;
 
   const {
-    selectedConnection,
     setSelectedConnection,
     canvasBlocks,
     setCanvasBlocks
@@ -21,14 +20,10 @@ const Grid = (props) => {
 
   const handleBlockClick = (event, block) => {
     if (canvasBlocks.some((b) => b.id === block.id)) {
-      // let filteredBlocks = canvasBlocks.filter((b) => b.id !== block.id);
-      // let index = canvasBlocks.indexOf(block)
       setCanvasBlocks(canvasBlocks.filter((b) => b.id !== block.id));
     } else {
       setCanvasBlocks(canvasBlocks.concat(block));
     }
-
-    // console.log(canvasBlocks);
   };
 
   return (
@@ -44,8 +39,10 @@ const Grid = (props) => {
           {blocks ? (
             blocks.map((block) => {
               return (
-                <ContextMenu
+                <BlockContextMenu
                   key={block.id}
+                  block={block}
+                  formation={formation}
                   handleBlockClick={(e) => {
                     handleBlockClick(e, block);
                   }}>
@@ -58,11 +55,11 @@ const Grid = (props) => {
                       <BlockRepresentation block={block} />
                     </div>
                   </Card>
-                </ContextMenu>
+                </BlockContextMenu>
               );
             })
           ) : (
-            <div>not found</div>
+            <div>No blocks in this channel</div>
           )}
         </div>
       </div>

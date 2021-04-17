@@ -1,10 +1,8 @@
-import React, { useRef, useState } from 'react';
 import { useWorkspace } from '@context/workspace-context';
-import withApollo from '~/src/hooks/withApollo';
+import React, { useRef, useState } from 'react';
 import { PanZoom } from 'react-easy-panzoom';
 import { useSelection } from '~/src/context/selection-context';
-import Slider from 'rc-slider';
-import ZoomInIcon from '~/public/zoom-in.svg';
+import withApollo from '~/src/hooks/withApollo';
 import SelectionPanel from '../SelectionPanel';
 
 export default withApollo((props) => {
@@ -117,9 +115,7 @@ export default withApollo((props) => {
         ref={panZoomRef}
         preventPan={preventPan}
         className="canvas"
-        // onZoom={onZoom}
         onZoomEnd={onZoomEnd}
-        // panZoomRef={panZoomRef}
         scale={zoomScale}
         minZoom={0.4}
         autoCenter={true}

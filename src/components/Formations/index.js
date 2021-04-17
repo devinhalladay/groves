@@ -6,9 +6,10 @@ import { useWorkspace } from '@context/workspace-context';
 import { Select } from '@blueprintjs/select';
 import { GlobalHotKeys } from 'react-hotkeys';
 import KeyMaps from '~/src/constants/KeyMaps';
+import Formations from '~/src/constants/Formations';
 
 export default function GroveFormations() {
-  const { workspaceOptions, setWorkspaceOptions, formations } = useWorkspace();
+  const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
   const { formation } = workspaceOptions;
 
   const handleChangeFormation = (f) => {
@@ -19,13 +20,13 @@ export default function GroveFormations() {
   };
 
   const hotkeyHandlers = {
-    VIEW_GRID: React.useCallback(() => handleChangeFormation(formations.GRID)),
-    VIEW_CHANNEL_INDEX: React.useCallback(() => handleChangeFormation(formations.CHANNEL_INDEX)),
-    VIEW_CANVAS: React.useCallback(() => handleChangeFormation(formations.CANVAS))
+    VIEW_GRID: React.useCallback(() => handleChangeFormation(Formations.GRID)),
+    VIEW_CHANNEL_INDEX: React.useCallback(() => handleChangeFormation(Formations.CHANNEL_INDEX)),
+    VIEW_CANVAS: React.useCallback(() => handleChangeFormation(Formations.CANVAS))
   };
 
   const formationOptionRenderer = (formationOption) => {
-    const that = formations[formationOption];
+    const that = Formations[formationOption];
     return (
       <MenuItem
         icon={that.icon}
@@ -42,7 +43,7 @@ export default function GroveFormations() {
       <GlobalHotKeys handlers={hotkeyHandlers} keyMap={KeyMaps} />
       <Select
         itemRenderer={formationOptionRenderer}
-        items={Object.keys(formations)}
+        items={Object.keys(Formations)}
         filterable={false}>
         <Button
           minimal={true}

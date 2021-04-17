@@ -1,4 +1,3 @@
-import Slider from 'rc-slider';
 import React, { useRef, useState } from 'react';
 import { PanZoom } from 'react-easy-panzoom';
 import SelectionPanel from '~/src/components/SelectionPanel';

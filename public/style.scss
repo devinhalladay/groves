@@ -342,11 +342,11 @@ header {
     // width: fit-content;
 
 
-    .bp3-navbar {
+    .bp4-navbar {
       padding: 0 !important;
       border-radius: 8px;
       width: 100%;
-      .bp3-navbar-group {
+      .bp4-navbar-group {
         width: 100%;
       }
     }
@@ -1321,12 +1321,12 @@ header {
   }
 }
 
-.bp3-overlay,
-.bp3-transition-container {
+.bp4-overlay,
+.bp4-transition-container {
   z-index: 10000 !important;
 }
 
-.bp3-multi-select-popover {
+.bp4-multi-select-popover {
   max-width: 300px;
   max-height: 200px;
   overflow-y: scroll;
@@ -1350,14 +1350,14 @@ header {
   backdrop-filter: blur(44px);
   border-radius: 5px;
 
-  .bp3-editable-text {
+  .bp4-editable-text {
     width: 100%;
   }
 
   .inline-wrapper {
     display: flex;
 
-    .bp3-editable-text {
+    .bp4-editable-text {
       flex: 1;
     }
   }
@@ -1541,8 +1541,8 @@ button,
   }
 }
 
-.bp3-editable-text-content,
-.bp3-editable-text-input {
+.bp4-editable-text-content,
+.bp4-editable-text-input {
   line-height: 140% !important;
   font-size: 0.95rem !important;
   color: $pt-text-color !important;
@@ -1619,11 +1619,11 @@ button,
   flex: 1;
 }
 
-.bp3-control input {
+.bp4-control input {
   box-sizing: border-box;
 }
 
-.bp3-control input ~ .bp3-card {
+.bp4-control input ~ .bp4-card {
   // background-color: $dark-gray2;
   box-sizing: border-box;
   // transition: 0.2s border;
@@ -1631,20 +1631,20 @@ button,
   // color: $pt-text-color;
 }
 
-.bp3-control input:checked ~ .bp3-card {
+.bp4-control input:checked ~ .bp4-card {
   border: 2px solid $blue4;
   border-radius: 4px;
   margin: -2px;
 }
 
-.merge-input-disabled .bp3-input[type='text'] {
+.merge-input-disabled .bp4-input[type='text'] {
   color: $dark-gray4 !important;
 }
 
-.bp3-dark {
+.bp4-dark {
   background-color: $black;
 
-  .merge-input-disabled .bp3-input[type='text'] {
+  .merge-input-disabled .bp4-input[type='text'] {
     color: $gray4 !important;
   }
 
@@ -1652,8 +1652,8 @@ button,
     background-color: $pt-dark-app-background-color;
   }
 
-  .bp3-editable-text-content,
-  .bp3-editable-text-input {
+  .bp4-editable-text-content,
+  .bp4-editable-text-input {
     color: $pt-dark-text-color !important;
   }
 
@@ -1690,12 +1690,12 @@ button,
 }
 
 .action {
-  .bp3-button-text {
+  .bp4-button-text {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 }
-.bp3-popover {
+.bp4-popover {
   z-index: 999999;
 }

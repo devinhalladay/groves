@@ -22,6 +22,7 @@ import { Button } from '@blueprintjs/core';
 import { LookoutVision } from 'aws-sdk';
 import { CHANNEL_SKELETON } from '~/src/graphql/queries';
 import { initializeApollo, addApolloState } from '~/src/lib/apolloClient';
+import Formations from '~/src/constants/Formations';
 
 const Grove = ({ data, initialSelection, ...props }) => {
   const router = useRouter();
@@ -34,7 +35,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
 
   const { apollo } = props;
 
-  const { workspaceOptions, formations, setWorkspaceOptions } = useWorkspace();
+  const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
   const { formation } = workspaceOptions;
 
   const {
@@ -79,12 +80,12 @@ const Grove = ({ data, initialSelection, ...props }) => {
   const _switchToGridFormation = () => {
     setWorkspaceOptions({
       ...workspaceOptions,
-      formation: formations.GRID
+      formation: Formations.GRID
     });
   };
 
   const renderFormation = (formation) => {
-    if (formation.key === formations.CANVAS.key) {
+    if (formation.key === Formations.CANVAS.key) {
       if (canvasBlocks && canvasBlocks.length > 0) {
         return (
           <Layout {...props}>
@@ -116,13 +117,13 @@ const Grove = ({ data, initialSelection, ...props }) => {
               }}>
               You can blocks to your canvas using the Grid View.
             </p>
-            <Button onClick={_switchToGridFormation} icon={formations.GRID.icon}>
+            <Button onClick={_switchToGridFormation} icon={Formations.GRID.icon}>
               Switch to Grid View
             </Button>
           </div>
         );
       }
-    } else if (formation.key === formations.GRID.key) {
+    } else if (formation.key === Formations.GRID.key) {
       if (selectedChannel && selectedChannel.channel) {
         return <Grid blocks={selectedChannel.channel.initial_contents} />;
       } else if (channelSkeleton && channelSkeleton.channel) {
@@ -130,7 +131,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
       } else {
         return <Loading fullScreen="true" description="Loading blocks..." />
       }
-    } else if (formation.key === formations.CHANNEL_INDEX.key) {
+    } else if (formation.key === Formations.CHANNEL_INDEX.key) {
       return <ChannelIndex />;
     }
   };
