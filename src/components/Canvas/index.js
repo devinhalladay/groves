@@ -3,7 +3,6 @@ import React, { useRef, useState } from 'react';
 import { PanZoom } from 'react-easy-panzoom';
 import { useSelection } from '~/src/context/selection-context';
 import withApollo from '~/src/hooks/withApollo';
-import SelectionPanel from '../SelectionPanel';
 
 export default withApollo((props) => {
   const { workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale } = useWorkspace();
@@ -23,6 +22,7 @@ export default withApollo((props) => {
   const { selectedConnection, setSelectedConnection, selectedRef, setSelectedRef } = useSelection();
 
   const preventPan = (event, x, y) => {
+    console.log('eval pan');
     if (
       event.target &&
       event.target.parentElement &&

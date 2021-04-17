@@ -341,7 +341,6 @@ header {
   &--nav {
     // width: fit-content;
 
-
     .bp4-navbar {
       padding: 0 !important;
       border-radius: 8px;
@@ -1546,17 +1545,19 @@ button,
 
 .grid > * {
   box-sizing: border-box;
-  // width: calc(25% - 20px) !important;
   flex: calc(25% - 20px) 0 !important;
   max-height: 250px;
-  // height: calc(25% - 20px) !important;
-  // padding-top: 100%;
   position: relative;
   margin: unset;
   margin: 0px 10px 40px !important;
   display: flex;
   justify-content: center;
-  // border: 1px solid #d7dde4;
+
+  &:after {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+  }
 
   .block-card {
     display: flex;
@@ -1690,6 +1691,6 @@ button,
   z-index: 9999;
 }
 
-.bp4-popover-transition-container  {
+.bp4-popover-transition-container {
   z-index: 9999;
 }
