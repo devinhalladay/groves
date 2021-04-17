@@ -388,7 +388,7 @@ const SelectionPanel = React.memo((props) => {
             }}>
             <div className="inline-wrapper">
               <EditableText
-                onChange={(e) => handleTitleChange(e, selectedConnection)}
+                onConfirm={(e) => handleTitleChange(e, selectedConnection)}
                 fill={true}
                 autoFocus
                 intent={Intent.PRIMARY}
@@ -456,7 +456,7 @@ const SelectionPanel = React.memo((props) => {
               maxLines={24}
               minLines={2}
               className="description-field"
-              onChange={(e) => handleDescriptionChange(e, selectedConnection)}
+              onConfirm={(e) => handleDescriptionChange(e, selectedConnection)}
               style={{
                 height: 60
               }}
