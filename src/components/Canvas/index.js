@@ -23,10 +23,6 @@ export default withApollo((props) => {
   const { selectedConnection, setSelectedConnection, selectedRef, setSelectedRef } = useSelection();
 
   const preventPan = (event, x, y) => {
-    console.log(event.target.parentElement);
-    // event.preventDefault()
-    // if the target is the content container then prevent panning
-    console.log(event.target);
     if (
       event.target &&
       event.target.parentElement &&
@@ -41,7 +37,6 @@ export default withApollo((props) => {
           'block'
       )
     ) {
-      console.log('true');
       return true;
     }
   };

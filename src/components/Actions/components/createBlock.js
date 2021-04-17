@@ -86,8 +86,6 @@ const CreateBlock = (props) => {
             'Content-Type': file.type
           }
         }).then((res) => {
-          console.log(res);
-
           newBlock({
             variables: {
               channelId: router.query.grove,
@@ -101,7 +99,6 @@ const CreateBlock = (props) => {
 
   const inputElement = useRef(null);
   const onSubmit = (value) => {
-    console.log(inputElement.current);
     newBlock({
       variables: {
         channelId: router.query.grove,

@@ -61,8 +61,6 @@ const StageConnections = () => {
             // })
             items
           );
-
-          console.log(inputItems);
         }
       }
     });

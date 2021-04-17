@@ -228,8 +228,6 @@ const SelectionPanel = React.memo((props) => {
             title: tag.title
           }
         }).then((data) => {
-          console.log('data');
-          console.log(data.data.create_channel.channel);
           selectTag(data.data.create_channel.channel);
         });
       }
@@ -417,7 +415,8 @@ const SelectionPanel = React.memo((props) => {
               )}
               <AnchorButton
                 href={`https://are.na${selectedConnection.href}`}
-                icon={<img src="/open.svg" alt="" />}>
+                icon={<img src="/open.svg" alt="" />}
+                target="_blank">
                 Open in Are.na
               </AnchorButton>
             </div>

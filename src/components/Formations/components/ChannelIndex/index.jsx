@@ -24,7 +24,6 @@ const ChannelIndex = (props) => {
 
   const handleDeleteChannels = (channel) => {
     selections.forEach((c) => {
-      console.log(c);
       deleteChannel(c, (data) => {
         toast(`Deleted channel ID ${c.id}`);
         const newList = currentList.filter((chan) => chan.id !== c.id);
@@ -36,11 +35,8 @@ const ChannelIndex = (props) => {
 
   const handleMultiSelect = (channel, i) => {
     const start = flatIndex.findIndex((c) => c.id === selections[selections.length - 1].id);
-    // console.log(start);
     const end = i + 1;
-    // console.log(end);
     const intermediateItems = currentList.slice(start, end);
-    // console.log(intermediateItems);
     setSelections([...selections, ...intermediateItems]);
   };
 
@@ -59,13 +55,6 @@ const ChannelIndex = (props) => {
                     marginBottom: 0,
                     flex: 1
                   }}
-                  // onChange={(e) => {
-                  //   console.log(e);
-                  //   if (e.shiftKey) {
-                  //     console.log(e);
-                  //     handleChannelCheckbox(e, channel);
-                  //   }
-                  // }}
                   onChange={(e) => handleChannelCheckbox(e, channel)}>
                   <Card
                     onClick={(e) => {

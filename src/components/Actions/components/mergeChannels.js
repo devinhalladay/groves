@@ -62,7 +62,6 @@ const MergeChannelsAction = (props) => {
       channels.forEach((channel) => {
         allItems.push(...channel.skeleton);
       });
-      console.log(allItems);
       setMergeList(allItems);
     }
   });
@@ -110,8 +109,6 @@ const MergeChannelsAction = (props) => {
         });
       });
     }
-
-    console.log(selections);
 
     selections.forEach((channel) => {
       if (channel.id !== destination.id) {

@@ -14,8 +14,6 @@ const KeyMapDialog = () => {
   const { workspaceOptions } = useWorkspace();
   const { formation } = workspaceOptions;
 
-  console.log(globalKeyMap);
-
   const [isOpen, setIsOpen] = useState(false);
 
   const hotkeyHandlers = {

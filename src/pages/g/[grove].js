@@ -1,28 +1,25 @@
-import { ApolloClient, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
+import { Button } from '@blueprintjs/core';
 import Grid from '@components/Formations/components/Grid';
 import { useSelection } from '@context/selection-context';
 import { useWorkspace } from '@context/workspace-context';
 import { useRouter } from 'next/router';
-import nookies, { parseCookies } from 'nookies';
-import React, { useEffect, useState } from 'react';
+import nookies from 'nookies';
+import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import DraggableBlock from '~/src/components/Block';
-import Loading from '~/src/components/Loader';
-
-// import { ADD_BLOCK } from '~/src/graphql/mutations';
-// import { useWorkspace } from '@context/workspace-context';
 import createBlock from '~/src/components/Block/mutations/createBlock';
 import GrovesCanvas from '~/src/components/Canvas';
 import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
 import KeyMapDialog from '~/src/components/KeyMapDialog';
 import Layout from '~/src/components/Layout';
-import withApollo from '~/src/hooks/withApollo';
-import { withAuthSync } from '~/src/utils/auth';
-import { Button } from '@blueprintjs/core';
-import { LookoutVision } from 'aws-sdk';
-import { CHANNEL_SKELETON } from '~/src/graphql/queries';
-import { initializeApollo, addApolloState } from '~/src/lib/apolloClient';
+import Loading from '~/src/components/Loader';
 import Formations from '~/src/constants/Formations';
+import { CHANNEL_SKELETON } from '~/src/graphql/queries';
+import withApollo from '~/src/hooks/withApollo';
+import { addApolloState, initializeApollo } from '~/src/lib/apolloClient';
+import { withAuthSync } from '~/src/utils/auth';
+
 
 const Grove = ({ data, initialSelection, ...props }) => {
   const router = useRouter();
@@ -53,7 +50,6 @@ const Grove = ({ data, initialSelection, ...props }) => {
     CHANNEL_SKELETON,
     {
       variables: { channelId: channelID },
-      notifyOnNetworkStatusChange: true,
       fetchPolicy: 'no-cache',
       client: apollo,
       // Setting this value to true will make the component rerender when
@@ -124,12 +120,14 @@ const Grove = ({ data, initialSelection, ...props }) => {
         );
       }
     } else if (formation.key === Formations.GRID.key) {
-      if (selectedChannel && selectedChannel.channel) {
+      if (loading) {
+        return <Loading fullScreen="true" description="Loading blocks..." />
+      } else if (selectedChannel && selectedChannel.channel) {
         return <Grid blocks={selectedChannel.channel.initial_contents} />;
       } else if (channelSkeleton && channelSkeleton.channel) {
         return <Grid blocks={channelSkeleton.channel.initial_contents} />;
       } else {
-        return <Loading fullScreen="true" description="Loading blocks..." />
+        return <div>Error</div>
       }
     } else if (formation.key === Formations.CHANNEL_INDEX.key) {
       return <ChannelIndex />;
