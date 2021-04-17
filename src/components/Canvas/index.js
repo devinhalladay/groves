@@ -63,7 +63,6 @@ export default withApollo((props) => {
 
   return (
     <>
-      {selectedConnection && <SelectionPanel />}
       {/* <div
         className="zoomTools"
         style={{

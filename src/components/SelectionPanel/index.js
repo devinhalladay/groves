@@ -61,19 +61,6 @@ const SelectionPanel = React.memo((props) => {
       }
     });
 
-    const [createChannel, { loading: creatingChannel, error: errorCreatingChannel }] = useMutation(
-      CREATE_CHANNEL,
-      {
-        client: apollo,
-        onCompleted: (data) => {
-          console.log(data);
-        },
-        onError: (error) => {
-          console.log(error);
-        }
-      }
-    );
-
     const [
       createConnection,
       { loading: creatingConnection, error: errorCreatingConnection }
@@ -286,7 +273,6 @@ const SelectionPanel = React.memo((props) => {
           width: 16,
           height: 16
         }}
-        // boundary="scrollParent"
         usePortal={false}>
         <div
           style={{
@@ -295,7 +281,7 @@ const SelectionPanel = React.memo((props) => {
             marginTop: 5,
             marginRight: 5
           }}>
-          <Icon icon={Icons.InfoSign} />
+          <Icon icon="info-sign" />
         </div>
       </Tooltip>
     );
@@ -484,21 +470,15 @@ const SelectionPanel = React.memo((props) => {
                 },
                 fill: true
               }}
-              // itemsEqual={areFilmsEqual}
-              // we may customize the default filmSelectProps.items by
-              // adding newly created items to the list, so pass our own
               items={flatItems}
               noResults={<MenuItem disabled={true} text="No results." />}
               onItemSelect={handleTagSelect}
               onRemove={handleTagRemove}
               fill={true}
-              // onItemsPaste={this.handleFilmsPaste}
-              // popoverProps={{ minimal: true,  }}
               tagRenderer={renderTag}
               tagInputProps={{
-                // onRemove: handleTagRemove,
                 rightElement: explainElement(),
-                leftIcon: Icons.Tag,
+                leftIcon: 'tag',
                 tagProps: {
                   minimal: true
                 }

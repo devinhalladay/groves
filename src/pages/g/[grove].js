@@ -14,6 +14,7 @@ import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
 import KeyMapDialog from '~/src/components/KeyMapDialog';
 import Layout from '~/src/components/Layout';
 import Loading from '~/src/components/Loader';
+import SelectionPanel from '~/src/components/SelectionPanel';
 import Formations from '~/src/constants/Formations';
 import { CHANNEL_SKELETON } from '~/src/graphql/queries';
 import withApollo from '~/src/hooks/withApollo';
@@ -50,12 +51,12 @@ const Grove = ({ data, initialSelection, ...props }) => {
     CHANNEL_SKELETON,
     {
       variables: { channelId: channelID },
-      fetchPolicy: 'no-cache',
+      // fetchPolicy: 'no-cache',
       client: apollo,
       // Setting this value to true will make the component rerender when
       // the "networkStatus" changes, so we are able to know if it is fetching
       // more data
-      notifyOnNetworkStatusChange: true
+      // notifyOnNetworkStatusChange: true
     }
   );
 
@@ -85,6 +86,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
       if (canvasBlocks && canvasBlocks.length > 0) {
         return (
           <Layout {...props}>
+            {selectedConnection && <SelectionPanel />}
             <GrovesCanvas {...props}>
               <div className="canvas-container">
                 {canvasBlocks.map((block, i) => (
