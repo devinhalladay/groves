@@ -21,7 +21,6 @@ import withApollo from '~/src/hooks/withApollo';
 import { addApolloState, initializeApollo } from '~/src/lib/apolloClient';
 import { withAuthSync } from '~/src/utils/auth';
 
-
 const Grove = ({ data, initialSelection, ...props }) => {
   const router = useRouter();
 
@@ -52,7 +51,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
     {
       variables: { channelId: channelID },
       fetchPolicy: 'no-cache',
-      client: apollo,
+      client: apollo
       // Setting this value to true will make the component rerender when
       // the "networkStatus" changes, so we are able to know if it is fetching
       // more data
@@ -123,13 +122,16 @@ const Grove = ({ data, initialSelection, ...props }) => {
       }
     } else if (formation.key === Formations.GRID.key) {
       if (loading) {
-        return <Loading fullScreen="true" description="Loading blocks..." />
-      } else if (selectedChannel && selectedChannel.channel) {
-        return <Grid blocks={selectedChannel.channel.initial_contents} />;
+        return <Loading fullScreen="true" description="Loading blocks..." />;
       } else if (channelSkeleton && channelSkeleton.channel) {
-        return <Grid blocks={channelSkeleton.channel.initial_contents} />;
+        return (
+          <div className="workspace">
+            <SelectionPanel />
+            <Grid blocks={channelSkeleton.channel.initial_contents} />
+          </div>
+        );
       } else {
-        return <div>Error</div>
+        return <div>Error</div>;
       }
     } else if (formation.key === Formations.CHANNEL_INDEX.key) {
       return <ChannelIndex />;

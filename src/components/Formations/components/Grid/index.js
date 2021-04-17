@@ -28,13 +28,12 @@ const Grid = (props) => {
 
   return (
     <>
-      <div className="workspace">
-        <SelectionPanel />
+
         <div
           className="grid"
           style={{
-            position: 'absolute',
-            right: 325
+            position: formation.key === Formations.GRID.key && 'absolute',
+            right: formation.key === Formations.GRID.key && 325
           }}>
           {blocks ? (
             blocks.map((block) => {
@@ -62,7 +61,6 @@ const Grid = (props) => {
             <div>No blocks in this channel</div>
           )}
         </div>
-      </div>
     </>
   );
 };
