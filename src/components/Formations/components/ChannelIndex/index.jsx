@@ -22,6 +22,9 @@ const ChannelIndex = (props) => {
     }
   };
 
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [confirmedDelete, setConfirmedDelete] = useState(false);
+
   const handleDeleteSingleChannel = (channel) => {
     deleteChannel(channel, () => {
       toast(`Deleted channel ID ${channel.id}`);
@@ -107,10 +110,14 @@ const ChannelIndex = (props) => {
                         alignSelf: 'flex-end',
                         justifyContent: 'flex-end'
                       }}>
-                      <Button
-                        icon='trash'
-                        onClick={() => handleDeleteSingleChannel(channel)}
-                      />
+                      {/* {isDeleting ? (
+                        <Button icon="trash" intent="danger" onClick={() => handleDeleteSingleChannel(channel)}>
+                          Confirm
+                        </Button>
+                      ) : (
+                        <Button icon="trash" onClick={() => setIsDeleting(true)} />
+                      )} */}
+                      <Button icon="trash" onClick={() => handleDeleteSingleChannel(channel)} />
                     </div>
                   </Card>
                 </Checkbox>
