@@ -22,7 +22,15 @@ const ChannelIndex = (props) => {
     }
   };
 
-  const handleDeleteChannels = (channel) => {
+  const handleDeleteSingleChannel = (channel) => {
+    deleteChannel(channel, () => {
+      toast(`Deleted channel ID ${channel.id}`);
+      const newList = currentList.filter((chan) => chan.id !== channel.id);
+      setCurrentList(newList);
+    });
+  };
+
+  const handleDeleteMultipleChannels = () => {
     selections.forEach((c) => {
       deleteChannel(c, (data) => {
         toast(`Deleted channel ID ${c.id}`);
@@ -101,7 +109,7 @@ const ChannelIndex = (props) => {
                       }}>
                       <Button
                         icon='trash'
-                        onClick={() => handleDeleteChannels(channel)}
+                        onClick={() => handleDeleteSingleChannel(channel)}
                       />
                     </div>
                   </Card>
