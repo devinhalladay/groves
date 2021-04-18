@@ -36,51 +36,49 @@ const Grove = (props) => {
 
   return (
     <WorkspaceProvider>
-      <Layout {...props}>
-        <div className={`loading-screen fullscreen`}>
-          <p
-            style={{
-              marginBottom: 20
-            }}>
-            Search for a channel or create a new one.
-          </p>
+      <div className={`loading-screen fullscreen`}>
+        <p
+          style={{
+            marginBottom: 20
+          }}>
+          Search for a channel or create a new one.
+        </p>
 
-          <Popover
-            position="bottom"
-            content={
-              <section style={{ padding: 15, width: 350, paddingTop: 25 }}>
-                <p style={{ marginBottom: 15 }}>
-                  <strong>Create a channel</strong>
-                </p>
-                <InputGroup
-                  large={true}
-                  fill={true}
-                  placeholder="Enter a name for your channel…"
-                  leftIcon={Icons.Edit}
-                  style={{ marginBottom: 15 }}
-                  className="merge-input-disabled"
-                  inputRef={nameInput}
-                />
-                <Button
-                  large={true}
-                  fill={true}
-                  icon={Icons.NewObject}
-                  intent="primary"
-                  onClick={handleCreateChannel}>
-                  Create channel
-                </Button>
-              </section>
-            }>
-            <Button
-              onClick={() => {
-                return null;
-              }}
-              icon="add">
-              Create Channel
-            </Button>
-          </Popover>
-        </div>
-      </Layout>
+        <Popover
+          position="bottom"
+          content={
+            <section style={{ padding: 15, width: 350, paddingTop: 25 }}>
+              <p style={{ marginBottom: 15 }}>
+                <strong>Create a channel</strong>
+              </p>
+              <InputGroup
+                large={true}
+                fill={true}
+                placeholder="Enter a name for your channel…"
+                leftIcon={Icons.Edit}
+                style={{ marginBottom: 15 }}
+                className="merge-input-disabled"
+                inputRef={nameInput}
+              />
+              <Button
+                large={true}
+                fill={true}
+                icon={Icons.NewObject}
+                intent="primary"
+                onClick={handleCreateChannel}>
+                Create channel
+              </Button>
+            </section>
+          }>
+          <Button
+            onClick={() => {
+              return null;
+            }}
+            icon="add">
+            Create Channel
+          </Button>
+        </Popover>
+      </div>
     </WorkspaceProvider>
   );
 };

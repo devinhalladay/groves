@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react';
 import { PanZoom } from 'react-easy-panzoom';
 import { useSelection } from '~/src/context/selection-context';
 import withApollo from '~/src/hooks/withApollo';
+import DraggableBlock from '../Block';
 
 export default withApollo((props) => {
   const { workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale } = useWorkspace();
@@ -17,9 +18,13 @@ export default withApollo((props) => {
     setWorkspaceOptions
   });
 
+  const [dragStates, setDragStates] = useState({
+    maxZIndex: 1000
+  });
+
   const panZoomRef = useRef(null);
 
-  const { selectedConnection, setSelectedConnection, selectedRef, setSelectedRef } = useSelection();
+  const { selectedConnection, setSelectedConnection, canvasBlocks } = useSelection();
 
   const preventPan = (event, x, y) => {
     console.log('eval pan');
@@ -61,8 +66,24 @@ export default withApollo((props) => {
 
   let dragging = false;
 
+  if (!canvasBlocks && canvasBlocks.length === 0) {
+    return (
+      <div className={`loading-screen fullscreen`}>
+        <p
+          style={{
+            marginBottom: 20
+          }}>
+          You can blocks to your canvas using the Grid View.
+        </p>
+        <Button onClick={_switchToGridFormation} icon={Formations.GRID.icon}>
+          Switch to Grid View
+        </Button>
+      </div>
+    );
+  }
+
   return (
-    <>
+    <div className="canvas-container">
       {/* <div
         className="zoomTools"
         style={{
@@ -138,12 +159,22 @@ export default withApollo((props) => {
 
           dragging = false;
         }}>
-        {React.cloneElement(props.children, {
-          panZoomRef: panZoomRef,
-          canvasSpace: canvasSpace,
-          setCanvasSpace: setCanvasSpace
-        })}
+        {canvasBlocks.map((block, i) => (
+          <DraggableBlock
+            title={block.title ? block.title : null}
+            type={block.__typename}
+            dragStates={dragStates}
+            setDragStates={setDragStates}
+            panZoomRef={props.panZoomRef}
+            key={block.id}
+            block={block}
+            canvasSpace={canvasSpace}
+            setCanvasSpace={setCanvasSpace}
+            bounds="parent"
+            {...props}
+          />
+        ))}
       </PanZoom>
-    </>
+    </div>
   );
 });

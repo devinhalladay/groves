@@ -1,5 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client';
-import { Button } from '@blueprintjs/core';
+import { useQuery } from '@apollo/client';
 import Grid from '@components/Formations/components/Grid';
 import { useSelection } from '@context/selection-context';
 import { useWorkspace } from '@context/workspace-context';
@@ -7,8 +6,6 @@ import { useRouter } from 'next/router';
 import nookies from 'nookies';
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import DraggableBlock from '~/src/components/Block';
-import createBlock from '~/src/components/Block/mutations/createBlock';
 import GrovesCanvas from '~/src/components/Canvas';
 import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
 import KeyMapDialog from '~/src/components/KeyMapDialog';
@@ -24,11 +21,7 @@ import { withAuthSync } from '~/src/utils/auth';
 const Grove = ({ data, initialSelection, ...props }) => {
   const router = useRouter();
 
-  const [dragStates, setDragStates] = useState({
-    maxZIndex: 1000
-  });
-
-  const { canvasBlocks, setCanvasBlocks } = useSelection();
+  const { canvasBlocks } = useSelection();
 
   const { apollo } = props;
 
@@ -37,14 +30,8 @@ const Grove = ({ data, initialSelection, ...props }) => {
 
   const {
     selectedConnection,
-    setSelectedConnection,
-    selectedRef,
-    setSelectedRef,
-    selectedChannel,
     channelID
   } = useSelection();
-
-  const [files, setFiles] = useState([]);
 
   const { loading, error, data: channelSkeleton, fetchMore, networkStatus } = useQuery(
     CHANNEL_SKELETON,
@@ -52,20 +39,6 @@ const Grove = ({ data, initialSelection, ...props }) => {
       variables: { channelId: channelID },
       fetchPolicy: 'no-cache',
       client: apollo
-    }
-  );
-
-  const [connectBlock, { loading: mutationLoading, error: mutationError }] = useMutation(
-    createBlock,
-    {
-      client: apollo,
-      onCompleted: (data) => {
-        console.log(data);
-        setFiles([]);
-      },
-      onError: (error) => {
-        console.log(error);
-      }
     }
   );
 
@@ -80,40 +53,10 @@ const Grove = ({ data, initialSelection, ...props }) => {
     if (formation.key === Formations.CANVAS.key) {
       if (canvasBlocks && canvasBlocks.length > 0) {
         return (
-          <Layout {...props}>
+          <>
             {selectedConnection && <SelectionPanel />}
-            <GrovesCanvas {...props}>
-              <div className="canvas-container">
-                {canvasBlocks.map((block, i) => (
-                  <DraggableBlock
-                    title={block.title ? block.title : null}
-                    type={block.__typename}
-                    dragStates={dragStates}
-                    setDragStates={setDragStates}
-                    panZoomRef={props.panZoomRef}
-                    key={block.id}
-                    block={block}
-                    bounds="parent"
-                    {...props}
-                  />
-                ))}
-              </div>
-            </GrovesCanvas>
-          </Layout>
-        );
-      } else {
-        return (
-          <div className={`loading-screen fullscreen`}>
-            <p
-              style={{
-                marginBottom: 20
-              }}>
-              You can blocks to your canvas using the Grid View.
-            </p>
-            <Button onClick={_switchToGridFormation} icon={Formations.GRID.icon}>
-              Switch to Grid View
-            </Button>
-          </div>
+            <GrovesCanvas {...props}/>
+          </>
         );
       }
     } else if (formation.key === Formations.GRID.key) {
