@@ -1,20 +1,12 @@
-import { useRouter } from 'next/router';
-import { useSelection } from '@context/selection-context';
-import GrovesCanvas from '~/src/components/Canvas';
-import { parseCookies } from 'nookies';
-import Layout from '~/src/components/Layout';
-import { useState, Fragment, useRef } from 'react';
-import withApollo from '~/src/hooks/withApollo';
-import { gql, NetworkStatus } from '@apollo/client';
-import { useQuery } from '@apollo/client';
-import DraggableBlock from '~/src/components/Block';
-import { WorkspaceProvider } from '@context/workspace-context';
-import { ToastContainer } from 'react-toastify';
-import { withAuthSync } from '~/src/utils/auth';
-import Formations from '~/src/constants/Formations';
 import { Button, InputGroup, Popover } from '@blueprintjs/core';
 import { Icons } from '@blueprintjs/icons';
+import { WorkspaceProvider } from '@context/workspace-context';
+import { useRouter } from 'next/router';
+import { parseCookies } from 'nookies';
+import { useRef } from 'react';
 import withChannel from '~/src/components/Channel';
+import withApollo from '~/src/hooks/withApollo';
+import { withAuthSync } from '~/src/utils/auth';
 
 const Grove = (props) => {
   const router = useRouter();

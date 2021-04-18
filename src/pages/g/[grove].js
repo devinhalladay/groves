@@ -4,12 +4,11 @@ import { useSelection } from '@context/selection-context';
 import { useWorkspace } from '@context/workspace-context';
 import { useRouter } from 'next/router';
 import nookies from 'nookies';
-import React, { useState } from 'react';
+import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import GrovesCanvas from '~/src/components/Canvas';
 import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
 import KeyMapDialog from '~/src/components/KeyMapDialog';
-import Layout from '~/src/components/Layout';
 import Loading from '~/src/components/Loader';
 import SelectionPanel from '~/src/components/SelectionPanel';
 import Formations from '~/src/constants/Formations';
@@ -28,10 +27,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
   const { formation } = workspaceOptions;
 
-  const {
-    selectedConnection,
-    channelID
-  } = useSelection();
+  const { selectedConnection, channelID } = useSelection();
 
   const { loading, error, data: channelSkeleton, fetchMore, networkStatus } = useQuery(
     CHANNEL_SKELETON,
@@ -50,30 +46,32 @@ const Grove = ({ data, initialSelection, ...props }) => {
   };
 
   const renderFormation = (formation) => {
+    if (loading) {
+      return <Loading fullScreen="true" description="Loading blocks..." />;
+    }
+
     if (formation.key === Formations.CANVAS.key) {
       if (canvasBlocks && canvasBlocks.length > 0) {
         return (
           <>
             {selectedConnection && <SelectionPanel />}
-            <GrovesCanvas {...props}/>
+            <GrovesCanvas {...props} />
           </>
         );
       }
     } else if (formation.key === Formations.GRID.key) {
-      if (loading) {
-        return <Loading fullScreen="true" description="Loading blocks..." />;
-      } else if (channelSkeleton && channelSkeleton.channel) {
+      if (channelSkeleton && channelSkeleton.channel) {
         return (
           <div className="workspace">
             <SelectionPanel />
             <Grid blocks={channelSkeleton.channel.initial_contents} />
           </div>
         );
-      } else {
-        return <div>Error</div>;
       }
     } else if (formation.key === Formations.CHANNEL_INDEX.key) {
       return <ChannelIndex />;
+    } else {
+      return <div>Error</div>;
     }
   };
 
@@ -82,13 +80,10 @@ const Grove = ({ data, initialSelection, ...props }) => {
       <ToastContainer
         position="bottom-center"
         autoClose={2000}
-        hideProgressBar
         newestOnTop={false}
         closeOnClick
-        rtl={false}
         pauseOnFocusLoss
         draggable={false}
-        pauseOnHover={false}
       />
 
       {renderFormation(formation)}

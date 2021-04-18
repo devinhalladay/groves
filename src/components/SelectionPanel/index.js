@@ -26,6 +26,8 @@ import {
 import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/graphql/queries';
 import ChevronDown from '~/public/chevron-down.svg';
 import ChevronUp from '~/public/chevron-up.svg';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const SelectionPanel = React.memo((props) => {
   const router = useRouter();
@@ -36,6 +38,8 @@ const SelectionPanel = React.memo((props) => {
     const { index } = useUser();
 
     const query = selectedConnection.__typename === 'Channel' ? SELECTED_CHANNEL : SELECTED_BLOCK;
+
+    console.log(selectedConnection);
 
     const [tagState, setTagState] = useState({
       tags: selectedConnection.current_user_channels
@@ -286,6 +290,8 @@ const SelectionPanel = React.memo((props) => {
       </Tooltip>
     );
 
+    console.log(tagState.tags);
+
     if (loading) {
       return (
         <div
@@ -436,6 +442,7 @@ const SelectionPanel = React.memo((props) => {
           </section>
           <div className="section">
             <p className="section__title">Description</p>
+            
             <EditableText
               intent={Intent.PRIMARY}
               maxLines={24}
@@ -450,17 +457,35 @@ const SelectionPanel = React.memo((props) => {
               defaultValue={
                 selectedConnection &&
                 selectedConnection.description &&
-                parse(`${selectedConnection.description}`)
+                // parse(`${selectedConnection.description}`)
+                <ReactMarkdown skipHtml={true} unwrapDisallowed={true} remarkPlugins={[remarkGfm]}>{selectedConnection.description}</ReactMarkdown>
               }
             />
+
           </div>
           <div className="section">
-            <div className="section__title">Tags</div>
+            <div className="section__title">Connected To</div>
+            {selectedConnection.current_user_channels && selectedConnection.current_user_channels.map(channel => (
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginBottom: 5
+              }}>
+                <span className="bp4-text-overflow-ellipsis" style={{
+                  marginRight: 10,
+                  flex: 1
+                }}>{channel.title}</span>
+                <Button
+                  icon={<Icon icon="cross" />}
+                  onClick={handleTagRemove}
+                  minimal={true}></Button>
+              </div>
+            ))}
             <MultiSelect
               className="position-relative"
               createNewItemFromQuery={createNewTagFromQuery}
               createNewItemRenderer={createNewTagRenderer}
-              selectedItems={tagState.tags}
+              // selectedItems={tagState.tags}
               itemPredicate={filterTags}
               itemRenderer={renderTagOption}
               popoverProps={{
@@ -473,17 +498,28 @@ const SelectionPanel = React.memo((props) => {
               items={flatItems}
               noResults={<MenuItem disabled={true} text="No results." />}
               onItemSelect={handleTagSelect}
-              onRemove={handleTagRemove}
+              // onRemove={handleTagRemove}
               fill={true}
-              tagRenderer={renderTag}
+              tagRenderer={() => {
+                return {};
+              }}
               tagInputProps={{
-                rightElement: explainElement(),
-                leftIcon: 'tag',
+                rightElement: (
+                  <div
+                    style={{
+                      display: 'flex',
+                      height: '100%',
+                      alignItems: 'center',
+                    }}>
+                    {explainElement()}
+                  </div>
+                ),
+                leftIcon: 'add',
                 tagProps: {
                   minimal: true
                 }
               }}
-              selectedItems={tagState.tags}
+              // selectedItems={tagState.tags}
               resetOnSelect={true}
             />
           </div>

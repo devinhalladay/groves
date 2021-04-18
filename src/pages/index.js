@@ -1,19 +1,13 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import Layout from '~/src/components/Layout';
-import DraggableBlock from '~/src/components/Block';
-import { gql } from '@apollo/client';
-import { useQuery } from '@apollo/client';
-import withApollo from '~/src/hooks/withApollo';
-import Panel from '~/src/components/Panel';
-import Loading from '~/src/components/Loader';
-import { SelectionProvider } from '@context/selection-context';
-import { ThemeProvider } from '@context/theme-provider';
-import { ToastContainer } from 'react-toastify';
-import { WorkspaceProvider } from '@context/workspace-context';
+import { gql, useQuery } from '@apollo/client';
 import GrovesCanvas from '@components/Canvas';
-import { withAuthSync } from '../utils/auth';
+import { SelectionProvider } from '@context/selection-context';
 import { parseCookies } from 'nookies';
+import React, { useState } from 'react';
+import DraggableBlock from '~/src/components/Block';
+import Loading from '~/src/components/Loader';
+import Panel from '~/src/components/Panel';
+import withApollo from '~/src/hooks/withApollo';
+import { withAuthSync } from '../utils/auth';
 
 const GET_LANDING_BLOCKS = gql`
   {
