@@ -73,7 +73,7 @@ export default withApollo((props) => {
 
   return (
     <div className="canvas-container">
-      <ZoomTools panZoomRef={panZoomRef} />
+      {/* <ZoomTools panZoomRef={panZoomRef} /> */}
       <PanZoom
         ref={panZoomRef}
         preventPan={preventPan}

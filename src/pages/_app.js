@@ -9,6 +9,7 @@ import '~/public/toastify/main.scss';
 import { AuthenticatedHeader, UnauthenticatedHeader } from '~/src/components/Header';
 import KeyMaps from '../constants/KeyMaps';
 import { AuthProvider } from '../context/auth-context';
+import { SelectionProvider } from '../context/selection-context';
 import { ThemeProvider } from '../context/theme-provider';
 import { UserProvider } from '../context/user-context';
 import { WorkspaceProvider } from '../context/workspace-context';
@@ -74,7 +75,9 @@ const GrovesClient = ({ Component, pageProps, isAuthenticated }) => {
           <ThemeProvider>
             <WorkspaceProvider>
               <UnauthenticatedHeader {...pageProps} />
-              <Component {...pageProps} />
+              <SelectionProvider>
+                <Component {...pageProps} />
+              </SelectionProvider>
             </WorkspaceProvider>
           </ThemeProvider>
         )}

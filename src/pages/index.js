@@ -1,8 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
 import GrovesCanvas from '@components/Canvas';
-import { SelectionProvider } from '@context/selection-context';
+import { SelectionProvider, useSelection } from '@context/selection-context';
 import { parseCookies } from 'nookies';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DraggableBlock from '~/src/components/Block';
 import Loading from '~/src/components/Loader';
 import Panel from '~/src/components/Panel';
@@ -36,6 +36,12 @@ const Root = (props) => {
     maxZIndex: 1000
   });
 
+  const { setCanvasBlocks } = useSelection();
+
+  useEffect(() => {
+    data && setCanvasBlocks(data.channel.blokks);
+  }, [data]);
+
   if (loading) {
     return <Loading fullScreen="true" description="Loading your Grove :)" />;
   } else if (error) {
@@ -44,44 +50,43 @@ const Root = (props) => {
   }
 
   return (
-    <SelectionProvider>
-      <GrovesCanvas {...props}>
-        <>
-          <Panel
+    <>
+      <GrovesCanvas {...props} />
+      <Panel
+        pinSide="none"
+        style={{
+          width: '350px',
+          position: 'absolute',
+          bottom: 15,
+          right: 15
+        }}
+        canCollapse={false}
+        className={'newsletter-panel'}
+        panelTitle={'Subscribe to updates'}
+        {...props}>
+        <p>Get very occasional updates on development, beta testing, and launch dates.</p>
+        <form
+          action="https://network.us18.list-manage.com/subscribe/post?u=488634612d3795996b128e2ba&amp;id=d3ad9e4e39"
+          method="post">
+          <label htmlFor="EMAIL">Email address</label>
+          <input
+            name="EMAIL"
+            type="email"
+            placeholder="dev@groves.network"
             style={{
-              width: '350px'
+              width: '100%'
             }}
-            canCollapse={false}
-            className={'newsletter-panel'}
-            defaultPosition={{ x: 25, y: 520 }}
-            panelTitle={'Subscribe to updates'}
-            {...props}>
-            <p>Get very occasional updates on development, beta testing, and launch dates.</p>
-            <form
-              action="https://network.us18.list-manage.com/subscribe/post?u=488634612d3795996b128e2ba&amp;id=d3ad9e4e39"
-              method="post">
-              <label htmlFor="EMAIL">Email address</label>
-              <input name="EMAIL" type="email" placeholder="dev@groves.network" />
-              <input type="submit" value="Submit" />
-            </form>
-          </Panel>
-          {data.channel.blokks.map((blokk, i) => {
-            return (
-              <DraggableBlock
-                staticBlock={true}
-                title={blokk.title ? blokk.title : null}
-                type={blokk.__typename}
-                dragStates={dragStates}
-                setDragStates={setDragStates}
-                key={blokk.id}
-                block={blokk}
-                {...props}
-              />
-            );
-          })}
-        </>
-      </GrovesCanvas>
-    </SelectionProvider>
+          />
+          <input
+            type="submit"
+            value="Submit"
+            style={{
+              width: '100%'
+            }}
+          />
+        </form>
+      </Panel>
+    </>
   );
 };
 
