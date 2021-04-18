@@ -3,7 +3,6 @@ import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import { parseCookies } from 'nookies';
 import { useRef } from 'react';
-import localForage from 'localforage';
 
 export default withApollo(
   ({ initialState }) => {

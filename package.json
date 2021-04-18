@@ -17,12 +17,9 @@
     "@apollo/react-hooks": "^3.1.5",
     "@blueprintjs/core": "^4.0.0-alpha.0",
     "@blueprintjs/icons": "^4.0.0-alpha.0",
-    "@blueprintjs/popover2": "^0.5.0",
     "@blueprintjs/select": "^4.0.0-alpha.0",
     "@svgr/webpack": "^5.5.0",
     "@tippyjs/react": "^4.1.0",
-    "@use-it/event-listener": "^0.1.4",
-    "agent-base": "^6.0.2",
     "aws-sdk": "^2.819.0",
     "axios": "^0.19.2",
     "deepmerge": "^4.2.2",
@@ -33,10 +30,8 @@
     "eslint-plugin-react": "^7.21.5",
     "graphql": "^15.0.0",
     "html-react-parser": "^0.10.3",
-    "isomorphic-unfetch": "^3.0.0",
     "localforage": "^1.8.1",
     "lodash": "^4.17.21",
-    "nanoid": "^3.1.22",
     "next": "^9.2.1",
     "next-with-apollo": "^5.0.1",
     "nookies": "^2.0.8",
@@ -69,8 +64,7 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "husky": "^4.3.6",
     "patch-package": "^6.2.2",
-    "postinstall-postinstall": "^2.1.0",
-    "prisma": "^2.20.0"
+    "postinstall-postinstall": "^2.1.0"
   },
   "peerDependencies": {
     "eslint-config-airbnb": "^18.2.1"

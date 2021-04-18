@@ -9,7 +9,7 @@ export default async (req, res) => {
     const response = await axios.post(authURL);
     const { access_token } = response.data;
 
-    return res.status(200).json({ access_token: access_token });
+    return res.json({ access_token: access_token }).status(200);
   } catch (error) {
     const { response } = error;
     return response
