@@ -14,12 +14,21 @@ const BlockContextMenu = (props) => {
     <ContextMenu
       content={
         <Menu>
-          {props.formation.key === Formations.GRID.key ? (
-            <MenuItem icon="send-to" onClick={props.handleBlockClick} text="Add to canvas" />
+          {props.formation.key === Formations.GRID.key ||
+          props.formation.key == Formations.FOLDERS.key ? (
+            <MenuItem
+              icon="send-to"
+              onClick={() => props.handleBlockClick(props.block)}
+              text="Add to canvas"
+            />
           ) : (
             <MenuItem icon="remove" onClick={removeFromCanvas} text="Remove from canvas" />
           )}
-          <MenuItem icon="trash" onClick={props.handleBlockClick} text="Delete connection" />
+          <MenuItem
+            icon="trash"
+            onClick={() => props.handleBlockClick(props.block)}
+            text="Delete connection"
+          />
         </Menu>
       }>
       {props.children}
@@ -27,7 +36,7 @@ const BlockContextMenu = (props) => {
   );
 };
 
-export const handleBlockClick = (event, canvasBlocks, block) => {
+export const handleBlockClick = (event, canvasBlocks, block, setCanvasBlocks) => {
   if (canvasBlocks.some((b) => b.id === block.id)) {
     setCanvasBlocks(canvasBlocks.filter((b) => b.id !== block.id));
   } else {

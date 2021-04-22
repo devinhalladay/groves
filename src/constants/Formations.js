@@ -22,7 +22,7 @@ export default {
   FOLDERS: {
     key: 'FOLDERS',
     value: 'folders',
-    title: 'Folder View',
-    icon: 'folder'
+    title: 'Folders',
+    icon: 'panel-table'
   }
 };

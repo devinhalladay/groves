@@ -39,13 +39,11 @@ const SelectionPanel = React.memo((props) => {
 
     const query = selectedConnection.__typename === 'Channel' ? SELECTED_CHANNEL : SELECTED_BLOCK;
 
-    console.log(selectedConnection);
-
-    const [tagState, setTagState] = useState({
-      tags: selectedConnection.current_user_channels
-        .map((chanel) => chanel)
-        .filter((channel) => channel.id !== parseInt(router.query.grove))
-    });
+    // const [tagState, setTagState] = useState({
+    //   tags: selectedConnection.current_user_channels
+    //     .map((chanel) => chanel)
+    //     .filter((channel) => channel.id !== parseInt(router.query.grove))
+    // });
 
     const filterTags = (query, tag) => {
       const text = `${tag.title}`;
@@ -147,7 +145,7 @@ const SelectionPanel = React.memo((props) => {
     };
 
     const getSelectedTagIndex = (tag) => {
-      return tagState.tags.indexOf(tag);
+      return selectedConnection.current_user_channels.indexOf(tag);
     };
 
     const isTagSelected = (tag) => {
@@ -159,7 +157,7 @@ const SelectionPanel = React.memo((props) => {
     };
 
     const selectTags = (tagsToSelect) => {
-      const { tags } = tagState;
+      const tags = selectedConnection.current_user_channels;
 
       let nextTags = tags.slice();
       // let nextItems = items.slice();
@@ -300,8 +298,6 @@ const SelectionPanel = React.memo((props) => {
         </div>
       </Tooltip>
     );
-
-    console.log(tagState.tags);
 
     if (loading) {
       return (
@@ -473,27 +469,29 @@ const SelectionPanel = React.memo((props) => {
           <div className="section">
             <div className="section__title">Connected To</div>
             {selectedConnection.current_user_channels &&
-              selectedConnection.current_user_channels.map((channel) => (
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginBottom: 5
-                  }}>
-                  <span
-                    className="bp4-text-overflow-ellipsis"
+              selectedConnection.current_user_channels
+                .filter((channel) => channel.id !== parseInt(router.query.grove))
+                .map((channel) => (
+                  <div
                     style={{
-                      marginRight: 10,
-                      flex: 1
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginBottom: 5
                     }}>
-                    {channel.title}
-                  </span>
-                  <Button
-                    icon={<Icon icon="cross" />}
-                    onClick={() => handleTagRemove({ id: channel.id })}
-                    minimal={true}></Button>
-                </div>
-              ))}
+                    <span
+                      className="bp4-text-overflow-ellipsis"
+                      style={{
+                        marginRight: 10,
+                        flex: 1
+                      }}>
+                      {channel.title}
+                    </span>
+                    <Button
+                      icon={<Icon icon="cross" />}
+                      onClick={() => handleTagRemove({ id: channel.id })}
+                      minimal={true}></Button>
+                  </div>
+                ))}
             <MultiSelect
               className="position-relative"
               createNewItemFromQuery={createNewTagFromQuery}

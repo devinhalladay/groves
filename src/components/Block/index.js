@@ -12,7 +12,7 @@ import { useSelection } from '../../context/selection-context';
 import { useAuth } from '../../context/auth-context';
 import { useWorkspace } from '../../context/workspace-context';
 import { Card, Elevation } from '@blueprintjs/core';
-import BlockContextMenu from '../BlockContextMenu';
+import BlockContextMenu, { handleBlockClick } from '../BlockContextMenu';
 
 // TODO: Need to break up this component, it's all kinds of fucked up
 // and recursively renders itself via InlineExpandedChannel which
@@ -36,7 +36,13 @@ const DraggableBlock = ({
 
   let { staticBlock } = props;
 
-  const { workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale } = useWorkspace();
+  const {
+    workspaceOptions,
+    setWorkspaceOptions,
+    zoomScale,
+    setZoomScale,
+    setCanvasBlocks
+  } = useWorkspace();
   const { formation } = workspaceOptions;
 
   if (block.description && block.description.includes('"x":')) {
@@ -238,7 +244,10 @@ const DraggableBlock = ({
     <BlockContextMenu
       key={block.id}
       block={block}
-      formation={formation}>
+      formation={formation}
+      handleBlockClick={(e) => {
+        handleBlockClick(e, canvasBlocks, value, setCanvasBlocks);
+      }}>
       <Rnd
         ref={rndEl}
         key={block.id}

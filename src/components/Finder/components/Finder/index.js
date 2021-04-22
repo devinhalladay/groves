@@ -2,34 +2,53 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import equal from 'fast-deep-equal';
 import { useSelection } from '~/src/context/selection-context';
+import BlockContextMenu, { handleBlockClick } from '~/src/components/BlockContextMenu';
+import { useWorkspace } from '~/src/context/workspace-context';
 
 const FinderRow = (props) => {
-  const { rowIndex, columnIndex, disable, value, hasChild } = props;
+  const { value, hasChild } = props;
+  const { rowIndex, columnIndex, disable } = props;
 
   const onChange = () => {
+    const { onChange } = props;
     if (!disable && onChange) {
       onChange(rowIndex, columnIndex, value, !hasChild);
     }
   };
 
-  const { selectedConnection } = useSelection();
+  const { selectedConnection, canvasBlocks, setCanvasBlocks } = useSelection();
+  const { workspaceOptions } = useWorkspace();
+  const { formation } = workspaceOptions;
 
   const { text, isSelect } = props;
 
+  const truncatedText =
+    text.length > 36
+      ? text.substr(0, 20) + '...' + text.substr(text.length - 20, text.length)
+      : text;
+
   return (
-    <li
-      className={`${hasChild && 'has-child'} ${disable && 'disable'} ${isSelect && 'select'}`}
-      onClick={onChange}>
-      {hasChild ? (
-        <li>
-          <img src={value && value.image_url ? value.image_url : '/folder.svg'} />
-          <span>{text}</span>
-          <img src="/arrow.svg" />
-        </li>
-      ) : (
-        <span style={{ width: '100%' }}>{text}</span>
-      )}
-    </li>
+    <BlockContextMenu
+      key={value.id}
+      block={value}
+      formation={formation}
+      handleBlockClick={(e) => {
+        handleBlockClick(e, canvasBlocks, value, setCanvasBlocks);
+      }}>
+      <li
+        className={`${hasChild && 'has-child'} ${disable && 'disable'} ${isSelect && 'select'}`}
+        onClick={onChange}>
+        {hasChild ? (
+          <li>
+            <img src={value && value.image_url ? value.image_url : '/folder.svg'} />
+            <span>{truncatedText}</span>
+            <img src="/arrow.svg" />
+          </li>
+        ) : (
+          <span style={{ width: '100%' }}>{text}</span>
+        )}
+      </li>
+    </BlockContextMenu>
   );
 };
 

@@ -22,7 +22,8 @@ export default function GroveFormations() {
   const hotkeyHandlers = {
     VIEW_GRID: React.useCallback(() => handleChangeFormation(Formations.GRID)),
     VIEW_CHANNEL_INDEX: React.useCallback(() => handleChangeFormation(Formations.CHANNEL_INDEX)),
-    VIEW_CANVAS: React.useCallback(() => handleChangeFormation(Formations.CANVAS))
+    VIEW_CANVAS: React.useCallback(() => handleChangeFormation(Formations.CANVAS)),
+    VIEW_FOLDERS: React.useCallback(() => handleChangeFormation(Formations.FOLDERS))
   };
 
   const formationOptionRenderer = (formationOption) => {

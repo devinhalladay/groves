@@ -31,7 +31,7 @@ const Grid = (props) => {
                 block={block}
                 formation={formation}
                 handleBlockClick={(e) => {
-                  handleBlockClick(e, canvasBlocks, block);
+                  handleBlockClick(e, canvasBlocks, block, setCanvasBlocks);
                 }}>
                 <Card
                   interactive={false}

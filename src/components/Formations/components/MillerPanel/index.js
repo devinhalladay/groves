@@ -22,10 +22,14 @@ const MillerPanel = (props) => {
         text: block.title ? block.title : block.description,
         value: block,
         child: block.current_user_channels.map(function (item) {
-          return {
-            text: block.title ? block.title : block.description,
-            value: block
-          };
+          if (item.title !== block.title) {
+            return {
+              text: item.title ? item.title : item.description,
+              value: item
+            };
+          }
+
+          return null;
         })
       };
     });
@@ -46,10 +50,10 @@ const MillerPanel = (props) => {
           value={value}
           data={convertData(initialSelection && initialSelection.channel.skeleton)}
           onChange={(value, isEnd, selectedIndexes) => {
-            setSelectedConnection(value);
             setValue(value);
             setIsEnd(isEnd);
             setSelectedIndexes(selectedIndexes);
+            setSelectedConnection(value);
           }}
         />
       </div>
