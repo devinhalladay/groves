@@ -1,4 +1,4 @@
-import { Icons } from "@blueprintjs/icons";
+import { Icons } from '@blueprintjs/icons';
 
 export default {
   GRID: {
@@ -18,5 +18,11 @@ export default {
     value: 'channelIndex',
     title: 'Channel Index',
     icon: 'list-detail-view'
+  },
+  FOLDERS: {
+    key: 'FOLDERS',
+    value: 'folders',
+    title: 'Folder View',
+    icon: 'folder'
   }
 };

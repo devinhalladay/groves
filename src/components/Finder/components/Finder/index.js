@@ -1,41 +1,37 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import equal from 'fast-deep-equal';
+import { useSelection } from '~/src/context/selection-context';
 
-class FinderRow extends Component {
-  constructor(props) {
-    super(props);
+const FinderRow = (props) => {
+  const { rowIndex, columnIndex, disable, value, hasChild } = props;
 
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onChange() {
-    const { rowIndex, columnIndex, disable, value, hasChild, onChange } = this.props;
+  const onChange = () => {
     if (!disable && onChange) {
       onChange(rowIndex, columnIndex, value, !hasChild);
     }
-  }
+  };
 
-  render() {
-    const { text, disable, hasChild, isSelect } = this.props;
+  const { selectedConnection } = useSelection();
 
-    return (
-      <li
-        className={`${hasChild && 'has-child'} ${disable && 'disable'} ${isSelect && 'select'}`}
-        onClick={this.onChange}>
-        {hasChild ? (
-          <>
-            <img src="/folder.svg" />
-            <span>{text}</span>
-            <img src="/arrow.svg" />
-          </>
-        ) : (
-          <span style={{ width: '100%' }}>{text}</span>
-        )}
-      </li>
-    );
-  }
-}
+  const { text, isSelect } = props;
+
+  return (
+    <li
+      className={`${hasChild && 'has-child'} ${disable && 'disable'} ${isSelect && 'select'}`}
+      onClick={onChange}>
+      {hasChild ? (
+        <li>
+          <img src={value && value.image_url ? value.image_url : '/folder.svg'} />
+          <span>{text}</span>
+          <img src="/arrow.svg" />
+        </li>
+      ) : (
+        <span style={{ width: '100%' }}>{text}</span>
+      )}
+    </li>
+  );
+};
 
 class FinderColumn extends Component {
   constructor(props) {

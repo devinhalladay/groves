@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import GrovesCanvas from '~/src/components/Canvas';
 import CanvasContextMenu from '~/src/components/CanvasContextMenu';
 import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
+import MillerPanel from '~/src/components/Formations/components/MillerPanel';
 import KeyMapDialog from '~/src/components/KeyMapDialog';
 import Loading from '~/src/components/Loader';
 import SelectionPanel from '~/src/components/SelectionPanel';
@@ -76,6 +77,13 @@ const Grove = ({ data, initialSelection, ...props }) => {
       }
     } else if (formation.key === Formations.CHANNEL_INDEX.key) {
       return <ChannelIndex />;
+    } else if (formation.key === Formations.FOLDERS.key) {
+      return (
+        <div className="workspace">
+          <SelectionPanel />
+          <MillerPanel blocks={channelSkeleton.channel.initial_contents} />
+        </div>
+      );
     } else {
       return <div>Error</div>;
     }

@@ -2,6 +2,8 @@ import Panel from '~/src/components/Panel';
 import { useState } from 'react';
 import { initialData } from './initialData';
 import Finder from '~/src/components/Finder';
+import { useSelection } from '~/src/context/selection-context';
+import { prototype } from 'aws-sdk/clients/wellarchitected';
 
 const MillerPanel = (props) => {
   const [data, setData] = useState(initialData);
@@ -9,18 +11,42 @@ const MillerPanel = (props) => {
   const [value, setValue] = useState('');
   const [isEnd, setIsEnd] = useState(true);
 
+  const { blocks } = props;
+
+  const { selectedChannel, initialSelection, setSelectedConnection } = useSelection();
+
+  console.log(blocks);
+  function convertData() {
+    return blocks.map(function (block) {
+      return {
+        text: block.title ? block.title : block.description,
+        value: block,
+        child: block.current_user_channels.map(function (item) {
+          return {
+            text: block.title ? block.title : block.description,
+            value: block
+          };
+        })
+      };
+    });
+  }
+
+  console.log(convertData());
+
   return (
-    <Panel
-      pinSide="left"
-      panelTitle={'Miller Columns'}
-      panelType="wide"
-      defaultPosition={{ x: 0, y: 60 }}
-      {...props}>
+    <div
+      style={{
+        position: 'absolute',
+        right: 325,
+        left: 0,
+        paddingTop: 90
+      }}>
       <div className="finder-demo">
         <Finder
           value={value}
-          data={data}
+          data={convertData(initialSelection && initialSelection.channel.skeleton)}
           onChange={(value, isEnd, selectedIndexes) => {
+            setSelectedConnection(value);
             setValue(value);
             setIsEnd(isEnd);
             setSelectedIndexes(selectedIndexes);
@@ -36,7 +62,7 @@ const MillerPanel = (props) => {
         </li>
         <li>isEndNode: {`${isEnd}`}</li>
       </ul>
-    </Panel>
+    </div>
   );
 };
 

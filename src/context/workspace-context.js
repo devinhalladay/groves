@@ -1,5 +1,4 @@
 import React, { useContext, createContext, useState } from 'react';
-import { IconNames } from '@blueprintjs/icons';
 import Formations from '../constants/Formations';
 
 const WorkspaceContext = createContext();

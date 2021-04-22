@@ -19,6 +19,11 @@ export default {
     sequence: 'w 3',
     group: 'Global Shortcuts'
   },
+  VIEW_FOLDERS: {
+    name: 'Folder View',
+    sequence: 'w 4',
+    group: 'Global Shortcuts'
+  },
   FOCUS_NAVIGATOR: {
     name: 'Focus navigator input',
     sequence: 'command+u',
