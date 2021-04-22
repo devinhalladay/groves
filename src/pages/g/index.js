@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { useRef } from 'react';
 import withChannel from '~/src/components/Channel';
+import KeyMapDialog from '~/src/components/KeyMapDialog';
+import { useSelection } from '~/src/context/selection-context';
 import withApollo from '~/src/hooks/withApollo';
 import { withAuthSync } from '~/src/utils/auth';
 
@@ -13,6 +15,21 @@ const Grove = (props) => {
 
   const { createChannel } = props;
 
+  const {
+    selectedChannel,
+    setSelectedChannel,
+    // initialSelection,
+    // selectedConnection,
+    // setSelectedConnection,
+    // selectedRef,
+    // setSelectedRef,
+    // canvasBlocks,
+    // setCanvasBlocks,
+    // channelID,
+    // selections,
+    // setSelections
+  } = useSelection();
+
   const nameInput = useRef(null);
 
   const handleCreateChannel = async () => {
@@ -20,6 +37,7 @@ const Grove = (props) => {
     await createChannel(
       { title: val },
       (res) => {
+        setSelectedChannel(res.data.create_channel.channel)
         router.push(`/g/[grove]`, `/g/${res.data.create_channel.channel.id}`, { shallow: true });
       },
       (error) => console.log(error)
@@ -71,6 +89,7 @@ const Grove = (props) => {
           </Button>
         </Popover>
       </div>
+      <KeyMapDialog />
     </WorkspaceProvider>
   );
 };

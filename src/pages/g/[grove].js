@@ -7,6 +7,7 @@ import nookies from 'nookies';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import GrovesCanvas from '~/src/components/Canvas';
+import CanvasContextMenu from '~/src/components/CanvasContextMenu';
 import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
 import KeyMapDialog from '~/src/components/KeyMapDialog';
 import Loading from '~/src/components/Loader';
@@ -55,7 +56,9 @@ const Grove = ({ data, initialSelection, ...props }) => {
         return (
           <>
             {selectedConnection && <SelectionPanel />}
-            <GrovesCanvas {...props} />
+            <CanvasContextMenu>
+              <GrovesCanvas {...props} />
+            </CanvasContextMenu>
           </>
         );
       }
@@ -64,7 +67,9 @@ const Grove = ({ data, initialSelection, ...props }) => {
         return (
           <div className="workspace">
             <SelectionPanel />
-            <Grid blocks={channelSkeleton.channel.initial_contents} />
+            <CanvasContextMenu>
+              <Grid blocks={channelSkeleton.channel.initial_contents} />
+            </CanvasContextMenu>
           </div>
         );
       }
@@ -86,8 +91,8 @@ const Grove = ({ data, initialSelection, ...props }) => {
         draggable={false}
       />
 
-      {renderFormation(formation)}
       <KeyMapDialog />
+      {renderFormation(formation)}
     </div>
   );
 };

@@ -1,16 +1,11 @@
 import { Button, Dialog, KeyComboTag } from '@blueprintjs/core';
 import { Icons } from '@blueprintjs/icons';
-import { useWorkspace } from '@context/workspace-context';
 import { useState } from 'react';
 import { getApplicationKeyMap, GlobalHotKeys } from 'react-hotkeys';
-import Formations from '~/src/constants/Formations';
 import KeyMaps from '~/src/constants/KeyMaps';
 
 const KeyMapDialog = () => {
   const globalKeyMap = getApplicationKeyMap();
-
-  const { workspaceOptions } = useWorkspace();
-  const { formation } = workspaceOptions;
 
   const [isOpen, setIsOpen] = useState(false);
 

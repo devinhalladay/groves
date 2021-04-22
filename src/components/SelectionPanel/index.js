@@ -104,7 +104,7 @@ const SelectionPanel = React.memo((props) => {
       }
     );
 
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(true);
 
     const handleTitleChange = (e, connectable) => {
       if (connectable.__typename === 'Channel') {
@@ -179,23 +179,25 @@ const SelectionPanel = React.memo((props) => {
             channel_ids: [tag.id]
           }
         });
-      });
 
-      setTagState({
-        tags: nextTags
-        // items: nextItems
+        let selected = selectedConnection;
+        console.log(selectedConnection);
+        selected.current_user_channels.push({
+          title: tag.title
+        });
+
+        setSelectedConnection(selected);
       });
     };
 
     const flatItems = index.flatMap((channelSet) => channelSet.channels.flatMap((c) => c));
 
     let deselectTag = (tag) => {
-      const { tags } = tagState;
-
-      // Delete the item if the user manually created it.
-      setTagState({
-        tags: tags.filter((t) => t.id !== tag.id)
-      });
+      let selected = selectedConnection;
+      selected.current_user_channels = selected.current_user_channels.filter(
+        (t) => t.id !== tag.id
+      );
+      setSelectedConnection(selected);
 
       removeConnection({
         variables: {
@@ -255,6 +257,15 @@ const SelectionPanel = React.memo((props) => {
     });
 
     const createNewTagFromQuery = (query) => {
+      if (selectedConnection && selectedConnection.currentUserChannels) {
+        let selected = selectedConnection;
+        selected.currentUserChannels.push({
+          title: query
+        });
+
+        setSelectedConnection(selected);
+      }
+
       return {
         title: query
       };
@@ -442,7 +453,7 @@ const SelectionPanel = React.memo((props) => {
           </section>
           <div className="section">
             <p className="section__title">Description</p>
-            
+
             <EditableText
               intent={Intent.PRIMARY}
               maxLines={24}
@@ -456,31 +467,42 @@ const SelectionPanel = React.memo((props) => {
               placeholder="Add a description to this block…"
               defaultValue={
                 selectedConnection &&
-                selectedConnection.description &&
-                // parse(`${selectedConnection.description}`)
-                <ReactMarkdown skipHtml={true} unwrapDisallowed={true} remarkPlugins={[remarkGfm]}>{selectedConnection.description}</ReactMarkdown>
+                selectedConnection.description && (
+                  // parse(`${selectedConnection.description}`)
+                  <ReactMarkdown
+                    skipHtml={true}
+                    unwrapDisallowed={true}
+                    remarkPlugins={[remarkGfm]}>
+                    {selectedConnection.description}
+                  </ReactMarkdown>
+                )
               }
             />
-
           </div>
           <div className="section">
             <div className="section__title">Connected To</div>
-            {selectedConnection.current_user_channels && selectedConnection.current_user_channels.map(channel => (
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                marginBottom: 5
-              }}>
-                <span className="bp4-text-overflow-ellipsis" style={{
-                  marginRight: 10,
-                  flex: 1
-                }}>{channel.title}</span>
-                <Button
-                  icon={<Icon icon="cross" />}
-                  onClick={handleTagRemove}
-                  minimal={true}></Button>
-              </div>
-            ))}
+            {selectedConnection.current_user_channels &&
+              selectedConnection.current_user_channels.map((channel) => (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginBottom: 5
+                  }}>
+                  <span
+                    className="bp4-text-overflow-ellipsis"
+                    style={{
+                      marginRight: 10,
+                      flex: 1
+                    }}>
+                    {channel.title}
+                  </span>
+                  <Button
+                    icon={<Icon icon="cross" />}
+                    onClick={() => handleTagRemove({ id: channel.id })}
+                    minimal={true}></Button>
+                </div>
+              ))}
             <MultiSelect
               className="position-relative"
               createNewItemFromQuery={createNewTagFromQuery}
@@ -509,7 +531,7 @@ const SelectionPanel = React.memo((props) => {
                     style={{
                       display: 'flex',
                       height: '100%',
-                      alignItems: 'center',
+                      alignItems: 'center'
                     }}>
                     {explainElement()}
                   </div>

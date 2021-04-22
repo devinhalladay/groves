@@ -6,7 +6,7 @@ import { useSelection } from '@context/selection-context';
 import { useUser } from '@context/user-context';
 import KeyMaps from '~/src/constants/KeyMaps';
 
-const GrovesNavigator = ({initialSelection}) => {
+const GrovesNavigator = ({ initialSelection }) => {
   const router = useRouter();
 
   const { channels, index } = useUser();
@@ -20,10 +20,14 @@ const GrovesNavigator = ({initialSelection}) => {
 
   const handleFocusInput = (e) => {
     e.preventDefault();
-    inputRef.current.focus();
+    inputRef.current && inputRef.current.focus();
   };
 
   const keyHandlers = { FOCUS_NAVIGATOR: (e) => handleFocusInput(e) };
+
+  const selectInputContents = () => {
+    inputRef.current && inputRef.current.target.select();
+  };
 
   return (
     <>
@@ -45,8 +49,16 @@ const GrovesNavigator = ({initialSelection}) => {
           }
         }}
         itemToString={(item) => (item ? item.title : '')}
-        initialSelectedItem={(typeof initialSelection !== 'undefined' && initialSelection !== null) ? initialSelection.channel : null}
-        initialInputValue={(typeof initialSelection !== 'undefined' && initialSelection !== null) ? initialSelection.channel.title : null}>
+        initialSelectedItem={
+          typeof initialSelection !== 'undefined' && initialSelection !== null
+            ? initialSelection.channel
+            : null
+        }
+        initialInputValue={
+          typeof initialSelection !== 'undefined' && initialSelection !== null
+            ? initialSelection.channel.title
+            : null
+        }>
         {({
           getInputProps,
           getItemProps,
@@ -64,12 +76,19 @@ const GrovesNavigator = ({initialSelection}) => {
             <div {...getRootProps({}, { suppressRefError: true })} className="grove-navigation">
               <input
                 {...getInputProps({
-                  onFocus: openMenu
+                  onFocus: () => {
+                    openMenu();
+                    selectInputContents();
+                  },
+
+                  ref: (e) => {
+                    inputRef.current = e;
+                  }
                 })}
-                ref={inputRef}
+                // ref={inputRef}
                 placeholder="Enter a channel title..."
               />
-              <ul {...getMenuProps()} className={`groves-dropdown panel ${isOpen ? 'open' : ''}`}>
+              <ul {...getMenuProps({})} className={`groves-dropdown panel ${isOpen ? 'open' : ''}`}>
                 {isOpen &&
                   [...inputItems]
                     .sort((a, b) => a.title.localeCompare(b.title))
