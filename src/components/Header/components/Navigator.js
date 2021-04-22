@@ -26,7 +26,7 @@ const GrovesNavigator = ({ initialSelection }) => {
   const keyHandlers = { FOCUS_NAVIGATOR: (e) => handleFocusInput(e) };
 
   const selectInputContents = () => {
-    inputRef.current && inputRef.current.target.select();
+    inputRef.current && inputRef.current.select();
   };
 
   return (

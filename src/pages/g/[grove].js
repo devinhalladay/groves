@@ -33,6 +33,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
   const { loading, error, data: channelSkeleton, fetchMore, networkStatus } = useQuery(
     CHANNEL_SKELETON,
     {
+      // pollInterval: 500,
       variables: { channelId: channelID },
       fetchPolicy: 'no-cache',
       client: apollo

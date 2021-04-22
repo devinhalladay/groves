@@ -454,6 +454,7 @@ const SelectionPanel = React.memo((props) => {
           <div className="section">
             <p className="section__title">Description</p>
 
+            {/* <ReactMarkdown skipHtml={true} unwrapDisallowed={true} remarkPlugins={[remarkGfm]}> */}
             <EditableText
               intent={Intent.PRIMARY}
               maxLines={24}
@@ -465,19 +466,9 @@ const SelectionPanel = React.memo((props) => {
               }}
               multiline={true}
               placeholder="Add a description to this block…"
-              defaultValue={
-                selectedConnection &&
-                selectedConnection.description && (
-                  // parse(`${selectedConnection.description}`)
-                  <ReactMarkdown
-                    skipHtml={true}
-                    unwrapDisallowed={true}
-                    remarkPlugins={[remarkGfm]}>
-                    {selectedConnection.description}
-                  </ReactMarkdown>
-                )
-              }
+              defaultValue={selectedConnection && selectedConnection.description}
             />
+            {/* </ReactMarkdown> */}
           </div>
           <div className="section">
             <div className="section__title">Connected To</div>

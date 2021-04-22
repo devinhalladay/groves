@@ -94,7 +94,6 @@ const CreateBlock = (props) => {
   const inputElement = useRef(null);
 
   const onSubmit = (value) => {
-    console.log(inputElement.current);
     newBlock({
       variables: {
         channelId: router.query.grove,
@@ -115,7 +114,6 @@ const CreateBlock = (props) => {
   };
 
   const [newBlock, { loading: mutationLoading, error: mutationError }] = useMutation(createBlock, {
-    client: apollo,
     onCompleted: (data) => {
       console.log(data);
     },
@@ -131,66 +129,68 @@ const CreateBlock = (props) => {
   return (
     <Popover
       position="bottom"
-      content={<section style={{ padding: 15, width: 280, paddingTop: 25 }}>
-        <p style={{ marginBottom: 15 }}>
-          <strong>Create a new block</strong>
-        </p>
-        <div {...getRootProps()} onClick={replaceWithTextbox}>
-          {createState === 'text' ? (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                outline: 'none'
-              }}>
-              <TextArea
-                fill={true}
-                placeholder="Type here in Markdown…"
-                style={{
-                  height: 250,
-                  resize: 'none',
-                  marginBottom: 15
-                }}
-                autoFocus
-                inputRef={inputElement}
-              />
+      content={
+        <section style={{ padding: 15, width: 280, paddingTop: 25 }}>
+          <p style={{ marginBottom: 15 }}>
+            <strong>Create a new block</strong>
+          </p>
+          <div {...getRootProps()} onClick={replaceWithTextbox}>
+            {createState === 'text' ? (
               <div
                 style={{
                   display: 'flex',
-                  flex: 0,
-                  justifyContent: 'space-between'
-                }}>
-                <Button>Cancel</Button>
-                <Button intent={Intent.PRIMARY} icon={Icons.ADD} onClick={onSubmit}>
-                  Create Block
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <>
-              <input {...getInputProps()} />
-              <div
-                style={{
-                  height: 250,
-                  width: 250,
-                  display: 'flex',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  justifyContent: 'center',
-                  padding: 20,
-                  background: 'rgba(211, 211, 211, 0.27)',
+                  flexDirection: 'column',
                   outline: 'none'
                 }}>
-                {isDragActive ? (
-                  <p>Drop the files here ...</p>
-                ) : (
-                  <p>Drag a file here, or click to write some text.</p>
-                )}
+                <TextArea
+                  fill={true}
+                  placeholder="Type here in Markdown…"
+                  style={{
+                    height: 250,
+                    resize: 'none',
+                    marginBottom: 15
+                  }}
+                  autoFocus
+                  inputRef={inputElement}
+                />
+                <div
+                  style={{
+                    display: 'flex',
+                    flex: 0,
+                    justifyContent: 'space-between'
+                  }}>
+                  <Button>Cancel</Button>
+                  <Button intent={Intent.PRIMARY} icon={Icons.ADD} onClick={onSubmit}>
+                    Create Block
+                  </Button>
+                </div>
               </div>
-            </>
-          )}
-        </div>
-      </section>}
+            ) : (
+              <>
+                <input {...getInputProps()} />
+                <div
+                  style={{
+                    height: 250,
+                    width: 250,
+                    display: 'flex',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    justifyContent: 'center',
+                    padding: 20,
+                    background: 'rgba(211, 211, 211, 0.27)',
+                    outline: 'none'
+                  }}>
+                  {isDragActive ? (
+                    <p>Drop the files here ...</p>
+                  ) : (
+                    <p>Drag a file here, or click to write some text.</p>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        </section>
+      }
       style={{
         padding: 15
       }}>

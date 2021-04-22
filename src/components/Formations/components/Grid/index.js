@@ -36,6 +36,7 @@ const Grid = (props) => {
                 <Card
                   interactive={false}
                   className="block-card"
+                  style={{ width: '100%' }}
                   onClick={(e) => setSelectedConnection(block)}>
                   <div className={`block block--${block.__typename.toLowerCase()}`}>
                     {' '}
