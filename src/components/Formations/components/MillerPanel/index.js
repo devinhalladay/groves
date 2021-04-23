@@ -20,7 +20,7 @@ const MillerPanel = (props) => {
     return blocks.map(function (block) {
       return {
         text: block.title ? block.title : block.description,
-        value: block,
+        value: block.id,
         child: block.current_user_channels.map(function (item) {
           if (item.title !== block.title) {
             return {
@@ -53,7 +53,7 @@ const MillerPanel = (props) => {
             setValue(value);
             setIsEnd(isEnd);
             setSelectedIndexes(selectedIndexes);
-            setSelectedConnection(value);
+            // setSelectedConnection(value);
           }}
         />
       </div>
