@@ -10,9 +10,13 @@ import {
   InputGroup,
   Label
 } from '@blueprintjs/core';
+import { useState } from 'react';
 
 const Modal = (props) => {
   const { type } = props;
+
+  const [relationFields, setRelationFields] = useState(type);
+
   return (
     <Dialog isOpen={true} title="Add a new object type" icon="new-object">
       <div className={Classes.DIALOG_BODY}>
@@ -23,10 +27,13 @@ const Modal = (props) => {
           </p>
         </Callout>
 
-        <Label>
-          Object Name
-          <InputGroup fill={true} />
-        </Label>
+        <FormGroup
+          helperText="What is this object called? e.g. Book or Author"
+          label="Object Name"
+          labelFor="name-input"
+          labelInfo="(required)">
+          <InputGroup placeholder="Book" fill={true} id="name-input" />
+        </FormGroup>
 
         <Divider style={{ marginBottom: 20 }} />
 
@@ -36,7 +43,7 @@ const Modal = (props) => {
           <strong>Each field is its own channel.</strong>
         </Callout>
 
-        {Object.keys(type).map((field, i) => (
+        {relationFields.map((field, i) => (
           <>
             <div
               style={{
@@ -62,12 +69,29 @@ const Modal = (props) => {
                 }}>
                 {i + 1}
               </div>
-              <InputGroup fill={true} defaultValue={type[field]} key={i} />
-              <Button icon="cross" fill={false} style={{ marginLeft: 10 }} />
+              <InputGroup fill={true} defaultValue={field.title} key={field.id} />
+              <Button
+                icon="cross"
+                fill={false}
+                style={{ marginLeft: 10 }}
+                onClick={() => {
+                  let newFields = relationFields;
+                  newFields = newFields.filter((f) => f.title !== field.title);
+                  setRelationFields(newFields);
+                }}
+              />
             </div>
           </>
         ))}
-        <Button icon="add">Add relation field</Button>
+        <Button
+          icon="add"
+          onClick={() => {
+            let newFields = relationFields;
+            newFields.push({ id: relationFields.length + 1, title: '' });
+            setRelationFields([...newFields]);
+          }}>
+          Add relation field
+        </Button>
       </div>
       <Divider style={{ marginBottom: 20 }} />
       <div className={Classes.DIALOG_FOOTER}>
