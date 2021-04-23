@@ -22,11 +22,11 @@ export default async (req, res) => {
         }
       )
       .then((response) => {
-        res.status(response.status).json(response.data);
+        res.status(response.status).send(response.data);
       });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ message: error });
+    res.status(400).send({ message: error });
     return error;
   }
 };

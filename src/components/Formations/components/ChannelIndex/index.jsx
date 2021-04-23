@@ -26,27 +26,36 @@ const ChannelIndex = (props) => {
   const [confirmedDelete, setConfirmedDelete] = useState(false);
 
   const handleDeleteSingleChannel = (channel) => {
+    let list = currentList;
     deleteChannel(channel, () => {
+      list = list.filter((chan) => chan.id !== channel.id);
+      setCurrentList(list);
       toast(`Deleted channel ID ${channel.id}`);
-      const newList = currentList.filter((chan) => chan.id !== channel.id);
-      setCurrentList(newList);
     });
   };
 
   const handleDeleteMultipleChannels = () => {
+    let list = currentList;
+
     selections.forEach((c) => {
       deleteChannel(c, (data) => {
-        toast(`Deleted channel ID ${c.id}`);
-        const newList = currentList.filter((chan) => chan.id !== c.id);
-        setCurrentList(newList);
+        list = list.filter((chan) => chan.id !== c.id);
       });
     });
+
+    setCurrentList(list);
+    toast(`Deleted channels`);
+
     setSelections([]);
+  };
+
+  const handleDeletion = (channel) => {
+    selections.length > 1 ? handleDeleteMultipleChannels() : handleDeleteSingleChannel(channel);
   };
 
   const handleMultiSelect = (channel, i) => {
     const start = flatIndex.findIndex((c) => c.id === selections[selections.length - 1].id);
-    const end = i + 1;
+    const end = i;
     const intermediateItems = currentList.slice(start, end);
     setSelections([...selections, ...intermediateItems]);
   };
@@ -117,7 +126,7 @@ const ChannelIndex = (props) => {
                       ) : (
                         <Button icon="trash" onClick={() => setIsDeleting(true)} />
                       )} */}
-                      <Button icon="trash" onClick={() => handleDeleteSingleChannel(channel)} />
+                      <Button icon="trash" onClick={() => handleDeletion(channel)} />
                     </div>
                   </Card>
                 </Checkbox>

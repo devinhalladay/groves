@@ -1545,13 +1545,25 @@ button,
 
 .grid > * {
   box-sizing: border-box;
-  flex: calc(25% - 20px) 0 !important;
-  max-height: 250px;
+  flex: calc(33.33% - 20px) 0 !important;
+  // max-height: 250px;
   position: relative;
   margin: unset;
   margin: 0px 10px 40px !important;
   display: flex;
   justify-content: center;
+
+  @media (min-width: 1200px) {
+    flex: calc(25% - 20px) 0 !important;
+  }
+
+  @media (min-width: 1700px) {
+    flex: calc(20% - 20px) 0 !important;
+  }
+
+  @media (min-width: 2000px) {
+    flex: calc(16.66% - 20px) 0 !important;
+  }
 
   &:after {
     content: '';

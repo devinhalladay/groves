@@ -13,6 +13,7 @@ import { useAuth } from '../../context/auth-context';
 import { useWorkspace } from '../../context/workspace-context';
 import { Card, Elevation } from '@blueprintjs/core';
 import BlockContextMenu, { handleBlockClick } from '../BlockContextMenu';
+import { useRouter } from 'next/router';
 
 // TODO: Need to break up this component, it's all kinds of fucked up
 // and recursively renders itself via InlineExpandedChannel which
@@ -284,6 +285,7 @@ const DraggableBlock = ({
           zIndex: spatialState.zIndex
         }}>
         <Card
+          onClick={() => console.log('test')}
           interactive={true}
           className={`draggable-block-container ${block.__typename ? block.__typename : ''} ${
             selectedConnection && selectedConnection.id

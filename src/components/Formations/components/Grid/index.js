@@ -6,6 +6,7 @@ import SelectionPanel from '~/src/components/SelectionPanel';
 import { useSelection } from '~/src/context/selection-context';
 import { useWorkspace } from '~/src/context/workspace-context';
 import Formations from '~/src/constants/Formations';
+import { useRouter } from 'next/router';
 
 const Grid = (props) => {
   const { blocks } = props;
@@ -13,6 +14,23 @@ const Grid = (props) => {
   const { formation } = workspaceOptions;
 
   const { setSelectedConnection, canvasBlocks, setCanvasBlocks } = useSelection();
+
+  const router = useRouter();
+
+  let clickTimer;
+
+  const handleBlockClickEvent = (event, block) => {
+    clearTimeout(clickTimer);
+
+    if (event.detail === 1) {
+      clickTimer = setTimeout(() => console.log(1), 200);
+    } else if (event.detail === 2) {
+      console.log(2);
+      if (block.__typename == 'Channel') {
+        router.push(`/g/[grove]`, `/g/${block.id}`, { shallow: true });
+      }
+    }
+  };
 
   return (
     <>
@@ -37,7 +55,10 @@ const Grid = (props) => {
                   interactive={false}
                   className="block-card"
                   style={{ width: '100%' }}
-                  onClick={(e) => setSelectedConnection(block)}>
+                  onClick={(e) => {
+                    setSelectedConnection(block);
+                    handleBlockClickEvent(e, block);
+                  }}>
                   <div className={`block block--${block.__typename.toLowerCase()}`}>
                     {' '}
                     <BlockRepresentation block={block} />

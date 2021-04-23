@@ -16,8 +16,12 @@ const CreateGroveAction = (props) => {
       { title: val },
       (data) => {
         console.log(data);
+        return data;
       },
-      (error) => console.log(error)
+      (error) => {
+        console.log(error);
+        return error;
+      }
     );
   };
 

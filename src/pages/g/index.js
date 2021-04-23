@@ -1,12 +1,17 @@
 import { Button, InputGroup, Popover } from '@blueprintjs/core';
 import { Icons } from '@blueprintjs/icons';
-import { WorkspaceProvider } from '@context/workspace-context';
+import { useWorkspace, WorkspaceProvider } from '@context/workspace-context';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { useRef } from 'react';
 import withChannel from '~/src/components/Channel';
+import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
+import Grid from '~/src/components/Formations/components/Grid';
 import KeyMapDialog from '~/src/components/KeyMapDialog';
+import SelectionPanel from '~/src/components/SelectionPanel';
+import Formations from '~/src/constants/Formations';
 import { useSelection } from '~/src/context/selection-context';
+import { useUser } from '~/src/context/user-context';
 import withApollo from '~/src/hooks/withApollo';
 import { withAuthSync } from '~/src/utils/auth';
 
@@ -14,10 +19,12 @@ const Grove = (props) => {
   const router = useRouter();
 
   const { createChannel } = props;
+  const { workspaceOptions } = useWorkspace();
+  const { formation } = workspaceOptions;
 
   const {
     selectedChannel,
-    setSelectedChannel,
+    setSelectedChannel
     // initialSelection,
     // selectedConnection,
     // setSelectedConnection,
@@ -32,12 +39,14 @@ const Grove = (props) => {
 
   const nameInput = useRef(null);
 
+  const { flatIndex } = useUser();
+
   const handleCreateChannel = async () => {
     const val = nameInput.current.value;
     await createChannel(
       { title: val },
       (res) => {
-        setSelectedChannel(res.data.create_channel.channel)
+        setSelectedChannel(res.data.create_channel.channel);
         router.push(`/g/[grove]`, `/g/${res.data.create_channel.channel.id}`, { shallow: true });
       },
       (error) => console.log(error)
@@ -46,50 +55,10 @@ const Grove = (props) => {
 
   return (
     <WorkspaceProvider>
-      <div className={`loading-screen fullscreen`}>
-        <p
-          style={{
-            marginBottom: 20
-          }}>
-          Search for a channel or create a new one.
-        </p>
-
-        <Popover
-          position="bottom"
-          content={
-            <section style={{ padding: 15, width: 350, paddingTop: 25 }}>
-              <p style={{ marginBottom: 15 }}>
-                <strong>Create a channel</strong>
-              </p>
-              <InputGroup
-                large={true}
-                fill={true}
-                placeholder="Enter a name for your channel…"
-                leftIcon={Icons.Edit}
-                style={{ marginBottom: 15 }}
-                className="merge-input-disabled"
-                inputRef={nameInput}
-              />
-              <Button
-                large={true}
-                fill={true}
-                icon={Icons.NewObject}
-                intent="primary"
-                onClick={handleCreateChannel}>
-                Create channel
-              </Button>
-            </section>
-          }>
-          <Button
-            onClick={() => {
-              return null;
-            }}
-            icon="add">
-            Create Channel
-          </Button>
-        </Popover>
-      </div>
+      <SelectionPanel />
       <KeyMapDialog />
+      {formation.key === Formations.GRID.key && <Grid blocks={flatIndex} />}
+      {formation.key === Formations.CHANNEL_INDEX.key && <ChannelIndex />}
     </WorkspaceProvider>
   );
 };

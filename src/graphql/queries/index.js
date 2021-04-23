@@ -5,7 +5,18 @@ const CURRENT_USER = gql`
     me {
       channels_index {
         channels {
+          __typename
+          user {
+            name
+          }
+          description
           id
+          current_user_channels {
+            __typename
+            id
+            title
+            href
+          }
           title
           counts {
             contents

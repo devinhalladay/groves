@@ -28,11 +28,24 @@ import ChevronDown from '~/public/chevron-down.svg';
 import ChevronUp from '~/public/chevron-up.svg';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import withChannel from '../Channel';
 
 const SelectionPanel = React.memo((props) => {
   const router = useRouter();
-  const { apollo } = props;
+  const { apollo, createChannel } = props;
   const { selectedConnection, setSelectedConnection } = useSelection();
+
+  const handleCreateChannel = async (title) => {
+    await createChannel(
+      { title: title },
+      (data) => {
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
 
   if (selectedConnection) {
     const { index } = useUser();
@@ -213,14 +226,6 @@ const SelectionPanel = React.memo((props) => {
         } else {
           handleTagRemove(tag);
         }
-      } else {
-        await createChannel({
-          variables: {
-            title: tag.title
-          }
-        }).then((data) => {
-          selectTag(data.data.create_channel.channel);
-        });
       }
     };
 
@@ -254,9 +259,18 @@ const SelectionPanel = React.memo((props) => {
       }
     });
 
-    const createNewTagFromQuery = (query) => {
+    const createNewTagFromQuery = async (query) => {
       if (selectedConnection && selectedConnection.currentUserChannels) {
+        await createChannel(
+          { title: query },
+          (data) => {
+            console.log(data);
+          },
+          (error) => console.log(error)
+        );
+
         let selected = selectedConnection;
+
         selected.currentUserChannels.push({
           title: query
         });
@@ -558,4 +572,4 @@ const SelectionPanel = React.memo((props) => {
   }
 });
 
-export default SelectionPanel;
+export default withChannel()(SelectionPanel);
