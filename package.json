@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./ --fix",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc --ignore-path .gitignore"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc --ignore-path .gitignore",
+    "storybook": "start-storybook -p 6006",
+    "storybook:build": "build-storybook"
   },
   "author": "devin@devinhalladay.com",
   "license": "GPL-3.0",
@@ -34,6 +36,7 @@
     "lodash": "^4.17.21",
     "next": "^9.2.1",
     "next-with-apollo": "^5.0.1",
+    "node-sass": "4.14.1",
     "nookies": "^2.0.8",
     "prettier": "^2.2.1",
     "rc-slider": "^9.7.2",
@@ -54,11 +57,17 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/preset-scss": "^1.0.3",
+    "@storybook/react": "^6.2.9",
     "@types/node": "^14.14.16",
     "@types/react": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.11.1",
     "@typescript-eslint/parser": "^4.11.1",
     "babel-loader": "^8.0.6",
+    "css-loader": "^5.2.4",
     "eslint": "^7.16.0",
     "eslint-config-nextjs": "^1.0.6",
     "eslint-config-prettier": "^7.1.0",
@@ -67,7 +76,9 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "husky": "^4.3.6",
     "patch-package": "^6.2.2",
-    "postinstall-postinstall": "^2.1.0"
+    "postinstall-postinstall": "^2.1.0",
+    "sass-loader": "7.1.0",
+    "style-loader": "^2.0.0"
   },
   "peerDependencies": {
     "eslint-config-airbnb": "^18.2.1"
