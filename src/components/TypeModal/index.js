@@ -3,12 +3,10 @@ import {
   Callout,
   Classes,
   Colors,
-  ControlGroup,
   Dialog,
   Divider,
   FormGroup,
-  InputGroup,
-  Label
+  InputGroup
 } from '@blueprintjs/core';
 import { useState } from 'react';
 
