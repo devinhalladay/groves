@@ -10,23 +10,14 @@ import createBlock from '~/src/components/Block/mutations/createBlock';
 import { useTheme } from '~/src/context/theme-provider';
 
 const CreateBlock = (props) => {
-  const [visible, setVisible] = useState(false);
   const [files, setFiles] = useState([]);
 
   const { theme } = useTheme();
 
-  const { apollo } = props;
-
-  const show = () => setVisible(true);
-  const hide = () => {
-    setVisible(false);
-    setCreateState('omni');
-  };
-
   const router = useRouter();
 
   const ActionButton = forwardRef((props, ref) => (
-    <Button ref={ref} minimal={true} className="action" onClick={visible ? hide : show}>
+    <Button ref={ref} minimal={true} className="action">
       <ActionIcon
         fill={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
         stroke={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
@@ -98,7 +89,8 @@ const CreateBlock = (props) => {
       variables: {
         channelId: router.query.grove,
         value: inputElement.current.value
-      }
+      },
+      optimisticResponse: true
     });
   };
 

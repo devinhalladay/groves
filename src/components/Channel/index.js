@@ -1,10 +1,32 @@
-import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
-import { CREATE_CHANNEL, DELETE_CHANNEL, UPDATE_CHANNEL } from '~/src/graphql/mutations';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import React from 'react';
-import getSkeleton from './queries/getSkeleton';
+import { CREATE_CHANNEL, DELETE_CHANNEL, UPDATE_CHANNEL } from '~/src/graphql/mutations';
+import { CHANNEL_SKELETON } from '~/src/graphql/queries';
 
 const withChannel = (props) => (WrappedComponent) => () => {
   // const { apollo } = props;
+
+  const [
+    loadChannelSkeleton,
+    { called: calledChannelSkeleton, loading: loadingChannelSkeleton, data: channelSkeleton }
+  ] = useLazyQuery(CHANNEL_SKELETON, {
+    fetchPolicy: 'no-cache'
+  });
+
+  const getChannelSkeleton = async (channelId, onSuccess, onError) => {
+    await loadChannelSkeleton({
+      variables: {
+        channelId: channelId
+      }
+    })
+      .then((data) => {
+        onSuccess && onSuccess(data);
+      })
+      .catch((error) => {
+        console.error(error);
+        onError && onError(error);
+      });
+  };
 
   const [
     createChannelMutation,
@@ -94,7 +116,7 @@ const withChannel = (props) => (WrappedComponent) => () => {
       createChannel={createChannel}
       updateChannel={updateChannel}
       deleteChannel={deleteChannel}
-      // getChannelSkeleton={getChannelSkeleton}
+      getChannelSkeleton={getChannelSkeleton}
       {...props}
     />
   );

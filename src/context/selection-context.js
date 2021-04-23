@@ -26,7 +26,6 @@ const SelectionProvider = withApollo((props) => {
     } else if (router.query.grove) {
       return router.query.grove;
     } else {
-      // return '924348';
       return null;
     }
   };
@@ -42,12 +41,6 @@ const SelectionProvider = withApollo((props) => {
       client: props.apollo
     }
   );
-
-  console.log(channelID);
-
-  // if (channelID !== null) {
-  //   loadSkeleton();
-  // }
 
   if (typeof loading !== 'undefined' && loading == true) {
     return <Loading fullScreen="true" description={'Loading your Grove :)'} />;

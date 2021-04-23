@@ -8,6 +8,7 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import GrovesCanvas from '~/src/components/Canvas';
 import CanvasContextMenu from '~/src/components/CanvasContextMenu';
+import withChannel from '~/src/components/Channel';
 import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
 import MillerPanel from '~/src/components/Formations/components/MillerPanel';
 import KeyMapDialog from '~/src/components/KeyMapDialog';
@@ -20,10 +21,6 @@ import { addApolloState, initializeApollo } from '~/src/lib/apolloClient';
 import { withAuthSync } from '~/src/utils/auth';
 
 const Grove = ({ data, initialSelection, ...props }) => {
-  const router = useRouter();
-
-  const { canvasBlocks } = useSelection();
-
   const { apollo } = props;
 
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
@@ -34,19 +31,11 @@ const Grove = ({ data, initialSelection, ...props }) => {
   const { loading, error, data: channelSkeleton, fetchMore, networkStatus } = useQuery(
     CHANNEL_SKELETON,
     {
-      // pollInterval: 500,
       variables: { channelId: channelID },
       fetchPolicy: 'no-cache',
       client: apollo
     }
   );
-
-  const _switchToGridFormation = () => {
-    setWorkspaceOptions({
-      ...workspaceOptions,
-      formation: Formations.GRID
-    });
-  };
 
   const renderFormation = (formation) => {
     if (loading) {
@@ -54,16 +43,14 @@ const Grove = ({ data, initialSelection, ...props }) => {
     }
 
     if (formation.key === Formations.CANVAS.key) {
-      if (canvasBlocks && canvasBlocks.length > 0) {
-        return (
-          <>
-            {selectedConnection && <SelectionPanel />}
-            <CanvasContextMenu>
-              <GrovesCanvas {...props} />
-            </CanvasContextMenu>
-          </>
-        );
-      }
+      return (
+        <>
+          {selectedConnection && <SelectionPanel />}
+          <CanvasContextMenu>
+            <GrovesCanvas {...props} />
+          </CanvasContextMenu>
+        </>
+      );
     } else if (formation.key === Formations.GRID.key) {
       if (channelSkeleton && channelSkeleton.channel) {
         return (
@@ -101,6 +88,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
       />
 
       <KeyMapDialog />
+
       {renderFormation(formation)}
     </div>
   );
