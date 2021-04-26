@@ -1,4 +1,4 @@
-import { ContextMenu, Menu, MenuItem } from '@blueprintjs/core';
+import { ContextMenu, Divider, Menu, MenuItem } from '@blueprintjs/core';
 import { Icons } from '@blueprintjs/icons';
 import { useRouter } from 'next/router';
 import Formations from '~/src/constants/Formations';
@@ -27,7 +27,10 @@ const BlockContextMenu = (props) => {
             ) : (
               <MenuItem icon="remove" onClick={removeFromCanvas} text="Remove from canvas" />
             ))}
+          <Divider style={{ marginBottom: 10 }} />
           <MenuItem
+            style={{ backgroundColor: 'rgb(219 55 56 / 18%)' }}
+            intent="danger"
             icon="trash"
             onClick={() => props.handleBlockClick(props.block)}
             text={`Delete ${props.block.__typename}`}

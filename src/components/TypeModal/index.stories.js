@@ -1,4 +1,4 @@
-import Modal from './index';
+import TypeModal from './index';
 
 const typeMock = [
   {
@@ -12,7 +12,7 @@ const typeMock = [
   { title: 'Publication Year', id: 3 }
 ];
 
-const Story = (props) => <Modal {...props} />;
+const Story = (props) => <TypeModal {...props} />;
 
 // Here we export a variant of the default template passing props
 export const TypeModalStory = Story.bind({});
@@ -23,8 +23,8 @@ TypeModalStory.args = {
 // Here we export the default component that
 // will be used by Storybook to show it inside the sidebar
 export default {
-  title: 'Modal',
-  component: Modal
+  title: 'Type Modal',
+  component: TypeModal
   // argTypes: {
   //   showImage: { control: 'boolean' }
   // }

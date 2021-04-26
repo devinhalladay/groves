@@ -10,13 +10,13 @@ import {
 } from '@blueprintjs/core';
 import { useState } from 'react';
 
-const Modal = (props) => {
-  const { type } = props;
+const TypeModal = (props) => {
+  const { type, setTypeModalIsOpen, isOpen } = props;
 
   const [relationFields, setRelationFields] = useState(type);
 
   return (
-    <Dialog isOpen={true} title="Add a new object type" icon="new-object">
+    <Dialog isOpen={isOpen} title="Add a new object type" icon="new-object">
       <div className={Classes.DIALOG_BODY}>
         <Callout title="Objects in Groves" intent="primary" style={{ marginBottom: 20 }}>
           <p>
@@ -35,7 +35,7 @@ const Modal = (props) => {
 
         <Divider style={{ marginBottom: 20 }} />
 
-        <Callout title="Relations">
+        <Callout title="Relations" style={{ marginBottom: 20 }}>
           Relations are unique fields that describe the properties of an object. For example, a
           "Book" may have fields of "Author" and "Publication Year".{' '}
           <strong>Each field is its own channel.</strong>
@@ -46,7 +46,6 @@ const Modal = (props) => {
             <div
               style={{
                 display: 'flex',
-                marginTop: 20,
                 marginBottom: 20
               }}>
               <div
@@ -103,4 +102,4 @@ const Modal = (props) => {
   );
 };
 
-export default Modal;
+export default TypeModal;

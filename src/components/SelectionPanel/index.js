@@ -29,6 +29,7 @@ import ChevronUp from '~/public/chevron-up.svg';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import withChannel from '../Channel';
+import TypeModal from '../TypeModal';
 
 const SelectionPanel = React.memo((props) => {
   const router = useRouter();
@@ -40,6 +41,13 @@ const SelectionPanel = React.memo((props) => {
       { title: title },
       (data) => {
         console.log(data);
+        let selected = selectedConnection;
+        console.log(selectedConnection);
+        selected.current_user_channels.push({
+          title: title
+        });
+
+        setSelectedConnection(selected);
       },
       (error) => {
         console.log(error);
@@ -68,6 +76,8 @@ const SelectionPanel = React.memo((props) => {
   }
 
   const { index } = useUser();
+
+  const [typeModalIsOpen, setTypeModalIsOpen] = useState(false);
 
   const query = selectedConnection.__typename === 'Channel' ? SELECTED_CHANNEL : SELECTED_BLOCK;
 
@@ -305,7 +315,7 @@ const SelectionPanel = React.memo((props) => {
       icon="add"
       text={`Create "${query}"`}
       active={active}
-      onClick={handleClick}
+      onClick={() => handleCreateChannel(query)}
       shouldDismissPopover={false}
     />
   );
@@ -450,6 +460,26 @@ const SelectionPanel = React.memo((props) => {
               Open in Are.na
             </AnchorButton>
           </div>
+        </div>
+        <div className="section">
+          <p className="section__title">Block Type</p>
+          <Button onClick={() => setTypeModalIsOpen(!typeModalIsOpen)}>Create a new type</Button>
+          <TypeModal
+            type={[
+              {}
+              // {
+              //   title: 'Authors',
+              //   id: 1
+              // },
+              // {
+              //   title: 'Subjects',
+              //   id: 2
+              // },
+              // { title: 'Publication Year', id: 3 }
+            ]}
+            isOpen={typeModalIsOpen}
+            setTypeModalIsOpen={setTypeModalIsOpen}
+          />
         </div>
         <section
           onClick={() => setIsExpanded(!isExpanded)}
