@@ -94,7 +94,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
   );
 };
 
-export async function getServerSideProps(context) {
+export async function getInitialProps(context) {
   const cookies = nookies.get(context);
 
   if (!cookies.access_token) {

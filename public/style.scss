@@ -667,7 +667,7 @@ header {
   display: block;
   user-select: none;
   // width: 315px;
-  // height: 315px;
+  max-height: 315px;
   margin-bottom: 3em;
   text-decoration: none;
 }
@@ -1705,4 +1705,10 @@ button,
 
 .bp4-popover-transition-container {
   z-index: 9999;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  // background-color: ;
 }
