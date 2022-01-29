@@ -44,6 +44,7 @@ const TypeModal = (props) => {
         {relationFields.map((field, i) => (
           <>
             <div
+              key={i}
               style={{
                 display: 'flex',
                 marginBottom: 20

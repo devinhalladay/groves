@@ -14,6 +14,12 @@ const BlockContextMenu = (props) => {
 
   return (
     <ContextMenu2
+      className="grid"
+      style={{
+        position: props.formation.key === Formations.GRID.key && 'absolute',
+        right: props.formation.key === Formations.GRID.key && 325,
+        left: 0
+      }}
       content={
         <Menu>
           {router.query.grove &&
@@ -32,8 +38,9 @@ const BlockContextMenu = (props) => {
             style={{ backgroundColor: 'rgb(219 55 56 / 18%)' }}
             intent="danger"
             icon="trash"
-            onClick={() => props.handleBlockClick(props.block)}
-            text={`Delete ${props.block.__typename}`}
+            // onClick={() => props.handleBlockClick(props.block)}
+            // text={`Delete ${props.block.__typename}`}
+            text="Delete block"
           />
         </Menu>
       }>

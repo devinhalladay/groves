@@ -56,9 +56,9 @@ const Grove = ({ data, initialSelection, ...props }) => {
         return (
           <div className="workspace">
             <SelectionPanel />
-            <CanvasContextMenu>
-              <Grid blocks={channelSkeleton.channel.initial_contents} />
-            </CanvasContextMenu>
+            {/* <CanvasContextMenu> */}
+            <Grid blocks={channelSkeleton.channel.initial_contents} />
+            {/* </CanvasContextMenu> */}
           </div>
         );
       }
