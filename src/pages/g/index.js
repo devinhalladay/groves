@@ -1,5 +1,3 @@
-import { Button, InputGroup, Popover } from '@blueprintjs/core';
-import { Icons } from '@blueprintjs/icons';
 import { useWorkspace, WorkspaceProvider } from '@context/workspace-context';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';

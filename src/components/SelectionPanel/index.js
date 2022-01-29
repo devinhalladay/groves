@@ -8,26 +8,22 @@ import {
   MenuItem,
   Tooltip
 } from '@blueprintjs/core';
-import { Icons } from '@blueprintjs/icons';
+import { IconNames as Icons } from '@blueprintjs/icons';
 import { MultiSelect } from '@blueprintjs/select';
 import { useSelection } from '@context/selection-context';
-import parse from 'html-react-parser';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import ChevronDown from '~/public/chevron-down.svg';
+import ChevronUp from '~/public/chevron-up.svg';
 import Loading from '~/src/components/Loader';
 import { useUser } from '~/src/context/user-context';
 import {
-  CREATE_CHANNEL,
   CREATE_CONNECTION,
   REMOVE_CONNECTION,
   UPDATE_CHANNEL,
   UPDATE_CONNECTION
 } from '~/src/graphql/mutations';
 import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/graphql/queries';
-import ChevronDown from '~/public/chevron-down.svg';
-import ChevronUp from '~/public/chevron-up.svg';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import withChannel from '../Channel';
 import TypeModal from '../TypeModal';
 
@@ -80,12 +76,6 @@ const SelectionPanel = React.memo((props) => {
   const [typeModalIsOpen, setTypeModalIsOpen] = useState(false);
 
   const query = selectedConnection.__typename === 'Channel' ? SELECTED_CHANNEL : SELECTED_BLOCK;
-
-  // const [tagState, setTagState] = useState({
-  //   tags: selectedConnection.current_user_channels
-  //     .map((chanel) => chanel)
-  //     .filter((channel) => channel.id !== parseInt(router.query.grove))
-  // });
 
   const filterTags = (query, tag) => {
     const text = `${tag.title}`;

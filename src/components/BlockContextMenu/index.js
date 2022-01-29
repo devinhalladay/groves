@@ -1,5 +1,5 @@
-import { ContextMenu, Divider, Menu, MenuItem } from '@blueprintjs/core';
-import { Icons } from '@blueprintjs/icons';
+import { Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
+import { ContextMenu2 } from '@blueprintjs/popover2';
 import { useRouter } from 'next/router';
 import Formations from '~/src/constants/Formations';
 import { useSelection } from '~/src/context/selection-context';
@@ -13,21 +13,21 @@ const BlockContextMenu = (props) => {
   };
 
   return (
-    <ContextMenu
+    <ContextMenu2
       content={
         <Menu>
           {router.query.grove &&
             (props.formation.key === Formations.GRID.key ||
             props.formation.key == Formations.FOLDERS.key ? (
               <MenuItem
-                icon="send-to"
+                icon="send-to-graph"
                 onClick={() => props.handleBlockClick(props.block)}
                 text="Add to canvas"
               />
             ) : (
               <MenuItem icon="remove" onClick={removeFromCanvas} text="Remove from canvas" />
             ))}
-          <Divider style={{ marginBottom: 10 }} />
+          <MenuDivider style={{ marginBottom: 10 }} />
           <MenuItem
             style={{ backgroundColor: 'rgb(219 55 56 / 18%)' }}
             intent="danger"
@@ -38,7 +38,7 @@ const BlockContextMenu = (props) => {
         </Menu>
       }>
       {props.children}
-    </ContextMenu>
+    </ContextMenu2>
   );
 };
 

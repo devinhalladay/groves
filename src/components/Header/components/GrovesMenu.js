@@ -1,12 +1,11 @@
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import { Menu, MenuItem } from '@blueprintjs/core';
+import { Popover2 } from '@blueprintjs/popover2';
 import { useAuth } from '@context/auth-context';
 import { useUser } from '@context/user-context';
-import { Menu, MenuItem, Popover } from '@blueprintjs/core';
-import { Icons } from '@blueprintjs/icons';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 
 const GrovesMenu = () => {
-  const router = useRouter();
   const { logout } = useAuth();
   const { currentUser } = useUser();
 
@@ -16,12 +15,12 @@ const GrovesMenu = () => {
   console.log('nav clicked');
 
   return (
-    <Popover
+    <Popover2
       position="bottom-left"
       content={
         <Menu>
-          <MenuItem icon={Icons.Clear} text={`Welcome, ${currentUser.me.name}`} />
-          <MenuItem icon={Icons.LogOut} text="Logout" onClick={logout} />
+          <MenuItem icon="blank" text={`Welcome, ${currentUser.me.name}`} />
+          <MenuItem icon="log-out" text="Logout" onClick={logout} />
         </Menu>
       }>
       <button className="groves-menu-button">
@@ -40,7 +39,7 @@ const GrovesMenu = () => {
           </svg>
         </div>
       </button>
-    </Popover>
+    </Popover2>
   );
 };
 

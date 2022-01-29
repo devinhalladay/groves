@@ -1,4 +1,4 @@
-import { Icons } from '@blueprintjs/icons';
+import { IconNames as Icons } from '@blueprintjs/icons';
 
 export default {
   GRID: {

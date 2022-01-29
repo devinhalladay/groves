@@ -1,27 +1,23 @@
-import { useState, useRef, useEffect } from 'react';
-import BlockRepresentation from './components/BlockRepresentation';
+import { Card } from '@blueprintjs/core';
+import { useRef, useState } from 'react';
 import { Rnd } from 'react-rnd';
-import {
-  cursorPositionInViewport,
-  viewportDimensions,
-  shouldScrollAtEdge,
-  adjustWindowScroll
-} from '../../utils/canvas';
-import InlineExpandedChannel from '../ChannelEmbed';
 import { useSelection } from '../../context/selection-context';
-import { useAuth } from '../../context/auth-context';
 import { useWorkspace } from '../../context/workspace-context';
-import { Card, Elevation } from '@blueprintjs/core';
+import {
+  adjustWindowScroll,
+  cursorPositionInViewport,
+  shouldScrollAtEdge,
+  viewportDimensions
+} from '../../utils/canvas';
 import BlockContextMenu, { handleBlockClick } from '../BlockContextMenu';
-import { useRouter } from 'next/router';
+import InlineExpandedChannel from '../ChannelEmbed';
+import BlockRepresentation from './components/BlockRepresentation';
 
 // TODO: Need to break up this component, it's all kinds of fucked up
 // and recursively renders itself via InlineExpandedChannel which
 // feels bad and makes it hard to keep track of props
 
 const DraggableBlock = ({
-  canvasSpace,
-  setCanvasSpace,
   block,
   width,
   height,
@@ -29,8 +25,6 @@ const DraggableBlock = ({
   setDragStates,
   parentDimensions,
   dragHandleClassName,
-  panZoomRef,
-  scale,
   ...props
 }) => {
   let description;

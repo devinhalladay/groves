@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client';
-import { Button, Colors, Popover } from '@blueprintjs/core';
+import { Button, Colors } from '@blueprintjs/core';
+import { Classes, Popover2 } from "@blueprintjs/popover2";
 import { useCombobox } from 'downshift';
 import { useRouter } from 'next/router';
 import { forwardRef, useEffect, useRef, useState } from 'react';
@@ -163,7 +164,7 @@ const ConnectTo = (props) => {
   };
 
   return (
-    <Popover
+    <Popover2
       content={
         <>
           <p className="title">Link with another Grove</p>
@@ -175,7 +176,7 @@ const ConnectTo = (props) => {
         </>
       }>
       <ActionButton />
-    </Popover>
+    </Popover2>
   );
 };
 

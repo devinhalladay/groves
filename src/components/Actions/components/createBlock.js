@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client';
-import { Button, Colors, Intent, Popover, TextArea } from '@blueprintjs/core';
-import { Icons } from '@blueprintjs/icons';
+import { Button, Colors, Intent, TextArea } from '@blueprintjs/core';
+import { Classes, Popover2 } from "@blueprintjs/popover2";
+import { IconNames as Icons } from '@blueprintjs/icons';
 import { useRouter } from 'next/router';
 import { forwardRef, useCallback, useRef, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
@@ -119,7 +120,7 @@ const CreateBlock = (props) => {
   };
 
   return (
-    <Popover
+    <Popover2
       position="bottom"
       content={
         <section style={{ padding: 15, width: 280, paddingTop: 25 }}>
@@ -187,7 +188,7 @@ const CreateBlock = (props) => {
         padding: 15
       }}>
       <ActionButton />
-    </Popover>
+    </Popover2>
   );
 };
 

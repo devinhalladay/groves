@@ -1,5 +1,5 @@
 import { Button, Card, Checkbox } from '@blueprintjs/core';
-import { Icons } from '@blueprintjs/icons';
+import { IconNames as Icons } from '@blueprintjs/icons';
 import withChannel from '@components/Channel';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';

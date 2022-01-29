@@ -1,5 +1,5 @@
-import { Button, Dialog, KeyComboTag } from '@blueprintjs/core';
-import { Icons } from '@blueprintjs/icons';
+import { Button, Dialog, KeyCombo } from '@blueprintjs/core';
+import { IconNames as Icons } from '@blueprintjs/icons';
 import { useState } from 'react';
 import { getApplicationKeyMap, GlobalHotKeys } from 'react-hotkeys';
 import KeyMaps from '~/src/constants/KeyMaps';
@@ -29,7 +29,7 @@ const KeyMapDialog = () => {
           onClick={() => setIsOpen(true)}
           icon="help"
           large={true}
-          style={{ borderRadius: '100%' }}/>
+          style={{ borderRadius: '100%' }} />
         {isOpen && (
           <Dialog
             title="Keyboard Shortcuts"
@@ -57,7 +57,7 @@ const KeyMapDialog = () => {
                       }>
                       <p style={{ paddingRight: 15, justifySelf: 'flex-end' }}>
                         {sequences.map(({ sequence }) => (
-                          <KeyComboTag key={sequence} combo={sequence} />
+                          <KeyCombo key={sequence} combo={sequence} />
                         ))}
                       </p>
                     </div>

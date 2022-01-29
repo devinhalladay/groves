@@ -1,14 +1,6 @@
 import { useLazyQuery, useMutation } from '@apollo/client';
-import {
-  Button,
-  ControlGroup,
-  Icon,
-  InputGroup,
-  Menu,
-  MenuItem,
-  Navbar,
-  Popover
-} from '@blueprintjs/core';
+import { Button, ControlGroup, Icon, InputGroup, Menu, MenuItem, Navbar } from '@blueprintjs/core';
+import { Popover2 } from '@blueprintjs/popover2';
 import withChannel from '@components/Channel';
 import { GET_SKELETON } from '@components/Channel/queries/getSkeleton';
 import React, { useEffect, useState } from 'react';
@@ -129,7 +121,7 @@ const MergeChannelsAction = (props) => {
     return (
       <>
         <Navbar.Divider />
-        <Popover
+        <Popover2
           position="bottom-right"
           content={
             <section style={{ padding: 15, width: 450, paddingTop: 25 }}>
@@ -150,7 +142,7 @@ const MergeChannelsAction = (props) => {
                   style={{ textAlign: 'center', justifyContent: 'center' }}
                   className="merge-input-disabled"
                 />
-                <Popover
+                <Popover2
                   position="bottom"
                   fill={true}
                   captureDismiss={true}
@@ -179,7 +171,7 @@ const MergeChannelsAction = (props) => {
                     style={{ textOverflow: 'ellipsis' }}>
                     {destination ? destination.title : selections[0].title}
                   </Button>
-                </Popover>
+                </Popover2>
               </ControlGroup>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button large={true} icon={'remove'} intent="danger" onClick={handleDangerousMerge}>
@@ -195,7 +187,7 @@ const MergeChannelsAction = (props) => {
           <Button className="action" minimal={true}>
             <Icon icon="git-merge" />
           </Button>
-        </Popover>
+        </Popover2>
       </>
     );
   }

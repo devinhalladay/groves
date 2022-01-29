@@ -1,8 +1,9 @@
-import { Button, Colors, Popover, Icon, InputGroup } from '@blueprintjs/core';
+import { Button, Colors, Icon, InputGroup } from '@blueprintjs/core';
+import { Classes, Popover2 } from "@blueprintjs/popover2";
 import React, { useRef } from 'react';
 import CreateGrove from '~/public/create-grove.svg';
 import { useTheme } from '~/src/context/theme-provider';
-import { Icons } from '@blueprintjs/icons';
+import { IconNames as Icons } from '@blueprintjs/icons';
 import withChannel from '@components/Channel';
 
 const CreateGroveAction = (props) => {
@@ -26,7 +27,7 @@ const CreateGroveAction = (props) => {
   };
 
   return (
-    <Popover
+    <Popover2
       position="bottom-right"
       content={
         <section style={{ padding: 15, width: 350, paddingTop: 25 }}>
@@ -58,7 +59,7 @@ const CreateGroveAction = (props) => {
           stroke={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
         />
       </Button>
-    </Popover>
+    </Popover2>
   );
 };
 

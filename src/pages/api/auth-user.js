@@ -12,8 +12,9 @@ export default async (req, res) => {
     return res.json({ access_token: access_token });
   } catch (error) {
     const { response } = error;
-    return response
-      ? res.status(response.status).send({ message: response.statusText })
-      : res.status(400).send({ message: error.message });
+    if (response) {
+      return res.status(response.status).send({ message: response.statusText })
+    }
+    res.status(400).send({ message: error.message });
   }
 };
