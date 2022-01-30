@@ -13,7 +13,7 @@ const KeyMapDialog = () => {
     VIEW_SHORTCUTS: (e) => {
       e.preventDefault();
       setIsOpen(true);
-    }
+    },
   };
   return (
     <>
@@ -23,8 +23,9 @@ const KeyMapDialog = () => {
           position: 'fixed',
           bottom: 15,
           // right: formation.key === Formations.CANVAS.key ? 55 : 15
-          right: 15
-        }}>
+          right: 15,
+        }}
+      >
         <Button
           onClick={() => setIsOpen(true)}
           icon="help"
@@ -36,7 +37,8 @@ const KeyMapDialog = () => {
             title="Keyboard Shortcuts"
             icon="key"
             isOpen={isOpen}
-            onClose={() => setIsOpen(false)}>
+            onClose={() => setIsOpen(false)}
+          >
             <div style={{ padding: 15 }}>
               {Object.keys(globalKeyMap).map((action, i) => {
                 const { sequences, name, group } = globalKeyMap[action];
@@ -48,14 +50,16 @@ const KeyMapDialog = () => {
                       display: 'flex',
                       width: '100%',
                       alignItems: 'center',
-                      marginBottom: 15
-                    }}>
+                      marginBottom: 15,
+                    }}
+                  >
                     <div
                       style={
                         {
                           // flex: 1
                         }
-                      }>
+                      }
+                    >
                       <p style={{ paddingRight: 15, justifySelf: 'flex-end' }}>
                         {sequences.map(({ sequence }) => (
                           <KeyCombo key={sequence} combo={sequence} />
@@ -64,8 +68,9 @@ const KeyMapDialog = () => {
                     </div>
                     <div
                       style={{
-                        flex: 1
-                      }}>
+                        flex: 1,
+                      }}
+                    >
                       <p>{name}</p>
                     </div>
                   </div>

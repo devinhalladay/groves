@@ -13,14 +13,18 @@ export default function GroveFormations() {
   const handleChangeFormation = (f) => {
     setWorkspaceOptions({
       ...workspaceOptions,
-      formation: f
+      formation: f,
     });
   };
 
   const hotkeyHandlers = {
     VIEW_GRID: React.useCallback(() => handleChangeFormation(Formations.GRID)),
-    VIEW_CHANNEL_INDEX: React.useCallback(() => handleChangeFormation(Formations.CHANNEL_INDEX)),
-    VIEW_CANVAS: React.useCallback(() => handleChangeFormation(Formations.CANVAS))
+    VIEW_CHANNEL_INDEX: React.useCallback(() =>
+      handleChangeFormation(Formations.CHANNEL_INDEX),
+    ),
+    VIEW_CANVAS: React.useCallback(() =>
+      handleChangeFormation(Formations.CANVAS),
+    ),
     // VIEW_FOLDERS: React.useCallback(() => handleChangeFormation(Formations.FOLDERS))
   };
 
@@ -43,7 +47,8 @@ export default function GroveFormations() {
       <Select
         itemRenderer={formationOptionRenderer}
         items={Object.keys(Formations)}
-        filterable={false}>
+        filterable={false}
+      >
         <Button
           minimal={true}
           text={workspaceOptions.formation.title}

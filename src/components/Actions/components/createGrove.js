@@ -1,10 +1,9 @@
-import { Button, Colors, Icon, InputGroup } from '@blueprintjs/core';
-import { Classes, Popover2 } from '@blueprintjs/popover2';
+import { Button, Colors, InputGroup } from '@blueprintjs/core';
+import { Popover2 } from '@blueprintjs/popover2';
+import withChannel from '@components/Channel';
 import React, { useRef } from 'react';
 import CreateGrove from '~/public/create-grove.svg';
 import { useTheme } from '~/src/context/theme-provider';
-import { IconNames as Icons } from '@blueprintjs/icons';
-import withChannel from '@components/Channel';
 
 const CreateGroveAction = (props) => {
   const { createChannel } = props;
@@ -22,7 +21,7 @@ const CreateGroveAction = (props) => {
       (error) => {
         console.log(error);
         return error;
-      }
+      },
     );
   };
 
@@ -48,11 +47,13 @@ const CreateGroveAction = (props) => {
             fill={true}
             icon="new-object"
             intent="primary"
-            onClick={handleCreateChannel}>
+            onClick={handleCreateChannel}
+          >
             Create channel
           </Button>
         </section>
-      }>
+      }
+    >
       <Button className="action" minimal={true}>
         <CreateGrove
           fill={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}

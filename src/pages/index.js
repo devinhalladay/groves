@@ -1,12 +1,11 @@
 import { gql, useQuery } from '@apollo/client';
 import GrovesCanvas from '@components/Canvas';
-import { SelectionProvider, useSelection } from '@context/selection-context';
-import { parseCookies } from 'nookies';
-import React, { useEffect, useState } from 'react';
-import DraggableBlock from '~/src/components/Block';
+import { useSelection } from '@context/selection-context';
 import Loading from '~/src/components/Loader';
 import Panel from '~/src/components/Panel';
 import withApollo from '~/src/hooks/withApollo';
+import { parseCookies } from 'nookies';
+import React, { useEffect } from 'react';
 import { withAuthSync } from '../utils/auth';
 
 const GET_LANDING_BLOCKS = gql`
@@ -55,30 +54,35 @@ const Root = (props) => {
           width: '350px',
           position: 'absolute',
           bottom: 15,
-          right: 15
+          right: 15,
         }}
         canCollapse={false}
         className={'newsletter-panel'}
         panelTitle={'Subscribe to updates'}
-        {...props}>
-        <p>Get very occasional updates on development, beta testing, and launch dates.</p>
+        {...props}
+      >
+        <p>
+          Get very occasional updates on development, beta testing, and launch
+          dates.
+        </p>
         <form
           action="https://network.us18.list-manage.com/subscribe/post?u=488634612d3795996b128e2ba&amp;id=d3ad9e4e39"
-          method="post">
+          method="post"
+        >
           <label htmlFor="EMAIL">Email address</label>
           <input
             name="EMAIL"
             type="email"
             placeholder="dev@groves.network"
             style={{
-              width: '100%'
+              width: '100%',
             }}
           />
           <input
             type="submit"
             value="Submit"
             style={{
-              width: '100%'
+              width: '100%',
             }}
           />
         </form>
@@ -94,7 +98,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: {}
+    props: {},
   };
 }
 

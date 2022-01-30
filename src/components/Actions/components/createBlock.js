@@ -42,10 +42,10 @@ const CreateBlock = (props) => {
               description: null,
               title: file.name,
               id: router.query.grove,
-              image_url: URL.createObjectURL(file)
-            }
-          })
-        )
+              image_url: URL.createObjectURL(file),
+            },
+          }),
+        ),
       );
 
       const res = await fetch(
@@ -54,14 +54,14 @@ const CreateBlock = (props) => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': '*',
           },
           body: JSON.stringify({
             path: file.path,
             type: file.type,
-            name: file.name
-          })
-        }
+            name: file.name,
+          }),
+        },
       );
 
       res.json().then(({ signedRequest, url }) => {
@@ -69,14 +69,14 @@ const CreateBlock = (props) => {
           method: 'PUT',
           body: file,
           headers: {
-            'Content-Type': file.type
-          }
+            'Content-Type': file.type,
+          },
         }).then((res) => {
           newBlock({
             variables: {
               channelId: router.query.grove,
-              value: url
-            }
+              value: url,
+            },
           });
         });
       });
@@ -89,15 +89,15 @@ const CreateBlock = (props) => {
     newBlock({
       variables: {
         channelId: router.query.grove,
-        value: inputElement.current.value
+        value: inputElement.current.value,
       },
-      optimisticResponse: true
+      optimisticResponse: true,
     });
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    noClick: true
+    noClick: true,
   });
 
   const [createState, setCreateState] = useState('omni');
@@ -106,14 +106,15 @@ const CreateBlock = (props) => {
     toast(`Connected to ${connectable.title}`);
   };
 
-  const [newBlock, { loading: mutationLoading, error: mutationError }] = useMutation(createBlock, {
-    onCompleted: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    }
-  });
+  const [newBlock, { loading: mutationLoading, error: mutationError }] =
+    useMutation(createBlock, {
+      onCompleted: (data) => {
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
 
   const replaceWithTextbox = () => {
     setCreateState('text');
@@ -133,15 +134,16 @@ const CreateBlock = (props) => {
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  outline: 'none'
-                }}>
+                  outline: 'none',
+                }}
+              >
                 <TextArea
                   fill={true}
                   placeholder="Type here in Markdown…"
                   style={{
                     height: 250,
                     resize: 'none',
-                    marginBottom: 15
+                    marginBottom: 15,
                   }}
                   autoFocus
                   inputRef={inputElement}
@@ -150,8 +152,9 @@ const CreateBlock = (props) => {
                   style={{
                     display: 'flex',
                     flex: 0,
-                    justifyContent: 'space-between'
-                  }}>
+                    justifyContent: 'space-between',
+                  }}
+                >
                   <Button>Cancel</Button>
                   <Button intent={Intent.PRIMARY} icon="add" onClick={onSubmit}>
                     Create Block
@@ -171,8 +174,9 @@ const CreateBlock = (props) => {
                     justifyContent: 'center',
                     padding: 20,
                     background: 'rgba(211, 211, 211, 0.27)',
-                    outline: 'none'
-                  }}>
+                    outline: 'none',
+                  }}
+                >
                   {isDragActive ? (
                     <p>Drop the files here ...</p>
                   ) : (
@@ -185,8 +189,9 @@ const CreateBlock = (props) => {
         </section>
       }
       style={{
-        padding: 15
-      }}>
+        padding: 15,
+      }}
+    >
       <ActionButton />
     </Popover2>
   );

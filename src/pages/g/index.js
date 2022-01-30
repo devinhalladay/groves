@@ -22,7 +22,7 @@ const Grove = (props) => {
 
   const {
     selectedChannel,
-    setSelectedChannel
+    setSelectedChannel,
     // initialSelection,
     // selectedConnection,
     // setSelectedConnection,
@@ -45,9 +45,11 @@ const Grove = (props) => {
       { title: val },
       (res) => {
         setSelectedChannel(res.data.create_channel.channel);
-        router.push(`/g/[grove]`, `/g/${res.data.create_channel.channel.id}`, { shallow: true });
+        router.push(`/g/[grove]`, `/g/${res.data.create_channel.channel.id}`, {
+          shallow: true,
+        });
       },
-      (error) => console.log(error)
+      (error) => console.log(error),
     );
   };
 
@@ -68,7 +70,7 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: {}
+    props: {},
   };
 }
 

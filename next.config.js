@@ -7,22 +7,26 @@ module.exports = {
     APPLICATION_API_PATH: process.env.APPLICATION_API_PATH,
     SERVER_AUTH_CALLBACK: process.env.SERVER_AUTH_CALLBACK,
     GRAPHQL_TOKEN: process.env.GRAPHQL_TOKEN,
-    AUTHENTICATION_ENABLED: process.env.NODE_ENV === 'production' ? false : true
+    AUTHENTICATION_ENABLED:
+      process.env.NODE_ENV === 'production' ? false : true,
   },
 
-  webpack: (config) => {
+  webpack(config) {
     config.module.rules.push({
-      test: /\.svg$/,
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
       use: [
         {
           loader: '@svgr/webpack',
           options: {
-            svgo: false
-          }
-        }
-      ]
+            titleProp: true,
+            // dimensions: false,
+            svgo: false,
+          },
+        },
+      ],
     });
 
     return config;
-  }
+  },
 };

@@ -7,7 +7,8 @@ import DraggableBlock from '../Block';
 import ZoomTools from '~/src/components/ZoomTools';
 
 export default withApollo((props) => {
-  const { workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale } = useWorkspace();
+  const { workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale } =
+    useWorkspace();
 
   const [canvasSpace, setCanvasSpace] = useState({
     scrollAreaHeight: null,
@@ -16,16 +17,17 @@ export default withApollo((props) => {
     maxWidth: null,
     timer: null,
     workspaceOptions,
-    setWorkspaceOptions
+    setWorkspaceOptions,
   });
 
   const [dragStates, setDragStates] = useState({
-    maxZIndex: 1000
+    maxZIndex: 1000,
   });
 
   const panZoomRef = useRef(null);
 
-  const { selectedConnection, setSelectedConnection, canvasBlocks } = useSelection();
+  const { selectedConnection, setSelectedConnection, canvasBlocks } =
+    useSelection();
 
   const preventPan = (event, x, y) => {
     console.log('eval pan');
@@ -41,7 +43,7 @@ export default withApollo((props) => {
           'nested-canvas' ||
           'draggable-block-container--expanded' ||
           'draggable-block-container' ||
-          'block'
+          'block',
       )
     ) {
       return true;
@@ -61,8 +63,9 @@ export default withApollo((props) => {
       <div className={`loading-screen fullscreen`}>
         <p
           style={{
-            marginBottom: 20
-          }}>
+            marginBottom: 20,
+          }}
+        >
           You can blocks to your canvas using the Grid View.
         </p>
         <Button onClick={_switchToGridFormation} icon={Formations.GRID.icon}>
@@ -88,7 +91,7 @@ export default withApollo((props) => {
           height: '100vh',
           WebkitFilter: 'blur(0)',
           willChange: 'unset',
-          position: 'relative'
+          position: 'relative',
         }}
         maxZoom={3}
         onPanStart={(e) => {
@@ -107,7 +110,8 @@ export default withApollo((props) => {
           }
 
           dragging = false;
-        }}>
+        }}
+      >
         {canvasBlocks.map((block, i) => (
           <DraggableBlock
             title={block.title ? block.title : null}

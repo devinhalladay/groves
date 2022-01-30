@@ -1,16 +1,26 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
     "baseUrl": "./",
     "paths": {
-      "~/*": ["./*"],
-      "@components/*": ["./src/components/*"],
-      "@context/*": ["./src/context/*"]
+      "~/*": [
+        "./*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@context/*": [
+        "./src/context/*"
+      ]
     },
-    "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
+    // TODO: Change to true when everything has types
     "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
@@ -19,8 +29,18 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "incremental": true
   },
-  "exclude": ["node_modules", "build"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.jsx", "src/**/*"]
+  "exclude": [
+    "node_modules",
+    "build"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.jsx",
+    "src/**/*"
+  ]
 }

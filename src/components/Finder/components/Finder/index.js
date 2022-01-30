@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import equal from 'fast-deep-equal';
 import { useSelection } from '~/src/context/selection-context';
-import BlockContextMenu, { handleBlockClick } from '~/src/components/BlockContextMenu';
+import BlockContextMenu, {
+  handleBlockClick,
+} from '~/src/components/BlockContextMenu';
 import { useWorkspace } from '~/src/context/workspace-context';
 
 const FinderRow = (props) => {
@@ -34,13 +36,19 @@ const FinderRow = (props) => {
       formation={formation}
       handleBlockClick={(e) => {
         handleBlockClick(e, canvasBlocks, value, setCanvasBlocks);
-      }}>
+      }}
+    >
       <li
-        className={`${hasChild && 'has-child'} ${disable && 'disable'} ${isSelect && 'select'}`}
-        onClick={onChange}>
+        className={`${hasChild && 'has-child'} ${disable && 'disable'} ${
+          isSelect && 'select'
+        }`}
+        onClick={onChange}
+      >
         {hasChild ? (
           <li>
-            <img src={value && value.image_url ? value.image_url : '/folder.svg'} />
+            <img
+              src={value && value.image_url ? value.image_url : '/folder.svg'}
+            />
             <span>{truncatedText}</span>
             <img src="/arrow.svg" />
           </li>
@@ -99,30 +107,34 @@ class Finder extends Component {
     const { columns, newSelectIndexs } = this.parseData(
       valueIndexs || selectIndexs || defaultSelectIndexs,
       data,
-      dataKeys
+      dataKeys,
     );
 
     this.state = {
       selectIndexs: newSelectIndexs,
-      columns
+      columns,
     };
 
     this.onChange = this.onChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { data, dataKeys, defaultSelectIndexs, selectIndexs, value } = nextProps;
+    const { data, dataKeys, defaultSelectIndexs, selectIndexs, value } =
+      nextProps;
     const valueIndexs = value && this.getValueIndexs(value, data, dataKeys);
 
-    if (!equal(this.props.data, data) || (valueIndexs && valueIndexs !== this.state.selectIndexs)) {
+    if (
+      !equal(this.props.data, data) ||
+      (valueIndexs && valueIndexs !== this.state.selectIndexs)
+    ) {
       const { columns, newSelectIndexs } = this.parseData(
         valueIndexs || selectIndexs || defaultSelectIndexs,
         data,
-        dataKeys
+        dataKeys,
       );
       this.setState({
         columns,
-        selectIndexs: newSelectIndexs
+        selectIndexs: newSelectIndexs,
       });
     }
 
@@ -132,8 +144,13 @@ class Finder extends Component {
   }
 
   getValueIndexs(value, data, dataKeys) {
-    const { dataPathByValue, dataWithPathByValue } = this.getTreePath(data, dataKeys);
-    const valueIndexs = dataPathByValue[value] ? dataPathByValue[value].indexs : [];
+    const { dataPathByValue, dataWithPathByValue } = this.getTreePath(
+      data,
+      dataKeys,
+    );
+    const valueIndexs = dataPathByValue[value]
+      ? dataPathByValue[value].indexs
+      : [];
     return valueIndexs;
   }
 
@@ -148,7 +165,10 @@ class Finder extends Component {
           newIndexs = JSON.parse(JSON.stringify(indexs));
         newIndexs.push(key);
         item.indexs = newIndexs;
-        if (item[dataKeys.child] && Object.keys(item[dataKeys.child]).length > 0) {
+        if (
+          item[dataKeys.child] &&
+          Object.keys(item[dataKeys.child]).length > 0
+        ) {
           item.child = lookAll(item[dataKeys.child], dataKeys, newIndexs);
         }
         root.push(item);
@@ -170,7 +190,9 @@ class Finder extends Component {
       const selectIndex = dataItem[selectIndexs[i]] ? selectIndexs[i] : -1;
       newSelectIndexs.push(selectIndex);
       dataItem =
-        Array.isArray(dataItem) && dataItem[selectIndex] && dataItem[selectIndex][dataKeys.child];
+        Array.isArray(dataItem) &&
+        dataItem[selectIndex] &&
+        dataItem[selectIndex][dataKeys.child];
       i++;
     } while (dataItem);
 
@@ -187,7 +209,11 @@ class Finder extends Component {
       selectIndexs = selectIndexs.slice(0, columnIndex + 1);
     }
 
-    const { columns, newSelectIndexs } = this.parseData(selectIndexs, data, dataKeys);
+    const { columns, newSelectIndexs } = this.parseData(
+      selectIndexs,
+      data,
+      dataKeys,
+    );
     selectIndexs = newSelectIndexs;
 
     this.setState({ columns, selectIndexs });
@@ -223,7 +249,7 @@ Finder.propTypes = {
   disabled: PropTypes.bool,
   selectIndexs: PropTypes.array,
   value: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
 };
 
 Finder.defaultProps = {
@@ -232,8 +258,8 @@ Finder.defaultProps = {
     text: 'text',
     value: 'value',
     disable: 'disable',
-    child: 'child'
-  }
+    child: 'child',
+  },
 };
 
 export default Finder;

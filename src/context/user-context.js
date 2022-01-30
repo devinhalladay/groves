@@ -11,7 +11,7 @@ export const UserProvider = withApollo((props) => {
   const {
     loading: loadingCurrentUser,
     error: errorLoadingCurrentUser,
-    data: currentUser
+    data: currentUser,
   } = useQuery(CURRENT_USER);
 
   if (loadingCurrentUser) {
@@ -25,10 +25,15 @@ export const UserProvider = withApollo((props) => {
 
   let index = currentUser.me.channels_index;
 
-  let flatIndex = index.flatMap((channelSet) => channelSet.channels.flatMap((c) => c));
+  let flatIndex = index.flatMap((channelSet) =>
+    channelSet.channels.flatMap((c) => c),
+  );
 
   return (
-    <UserContext.Provider value={{ currentUser, channels, index, flatIndex }} {...props}>
+    <UserContext.Provider
+      value={{ currentUser, channels, index, flatIndex }}
+      {...props}
+    >
       <SelectionProvider>{props.children}</SelectionProvider>
     </UserContext.Provider>
   );

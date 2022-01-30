@@ -28,14 +28,17 @@ const Grove = ({ data, initialSelection, ...props }) => {
 
   const { selectedConnection, channelID } = useSelection();
 
-  const { loading, error, data: channelSkeleton, fetchMore, networkStatus } = useQuery(
-    CHANNEL_SKELETON,
-    {
-      variables: { channelId: channelID },
-      fetchPolicy: 'no-cache',
-      client: apollo
-    }
-  );
+  const {
+    loading,
+    error,
+    data: channelSkeleton,
+    fetchMore,
+    networkStatus,
+  } = useQuery(CHANNEL_SKELETON, {
+    variables: { channelId: channelID },
+    fetchPolicy: 'no-cache',
+    client: apollo,
+  });
 
   const renderFormation = (formation) => {
     if (loading) {
@@ -109,12 +112,12 @@ export async function getInitialProps(context) {
   const res = await apolloClient.query({
     query: CHANNEL_SKELETON,
     variables: {
-      channelId: channelId
-    }
+      channelId: channelId,
+    },
   });
 
   return addApolloState(apolloClient, {
-    props: { initialSelection: res.data }
+    props: { initialSelection: res.data },
   });
 }
 

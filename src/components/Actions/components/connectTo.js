@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { Button, Colors } from '@blueprintjs/core';
-import { Classes, Popover2 } from "@blueprintjs/popover2";
+import { Classes, Popover2 } from '@blueprintjs/popover2';
 import { useCombobox } from 'downshift';
 import { useRouter } from 'next/router';
 import { forwardRef, useEffect, useRef, useState } from 'react';
@@ -50,18 +50,16 @@ const ConnectTo = (props) => {
     </Button>
   ));
 
-  const [connectTo, { loading: mutationLoading, error: mutationError }] = useMutation(
-    CREATE_CONNECTION,
-    {
+  const [connectTo, { loading: mutationLoading, error: mutationError }] =
+    useMutation(CREATE_CONNECTION, {
       client: apollo,
       onCompleted: (data) => {
         console.log(data);
       },
       onError: (error) => {
         console.log(error);
-      }
-    }
-  );
+      },
+    });
 
   useEffect(() => {
     if (inputElement.current) {
@@ -72,7 +70,9 @@ const ConnectTo = (props) => {
   const DropdownCombobox = () => {
     const { channels, index } = useUser();
 
-    const allUserChannels = index.flatMap((channelSet) => channelSet.channels.flatMap((c) => c));
+    const allUserChannels = index.flatMap((channelSet) =>
+      channelSet.channels.flatMap((c) => c),
+    );
 
     const [inputItems, setInputItems] = useState(allUserChannels);
 
@@ -89,25 +89,27 @@ const ConnectTo = (props) => {
       getInputProps,
       getComboboxProps,
       highlightedIndex,
-      getItemProps
+      getItemProps,
     } = useCombobox({
       items: inputItems,
       itemToString: (item) => (item && item.title ? item.title : ''),
       onSelectedItemChange: ({ selectedItem }) => {
         connectTo({
           variables: {
-            connectable_id: selectedConnection ? selectedConnection.id : router.query.grove,
+            connectable_id: selectedConnection
+              ? selectedConnection.id
+              : router.query.grove,
             connectable_type: selectedConnection ? 'BLOCK' : 'CHANNEL',
-            channel_ids: [selectedItem.id]
-          }
+            channel_ids: [selectedItem.id],
+          },
         });
 
         connectTo({
           variables: {
             connectable_id: selectedItem ? selectedItem.id : router.query.grove,
             connectable_type: 'CHANNEL',
-            channel_ids: [router.query.grove]
-          }
+            channel_ids: [router.query.grove],
+          },
         });
 
         connectedToast(selectedItem);
@@ -133,10 +135,10 @@ const ConnectTo = (props) => {
             item.title
               .toLowerCase()
               .replace(/\W/g, '')
-              .startsWith(inputValue.toLowerCase().replace(/\W/g, ''))
-          )
+              .startsWith(inputValue.toLowerCase().replace(/\W/g, '')),
+          ),
         );
-      }
+      },
     });
 
     return (
@@ -145,16 +147,19 @@ const ConnectTo = (props) => {
         <div {...getComboboxProps()}>
           <input
             {...getInputProps({
-              placeholder: 'Type here...'
+              placeholder: 'Type here...',
             })}
           />
         </div>
         <ul {...getMenuProps()} className="inline-combobox">
           {inputItems.map((item, index) => (
             <li
-              style={highlightedIndex === index ? { backgroundColor: '#e2e6ea' } : {}}
+              style={
+                highlightedIndex === index ? { backgroundColor: '#e2e6ea' } : {}
+              }
               key={`${item}${index}`}
-              {...getItemProps({ item, index })}>
+              {...getItemProps({ item, index })}
+            >
               {item.title}
             </li>
           ))}
@@ -174,7 +179,8 @@ const ConnectTo = (props) => {
         <input type="text" name="channel" ref={inputElement} id="channel" /> */}
           </div>
         </>
-      }>
+      }
+    >
       <ActionButton />
     </Popover2>
   );

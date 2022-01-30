@@ -1,4 +1,9 @@
-import { AnchorButton, Button, EditableText, MenuItem } from '@blueprintjs/core';
+import {
+  AnchorButton,
+  Button,
+  EditableText,
+  MenuItem,
+} from '@blueprintjs/core';
 import { MultiSelect } from '@blueprintjs/select';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -18,8 +23,9 @@ const Section = ({ children }) => {
     <div
       className="section"
       style={{
-        position: 'relative'
-      }}>
+        position: 'relative',
+      }}
+    >
       {children}
     </div>
   );
@@ -36,15 +42,15 @@ const Meta = () => {
       updateChannel({
         variables: {
           id: connectable.id,
-          title: e
-        }
+          title: e,
+        },
       });
     } else {
       updateConnection({
         variables: {
           connectable_id: connectable.id,
-          title: e
-        }
+          title: e,
+        },
       });
     }
   };
@@ -54,8 +60,6 @@ const Meta = () => {
       <div className="inline-wrapper">
         <EditableText
           onConfirm={(e) => handleTitleChange(e, selectedConnection)}
-          fill={true}
-          autoFocus
           intent="primary"
           maxLength={45}
           placeholder="Edit title..."
@@ -70,20 +74,23 @@ const Meta = () => {
       <div
         style={{
           display: 'flex',
-          marginTop: 15
-        }}>
+          marginTop: 15,
+        }}
+      >
         {selectedConnection.source_url && (
           <AnchorButton
             href={selectedConnection.source_url}
             icon="link"
-            style={{ marginRight: 10 }}>
+            style={{ marginRight: 10 }}
+          >
             Source
           </AnchorButton>
         )}
         <AnchorButton
           href={`https://are.na${selectedConnection.href}`}
           icon={<img src="/open.svg" alt="" />}
-          target="_blank">
+          target="_blank"
+        >
           Open in Are.na
         </AnchorButton>
       </div>
@@ -101,8 +108,14 @@ const Header = () => {
         className="icon-button"
         onClick={() => {
           setSelectedConnection(null);
-        }}>
-        <svg width="17" height="17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        }}
+      >
+        <svg
+          width="17"
+          height="17"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
             d="M12.6211 4.04367L4.62109 12.0437"
             stroke="#BDC3CA"
@@ -127,18 +140,20 @@ const Type = ({ setTypeModalIsOpen, typeModalIsOpen }) => {
   return (
     <div className="section">
       <p className="section__title">Block Type</p>
-      <Button onClick={() => setTypeModalIsOpen(!typeModalIsOpen)}>Create a new type</Button>
+      <Button onClick={() => setTypeModalIsOpen(!typeModalIsOpen)}>
+        Create a new type
+      </Button>
       <TypeModal
         type={[
           {
             title: 'Authors',
-            id: 1
+            id: 1,
           },
           {
             title: 'Subjects',
-            id: 2
+            id: 2,
           },
-          { title: 'Publication Year', id: 3 }
+          { title: 'Publication Year', id: 3 },
         ]}
         isOpen={typeModalIsOpen}
         setTypeModalIsOpen={setTypeModalIsOpen}
@@ -159,15 +174,17 @@ const ToggleHeight = ({ isExpanded, setIsExpanded }) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: '10'
-      }}>
+        zIndex: '10',
+      }}
+    >
       <p
         style={{
           fontSize: '0.7rem',
           letterSpacing: '0.6px',
           color: '#86878a',
-          textTransform: 'uppercase'
-        }}>
+          textTransform: 'uppercase',
+        }}
+      >
         {isExpanded ? 'Minimize' : 'Expand'}
       </p>
       {isExpanded ? (
@@ -193,7 +210,7 @@ const Description = ({ handleDescriptionChange }) => {
         className="description-field"
         onConfirm={(e) => handleDescriptionChange(e, selectedConnection)}
         style={{
-          height: 60
+          height: 60,
         }}
         multiline={true}
         placeholder="Add a description to this block…"
@@ -206,7 +223,8 @@ const Description = ({ handleDescriptionChange }) => {
 const Connections = ({ createChannel }) => {
   const { selectedConnection, setSelectedConnection } = useSelection();
   const router = useRouter();
-  const { createConnection, removeConnection, updateConnection } = useConnectionMutation();
+  const { createConnection, removeConnection, updateConnection } =
+    useConnectionMutation();
   const { index } = useUser();
 
   const filterTags = (query, tag) => {
@@ -238,33 +256,37 @@ const Connections = ({ createChannel }) => {
         variables: {
           connectable_id: selectedConnection.id,
           connectable_type: 'BLOCK',
-          channel_ids: [tag.id]
-        }
+          channel_ids: [tag.id],
+        },
       });
 
       let selected = selectedConnection;
       console.log(selectedConnection);
       selected.current_user_channels.push({
-        title: tag.title
+        title: tag.title,
       });
 
       setSelectedConnection(selected);
     });
   };
 
-  const flatItems = index.flatMap((channelSet) => channelSet.channels.flatMap((c) => c));
+  const flatItems = index.flatMap((channelSet) =>
+    channelSet.channels.flatMap((c) => c),
+  );
 
   let deselectTag = (tag) => {
     let selected = selectedConnection;
-    selected.current_user_channels = selected.current_user_channels.filter((t) => t.id !== tag.id);
+    selected.current_user_channels = selected.current_user_channels.filter(
+      (t) => t.id !== tag.id,
+    );
     setSelectedConnection(selected);
 
     removeConnection({
       variables: {
         connectable_id: selectedConnection.id,
         connectable_type: 'BLOCK',
-        channel_id: tag.id
-      }
+        channel_id: tag.id,
+      },
     });
   };
 
@@ -288,14 +310,14 @@ const Connections = ({ createChannel }) => {
       (data) => {
         let selected = selectedConnection;
         selected.current_user_channels.push({
-          title: title
+          title: title,
         });
 
         setSelectedConnection(selected);
       },
       (error) => {
         console.log(error);
-      }
+      },
     );
   };
 
@@ -306,20 +328,20 @@ const Connections = ({ createChannel }) => {
         (data) => {
           console.log(data);
         },
-        (error) => console.log(error)
+        (error) => console.log(error),
       );
 
       let selected = selectedConnection;
 
       selected.currentUserChannels.push({
-        title: query
+        title: query,
       });
 
       setSelectedConnection(selected);
     }
 
     return {
-      title: query
+      title: query,
     };
   };
 
@@ -336,20 +358,23 @@ const Connections = ({ createChannel }) => {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                marginBottom: 5
-              }}>
+                marginBottom: 5,
+              }}
+            >
               <span
                 className="bp4-text-overflow-ellipsis"
                 style={{
                   marginRight: 10,
-                  flex: 1
-                }}>
+                  flex: 1,
+                }}
+              >
                 {channel.title}
               </span>
               <Button
                 icon="cross"
                 onClick={() => handleTagRemove({ id: channel.id })}
-                minimal={true}></Button>
+                minimal={true}
+              ></Button>
             </div>
           ))}
 
@@ -357,7 +382,11 @@ const Connections = ({ createChannel }) => {
         className="position-relative"
         createNewItemFromQuery={createNewTagFromQuery}
         createNewItemRenderer={(query, active) => (
-          <CreateNewTag active={active} query={query} handleCreateChannel={handleCreateChannel} />
+          <CreateNewTag
+            active={active}
+            query={query}
+            handleCreateChannel={handleCreateChannel}
+          />
         )}
         // selectedItems={tagState.tags}
         itemPredicate={filterTags}
@@ -365,9 +394,9 @@ const Connections = ({ createChannel }) => {
         popoverProps={{
           minimal: true,
           style: {
-            width: 300
+            width: 300,
           },
-          fill: true
+          fill: true,
         }}
         items={flatItems}
         noResults={<MenuItem disabled={true} text="No results." />}
@@ -383,15 +412,16 @@ const Connections = ({ createChannel }) => {
               style={{
                 display: 'flex',
                 height: '100%',
-                alignItems: 'center'
-              }}>
+                alignItems: 'center',
+              }}
+            >
               <ExplainTooltip />
             </div>
           ),
           leftIcon: 'add',
           tagProps: {
-            minimal: true
-          }
+            minimal: true,
+          },
         }}
         // selectedItems={tagState.tags}
         resetOnSelect={true}
@@ -406,7 +436,7 @@ const SectionNamespace = Object.assign(Section, {
   Type: Type,
   ToggleHeight: ToggleHeight,
   Description: Description,
-  Connections: withChannel()(Connections)
+  Connections: withChannel()(Connections),
 });
 
 export { SectionNamespace as Section };

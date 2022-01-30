@@ -12,7 +12,9 @@ const GrovesNavigator = ({ initialSelection }) => {
   const { channels, index } = useUser();
   const { selectedChannel, setSelectedChannel } = useSelection();
 
-  const allUserChannels = index.flatMap((channelSet) => channelSet.channels.flatMap((c) => c));
+  const allUserChannels = index.flatMap((channelSet) =>
+    channelSet.channels.flatMap((c) => c),
+  );
 
   const [inputItems, setInputItems] = useState(allUserChannels);
 
@@ -39,8 +41,8 @@ const GrovesNavigator = ({ initialSelection }) => {
               item.title
                 .toLowerCase()
                 .replace(/\W/g, '')
-                .startsWith(inputValue.toLowerCase().replace(/\W/g, ''))
-            )
+                .startsWith(inputValue.toLowerCase().replace(/\W/g, '')),
+            ),
           );
         }}
         onChange={(selection) => {
@@ -58,7 +60,8 @@ const GrovesNavigator = ({ initialSelection }) => {
           typeof initialSelection !== 'undefined' && initialSelection !== null
             ? initialSelection.channel.title
             : null
-        }>
+        }
+      >
         {({
           getInputProps,
           getItemProps,
@@ -70,10 +73,13 @@ const GrovesNavigator = ({ initialSelection }) => {
           selectedItem,
           isOpen,
           clearSelection,
-          openMenu
+          openMenu,
         }) => (
           <>
-            <div {...getRootProps({}, { suppressRefError: true })} className="grove-navigation">
+            <div
+              {...getRootProps({}, { suppressRefError: true })}
+              className="grove-navigation"
+            >
               <input
                 {...getInputProps({
                   onFocus: () => {
@@ -83,12 +89,15 @@ const GrovesNavigator = ({ initialSelection }) => {
 
                   ref: (e) => {
                     inputRef.current = e;
-                  }
+                  },
                 })}
                 // ref={inputRef}
                 placeholder="Enter a channel title..."
               />
-              <ul {...getMenuProps({})} className={`groves-dropdown panel ${isOpen ? 'open' : ''}`}>
+              <ul
+                {...getMenuProps({})}
+                className={`groves-dropdown panel ${isOpen ? 'open' : ''}`}
+              >
                 {isOpen &&
                   [...inputItems]
                     .sort((a, b) => a.title.localeCompare(b.title))
@@ -100,10 +109,15 @@ const GrovesNavigator = ({ initialSelection }) => {
                           index,
                           style: {
                             cursor: 'pointer',
-                            backgroundColor: highlightedIndex === index ? 'lightgray' : 'white',
-                            fontWeight: selectedItem === item ? 'bold' : 'normal'
-                          }
-                        })}>
+                            backgroundColor:
+                              highlightedIndex === index
+                                ? 'lightgray'
+                                : 'white',
+                            fontWeight:
+                              selectedItem === item ? 'bold' : 'normal',
+                          },
+                        })}
+                      >
                         {item.title}
                       </li>
                     ))}

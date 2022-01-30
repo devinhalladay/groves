@@ -32,15 +32,13 @@ const SelectionProvider = withApollo((props) => {
 
   const channelID = getChannelID();
 
-  const [loadSkeleton, { called, loading, data: channelSkeleton }] = useLazyQuery(
-    CHANNEL_SKELETON,
-    {
+  const [loadSkeleton, { called, loading, data: channelSkeleton }] =
+    useLazyQuery(CHANNEL_SKELETON, {
       variables: {
-        channelId: channelID
+        channelId: channelID,
       },
-      client: props.apollo
-    }
-  );
+      client: props.apollo,
+    });
 
   if (typeof loading !== 'undefined' && loading == true) {
     return <Loading fullScreen="true" description={'Loading your Grove :)'} />;
@@ -65,7 +63,7 @@ const SelectionProvider = withApollo((props) => {
         setCanvasBlocks,
         channelID,
         selections,
-        setSelections
+        setSelections,
       }}
       {...props}
     />

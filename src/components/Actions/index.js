@@ -42,13 +42,17 @@ export default function GroveActions(props) {
             className="action"
             style={{ paddingRight: 10 }}
             onClick={() => setWorkspaceOptions({ formation: Formations.GRID })}
-            active={formation.key === Formations.GRID.key}></Button>
+            active={formation.key === Formations.GRID.key}
+          ></Button>
           <Button
             minimal={true}
             icon="list"
             className="action"
-            onClick={() => setWorkspaceOptions({ formation: Formations.CHANNEL_INDEX })}
-            active={formation.key === Formations.CHANNEL_INDEX.key}></Button>
+            onClick={() =>
+              setWorkspaceOptions({ formation: Formations.CHANNEL_INDEX })
+            }
+            active={formation.key === Formations.CHANNEL_INDEX.key}
+          ></Button>
         </Navbar.Group>
       )}
     </Navbar>

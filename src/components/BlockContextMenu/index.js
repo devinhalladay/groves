@@ -6,7 +6,8 @@ import { useSelection } from '~/src/context/selection-context';
 
 const BlockContextMenu = (props) => {
   const router = useRouter();
-  const { setSelectedConnection, canvasBlocks, setCanvasBlocks } = useSelection();
+  const { setSelectedConnection, canvasBlocks, setCanvasBlocks } =
+    useSelection();
 
   const removeFromCanvas = () => {
     setCanvasBlocks(canvasBlocks.filter((b) => b.id !== props.block.id));
@@ -18,7 +19,7 @@ const BlockContextMenu = (props) => {
       style={{
         position: props.formation.key === Formations.GRID.key && 'absolute',
         right: props.formation.key === Formations.GRID.key && 325,
-        left: 0
+        left: 0,
       }}
       content={
         router.query.grove && (
@@ -31,7 +32,11 @@ const BlockContextMenu = (props) => {
                 text="Add to canvas"
               />
             ) : (
-              <MenuItem icon="remove" onClick={removeFromCanvas} text="Remove from canvas" />
+              <MenuItem
+                icon="remove"
+                onClick={removeFromCanvas}
+                text="Remove from canvas"
+              />
             )}
             <MenuDivider style={{ marginBottom: 10 }} />
             <MenuItem
@@ -44,13 +49,19 @@ const BlockContextMenu = (props) => {
             />
           </Menu>
         )
-      }>
+      }
+    >
       {props.children}
     </ContextMenu2>
   );
 };
 
-export const handleBlockClick = (event, canvasBlocks, block, setCanvasBlocks) => {
+export const handleBlockClick = (
+  event,
+  canvasBlocks,
+  block,
+  setCanvasBlocks,
+) => {
   if (canvasBlocks.some((b) => b.id === block.id)) {
     setCanvasBlocks(canvasBlocks.filter((b) => b.id !== block.id));
   } else {

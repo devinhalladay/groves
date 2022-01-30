@@ -19,7 +19,7 @@ const Grid = (props) => {
     setSelectedConnection,
     canvasBlocks,
     setCanvasBlocks,
-    selectedConnection
+    selectedConnection,
   } = useSelection();
 
   const removeFromCanvas = () => {
@@ -54,14 +54,19 @@ const Grid = (props) => {
         selectedConnection && (
           <Menu>
             {router.query.grove &&
-              (formation.key === Formations.GRID.key || formation.key == Formations.FOLDERS.key ? (
+              (formation.key === Formations.GRID.key ||
+              formation.key == Formations.FOLDERS.key ? (
                 <MenuItem
                   icon="send-to-graph"
                   onClick={() => handleBlockClick(selectedConnection)}
                   text="Add to canvas"
                 />
               ) : (
-                <MenuItem icon="remove" onClick={removeFromCanvas} text="Remove from canvas" />
+                <MenuItem
+                  icon="remove"
+                  onClick={removeFromCanvas}
+                  text="Remove from canvas"
+                />
               ))}
             <MenuDivider style={{ marginBottom: 10 }} />
             <MenuItem
@@ -73,16 +78,18 @@ const Grid = (props) => {
             />
           </Menu>
         )
-      }>
+      }
+    >
       {(ctxMenuProps) => {
         return (
           <div
             style={{
               position: formation.key === Formations.GRID.key && 'absolute',
               right: formation.key === Formations.GRID.key && 325,
-              left: 0
+              left: 0,
             }}
-            className={classNames('grid', ctxMenuProps.className)}>
+            className={classNames('grid', ctxMenuProps.className)}
+          >
             {ctxMenuProps.popover}
             {blocks.map((block, i) => (
               <Card
@@ -100,8 +107,12 @@ const Grid = (props) => {
                 onClick={(e) => {
                   setSelectedConnection(block);
                   handleBlockClickEvent(e, block);
-                }}>
-                <div className={`block block--${block.__typename.toLowerCase()}`} block={block}>
+                }}
+              >
+                <div
+                  className={`block block--${block.__typename.toLowerCase()}`}
+                  block={block}
+                >
                   {' '}
                   <BlockRepresentation block={block} />
                 </div>

@@ -7,12 +7,12 @@ const fs = require('fs');
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 // Load local SSL certificates for development
 const options = {
-  key: fs.readFileSync('./certs/key.pem'),
-  cert: fs.readFileSync('./certs/certificate.pem')
+  key: fs.readFileSync('./certs/localhost.key.pem'),
+  cert: fs.readFileSync('./certs/localhost.cer.pem'),
 };
 
 app.prepare().then(() => {

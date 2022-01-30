@@ -22,7 +22,8 @@ const UnauthenticatedHeader = (props) => {
               height="45"
               viewBox="0 0 50 45"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg">
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 fillRule="evenodd"
                 clipRule="evenodd"
@@ -65,7 +66,8 @@ const AuthenticatedHeader = ({ initialSelection }) => {
                 height="45"
                 viewBox="0 0 50 45"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg">
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -100,7 +102,8 @@ const AuthenticatedHeader = ({ initialSelection }) => {
                     height="45"
                     viewBox="0 0 50 45"
                     fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
@@ -135,7 +138,8 @@ const AuthenticatedHeader = ({ initialSelection }) => {
                 height="45"
                 viewBox="0 0 50 45"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg">
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -155,7 +159,8 @@ const AuthenticatedHeader = ({ initialSelection }) => {
                 <li>
                   <a
                     className="button"
-                    href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}>
+                    href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}
+                  >
                     Login
                   </a>
                 </li>

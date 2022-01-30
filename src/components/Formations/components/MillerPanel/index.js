@@ -13,7 +13,8 @@ const MillerPanel = (props) => {
 
   const { blocks } = props;
 
-  const { selectedChannel, initialSelection, setSelectedConnection } = useSelection();
+  const { selectedChannel, initialSelection, setSelectedConnection } =
+    useSelection();
 
   console.log(blocks);
   function convertData() {
@@ -25,12 +26,12 @@ const MillerPanel = (props) => {
           if (item.title !== block.title) {
             return {
               text: item.title ? item.title : item.description,
-              value: item
+              value: item,
             };
           }
 
           return null;
-        })
+        }),
       };
     });
   }
@@ -43,12 +44,15 @@ const MillerPanel = (props) => {
         position: 'absolute',
         right: 325,
         left: 0,
-        paddingTop: 90
-      }}>
+        paddingTop: 90,
+      }}
+    >
       <div className="finder-demo">
         <Finder
           value={value}
-          data={convertData(initialSelection && initialSelection.channel.skeleton)}
+          data={convertData(
+            initialSelection && initialSelection.channel.skeleton,
+          )}
           onChange={(value, isEnd, selectedIndexes) => {
             setValue(value);
             setIsEnd(isEnd);

@@ -1,5 +1,13 @@
 import { useLazyQuery, useMutation } from '@apollo/client';
-import { Button, ControlGroup, Icon, InputGroup, Menu, MenuItem, Navbar } from '@blueprintjs/core';
+import {
+  Button,
+  ControlGroup,
+  Icon,
+  InputGroup,
+  Menu,
+  MenuItem,
+  Navbar,
+} from '@blueprintjs/core';
 import { Popover2 } from '@blueprintjs/popover2';
 import withChannel from '@components/Channel';
 import { GET_SKELETON } from '@components/Channel/queries/getSkeleton';
@@ -31,21 +39,19 @@ const MergeChannelsAction = (props) => {
 
   const [mergeList, setMergeList] = useState([]);
 
-  const [connectTo, { loading: mutationLoading, error: mutationError }] = useMutation(
-    CREATE_CONNECTION,
-    {
+  const [connectTo, { loading: mutationLoading, error: mutationError }] =
+    useMutation(CREATE_CONNECTION, {
       onCompleted: (data) => {
         console.log(data);
       },
       onError: (error) => {
         console.log(error);
-      }
-    }
-  );
+      },
+    });
 
   const [
     getSkeleton,
-    { loading: gettingSkeleton, error: errorGettingSkeleton, data: skeleton }
+    { loading: gettingSkeleton, error: errorGettingSkeleton, data: skeleton },
   ] = useLazyQuery(GET_SKELETON, {
     onCompleted: (data) => {
       const { channels } = data;
@@ -54,7 +60,7 @@ const MergeChannelsAction = (props) => {
         allItems.push(...channel.skeleton);
       });
       setMergeList(allItems);
-    }
+    },
   });
 
   useEffect(() => {
@@ -69,8 +75,8 @@ const MergeChannelsAction = (props) => {
 
       getSkeleton({
         variables: {
-          ids: [...ids]
-        }
+          ids: [...ids],
+        },
       });
     }
   }, [selections, destination]);
@@ -81,8 +87,8 @@ const MergeChannelsAction = (props) => {
         variables: {
           connectable_id: connectable.id,
           connectable_type: connectable.type.toUpperCase(),
-          channel_ids: destination.id
-        }
+          channel_ids: destination.id,
+        },
       });
     });
     setSelections([]);
@@ -95,8 +101,8 @@ const MergeChannelsAction = (props) => {
           variables: {
             connectable_id: connectable.id,
             connectable_type: connectable.type.toUpperCase(),
-            channel_ids: destination.id
-          }
+            channel_ids: destination.id,
+          },
         });
       });
     }
@@ -105,8 +111,8 @@ const MergeChannelsAction = (props) => {
       if (channel.id !== destination.id) {
         deleteChannel({
           variables: {
-            id: channel.id
-          }
+            id: channel.id,
+          },
         });
         deleteChannel(channel, (data) => {
           toast(`Deleted channel "${channel.title}"`);
@@ -133,12 +139,19 @@ const MergeChannelsAction = (props) => {
               </p>
               <ControlGroup
                 vertical={true}
-                style={{ display: 'flex', alignItems: 'center', marginBottom: 15 }}>
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginBottom: 15,
+                }}
+              >
                 <InputGroup
                   disabled={true}
                   large={true}
                   fill={true}
-                  value={`Merge ${selections.length - 1} of ${selections.length} channels into`}
+                  value={`Merge ${selections.length - 1} of ${
+                    selections.length
+                  } channels into`}
                   style={{ textAlign: 'center', justifyContent: 'center' }}
                   className="merge-input-disabled"
                 />
@@ -161,29 +174,42 @@ const MergeChannelsAction = (props) => {
                         />
                       ))}
                     </Menu>
-                  }>
+                  }
+                >
                   <Button
                     large={true}
                     // minimal={true}
                     fill={true}
                     rightIcon="caret-down"
                     // intent="primary"
-                    style={{ textOverflow: 'ellipsis' }}>
+                    style={{ textOverflow: 'ellipsis' }}
+                  >
                     {destination ? destination.title : selections[0].title}
                   </Button>
                 </Popover2>
               </ControlGroup>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Button large={true} icon="remove" intent="danger" onClick={handleDangerousMerge}>
+                <Button
+                  large={true}
+                  icon="remove"
+                  intent="danger"
+                  onClick={handleDangerousMerge}
+                >
                   Merge and delete
                 </Button>
 
-                <Button large={true} icon="git-merge" intent="primary" onClick={handleSafeMerge}>
+                <Button
+                  large={true}
+                  icon="git-merge"
+                  intent="primary"
+                  onClick={handleSafeMerge}
+                >
                   Safe merge
                 </Button>
               </div>
             </section>
-          }>
+          }
+        >
           <Button className="action" minimal={true}>
             <Icon icon="git-merge" />
           </Button>

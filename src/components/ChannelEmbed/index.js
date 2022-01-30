@@ -1,10 +1,8 @@
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import Loading from '~/src/components/Loader';
-import DraggableBlock from '~/src/components/Block';
-import GrovesCanvas from '~/src/components/Canvas';
-import withApollo from '~/src/hooks/withApollo';
 import { CHANNEL_SKELETON } from '~/src/graphql/queries';
+import withApollo from '~/src/hooks/withApollo';
 import Grid from '../Formations/components/Grid';
 
 export default withApollo(
@@ -23,7 +21,7 @@ export default withApollo(
       variables: { channelId: channel.id },
       notifyOnNetworkStatusChange: true,
       fetchPolicy: 'no-cache',
-      client: apollo
+      client: apollo,
     });
 
     if (loading) {
@@ -40,7 +38,8 @@ export default withApollo(
               height="16"
               viewBox="0 0 17 16"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg">
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <g clipPath="url(#clip0)">
                 <path
                   d="M15.0132 10L10.0137 10L10.0137 15"
@@ -59,7 +58,12 @@ export default withApollo(
               </g>
               <defs>
                 <clipPath id="clip0">
-                  <rect width="16" height="16" fill="white" transform="translate(0.0136719)" />
+                  <rect
+                    width="16"
+                    height="16"
+                    fill="white"
+                    transform="translate(0.0136719)"
+                  />
                 </clipPath>
               </defs>
             </svg>
@@ -70,5 +74,5 @@ export default withApollo(
         </div>
       </>
     );
-  }
+  },
 );

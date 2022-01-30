@@ -25,27 +25,33 @@ const SelectionPanel = React.memo((props) => {
       updateChannel({
         variables: {
           id: connectable.id,
-          description: e
-        }
+          description: e,
+        },
       });
     } else {
       updateConnection({
         variables: {
           connectable_id: connectable.id,
-          description: e
-        }
+          description: e,
+        },
       });
     }
   };
 
-  const query = selectedConnection?.__typename === 'Channel' ? SELECTED_CHANNEL : SELECTED_BLOCK;
+  const query =
+    selectedConnection?.__typename === 'Channel'
+      ? SELECTED_CHANNEL
+      : SELECTED_BLOCK;
 
-  const [loadConnection, { called, loading, data, error }] = useLazyQuery(query, {
-    fetchPolicy: 'no-cache',
-    variables: {
-      id: selectedConnection?.id
-    }
-  });
+  const [loadConnection, { called, loading, data, error }] = useLazyQuery(
+    query,
+    {
+      fetchPolicy: 'no-cache',
+      variables: {
+        id: selectedConnection?.id,
+      },
+    },
+  );
 
   useEffect(() => {
     if (selectedConnection?.id) {
@@ -58,8 +64,9 @@ const SelectionPanel = React.memo((props) => {
       <div
         className="panel selection-panel"
         style={{
-          right: '15px'
-        }}>
+          right: '15px',
+        }}
+      >
         <div className="header">
           <p className="title">Selection</p>{' '}
         </div>
@@ -78,8 +85,9 @@ const SelectionPanel = React.memo((props) => {
       <div
         className="selection-panel"
         style={{
-          maxHeight: isExpanded ? 'unset' : '170px'
-        }}>
+          maxHeight: isExpanded ? 'unset' : '170px',
+        }}
+      >
         <Section.Header />
         <div className="contents">
           <Loading />
@@ -96,14 +104,23 @@ const SelectionPanel = React.memo((props) => {
       className="panel selection-panel"
       style={{
         right: selectedConnection !== null ? '15px' : '-315px',
-        maxHeight: isExpanded ? 'unset' : '170px'
-      }}>
+        maxHeight: isExpanded ? 'unset' : '170px',
+      }}
+    >
       <Section.Header />
       <div className="contents">
         <Section.Meta />
-        <Section.Type setTypeModalIsOpen={setTypeModalIsOpen} typeModalIsOpen={typeModalIsOpen} />
-        <Section.ToggleHeight setIsExpanded={setIsExpanded} isExpanded={isExpanded} />
-        <Section.Description handleDescriptionChange={handleDescriptionChange} />
+        <Section.Type
+          setTypeModalIsOpen={setTypeModalIsOpen}
+          typeModalIsOpen={typeModalIsOpen}
+        />
+        <Section.ToggleHeight
+          setIsExpanded={setIsExpanded}
+          isExpanded={isExpanded}
+        />
+        <Section.Description
+          handleDescriptionChange={handleDescriptionChange}
+        />
         <Section.Connections />
       </div>
     </div>
