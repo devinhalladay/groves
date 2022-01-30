@@ -539,7 +539,7 @@ const SelectionPanel = React.memo((props) => {
                     {channel.title}
                   </span>
                   <Button
-                    icon={<Icon icon="cross" />}
+                    icon="cross"
                     onClick={() => handleTagRemove({ id: channel.id })}
                     minimal={true}></Button>
                 </div>

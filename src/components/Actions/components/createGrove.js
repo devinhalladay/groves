@@ -1,5 +1,5 @@
 import { Button, Colors, Icon, InputGroup } from '@blueprintjs/core';
-import { Classes, Popover2 } from "@blueprintjs/popover2";
+import { Classes, Popover2 } from '@blueprintjs/popover2';
 import React, { useRef } from 'react';
 import CreateGrove from '~/public/create-grove.svg';
 import { useTheme } from '~/src/context/theme-provider';
@@ -38,7 +38,7 @@ const CreateGroveAction = (props) => {
             large={true}
             fill={true}
             placeholder="Enter a name for your channel…"
-            leftIcon={Icons.Edit}
+            leftIcon="edit"
             style={{ marginBottom: 15 }}
             className="merge-input-disabled"
             inputRef={nameInput}
@@ -46,7 +46,7 @@ const CreateGroveAction = (props) => {
           <Button
             large={true}
             fill={true}
-            icon={Icons.NewObject}
+            icon="new-object"
             intent="primary"
             onClick={handleCreateChannel}>
             Create channel

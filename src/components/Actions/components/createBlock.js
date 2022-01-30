@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { Button, Colors, Intent, TextArea } from '@blueprintjs/core';
-import { Classes, Popover2 } from "@blueprintjs/popover2";
+import { Classes, Popover2 } from '@blueprintjs/popover2';
 import { IconNames as Icons } from '@blueprintjs/icons';
 import { useRouter } from 'next/router';
 import { forwardRef, useCallback, useRef, useState } from 'react';
@@ -153,7 +153,7 @@ const CreateBlock = (props) => {
                     justifyContent: 'space-between'
                   }}>
                   <Button>Cancel</Button>
-                  <Button intent={Intent.PRIMARY} icon={Icons.ADD} onClick={onSubmit}>
+                  <Button intent={Intent.PRIMARY} icon="add" onClick={onSubmit}>
                     Create Block
                   </Button>
                 </div>

@@ -13,7 +13,7 @@ export default async (req, res) => {
   } catch (error) {
     const { response } = error;
     if (response) {
-      return res.status(response.status).json({ message: response.statusText });
+      return res.status(response.status).send({ message: response.statusText });
     }
     res.status(400).json({ message: error.message });
   }

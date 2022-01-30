@@ -29,11 +29,12 @@ const KeyMapDialog = () => {
           onClick={() => setIsOpen(true)}
           icon="help"
           large={true}
-          style={{ borderRadius: '100%' }} />
+          style={{ borderRadius: '100%' }}
+        />
         {isOpen && (
           <Dialog
             title="Keyboard Shortcuts"
-            icon={Icons.Key}
+            icon="key"
             isOpen={isOpen}
             onClose={() => setIsOpen(false)}>
             <div style={{ padding: 15 }}>

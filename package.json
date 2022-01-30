@@ -19,7 +19,7 @@
     "@apollo/react-hooks": "^3.1.5",
     "@blueprintjs/core": "4.0.0-beta.11",
     "@blueprintjs/icons": "4.0.0-beta.6",
-    "@blueprintjs/popover2": "^0.12.9",
+    "@blueprintjs/popover2": "^1.0.0-beta.11",
     "@blueprintjs/select": "4.0.0-beta.11",
     "@svgr/webpack": "^5.5.0",
     "@tippyjs/react": "^4.1.0",

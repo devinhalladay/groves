@@ -1,6 +1,6 @@
 import { Card, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
-import { ContextMenu2, ContextMenu2ChildrenProps } from '@blueprintjs/popover2';
 import classNames from 'classnames';
+import { ContextMenu2 } from '@blueprintjs/popover2';
 import { useRouter } from 'next/router';
 import React from 'react';
 import BlockRepresentation from '~/src/components/Block/components/BlockRepresentation';
@@ -10,7 +10,7 @@ import { useWorkspace } from '~/src/context/workspace-context';
 
 const Grid = (props) => {
   const { blocks } = props;
-  const { workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale } = useWorkspace();
+  const { workspaceOptions } = useWorkspace();
   const { formation } = workspaceOptions;
 
   const router = useRouter();
@@ -34,7 +34,6 @@ const Grid = (props) => {
     if (event.detail === 1) {
       clickTimer = setTimeout(() => console.log(1), 200);
     } else if (event.detail === 2) {
-      console.log(2);
       if (block.__typename == 'Channel') {
         router.push(`/g/[grove]`, `/g/${block.id}`, { shallow: true });
       }
@@ -76,32 +75,31 @@ const Grid = (props) => {
         )
       }>
       {(ctxMenuProps) => {
-        console.log(ctxMenuProps);
         return (
           <div
-            className="grid"
             style={{
               position: formation.key === Formations.GRID.key && 'absolute',
               right: formation.key === Formations.GRID.key && 325,
               left: 0
-            }}>
+            }}
+            className={classNames('grid', ctxMenuProps.className)}>
             {ctxMenuProps.popover}
             {blocks.map((block, i) => (
               <Card
                 block={block}
-                onContextMenu={(e) => {
-                  ctxMenuProps.onContextMenu(e);
-                  setSelectedConnection(block);
-                }}
-                ref={ctxMenuProps.ref}
                 key={block.id}
-                interactive={true}
-                contextMenu={ctxMenuProps.target}
+                interactive={false}
                 className="block-card"
                 style={{ width: '100%' }}
+                onContextMenu={(e) => {
+                  setSelectedConnection(block);
+                  ctxMenuProps.onContextMenu(e);
+                }}
+                ref={ctxMenuProps.ref}
+                contextMenu={ctxMenuProps.target}
                 onClick={(e) => {
                   setSelectedConnection(block);
-                  handleBlockClickEvent(block);
+                  handleBlockClickEvent(e, block);
                 }}>
                 <div className={`block block--${block.__typename.toLowerCase()}`} block={block}>
                   {' '}

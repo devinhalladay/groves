@@ -174,7 +174,7 @@ const MergeChannelsAction = (props) => {
                 </Popover2>
               </ControlGroup>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Button large={true} icon={'remove'} intent="danger" onClick={handleDangerousMerge}>
+                <Button large={true} icon="remove" intent="danger" onClick={handleDangerousMerge}>
                   Merge and delete
                 </Button>
 

@@ -21,9 +21,9 @@ const BlockContextMenu = (props) => {
         left: 0
       }}
       content={
-        <Menu>
-          {router.query.grove &&
-            (props.formation.key === Formations.GRID.key ||
+        router.query.grove && (
+          <Menu>
+            {props.formation.key === Formations.GRID.key ||
             props.formation.key == Formations.FOLDERS.key ? (
               <MenuItem
                 icon="send-to-graph"
@@ -32,17 +32,18 @@ const BlockContextMenu = (props) => {
               />
             ) : (
               <MenuItem icon="remove" onClick={removeFromCanvas} text="Remove from canvas" />
-            ))}
-          <MenuDivider style={{ marginBottom: 10 }} />
-          <MenuItem
-            style={{ backgroundColor: 'rgb(219 55 56 / 18%)' }}
-            intent="danger"
-            icon="trash"
-            // onClick={() => props.handleBlockClick(props.block)}
-            // text={`Delete ${props.block.__typename}`}
-            text="Delete block"
-          />
-        </Menu>
+            )}
+            <MenuDivider style={{ marginBottom: 10 }} />
+            <MenuItem
+              style={{ backgroundColor: 'rgb(219 55 56 / 18%)' }}
+              intent="danger"
+              icon="trash"
+              // onClick={() => props.handleBlockClick(props.block)}
+              // text={`Delete ${props.block.__typename}`}
+              text="Delete block"
+            />
+          </Menu>
+        )
       }>
       {props.children}
     </ContextMenu2>
