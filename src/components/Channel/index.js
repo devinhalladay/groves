@@ -1,25 +1,19 @@
-import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
-import { CREATE_CHANNEL, DELETE_CHANNEL, UPDATE_CHANNEL } from '~/src/graphql/mutations';
+import { useMutation } from '@apollo/client';
 import React from 'react';
-import getSkeleton from './queries/getSkeleton';
+import { CREATE_CHANNEL, DELETE_CHANNEL, UPDATE_CHANNEL } from '~/src/graphql/mutations';
 
 const withChannel = (props) => (WrappedComponent) => () => {
-  // const { apollo } = props;
-
-  const [
-    createChannelMutation,
-    { loading: creatingChannel, error: errorCreatingChannel }
-  ] = useMutation(CREATE_CHANNEL, {
-    onCompleted: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    }
-  });
+  const [createChannelMutation, { loading: creatingChannel, error: errorCreatingChannel }] =
+    useMutation(CREATE_CHANNEL, {
+      onCompleted: (data) => {
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
+    });
 
   const createChannel = async (channel, onSuccess, onError) => {
-    console.log(channel);
     await createChannelMutation({
       variables: {
         ...channel
@@ -36,18 +30,16 @@ const withChannel = (props) => (WrappedComponent) => () => {
       });
   };
 
-  const [
-    updateChannelMutation,
-    { loading: updatingChannel, error: errorUpdatingChannel }
-  ] = useMutation(UPDATE_CHANNEL, {
-    // client: apollo,
-    onCompleted: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    }
-  });
+  const [updateChannelMutation, { loading: updatingChannel, error: errorUpdatingChannel }] =
+    useMutation(UPDATE_CHANNEL, {
+      // client: apollo,
+      onCompleted: (data) => {
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
+    });
 
   const updateChannel = async (channel, onSuccess, onError) => {
     await updateChannelMutation({
@@ -64,17 +56,15 @@ const withChannel = (props) => (WrappedComponent) => () => {
       });
   };
 
-  const [
-    deleteChannelMutation,
-    { loading: deletingChannel, error: errorDeletingChannel }
-  ] = useMutation(DELETE_CHANNEL, {
-    onCompleted: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    }
-  });
+  const [deleteChannelMutation, { loading: deletingChannel, error: errorDeletingChannel }] =
+    useMutation(DELETE_CHANNEL, {
+      onCompleted: (data) => {
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      }
+    });
 
   const deleteChannel = async (channel, onSuccess, onError) => {
     await deleteChannelMutation({
@@ -96,7 +86,6 @@ const withChannel = (props) => (WrappedComponent) => () => {
       createChannel={createChannel}
       updateChannel={updateChannel}
       deleteChannel={deleteChannel}
-      // getChannelSkeleton={getChannelSkeleton}
       {...props}
     />
   );
