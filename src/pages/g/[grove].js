@@ -55,7 +55,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
       if (channelSkeleton && channelSkeleton.channel) {
         return (
           <div className="workspace">
-            <SelectionPanel />
+            <SelectionPanel key={formation.key} />
             {/* <CanvasContextMenu> */}
             <Grid blocks={channelSkeleton.channel.initial_contents} />
             {/* </CanvasContextMenu> */}
@@ -67,7 +67,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
     } else if (formation.key === Formations.FOLDERS.key) {
       return (
         <div className="workspace">
-          <SelectionPanel />
+          <SelectionPanel key={formation.key} />
           <MillerPanel blocks={channelSkeleton.channel.initial_contents} />
         </div>
       );

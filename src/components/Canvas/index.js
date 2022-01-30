@@ -4,7 +4,7 @@ import { PanZoom } from 'react-easy-panzoom';
 import { useSelection } from '~/src/context/selection-context';
 import withApollo from '~/src/hooks/withApollo';
 import DraggableBlock from '../Block';
-import ZoomTools from '~/src/components/ZoomTools'
+import ZoomTools from '~/src/components/ZoomTools';
 
 export default withApollo((props) => {
   const { workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale } = useWorkspace();
@@ -32,6 +32,7 @@ export default withApollo((props) => {
     if (
       event.target &&
       event.target.parentElement &&
+      event.target.parentElement.className &&
       event.target.parentElement.className.includes(
         'block' ||
           'draggable' ||

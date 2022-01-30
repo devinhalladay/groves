@@ -32,9 +32,6 @@ const GET_LANDING_BLOCKS = gql`
 
 const Root = (props) => {
   const { loading, error, data } = useQuery(GET_LANDING_BLOCKS);
-  const [dragStates, setDragStates] = useState({
-    maxZIndex: 1000
-  });
 
   const { setCanvasBlocks } = useSelection();
 

@@ -16,7 +16,11 @@ const TypeModal = (props) => {
   const [relationFields, setRelationFields] = useState(type);
 
   return (
-    <Dialog isOpen={isOpen} title="Add a new object type" icon="new-object">
+    <Dialog
+      isOpen={isOpen}
+      title="Add a new object type"
+      icon="new-object"
+      onClose={() => setTypeModalIsOpen(false)}>
       <div className={Classes.DIALOG_BODY}>
         <Callout title="Objects in Groves" intent="primary" style={{ marginBottom: 20 }}>
           <p>
@@ -42,44 +46,42 @@ const TypeModal = (props) => {
         </Callout>
 
         {relationFields.map((field, i) => (
-          <>
+          <div
+            key={i}
+            style={{
+              display: 'flex',
+              marginBottom: 20
+            }}>
             <div
-              key={i}
               style={{
+                fontSize: 12,
+                border: '1px solid',
+                borderColor: Colors.GRAY4,
+                color: Colors.GRAY1,
+                borderRadius: 100,
                 display: 'flex',
-                marginBottom: 20
+                fontWeight: '600',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 26,
+                padding: '6px 8px',
+                backgroundColor: Colors.LIGHT_GRAY2,
+                marginRight: 10
               }}>
-              <div
-                style={{
-                  fontSize: 12,
-                  border: '1px solid',
-                  borderColor: Colors.GRAY4,
-                  color: Colors.GRAY1,
-                  borderRadius: 100,
-                  display: 'flex',
-                  fontWeight: '600',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: 26,
-                  padding: '6px 8px',
-                  backgroundColor: Colors.LIGHT_GRAY2,
-                  marginRight: 10
-                }}>
-                {i + 1}
-              </div>
-              <InputGroup fill={true} defaultValue={field.title} key={field.id} />
-              <Button
-                icon="cross"
-                fill={false}
-                style={{ marginLeft: 10 }}
-                onClick={() => {
-                  let newFields = relationFields;
-                  newFields = newFields.filter((f) => f.title !== field.title);
-                  setRelationFields(newFields);
-                }}
-              />
+              {i + 1}
             </div>
-          </>
+            <InputGroup fill={true} defaultValue={field.title} key={field.id} />
+            <Button
+              icon="cross"
+              fill={false}
+              style={{ marginLeft: 10 }}
+              onClick={() => {
+                let newFields = relationFields;
+                newFields = newFields.filter((f) => f.title !== field.title);
+                setRelationFields(newFields);
+              }}
+            />
+          </div>
         ))}
         <Button
           icon="add"
@@ -94,7 +96,7 @@ const TypeModal = (props) => {
       <Divider style={{ marginBottom: 20 }} />
       <div className={Classes.DIALOG_FOOTER}>
         <div className={Classes.DIALOG_FOOTER_ACTIONS}>
-          <Button icon="new-object" intent="primary">
+          <Button icon="new-object" intent="primary" onClick={() => console.log(relationFields)}>
             Create Object Type
           </Button>
         </div>

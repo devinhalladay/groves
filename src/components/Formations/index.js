@@ -1,12 +1,10 @@
-import React from 'react';
-import Panel from '~/src/components/Panel';
-import Grid from './components/Grid';
-import { ControlGroup, HTMLSelect, MenuItem, Button, Hotkeys } from '@blueprintjs/core';
-import { useWorkspace } from '@context/workspace-context';
+import { Button, MenuItem } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
+import { useWorkspace } from '@context/workspace-context';
+import React from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
-import KeyMaps from '~/src/constants/KeyMaps';
 import Formations from '~/src/constants/Formations';
+import KeyMaps from '~/src/constants/KeyMaps';
 
 export default function GroveFormations() {
   const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
@@ -22,8 +20,8 @@ export default function GroveFormations() {
   const hotkeyHandlers = {
     VIEW_GRID: React.useCallback(() => handleChangeFormation(Formations.GRID)),
     VIEW_CHANNEL_INDEX: React.useCallback(() => handleChangeFormation(Formations.CHANNEL_INDEX)),
-    VIEW_CANVAS: React.useCallback(() => handleChangeFormation(Formations.CANVAS)),
-    VIEW_FOLDERS: React.useCallback(() => handleChangeFormation(Formations.FOLDERS))
+    VIEW_CANVAS: React.useCallback(() => handleChangeFormation(Formations.CANVAS))
+    // VIEW_FOLDERS: React.useCallback(() => handleChangeFormation(Formations.FOLDERS))
   };
 
   const formationOptionRenderer = (formationOption) => {

@@ -456,16 +456,15 @@ const SelectionPanel = React.memo((props) => {
           <Button onClick={() => setTypeModalIsOpen(!typeModalIsOpen)}>Create a new type</Button>
           <TypeModal
             type={[
-              {}
-              // {
-              //   title: 'Authors',
-              //   id: 1
-              // },
-              // {
-              //   title: 'Subjects',
-              //   id: 2
-              // },
-              // { title: 'Publication Year', id: 3 }
+              {
+                title: 'Authors',
+                id: 1
+              },
+              {
+                title: 'Subjects',
+                id: 2
+              },
+              { title: 'Publication Year', id: 3 }
             ]}
             isOpen={typeModalIsOpen}
             setTypeModalIsOpen={setTypeModalIsOpen}
