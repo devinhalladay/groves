@@ -6,10 +6,6 @@ const ExplainTooltip = () => {
   return (
     <Tooltip2
       content="Add tags to connect blocks to an are.na channel! Creating a tag creates a new channel."
-      targetProps={{
-        width: 16,
-        height: 16
-      }}
       usePortal={false}>
       <div
         style={{
