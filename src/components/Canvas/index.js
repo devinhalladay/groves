@@ -94,6 +94,7 @@ export default withApollo((props) => {
           position: 'relative',
         }}
         maxZoom={3}
+        disableScrollZoom
         onPanStart={(e) => {
           dragging = false;
         }}

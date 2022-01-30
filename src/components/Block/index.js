@@ -7,7 +7,7 @@ import {
   adjustWindowScroll,
   cursorPositionInViewport,
   shouldScrollAtEdge,
-  viewportDimensions
+  viewportDimensions,
 } from '../../utils/canvas';
 import BlockContextMenu, { handleBlockClick } from '../BlockContextMenu';
 import InlineExpandedChannel from '../ChannelEmbed';
@@ -36,7 +36,7 @@ const DraggableBlock = ({
     setWorkspaceOptions,
     zoomScale,
     setZoomScale,
-    setCanvasBlocks
+    setCanvasBlocks,
   } = useWorkspace();
   const { formation } = workspaceOptions;
 
@@ -81,8 +81,8 @@ const DraggableBlock = ({
       isInLeftEdge: false,
       isInRightEdge: false,
       isInTopEdge: false,
-      isInBottomEdge: false
-    }
+      isInBottomEdge: false,
+    },
   });
 
   const rndEl = useRef(null);
@@ -98,14 +98,14 @@ const DraggableBlock = ({
       ...spatialState,
       isExpanded: true,
       width: 400,
-      height: 300
+      height: 300,
     });
   };
 
   const retractChannelInline = () => {
     setSpatialState({
       ...spatialState,
-      isExpanded: false
+      isExpanded: false,
     });
   };
 
@@ -125,7 +125,7 @@ const DraggableBlock = ({
   const handleDragStart = (e) => {
     setDragStates({
       ...dragStates,
-      maxZIndex: dragStates.maxZIndex + 1
+      maxZIndex: dragStates.maxZIndex + 1,
     });
     setSpatialState({ ...spatialState, zIndex: dragStates.maxZIndex });
     if (spatialState.isBeingDragged) {
@@ -145,11 +145,15 @@ const DraggableBlock = ({
         cursorPosition: cursorPositionInViewport(e),
         edgeBottom: viewportDimensions().height - spatialState.cursor.edgeSize,
         edgeRight: viewportDimensions().width - spatialState.cursor.edgeSize,
-        isInLeftEdge: spatialState.cursor.cursorPosition.x < spatialState.cursor.edgeLeft,
-        isInRightEdge: spatialState.cursor.cursorPosition.x > spatialState.cursor.edgeRight,
-        isInTopEdge: spatialState.cursor.cursorPosition.y < spatialState.cursor.edgeTop,
-        isInBottomEdge: spatialState.cursor.cursorPosition.y > spatialState.cursor.edgeBottom
-      }
+        isInLeftEdge:
+          spatialState.cursor.cursorPosition.x < spatialState.cursor.edgeLeft,
+        isInRightEdge:
+          spatialState.cursor.cursorPosition.x > spatialState.cursor.edgeRight,
+        isInTopEdge:
+          spatialState.cursor.cursorPosition.y < spatialState.cursor.edgeTop,
+        isInBottomEdge:
+          spatialState.cursor.cursorPosition.y > spatialState.cursor.edgeBottom,
+      },
     });
 
     if (shouldScrollAtEdge(spatialState.cursor, e)) {
@@ -163,14 +167,14 @@ const DraggableBlock = ({
         ...spatialState,
         isBeingDragged: false,
         x: d.x,
-        y: d.y
+        y: d.y,
       });
 
       handleDragMetric();
     } else {
       if (!staticBlock) {
         setSelectedConnection({
-          ...block
+          ...block,
         });
       }
     }
@@ -204,7 +208,7 @@ const DraggableBlock = ({
     setSpatialState({
       ...spatialState,
       width: spatialState.width + delta.width,
-      height: spatialState.height + delta.height
+      height: spatialState.height + delta.height,
     });
   };
 
@@ -213,7 +217,7 @@ const DraggableBlock = ({
       ...spatialState,
       isExpanded: false,
       width: 200,
-      height: 200
+      height: 200,
     });
   };
 
@@ -228,7 +232,7 @@ const DraggableBlock = ({
         dismissInlineChannel={dismissInlineChannel}
         parentDimensions={{
           width: spatialState.width,
-          height: spatialState.height
+          height: spatialState.height,
         }}
         {...props}
       />
@@ -242,7 +246,8 @@ const DraggableBlock = ({
       formation={formation}
       handleBlockClick={(e) => {
         handleBlockClick(e, canvasBlocks, value, setCanvasBlocks);
-      }}>
+      }}
+    >
       <Rnd
         ref={rndEl}
         key={block.id}
@@ -251,7 +256,7 @@ const DraggableBlock = ({
         maxWidth="100%"
         position={{
           x: spatialState.x,
-          y: spatialState.y
+          y: spatialState.y,
         }}
         onDragStart={(e) => {
           handleDragStart(e);
@@ -276,24 +281,31 @@ const DraggableBlock = ({
           handleResizeStop(delta);
         }}
         style={{
-          zIndex: spatialState.zIndex
-        }}>
+          zIndex: spatialState.zIndex,
+        }}
+      >
         <Card
           onClick={() => console.log('test')}
           interactive={true}
-          className={`draggable-block-container ${block.__typename ? block.__typename : ''} ${
+          className={`draggable-block-container ${
+            block.__typename ? block.__typename : ''
+          } ${
             selectedConnection && selectedConnection.id
               ? block.id === selectedConnection.id
                 ? 'selected'
                 : ''
               : ''
-          } ${spatialState.isExpanded ? 'draggable-block-container--expanded' : ''} ${
-            spatialState.isBeingDragged ? 'isBeingDragged' : ''
-          }`}>
+          } ${
+            spatialState.isExpanded ? 'draggable-block-container--expanded' : ''
+          } ${spatialState.isBeingDragged ? 'isBeingDragged' : ''}`}
+        >
           {spatialState.isExpanded ? (
             renderChannelInline()
           ) : (
-            <div className={`block block--${block.__typename.toLowerCase()}`}>
+            <div
+              className={`block block--${block.__typename.toLowerCase()}`}
+              onScroll={(e) => e.stopPropagation()}
+            >
               {block.__typename === 'Channel' && (
                 <button className="icon-button" onClick={expandChannelInline}>
                   <svg
@@ -301,7 +313,8 @@ const DraggableBlock = ({
                     height="16"
                     viewBox="0 0 16 16"
                     fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
                       d="M8 13L12.9995 13V8"
                       stroke="#BDC3CA"

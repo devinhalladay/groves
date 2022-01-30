@@ -209,9 +209,6 @@ const Description = ({ handleDescriptionChange }) => {
         minLines={2}
         className="description-field"
         onConfirm={(e) => handleDescriptionChange(e, selectedConnection)}
-        style={{
-          height: 60,
-        }}
         multiline={true}
         placeholder="Add a description to this block…"
         defaultValue={selectedConnection && selectedConnection.description}
@@ -223,8 +220,7 @@ const Description = ({ handleDescriptionChange }) => {
 const Connections = ({ createChannel }) => {
   const { selectedConnection, setSelectedConnection } = useSelection();
   const router = useRouter();
-  const { createConnection, removeConnection, updateConnection } =
-    useConnectionMutation();
+  const { createConnection, removeConnection } = useConnectionMutation();
   const { index } = useUser();
 
   const filterTags = (query, tag) => {
@@ -351,7 +347,9 @@ const Connections = ({ createChannel }) => {
 
       {selectedConnection.current_user_channels &&
         selectedConnection.current_user_channels
-          .filter((channel) => channel.id !== parseInt(router.query.grove))
+          .filter(
+            (channel) => channel.id !== parseInt(router.query.grove as string),
+          )
           .map((channel) => (
             <div
               key={channel.id}
@@ -393,9 +391,9 @@ const Connections = ({ createChannel }) => {
         itemRenderer={(props) => <TagOption {...props} />}
         popoverProps={{
           minimal: true,
-          style: {
-            width: 300,
-          },
+          // style: {
+          //   width: 300,
+          // },
           fill: true,
         }}
         items={flatItems}
