@@ -19,6 +19,7 @@
     "trailingComma": "all"
   },
   "dependencies": {
+    "@antv/x6": "^1.30.0",
     "@apollo/client": "^3.0.0-beta.39",
     "@apollo/react-hooks": "^3.1.5",
     "@blueprintjs/core": "4.0.0-beta.11",

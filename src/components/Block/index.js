@@ -1,6 +1,7 @@
 import { Card } from '@blueprintjs/core';
 import { useRef, useState } from 'react';
 import { Rnd } from 'react-rnd';
+import { getMovementDirection } from '~/src/utils/block';
 import { useSelection } from '../../context/selection-context';
 import { useWorkspace } from '../../context/workspace-context';
 import {
@@ -28,23 +29,15 @@ const DraggableBlock = ({
   ...props
 }) => {
   let description;
-
   let { staticBlock } = props;
 
-  const {
-    workspaceOptions,
-    setWorkspaceOptions,
-    zoomScale,
-    setZoomScale,
-    setCanvasBlocks,
-  } = useWorkspace();
+  const { selectedConnection, setSelectedConnection } = useSelection();
+  const { workspaceOptions, zoomScale, setCanvasBlocks } = useWorkspace();
   const { formation } = workspaceOptions;
 
   if (block.description && block.description.includes('"x":')) {
     description = JSON.parse(block.description.replace('\n', ''));
   }
-
-  const { selectedConnection, setSelectedConnection } = useSelection();
 
   const [spatialState, setSpatialState] = useState({
     zIndex: dragStates.maxZIndex,
@@ -93,6 +86,7 @@ const DraggableBlock = ({
     analytics.track('Dragged Block');
   };
 
+  // Open a channel transclusion
   const expandChannelInline = () => {
     setSpatialState({
       ...spatialState,
@@ -102,6 +96,7 @@ const DraggableBlock = ({
     });
   };
 
+  // Close a channel transclusion
   const retractChannelInline = () => {
     setSpatialState({
       ...spatialState,
@@ -109,19 +104,36 @@ const DraggableBlock = ({
     });
   };
 
-  const getMovementDirection = (e, d) => {
-    if (Math.sign(d.deltaY) === 1) {
-      return { y: 'up' };
-    } else if (Math.sign(d.deltaY) === -1) {
-      return { y: 'down' };
-    }
-
-    if (Math.sign(d.deltaX) === 1) {
-      return { x: 'right' };
-    } else if (Math.sign(d.deltaX) === -1) {
-      return { x: 'left' };
-    }
+  // Dismiss a transclusion
+  const dismissInlineChannel = () => {
+    setSpatialState({
+      ...spatialState,
+      isExpanded: false,
+      width: 200,
+      height: 200,
+    });
   };
+
+  // Render a transclusion
+  const renderChannelInline = () => {
+    return (
+      <InlineExpandedChannel
+        channel={block}
+        dragStates={dragStates}
+        setDragStates={setDragStates}
+        setSpatialState={setSpatialState}
+        spatialState={spatialState}
+        dismissInlineChannel={dismissInlineChannel}
+        parentDimensions={{
+          width: spatialState.width,
+          height: spatialState.height,
+        }}
+        {...props}
+      />
+    );
+  };
+
+  // Handle the drag start
   const handleDragStart = (e) => {
     setDragStates({
       ...dragStates,
@@ -135,6 +147,7 @@ const DraggableBlock = ({
     }
   };
 
+  // Handle movement while dragging
   const handleDrag = (e, d) => {
     setSpatialState({
       ...spatialState,
@@ -161,6 +174,7 @@ const DraggableBlock = ({
     }
   };
 
+  // Handle the end of the drag movement
   const handleDragStop = (e, d) => {
     if (spatialState.isBeingDragged) {
       setSpatialState({
@@ -180,6 +194,7 @@ const DraggableBlock = ({
     }
   };
 
+  // Handle resizing on the corners of a block
   const handleResize = (delta) => {
     if (block.__typename === 'Channel') {
       if (delta.width > 0 || delta.height > 0) {
@@ -204,39 +219,13 @@ const DraggableBlock = ({
     }
   };
 
+  // Handle the end of a resize event
   const handleResizeStop = (delta) => {
     setSpatialState({
       ...spatialState,
       width: spatialState.width + delta.width,
       height: spatialState.height + delta.height,
     });
-  };
-
-  const dismissInlineChannel = () => {
-    setSpatialState({
-      ...spatialState,
-      isExpanded: false,
-      width: 200,
-      height: 200,
-    });
-  };
-
-  const renderChannelInline = () => {
-    return (
-      <InlineExpandedChannel
-        channel={block}
-        dragStates={dragStates}
-        setDragStates={setDragStates}
-        setSpatialState={setSpatialState}
-        spatialState={spatialState}
-        dismissInlineChannel={dismissInlineChannel}
-        parentDimensions={{
-          width: spatialState.width,
-          height: spatialState.height,
-        }}
-        {...props}
-      />
-    );
   };
 
   return (

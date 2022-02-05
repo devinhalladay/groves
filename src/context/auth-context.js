@@ -18,25 +18,25 @@ const AuthProvider = (props) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
+          'Access-Control-Allow-Origin': '*',
         },
-        body: JSON.stringify({ auth_code: code })
-      }
+        body: JSON.stringify({ auth_code: code }),
+      },
     );
 
     res.json().then((res) => {
-      setCookie(ctx, 'access_token', res.access_token, {
+      setCookie(ctx, 'access_token', res.access_token || null, {
         maxAge: 30 * 24 * 60 * 60,
-        path: '/'
+        path: '/',
       });
-
-      router.push('/');
     });
+
+    return router.push('/');
   };
 
   const logout = (ctx) => {
     destroyCookie(ctx, 'access_token', {
-      path: '/'
+      path: '/',
     });
 
     window.localStorage.setItem('logout', Date.now());
@@ -45,7 +45,10 @@ const AuthProvider = (props) => {
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, login, logout, hasPreviousSession }} {...props} />
+    <AuthContext.Provider
+      value={{ accessToken, login, logout, hasPreviousSession }}
+      {...props}
+    />
   );
 };
 

@@ -35,25 +35,34 @@ export default function GroveActions(props) {
           </Navbar.Group>
         </>
       ) : (
-        <Navbar.Group>
-          <Button
-            minimal={true}
-            icon="grid-view"
-            className="action"
-            style={{ paddingRight: 10 }}
-            onClick={() => setWorkspaceOptions({ formation: Formations.GRID })}
-            active={formation.key === Formations.GRID.key}
-          ></Button>
-          <Button
-            minimal={true}
-            icon="list"
-            className="action"
-            onClick={() =>
-              setWorkspaceOptions({ formation: Formations.CHANNEL_INDEX })
-            }
-            active={formation.key === Formations.CHANNEL_INDEX.key}
-          ></Button>
-        </Navbar.Group>
+        <>
+          <Navbar.Group>
+            <Button
+              minimal={true}
+              icon="grid-view"
+              className="action"
+              style={{ paddingRight: 10 }}
+              onClick={() =>
+                setWorkspaceOptions({ formation: Formations.GRID })
+              }
+              active={formation.key === Formations.GRID.key}
+            ></Button>
+            <Button
+              minimal={true}
+              icon="list"
+              className="action"
+              onClick={() =>
+                setWorkspaceOptions({ formation: Formations.CHANNEL_INDEX })
+              }
+              active={formation.key === Formations.CHANNEL_INDEX.key}
+            ></Button>
+          </Navbar.Group>
+
+          <Navbar.Group>
+            <CreateGroveAction />
+            <DarkModeAction />
+          </Navbar.Group>
+        </>
       )}
     </Navbar>
   );

@@ -12,14 +12,14 @@ export default async (req, res) => {
       .post(
         authURL,
         {
-          ...req.body
+          ...req.body,
         },
         {
           headers: {
             authorization: `${req.headers['authorization']}`,
-            'X-APP-TOKEN': process.env.GRAPHQL_TOKEN
-          }
-        }
+            'X-APP-TOKEN': process.env.GRAPHQL_TOKEN,
+          },
+        },
       )
       .then((response) => {
         return res.status(response.status).json(response.data);

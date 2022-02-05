@@ -7,10 +7,15 @@ export default async (req, res) => {
 
   try {
     const response = await axios.post(authURL);
-    const { access_token } = response.data;
+    let { access_token } = response.data;
 
-    return res.json({ access_token: access_token });
+    if (!access_token) {
+      access_token = null;
+    }
+
+    return res.status(200).json({ access_token: access_token });
   } catch (error) {
+    console.log(error);
     const { response } = error;
     if (response) {
       return res.status(response.status).send({ message: response.statusText });

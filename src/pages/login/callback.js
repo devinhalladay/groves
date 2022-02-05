@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
 import { useAuth } from '../../context/auth-context';
 import Loading from '../../components/Loader';
+import { useRouter } from 'next/router';
 
 const Callback = ({ ctx, query: { code }, ...props }) => {
-  const { login, logout } = useAuth();
+  const { login, accessToken } = useAuth();
+
+  const router = useRouter();
 
   useEffect(() => {
     login({ ctx, code });
@@ -18,7 +21,7 @@ const Callback = ({ ctx, query: { code }, ...props }) => {
 
 export async function getServerSideProps({ query }) {
   return {
-    props: { query }
+    props: { query },
   };
 }
 

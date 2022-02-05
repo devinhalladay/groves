@@ -1344,7 +1344,7 @@ header {
 }
 
 .selection-panel {
-  z-index: 3000;
+  z-index: 200;
   position: fixed;
   width: 300px;
   transition: all ease-in-out 0.1s;
@@ -1730,13 +1730,13 @@ button,
     justify-content: center;
   }
 }
-.bp4-popover {
-  z-index: 9999;
-}
+// .bp4-popover {
+//   z-index: 9999;
+// }
 
-.bp4-popover-transition-container {
-  z-index: 9999;
-}
+// .bp4-popover-transition-container {
+//   z-index: 9999;
+// }
 
 .status-indicator {
   width: 8px;

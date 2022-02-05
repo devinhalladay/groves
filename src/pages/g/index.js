@@ -1,3 +1,4 @@
+import { Button } from '@blueprintjs/core';
 import { useWorkspace, WorkspaceProvider } from '@context/workspace-context';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
@@ -20,20 +21,7 @@ const Grove = (props) => {
   const { workspaceOptions } = useWorkspace();
   const { formation } = workspaceOptions;
 
-  const {
-    selectedChannel,
-    setSelectedChannel,
-    // initialSelection,
-    // selectedConnection,
-    // setSelectedConnection,
-    // selectedRef,
-    // setSelectedRef,
-    // canvasBlocks,
-    // setCanvasBlocks,
-    // channelID,
-    // selections,
-    // setSelections
-  } = useSelection();
+  const { setSelectedChannel } = useSelection();
 
   const nameInput = useRef(null);
 
@@ -55,10 +43,29 @@ const Grove = (props) => {
 
   return (
     <WorkspaceProvider>
-      <SelectionPanel />
-      <KeyMapDialog />
-      {formation.key === Formations.GRID.key && <Grid blocks={flatIndex} />}
-      {formation.key === Formations.CHANNEL_INDEX.key && <ChannelIndex />}
+      {!flatIndex.length ? (
+        <div className={`loading-screen fullscreen`}>
+          <p className="pb-4">
+            Welcome to Groves. Create a new channel to begin.
+          </p>
+          <Button icon="new-grid-item" text="New channel" />
+        </div>
+      ) : (
+        <>
+          <SelectionPanel />
+          <KeyMapDialog />
+          {() => {
+            switch (formation.key) {
+              case Formations.GRID.key:
+                return <Grid blocks={flatIndex} />;
+              case Formations.CHANNEL_INDEX.key:
+                return <ChannelIndex />;
+              default:
+                return <ChannelIndex />;
+            }
+          }}
+        </>
+      )}
     </WorkspaceProvider>
   );
 };
