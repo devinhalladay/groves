@@ -27,6 +27,7 @@
     "@blueprintjs/icons": "4.0.0-beta.6",
     "@blueprintjs/popover2": "^1.0.0-beta.11",
     "@blueprintjs/select": "4.0.0-beta.11",
+    "@grpc/proto-loader": "^0.6.9",
     "@segment/analytics-next": "^1.33.4",
     "@segment/snippet": "^4.15.3",
     "@tippyjs/react": "^4.1.0",

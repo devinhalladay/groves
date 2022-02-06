@@ -1730,9 +1730,12 @@ button,
     justify-content: center;
   }
 }
-// .bp4-popover {
-//   z-index: 9999;
-// }
+
+.bp4-popover2,
+.bp-popover,
+.bp4-popover2-transition-container {
+  z-index: 9999;
+}
 
 // .bp4-popover-transition-container {
 //   z-index: 9999;

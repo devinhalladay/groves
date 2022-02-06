@@ -6,8 +6,7 @@ import { useSelection } from '~/src/context/selection-context';
 
 const BlockContextMenu = (props) => {
   const router = useRouter();
-  const { setSelectedConnection, canvasBlocks, setCanvasBlocks } =
-    useSelection();
+  const { canvasBlocks, setCanvasBlocks } = useSelection();
 
   const removeFromCanvas = () => {
     setCanvasBlocks(canvasBlocks.filter((b) => b.id !== props.block.id));
@@ -24,27 +23,32 @@ const BlockContextMenu = (props) => {
       content={
         router.query.grove && (
           <Menu>
-            {props.formation.key === Formations.GRID.key ||
-            props.formation.key == Formations.FOLDERS.key ? (
-              <MenuItem
-                icon="send-to-graph"
-                onClick={() => props.handleBlockClick(props.block)}
-                text="Add to canvas"
-              />
-            ) : (
-              <MenuItem
-                icon="remove"
-                onClick={removeFromCanvas}
-                text="Remove from canvas"
-              />
-            )}
+            {() => {
+              switch (props.formation.key) {
+                case Formations.GRID.key:
+                  return (
+                    <MenuItem
+                      icon="send-to-graph"
+                      onClick={() => props.handleBlockClick(props.block)}
+                      text="Add to canvas"
+                    />
+                  );
+                default:
+                  return (
+                    <MenuItem
+                      icon="remove"
+                      onClick={removeFromCanvas}
+                      text="Remove from canvas"
+                    />
+                  );
+              }
+            }}
+
             <MenuDivider style={{ marginBottom: 10 }} />
             <MenuItem
               style={{ backgroundColor: 'rgb(219 55 56 / 18%)' }}
               intent="danger"
               icon="trash"
-              // onClick={() => props.handleBlockClick(props.block)}
-              // text={`Delete ${props.block.__typename}`}
               text="Delete block"
             />
           </Menu>

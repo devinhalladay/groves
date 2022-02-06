@@ -1,9 +1,8 @@
 import { AppProps } from 'next/app';
-import { Analytics, AnalyticsBrowser, Context } from '@segment/analytics-next';
 import Head from 'next/head';
-import router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { configure, GlobalHotKeys } from 'react-hotkeys';
 import '~/public/style.scss';
 import {
@@ -12,7 +11,6 @@ import {
 } from '~/src/components/Header';
 import KeyMaps from '../constants/KeyMaps';
 import { AuthProvider } from '../context/auth-context';
-import * as snippet from '@segment/snippet';
 import { SelectionProvider } from '../context/selection-context';
 import { ThemeProvider } from '../context/theme-provider';
 import { UserProvider } from '../context/user-context';
@@ -22,16 +20,12 @@ interface GrovesClient extends AppProps {
   isAuthenticated: boolean;
 }
 
-const SEGMENT_ID = process.env.SEGMENT_ID;
-
 const GrovesClient = ({
   Component,
   pageProps,
   isAuthenticated,
 }: GrovesClient) => {
   const router = useRouter();
-  const [analytics, setAnalytics] = useState<Analytics | undefined>(undefined);
-  const [writeKey, setWriteKey] = useState('4TeWCt1kFP32yi2z02MP0yLhXaDjECqs');
 
   if (isAuthenticated) {
     configure({
@@ -39,15 +33,6 @@ const GrovesClient = ({
       ignoreKeymapAndHandlerChangesByDefault: false,
     });
   }
-
-  useEffect(() => {
-    const loadAnalytics = async () => {
-      let [response] = await AnalyticsBrowser.load({ writeKey });
-      setAnalytics(response);
-    };
-    loadAnalytics();
-    analytics?.page();
-  }, [writeKey]);
 
   return (
     <>

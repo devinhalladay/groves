@@ -27,10 +27,6 @@ const CreateBlock = (props) => {
 
   ActionButton.displayName = 'CreateBlock';
 
-  // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-  // const { selectedConnection, setSelectedConnection } = useSelection();
-
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.map(async (file) => {
       setFiles(

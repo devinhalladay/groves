@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState } from 'react';
 import Loading from '~/src/components/Loader';
 import { CHANNEL_SKELETON } from '~/src/graphql/queries';
 import withApollo from '~/src/hooks/withApollo';
+import { ConnectableBlokk } from 'ervell/src/__generated__/ConnectableBlokk';
 
 const SelectionContext = createContext();
 
@@ -14,7 +15,8 @@ const SelectionProvider = withApollo((props) => {
 
   const [canvasBlocks, setCanvasBlocks] = useState([]);
 
-  const [selectedConnection, setSelectedConnection] = useState(null);
+  const [selectedConnection, setSelectedConnection] =
+    useState<ConnectableBlokk>(null);
 
   const [selections, setSelections] = useState([]);
 

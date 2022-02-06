@@ -6,6 +6,8 @@ export default async (req, res) => {
   query = JSON.parse(JSON.stringify(query));
 
   const authURL = `https://api.are.na/graphql`;
+  console.log(req.headers['authorization']);
+
 
   try {
     await axios

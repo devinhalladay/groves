@@ -1,6 +1,7 @@
 import { Card } from '@blueprintjs/core';
 import { useRef, useState } from 'react';
 import { Rnd } from 'react-rnd';
+import useSegment from '~/src/hooks/useSegment';
 import { getMovementDirection } from '~/src/utils/block';
 import { useSelection } from '../../context/selection-context';
 import { useWorkspace } from '../../context/workspace-context';
@@ -34,6 +35,7 @@ const DraggableBlock = ({
   const { selectedConnection, setSelectedConnection } = useSelection();
   const { workspaceOptions, zoomScale, setCanvasBlocks } = useWorkspace();
   const { formation } = workspaceOptions;
+  const { analytics } = useSegment();
 
   if (block.description && block.description.includes('"x":')) {
     description = JSON.parse(block.description.replace('\n', ''));
@@ -80,10 +82,8 @@ const DraggableBlock = ({
 
   const rndEl = useRef(null);
 
-  let analytics = window.analytics;
-
   let handleDragMetric = () => {
-    analytics.track('Dragged Block');
+    analytics?.track('Dragged Block');
   };
 
   // Open a channel transclusion

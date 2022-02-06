@@ -7,9 +7,14 @@ import BlockRepresentation from '~/src/components/Block/components/BlockRepresen
 import Formations from '~/src/constants/Formations';
 import { useSelection } from '~/src/context/selection-context';
 import { useWorkspace } from '~/src/context/workspace-context';
+import { Blokk_blokk } from 'ervell/src/__generated__/Blokk';
 
 const Grid = (props) => {
-  const { blocks } = props;
+  const {
+    blocks,
+  }: {
+    blocks: Blokk_blokk[];
+  } = props;
   const { workspaceOptions } = useWorkspace();
   const { formation } = workspaceOptions;
 
@@ -103,7 +108,6 @@ const Grid = (props) => {
                   ctxMenuProps.onContextMenu(e);
                 }}
                 ref={ctxMenuProps.ref}
-                contextMenu={ctxMenuProps.target}
                 onClick={(e) => {
                   setSelectedConnection(block);
                   handleBlockClickEvent(e, block);
@@ -111,7 +115,6 @@ const Grid = (props) => {
               >
                 <div
                   className={`block block--${block.__typename.toLowerCase()}`}
-                  block={block}
                 >
                   {' '}
                   <BlockRepresentation block={block} />

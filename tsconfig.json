@@ -41,6 +41,7 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.jsx",
-    "src/**/*"
+    "src/**/*",
+    "node_modules/ervell/src/__generated__/**/*"
   ]
 }

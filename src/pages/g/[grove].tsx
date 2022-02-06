@@ -21,18 +21,12 @@ import { withAuthSync } from '~/src/utils/auth';
 const Grove = ({ data, initialSelection, ...props }) => {
   const { apollo } = props;
 
-  const { workspaceOptions, setWorkspaceOptions } = useWorkspace();
+  const { workspaceOptions } = useWorkspace();
   const { formation } = workspaceOptions;
 
   const { selectedConnection, channelID } = useSelection();
 
-  const {
-    loading,
-    error,
-    data: channelSkeleton,
-    fetchMore,
-    networkStatus,
-  } = useQuery(CHANNEL_SKELETON, {
+  const { loading, data: channelSkeleton } = useQuery(CHANNEL_SKELETON, {
     variables: { channelId: channelID },
     fetchPolicy: 'no-cache',
     client: apollo,
@@ -40,7 +34,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
 
   const renderFormation = (formation) => {
     if (loading) {
-      return <Loading fullScreen="true" description="Loading blocks..." />;
+      return <Loading fullScreen={true} description="Loading blocks..." />;
     }
 
     if (formation.key === Formations.CANVAS.key) {
