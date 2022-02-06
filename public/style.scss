@@ -150,10 +150,10 @@ html {
 //   background-color: $light-gray3;
 // }
 
-.bp4-light {
-  background-color: $light-gray3;
-  color: $pt-text-color;
-}
+// .bp4-light {
+//   background-color: $light-gray3;
+//   color: $pt-text-color;
+// }
 
 .gray {
   color: rgba(0, 0, 0, 0.6);
@@ -974,12 +974,7 @@ header {
 }
 
 .draggable-block-container {
-  background: #ffffff;
-  // border: 1px solid #bdc3ca;
-  color: #6f7b8a;
   box-sizing: border-box;
-  // box-shadow: 0px 1px 1px rgba(111, 123, 138, 0.2), 0px 0px 0px #6f7b8a,
-  // 0px 0px 0px rgba(111, 123, 138, 0.1);
   border-radius: 2px;
   transform: rotate(0deg);
   transition: 0.2s all ease;
@@ -1002,23 +997,6 @@ header {
     transform: scale(1.02, 1.02);
   }
 
-  // &::after {
-  //   top: 0;
-  //   content: '';
-  //   position: absolute;
-  //   z-index: -1;
-  //   width: 100%;
-  //   height: 100%;
-  //   transition: 0.2s all ease-in-out;
-  //   box-shadow: 1px 4px 9px rgba(111, 123, 138, 0.2), 0px 0px 0px #6f7b8a,
-  //     -2px 3px 0px rgba(111, 123, 138, 0.1);
-  //   opacity: 0;
-  // }
-
-  // &:hover::after {
-  //   opacity: 1;
-  // }
-
   &.isBeingDragged,
   &.selected.isBeingDragged {
     border: 1.5px solid #47a7ff;
@@ -1037,12 +1015,12 @@ header {
 
   &.selected {
     border: 2px solid #ffae64;
-    color: #6f7b8a;
+    // color: #6f7b8a;
     box-sizing: border-box;
     .block {
-      background: #ffffff;
+      // background: #ffffff;
       // border: 1px solid #bdc3ca;
-      color: #6f7b8a;
+      // color: #6f7b8a;
       box-sizing: border-box;
     }
   }
@@ -1420,7 +1398,6 @@ header {
     display: block;
 
     .section {
-      padding-bottom: 30px;
       &__title {
         font-family: Arial, Helvetica, sans-serif;
         font-style: normal;
@@ -1613,6 +1590,11 @@ button,
 
 .grid .block-card {
   aspect-ratio: 1 / 1;
+  border: 2px solid transparent;
+
+  &.selected {
+    border: 2px solid #ffae64;
+  }
 }
 
 .position-relative {
@@ -1691,7 +1673,7 @@ button,
 
 .bp4-light,
 .bp4-light body {
-  background-color: $black;
+  background-color: $light-gray3;
   color: $pt-text-color;
 }
 
@@ -1701,6 +1683,10 @@ button,
 
   .merge-input-disabled .bp4-input[type='text'] {
     color: $gray4 !important;
+  }
+
+  .bp4-input {
+    box-shadow: $pt-dark-input-box-shadow;
   }
 
   .panel {
@@ -1768,6 +1754,14 @@ button,
   // background-color: ;
 }
 
-.meta {
-  color: #6f7b8a;
+.bp4-dark {
+  .meta {
+    color: $pt-dark-text-color-muted;
+  }
+}
+
+.bp4-light {
+  .meta {
+    color: $pt-text-color-muted;
+  }
 }

@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import GrovesCanvas from '@components/Canvas';
 import { useSelection } from '@context/selection-context';
+import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import React, { useEffect } from 'react';
 import Loading from '~/src/components/Loader';
@@ -91,7 +92,7 @@ const Root = (props) => {
   );
 };
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   if (parseCookies(context)['access_token']) {
     context.res.writeHead(301, { Location: '/g' });
     context.res.end();
@@ -100,6 +101,6 @@ export async function getServerSideProps(context) {
   return {
     props: {},
   };
-}
+};
 
 export default withApollo(withAuthSync(Root));

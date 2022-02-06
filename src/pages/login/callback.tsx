@@ -1,12 +1,10 @@
-import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
 import React, { useEffect } from 'react';
 import Loading from '../../components/Loader';
 import { useAuth } from '../../context/auth-context';
 
 const Callback = ({ ctx, query: { code }, ...props }) => {
-  const { login, accessToken } = useAuth();
-
-  const router = useRouter();
+  const { login } = useAuth();
 
   useEffect(() => {
     login({ ctx, code });
@@ -14,15 +12,15 @@ const Callback = ({ ctx, query: { code }, ...props }) => {
 
   return (
     <>
-      <Loading fullScreen="true" description="Authenticating..." />
+      <Loading fullScreen={true} description="Authenticating..." />
     </>
   );
 };
 
-export async function getServerSideProps({ query }) {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
     props: { query },
   };
-}
+};
 
 export default Callback;

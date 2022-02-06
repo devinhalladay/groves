@@ -23,7 +23,7 @@ import TagOption from './TagOption';
 const Section = ({ children }) => {
   return (
     <div
-      className="section"
+      className="section mt-2"
       style={{
         position: 'relative',
       }}
@@ -140,7 +140,7 @@ const Header = () => {
 
 const Type = ({ setTypeModalIsOpen, typeModalIsOpen }) => {
   return (
-    <div className="section">
+    <div className="section mt-5">
       <p className="section__title">Block Type</p>
       <Button onClick={() => setTypeModalIsOpen(!typeModalIsOpen)}>
         Create a new type
@@ -202,7 +202,7 @@ const Description = ({ handleDescriptionChange }) => {
   const { selectedConnection } = useSelection();
 
   return (
-    <div className="section">
+    <div className="section mt-5">
       <p className="section__title">Description</p>
 
       <EditableText
@@ -360,7 +360,7 @@ const Connections = ({ createChannel }) => {
   };
 
   return (
-    <div className="section">
+    <div className="section mt-5">
       <div className="section__title">Connected To</div>
 
       {selectedConnection.current_user_channels &&

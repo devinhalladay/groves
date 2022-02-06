@@ -1,5 +1,6 @@
 import { Button } from '@blueprintjs/core';
 import { useWorkspace, WorkspaceProvider } from '@context/workspace-context';
+import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import withChannel from '~/src/components/Channel';
 import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
@@ -46,7 +47,7 @@ const Grove = () => {
   );
 };
 
-export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   if (!parseCookies(context)['access_token']) {
     context.res.writeHead(301, { Location: '/' });
     context.res.end();
@@ -55,6 +56,6 @@ export async function getServerSideProps(context) {
   return {
     props: {},
   };
-}
+};
 
 export default withApollo(withAuthSync(withChannel()(Grove)));

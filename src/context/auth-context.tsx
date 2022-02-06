@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import React, { createContext, useContext } from 'react';
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 const AuthProvider = (props) => {
   const router = useRouter();
@@ -39,7 +39,7 @@ const AuthProvider = (props) => {
       path: '/',
     });
 
-    window.localStorage.setItem('logout', Date.now());
+    window.localStorage.setItem('logout', Date.now().toString());
 
     router.push('/');
   };

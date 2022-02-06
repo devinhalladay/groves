@@ -12,7 +12,7 @@ export interface IUserContext {
   me: Ervell.ProfileChannelIndex;
 }
 
-type UserContext = {
+export type UserContext = {
   currentUser: IUserContext;
   index: Ervell.ProfileChannelIndex_User_channels_index[] | null;
   flatIndex: Ervell.ProfileChannelIndex_User_channels_index_channels;

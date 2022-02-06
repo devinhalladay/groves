@@ -97,10 +97,15 @@ const Grid = (props) => {
             {ctxMenuProps.popover}
             {blocks.map((block, i) => (
               <Card
-                block={block}
                 key={block.id}
                 interactive={false}
-                className="block-card"
+                className={`block-card ${
+                  selectedConnection && selectedConnection.id
+                    ? block.id === selectedConnection.id
+                      ? 'selected'
+                      : ''
+                    : ''
+                }`}
                 style={{ width: '100%' }}
                 onContextMenu={(e) => {
                   setSelectedConnection(block);
