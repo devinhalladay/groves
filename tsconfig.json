@@ -5,11 +5,17 @@
       "~/*": [
         "./*"
       ],
+      "@src/*": [
+        "./src/*"
+      ],
       "@components/*": [
         "./src/components/*"
       ],
       "@context/*": [
         "./src/context/*"
+      ],
+      "@ervell/*": [
+        "./node_modules/ervell/src/__generated__/*"
       ]
     },
     "target": "es5",
@@ -33,7 +39,7 @@
     "incremental": true
   },
   "exclude": [
-    "node_modules",
+    // "node_modules",
     "build"
   ],
   "include": [
@@ -42,6 +48,5 @@
     "**/*.tsx",
     "**/*.jsx",
     "src/**/*",
-    "node_modules/ervell/src/__generated__/**/*"
   ]
 }

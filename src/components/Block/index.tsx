@@ -14,10 +14,25 @@ import {
 import BlockContextMenu, { handleBlockClick } from '../BlockContextMenu';
 import InlineExpandedChannel from '../ChannelEmbed';
 import BlockRepresentation from './components/BlockRepresentation';
+import { Blokk_blokk } from 'ervell/src/__generated__/Blokk';
+import { dragStates } from '~/src/types';
 
 // TODO: Need to break up this component, it's all kinds of fucked up
 // and recursively renders itself via InlineExpandedChannel which
 // feels bad and makes it hard to keep track of props
+
+interface DraggableBlock {
+  block: Blokk_blokk;
+  width: number;
+  height: number;
+  dragStates: dragStates;
+  setDragStates: React.Dispatch<React.SetStateAction<dragStates>>;
+  parentDimensions: {
+    width: number;
+    height: number;
+  };
+  dragHandleClassName: string;
+}
 
 const DraggableBlock = ({
   block,
