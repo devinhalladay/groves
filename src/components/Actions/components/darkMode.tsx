@@ -1,22 +1,28 @@
 import { Button, Colors, Icon } from '@blueprintjs/core';
 import MoonIcon from '~/public/moon.svg';
-import { useTheme } from '~/src/context/theme-provider';
+
+import { useTheme } from 'next-themes';
+import Themes from '~/src/constants/Themes';
 
 const DarkModeAction = () => {
   const { theme, setTheme } = useTheme();
 
   const handleThemeSwitch = () => {
-    if (theme === 'light') {
-      setTheme('dark');
-    } else if (theme === 'dark') {
-      setTheme('light');
+    console.log('testset');
+
+    console.log(theme);
+
+    if (theme === Themes.LIGHT) {
+      setTheme(Themes.DARK);
+    } else if (theme === Themes.DARK) {
+      setTheme(Themes.LIGHT);
     }
   };
 
   return (
     <>
       <Button className="action" onClick={handleThemeSwitch} minimal={true}>
-        {theme === 'dark' ? (
+        {theme === Themes.DARK ? (
           <MoonIcon fill={Colors.WHITE} />
         ) : (
           <Icon icon="flash" />

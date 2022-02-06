@@ -7,7 +7,9 @@ import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
 import ActionIcon from '~/public/create-block.svg';
 import createBlock from '~/src/components/Block/mutations/createBlock';
-import { useTheme } from '~/src/context/theme-provider';
+
+import { useTheme } from 'next-themes';
+import Themes from '~/src/constants/Themes';
 
 const CreateBlock = (props) => {
   const [files, setFiles] = useState([]);
@@ -19,8 +21,8 @@ const CreateBlock = (props) => {
   const ActionButton = forwardRef((props, ref) => (
     <Button ref={ref} minimal={true} className="action">
       <ActionIcon
-        fill={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
-        stroke={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
+        fill={theme === Themes.DARK ? Colors.WHITE : Colors.GRAY1}
+        stroke={theme === Themes.DARK ? Colors.WHITE : Colors.GRAY1}
       />
     </Button>
   ));

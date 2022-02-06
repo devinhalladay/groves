@@ -12,9 +12,10 @@ import {
 import KeyMaps from '../constants/KeyMaps';
 import { AuthProvider } from '../context/auth-context';
 import { SelectionProvider } from '../context/selection-context';
-import { ThemeProvider } from '../context/theme-provider';
 import { UserProvider } from '../context/user-context';
+import { ThemeProvider } from 'next-themes';
 import { WorkspaceProvider } from '../context/workspace-context';
+import Themes from '../constants/Themes';
 
 interface GrovesClient extends AppProps {
   isAuthenticated: boolean;
@@ -77,7 +78,13 @@ const GrovesClient = ({
           {isAuthenticated ? (
             <UserProvider>
               <GlobalHotKeys keyMap={KeyMaps}>
-                <ThemeProvider>
+                <ThemeProvider
+                  attribute="class"
+                  defaultTheme={Themes.LIGHT}
+                  enableSystem={false}
+                  // value={{ dark: Themes.DARK, light: Themes.LIGHT }}
+                  themes={[Themes.DARK, Themes.LIGHT]}
+                >
                   <WorkspaceProvider>
                     <AuthenticatedHeader {...pageProps} />
                     <Component {...pageProps} />
@@ -86,7 +93,13 @@ const GrovesClient = ({
               </GlobalHotKeys>
             </UserProvider>
           ) : (
-            <ThemeProvider>
+            <ThemeProvider
+              attribute="class"
+              enableSystem={false}
+              defaultTheme={Themes.LIGHT}
+              // value={{ dark: Themes.DARK, light: Themes.LIGHT }}
+              themes={[Themes.DARK, Themes.LIGHT]}
+            >
               <WorkspaceProvider>
                 <UnauthenticatedHeader {...pageProps} />
                 <SelectionProvider>

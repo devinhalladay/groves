@@ -5,7 +5,9 @@ import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
 import CreateGrove from '~/public/create-grove.svg';
 import { useSelection } from '~/src/context/selection-context';
-import { useTheme } from '~/src/context/theme-provider';
+
+import { useTheme } from 'next-themes';
+import Themes from '~/src/constants/Themes';
 
 const CreateGroveAction = (props) => {
   const { createChannel } = props;
@@ -75,12 +77,12 @@ const CreateGroveAction = (props) => {
     >
       <Button className="action" minimal={true}>
         <CreateGrove
-          fill={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
-          stroke={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
+          fill={theme === Themes.DARK ? Colors.WHITE : Colors.GRAY1}
+          stroke={theme === Themes.DARK ? Colors.WHITE : Colors.GRAY1}
         />
       </Button>
     </Popover2>
   );
 };
 
-export default withChannel(CreateGroveAction);
+export default withChannel()(CreateGroveAction);

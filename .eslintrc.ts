@@ -22,6 +22,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
     'prettier' // Make this the last element so prettier config overrides other formatting rules
   ],
   overrides: [

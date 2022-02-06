@@ -6,10 +6,12 @@ import { useRouter } from 'next/router';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import LinkGrovesIcon from '~/public/link-groves.svg';
-import { useTheme } from '~/src/context/theme-provider';
+
+import { useTheme } from 'next-themes';
 import { CREATE_CONNECTION } from '~/src/graphql/mutations';
 import { useSelection } from '../../../context/selection-context';
 import { useUser } from '../../../context/user-context';
+import Themes from '~/src/constants/Themes';
 
 const renderResult = (inputItem) => {
   return (
@@ -44,8 +46,8 @@ const ConnectTo = (props) => {
   const ActionButton = forwardRef((props, ref) => (
     <Button minimal={true} className="action" onClick={visible ? hide : show}>
       <LinkGrovesIcon
-        fill={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
-        stroke={theme === 'dark' ? Colors.WHITE : Colors.GRAY1}
+        fill={theme === Themes.DARK ? Colors.WHITE : Colors.GRAY1}
+        stroke={theme === Themes.DARK ? Colors.WHITE : Colors.GRAY1}
       />
     </Button>
   ));

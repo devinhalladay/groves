@@ -1,5 +1,9 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { GlobalHotKeys } from 'react-hotkeys';
+
+import { useTheme } from 'next-themes';
 import Formations from '../constants/Formations';
+import Themes from '../constants/Themes';
 
 const WorkspaceContext = createContext(null);
 
@@ -16,11 +20,27 @@ const WorkspaceProvider = (props) => {
 
   const [zoomScale, setZoomScale] = useState(1);
 
+  const { theme, setTheme } = useTheme();
+
+  const handleThemeSwitch = () => {
+    if (theme === Themes.LIGHT) {
+      setTheme(Themes.DARK);
+    } else if (theme === Themes.DARK) {
+      setTheme(Themes.LIGHT);
+    }
+  };
+
+  const keyHandlers = {
+    SWITCH_THEME: handleThemeSwitch,
+  };
+
   return (
     <WorkspaceContext.Provider
       value={{ workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale }}
       {...props}
-    />
+    >
+      <GlobalHotKeys handlers={keyHandlers} />;{props.children}
+    </WorkspaceContext.Provider>
   );
 };
 
