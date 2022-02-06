@@ -162,7 +162,10 @@ const ConnectTo = (props) => {
               key={`${item}${index}`}
               {...getItemProps({ item, index })}
             >
-              {item.title}
+              <p className="channel-title">{item.title}</p>
+              {/* <p className="meta">
+                {item.user.name} • {item.counts.contents}
+              </p> */}
             </li>
           ))}
         </ul>

@@ -142,7 +142,7 @@ html {
   margin: 0;
   font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
   font-size: 16px;
-  color: $pt-text-color;
+  // color: $pt-text-color;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -152,6 +152,7 @@ html {
 
 .bp4-light {
   background-color: $light-gray3;
+  color: $pt-text-color;
 }
 
 .gray {
@@ -1682,8 +1683,21 @@ button,
   color: $dark-gray4 !important;
 }
 
+.bp4-dark,
+.bp4-dark body {
+  background-color: $black;
+  color: $pt-dark-text-color;
+}
+
+.bp4-light,
+.bp4-light body {
+  background-color: $black;
+  color: $pt-text-color;
+}
+
 .bp4-dark {
   background-color: $black;
+  color: $pt-dark-text-color;
 
   .merge-input-disabled .bp4-input[type='text'] {
     color: $gray4 !important;

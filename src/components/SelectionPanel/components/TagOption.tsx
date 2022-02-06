@@ -1,7 +1,16 @@
 import { Icon, MenuItem } from '@blueprintjs/core';
+import { ItemRenderer } from '@blueprintjs/select';
+import { Ervell } from '~/src/types';
 
-const TagOption = (tag, { handleClick, modifiers, isTagSelected }) => {
-  if (!modifiers.matchesPredicate) {
+type ITag = Ervell.ConnectableBlokk_blokk_Channel;
+
+const TagOption: ItemRenderer<ITag> = (
+  tag: Ervell.ProfileChannelIndex_User_channels_index_channels,
+  { handleClick, modifiers, isTagSelected },
+) => {
+  console.log(modifiers);
+
+  if (!modifiers?.matchesPredicate) {
     return null;
   }
 

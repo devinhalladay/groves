@@ -3,14 +3,16 @@ import {
   Button,
   EditableText,
   MenuItem,
+  Icon,
 } from '@blueprintjs/core';
-import { MultiSelect } from '@blueprintjs/select';
+import { MultiSelect, ItemRenderer } from '@blueprintjs/select';
 import { useRouter } from 'next/router';
 import React from 'react';
 import ChevronDown from '~/public/chevron-down.svg';
 import ChevronUp from '~/public/chevron-up.svg';
 import { useSelection } from '~/src/context/selection-context';
 import { useUser } from '~/src/context/user-context';
+import { Ervell } from '~/src/types';
 import withChannel from '../../Channel';
 import TypeModal from '../../TypeModal';
 import { useChannelMutation, useConnectionMutation } from '../mutations';
@@ -221,7 +223,7 @@ const Connections = ({ createChannel }) => {
   const { selectedConnection, setSelectedConnection } = useSelection();
   const router = useRouter();
   const { createConnection, removeConnection } = useConnectionMutation();
-  const { index } = useUser();
+  const { index, flatIndex } = useUser();
 
   const filterTags = (query, tag) => {
     const text = `${tag.title}`;
@@ -266,10 +268,6 @@ const Connections = ({ createChannel }) => {
     });
   };
 
-  const flatItems = index.flatMap((channelSet) =>
-    channelSet.channels.flatMap((c) => c),
-  );
-
   let deselectTag = (tag) => {
     let selected = selectedConnection;
     selected.current_user_channels = selected.current_user_channels.filter(
@@ -287,7 +285,7 @@ const Connections = ({ createChannel }) => {
   };
 
   const handleTagSelect = async (tag) => {
-    if (flatItems.filter((t) => t.title == tag.title).length > 0) {
+    if (flatIndex.filter((t) => t.title == tag.title).length > 0) {
       if (!isTagSelected(tag)) {
         selectTag(tag);
       } else {
@@ -341,40 +339,58 @@ const Connections = ({ createChannel }) => {
     };
   };
 
+  const renderTag: ItemRenderer<Ervell.ConnectableTableBlokk_blokk_Channel> = (
+    tag,
+    { modifiers, handleClick },
+  ) => {
+    if (!modifiers.matchesPredicate) {
+      return null;
+    }
+    return (
+      <MenuItem
+        active={modifiers.active}
+        // icon={this.isFilmSelected(film) ? 'tick' : 'blank'}
+        key={tag.id}
+        labelElement={isTagSelected(tag) ? <Icon icon="tick" /> : null}
+        onClick={handleClick}
+        text={tag.title}
+        shouldDismissPopover={false}
+      />
+    );
+  };
+
   return (
     <div className="section">
       <div className="section__title">Connected To</div>
 
       {selectedConnection.current_user_channels &&
-        selectedConnection.current_user_channels
-          .filter(
-            (channel) => channel.id !== parseInt(router.query.grove as string),
-          )
-          .map((channel) => (
-            <div
-              key={channel.id}
+        selectedConnection.current_user_channels.map((channel) => (
+          <div
+            key={channel.id}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              marginBottom: 5,
+            }}
+          >
+            <span
+              className="bp4-text-overflow-ellipsis"
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                marginBottom: 5,
+                marginRight: 10,
+                flex: 1,
               }}
             >
-              <span
-                className="bp4-text-overflow-ellipsis"
-                style={{
-                  marginRight: 10,
-                  flex: 1,
-                }}
-              >
-                {channel.title}
-              </span>
+              {channel.title}
+            </span>
+            {channel.id !== parseInt(router.query.grove as string) && (
               <Button
                 icon="cross"
                 onClick={() => handleTagRemove({ id: channel.id })}
                 minimal={true}
               ></Button>
-            </div>
-          ))}
+            )}
+          </div>
+        ))}
 
       <MultiSelect
         className="position-relative"
@@ -388,19 +404,15 @@ const Connections = ({ createChannel }) => {
         )}
         // selectedItems={tagState.tags}
         itemPredicate={filterTags}
-        itemRenderer={(props) => <TagOption {...props} />}
+        itemRenderer={renderTag}
+        fill={true}
         popoverProps={{
           minimal: true,
-          // style: {
-          //   width: 300,
-          // },
           fill: true,
         }}
-        items={flatItems}
+        items={flatIndex}
         noResults={<MenuItem disabled={true} text="No results." />}
         onItemSelect={handleTagSelect}
-        // onRemove={handleTagRemove}
-        fill={true}
         tagRenderer={() => {
           return {};
         }}
