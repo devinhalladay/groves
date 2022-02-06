@@ -37,37 +37,38 @@ const Grove = ({ data, initialSelection, ...props }) => {
       return <Loading fullScreen={true} description="Loading blocks..." />;
     }
 
-    if (formation.key === Formations.CANVAS.key) {
-      return (
-        <>
-          {selectedConnection && <SelectionPanel />}
-          <CanvasContextMenu>
-            <GrovesCanvas {...props} />
-          </CanvasContextMenu>
-        </>
-      );
-    } else if (formation.key === Formations.GRID.key) {
-      if (channelSkeleton && channelSkeleton.channel) {
+    switch (formation.key) {
+      case Formations.CANVAS.key:
+        return (
+          <>
+            {selectedConnection && <SelectionPanel />}
+            <CanvasContextMenu>
+              <GrovesCanvas {...props} />
+            </CanvasContextMenu>
+          </>
+        );
+      case Formations.GRID.key:
+        if (channelSkeleton && channelSkeleton.channel) {
+          return (
+            <div className="workspace">
+              <SelectionPanel key={formation.key} />
+              {/* <CanvasContextMenu> */}
+              <Grid blocks={channelSkeleton.channel.initial_contents} />
+              {/* </CanvasContextMenu> */}
+            </div>
+          );
+        }
+      case Formations.CHANNEL_INDEX.key:
+        <ChannelIndex />;
+      case Formations.FOLDERS.key:
         return (
           <div className="workspace">
             <SelectionPanel key={formation.key} />
-            {/* <CanvasContextMenu> */}
-            <Grid blocks={channelSkeleton.channel.initial_contents} />
-            {/* </CanvasContextMenu> */}
+            <MillerPanel blocks={channelSkeleton.channel.initial_contents} />
           </div>
         );
-      }
-    } else if (formation.key === Formations.CHANNEL_INDEX.key) {
-      return <ChannelIndex />;
-    } else if (formation.key === Formations.FOLDERS.key) {
-      return (
-        <div className="workspace">
-          <SelectionPanel key={formation.key} />
-          <MillerPanel blocks={channelSkeleton.channel.initial_contents} />
-        </div>
-      );
-    } else {
-      return <div>Error</div>;
+      default:
+        return null;
     }
   };
 

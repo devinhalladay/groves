@@ -1,20 +1,13 @@
 import { useState } from 'react';
 import Finder from '~/src/components/Finder';
-import { useSelection } from '~/src/context/selection-context';
-import { initialData } from './initialData';
 
 const MillerPanel = (props) => {
-  const [data, setData] = useState(initialData);
   const [selectedIndexes, setSelectedIndexes] = useState([]);
   const [value, setValue] = useState('');
   const [isEnd, setIsEnd] = useState(true);
 
   const { blocks } = props;
 
-  const { selectedChannel, initialSelection, setSelectedConnection } =
-    useSelection();
-
-  console.log(blocks);
   function convertData() {
     return blocks.map(function (block) {
       return {
@@ -34,8 +27,6 @@ const MillerPanel = (props) => {
     });
   }
 
-  console.log(convertData());
-
   return (
     <div
       style={{
@@ -48,14 +39,11 @@ const MillerPanel = (props) => {
       <div className="finder-demo">
         <Finder
           value={value}
-          data={convertData(
-            initialSelection && initialSelection.channel.skeleton,
-          )}
+          data={convertData}
           onChange={(value, isEnd, selectedIndexes) => {
             setValue(value);
             setIsEnd(isEnd);
             setSelectedIndexes(selectedIndexes);
-            // setSelectedConnection(value);
           }}
         />
       </div>
