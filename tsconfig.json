@@ -39,7 +39,6 @@
     "incremental": true
   },
   "exclude": [
-    // "node_modules",
     "build"
   ],
   "include": [
