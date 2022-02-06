@@ -9,47 +9,47 @@ const initialData = [
         child: [
           {
             text: 'A111',
-            value: 'A111'
+            value: 'A111',
           },
           {
             text: 'A112',
-            value: 'A112'
+            value: 'A112',
           },
           {
             text: 'A113',
-            value: 'A113'
+            value: 'A113',
           },
           {
             text: 'A114',
-            value: 'A114'
+            value: 'A114',
           },
           {
             text: 'A115',
-            value: 'A115'
+            value: 'A115',
           },
           {
             text: 'A116',
-            value: 'A116'
-          }
-        ]
+            value: 'A116',
+          },
+        ],
       },
       {
         text: 'A12',
-        value: 'A12'
+        value: 'A12',
       },
       {
         text: 'A13',
-        value: 'A13'
+        value: 'A13',
       },
       {
         text: 'A14',
-        value: 'A14'
+        value: 'A14',
       },
       {
         text: 'A15',
-        value: 'A15'
-      }
-    ]
+        value: 'A15',
+      },
+    ],
   },
   {
     text: 'B1',
@@ -62,27 +62,27 @@ const initialData = [
         child: [
           {
             text: 'B111',
-            value: 'B111'
+            value: 'B111',
           },
           {
             text: 'B112',
-            value: 'B112'
+            value: 'B112',
           },
           {
             text: 'B113',
-            value: 'B113'
-          }
-        ]
+            value: 'B113',
+          },
+        ],
       },
       {
         text: 'B12',
-        value: 'B12'
+        value: 'B12',
       },
       {
         text: 'B13',
-        value: 'B13'
-      }
-    ]
+        value: 'B13',
+      },
+    ],
   },
   {
     text: 'C1',
@@ -94,30 +94,30 @@ const initialData = [
         child: [
           {
             text: 'C111',
-            value: 'C111'
+            value: 'C111',
           },
           {
             text: 'C112',
             value: 'C112',
-            child: []
+            child: [],
           },
           {
             text: 'C113',
-            value: 'C113'
+            value: 'C113',
           },
           {
             text: 'C114',
-            value: 'C114'
+            value: 'C114',
           },
           {
             text: 'C115',
-            value: 'C115'
+            value: 'C115',
           },
           {
             text: 'C116',
-            value: 'C116'
-          }
-        ]
+            value: 'C116',
+          },
+        ],
       },
       {
         text: 'C12',
@@ -126,24 +126,24 @@ const initialData = [
         child: [
           {
             text: 'C121',
-            value: 'C121'
-          }
-        ]
+            value: 'C121',
+          },
+        ],
       },
       {
         text: 'C13',
-        value: 'C13'
+        value: 'C13',
       },
       {
         text: 'C14',
-        value: 'C14'
+        value: 'C14',
       },
       {
         text: 'C15',
-        value: 'C15'
-      }
-    ]
-  }
+        value: 'C15',
+      },
+    ],
+  },
 ];
 
 export { initialData };

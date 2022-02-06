@@ -1,65 +1,61 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Graph } from '@antv/x6';
-import '@antv/x6-react-shape';
-// import './app.css';
+// import React, { useEffect, useRef, useState } from 'react';
+// import dynamic from 'next/dynamic';
+// import { Graph } from '@antv/x6';
+// import '@antv/x6-react-shape';
 
-export default () => {
-  const container = useRef<HTMLDivElement | null>(null);
+// const Content = () => {
+//   const container = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const graph = new Graph({
-      container: container?.current,
-      grid: true,
-    });
+//   useEffect(() => {
+//     const graph = new Graph({
+//       container: container?.current,
+//       grid: true,
+//     });
 
-    const source = graph.addNode({
-      x: 40,
-      y: 40,
-      width: 100,
-      height: 40,
-      shape: 'html',
-      html() {
-        const wrap = document.createElement('div');
-        wrap.style.width = '100%';
-        wrap.style.height = '100%';
-        wrap.style.background = '#f0f0f0';
-        wrap.style.display = 'flex';
-        wrap.style.justifyContent = 'center';
-        wrap.style.alignItems = 'center';
+//     const source = graph.addNode({
+//       x: 40,
+//       y: 40,
+//       width: 100,
+//       height: 40,
+//       shape: 'html',
+//       html() {
+//         return (
+//           <div className="w-full h-full flex justify-center items-center">
+//             hi
+//           </div>
+//         );
+//       },
+//     });
 
-        wrap.innerText = 'Hello';
+//     const target = graph.addNode({
+//       x: 180,
+//       y: 160,
+//       width: 100,
+//       height: 40,
+//       shape: 'html',
+//       html() {
+//         return (
+//           <div className="w-full h-full flex justify-center items-center">
+//             World
+//           </div>
+//         );
+//       },
+//     });
 
-        return wrap;
-      },
-    });
+//     graph.addEdge({
+//       source,
+//       target,
+//     });
+//     console.log(container);
+//   }, []);
 
-    const wrap = document.createElement('div');
-    wrap.style.width = '100%';
-    wrap.style.height = '100%';
-    wrap.style.background = '#f0f0f0';
-    wrap.style.display = 'flex';
-    wrap.style.justifyContent = 'center';
-    wrap.style.alignItems = 'center';
-    wrap.innerText = 'World';
+//   console.log(container);
 
-    const target = graph.addNode({
-      x: 180,
-      y: 160,
-      width: 100,
-      height: 40,
-      shape: 'html',
-      html: wrap,
-    });
+//   return <div className="app-content" ref={container} />;
+// };
 
-    graph.addEdge({
-      source,
-      target,
-    });
-  }, [container]);
+// export default dynamic(() => Promise.resolve(Content), {
+//   ssr: false,
+// });
 
-  return (
-    <div className="app">
-      <div className="app-content" ref={container} />
-    </div>
-  );
-};
+export default () => <div>test</div>;

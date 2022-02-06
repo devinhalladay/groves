@@ -1,17 +1,13 @@
 import { useLazyQuery } from '@apollo/client';
 import { useSelection } from '@context/selection-context';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Loading from '~/src/components/Loader';
-import { useUser } from '~/src/context/user-context';
 import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/graphql/queries';
 import withChannel from '../Channel';
 import { Section } from './components/Section';
 import { useChannelMutation, useConnectionMutation } from './mutations';
 
 const SelectionPanel = React.memo((props) => {
-  const { createChannel } = props;
-
   const { selectedConnection, setSelectedConnection } = useSelection();
   const { updateConnection } = useConnectionMutation();
   const { updateChannel } = useChannelMutation();
