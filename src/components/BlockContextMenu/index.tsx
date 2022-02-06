@@ -7,6 +7,7 @@ import { useSelection } from '~/src/context/selection-context';
 const BlockContextMenu = (props) => {
   const router = useRouter();
   const { canvasBlocks, setCanvasBlocks } = useSelection();
+  const { selectedConnection, setSelectedConnection } = useSelection();
 
   const removeFromCanvas = () => {
     setCanvasBlocks(canvasBlocks.filter((b) => b.id !== props.block.id));
@@ -20,6 +21,7 @@ const BlockContextMenu = (props) => {
         right: props.formation.key === Formations.GRID.key && 325,
         left: 0,
       }}
+      onContextMenu={() => setSelectedConnection(props.block)}
       content={
         router.query.grove && (
           <Menu>

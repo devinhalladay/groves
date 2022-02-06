@@ -103,11 +103,11 @@ const grovePageFragments = {
 };
 
 // export const ADD_BLOCK = gql`
-//   mutation ConnectBlock($channelId: ID!, $value: String!) {
+//   mutation ConnectBlock($id: ID!, $value: String!) {
 //     create_block(
 //       input: {
 //         clientMutationId: "groves"
-//         channel_ids: [$channelId]
+//         channel_ids: [$id]
 //         value: $value
 //         description: "Added by groves"
 //       }

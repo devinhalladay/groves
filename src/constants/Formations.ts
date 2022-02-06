@@ -23,4 +23,4 @@ export default {
   //   title: 'Folders',
   //   icon: 'panel-table'
   // }
-};
+}

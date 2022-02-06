@@ -5,12 +5,16 @@ import {
   DELETE_CHANNEL,
   UPDATE_CHANNEL,
 } from '~/src/graphql/mutations';
+import { Ervell } from '~/src/types';
 
-const withChannel = (props) => (WrappedComponent) => () => {
+const withChannel = (props?: any) => (WrappedComponent) => () => {
   const [
     createChannelMutation,
     { loading: creatingChannel, error: errorCreatingChannel },
-  ] = useMutation(CREATE_CHANNEL, {
+  ] = useMutation<
+    Ervell.createChannelMutation,
+    Ervell.createChannelMutationVariables
+  >(CREATE_CHANNEL, {
     onCompleted: (data) => {
       console.log(data);
     },
@@ -19,15 +23,19 @@ const withChannel = (props) => (WrappedComponent) => () => {
     },
   });
 
-  const createChannel = async (channel, onSuccess, onError) => {
+  const createChannel = async (
+    channel: Ervell.createChannelMutationVariables,
+    onSuccess: (data: Ervell.createChannelMutation) => void,
+    onError: (error: any) => void,
+  ) => {
     await createChannelMutation({
       variables: {
         ...channel,
       },
     })
-      .then((data) => {
-        onSuccess && onSuccess(data);
-        return data;
+      .then((res) => {
+        onSuccess && onSuccess(res.data);
+        return res.data;
       })
       .catch((error) => {
         console.error(error);
@@ -39,10 +47,13 @@ const withChannel = (props) => (WrappedComponent) => () => {
   const [
     updateChannelMutation,
     { loading: updatingChannel, error: errorUpdatingChannel },
-  ] = useMutation(UPDATE_CHANNEL, {
-    // client: apollo,
+  ] = useMutation<
+    Ervell.updateChannelMutation,
+    Ervell.updateChannelMutationVariables
+  >(UPDATE_CHANNEL, {
     onCompleted: (data) => {
       console.log(data);
+      return data;
     },
     onError: (error) => {
       console.log(error);
@@ -67,7 +78,10 @@ const withChannel = (props) => (WrappedComponent) => () => {
   const [
     deleteChannelMutation,
     { loading: deletingChannel, error: errorDeletingChannel },
-  ] = useMutation(DELETE_CHANNEL, {
+  ] = useMutation<
+    Ervell.deleteChannelMutation,
+    Ervell.deleteChannelMutationVariables
+  >(DELETE_CHANNEL, {
     onCompleted: (data) => {
       console.log(data);
     },

@@ -1,10 +1,16 @@
 import React, { createContext, useContext, useState } from 'react';
 import Formations from '../constants/Formations';
 
-const WorkspaceContext = createContext();
+const WorkspaceContext = createContext(null);
+
+type FormationKeys = keyof typeof Formations;
+
+export type WorkspaceOptions = {
+  formation: typeof Formations[FormationKeys];
+};
 
 const WorkspaceProvider = (props) => {
-  const [workspaceOptions, setWorkspaceOptions] = useState({
+  const [workspaceOptions, setWorkspaceOptions] = useState<WorkspaceOptions>({
     formation: Formations.GRID,
   });
 

@@ -27,7 +27,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
   const { selectedConnection, channelID } = useSelection();
 
   const { loading, data: channelSkeleton } = useQuery(CHANNEL_SKELETON, {
-    variables: { channelId: channelID },
+    variables: { id: channelID },
     fetchPolicy: 'no-cache',
     client: apollo,
   });
@@ -99,12 +99,12 @@ export async function getInitialProps(context) {
 
   const apolloClient = initializeApollo(cookies.access_token);
 
-  const channelId = context.query.grove;
+  const id = context.query.grove;
 
   const res = await apolloClient.query({
     query: CHANNEL_SKELETON,
     variables: {
-      channelId: channelId,
+      id: id,
     },
   });
 

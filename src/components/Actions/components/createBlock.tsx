@@ -69,7 +69,7 @@ const CreateBlock = (props) => {
         }).then((res) => {
           newBlock({
             variables: {
-              channelId: router.query.grove,
+              id: router.query.grove,
               value: url,
             },
           });
@@ -83,7 +83,7 @@ const CreateBlock = (props) => {
   const onSubmit = (value) => {
     newBlock({
       variables: {
-        channelId: router.query.grove,
+        id: router.query.grove,
         value: inputElement.current.value,
       },
       optimisticResponse: true,

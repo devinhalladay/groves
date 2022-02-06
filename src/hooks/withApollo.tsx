@@ -4,9 +4,15 @@ import {
   HttpLink,
   InMemoryCache,
 } from '@apollo/client';
+import { NextPage } from 'next';
 import withApollo from 'next-with-apollo';
 import { parseCookies } from 'nookies';
-import { useRef } from 'react';
+
+interface RenderOptions {
+  children: React.ReactNode[];
+  Page: NextPage;
+  props: any;
+}
 
 export default withApollo(
   ({ initialState }) => {
@@ -27,7 +33,7 @@ export default withApollo(
     });
   },
   {
-    render: ({ Page, children, props }) => {
+    render: ({ Page, children, props }: RenderOptions) => {
       return (
         <ApolloProvider client={props.apollo}>
           {Page && <Page {...props} />}

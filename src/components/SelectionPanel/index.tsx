@@ -1,14 +1,14 @@
 import { useLazyQuery } from '@apollo/client';
 import { useSelection } from '@context/selection-context';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Loading from '~/src/components/Loader';
 import { SELECTED_BLOCK, SELECTED_CHANNEL } from '~/src/graphql/queries';
 import withChannel from '../Channel';
 import { Section } from './components/Section';
 import { useChannelMutation, useConnectionMutation } from './mutations';
 
-const SelectionPanel = React.memo((props) => {
-  const { selectedConnection, setSelectedConnection } = useSelection();
+const SelectionPanel = React.memo<FC>(() => {
+  const { selectedConnection } = useSelection();
   const { updateConnection } = useConnectionMutation();
   const { updateChannel } = useChannelMutation();
 
@@ -53,7 +53,7 @@ const SelectionPanel = React.memo((props) => {
     if (selectedConnection?.id) {
       loadConnection();
     }
-  }, [selectedConnection]);
+  }, []);
 
   if (!selectedConnection) {
     return (

@@ -1,11 +1,11 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  mutation createBlock($channelId: ID!, $value: String!) {
+  mutation createBlock($id: ID!, $value: String!) {
     create_block(
       input: {
         clientMutationId: "groves"
-        channel_ids: [$channelId]
+        channel_ids: [$id]
         value: $value
         description: "Added by groves"
       }

@@ -134,8 +134,8 @@ const grovePageFragments = {
 };
 
 const CHANNEL_SKELETON = gql`
-  query ChannelSkeleton($channelId: ID!) {
-    channel(id: $channelId) {
+  query ChannelSkeleton($id: ID!) {
+    channel(id: $id) {
       id
       title
       description

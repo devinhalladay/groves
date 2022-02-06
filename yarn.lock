@@ -12432,7 +12432,7 @@ newrelic@6.14.0:
   optionalDependencies:
     "@newrelic/native-metrics" "^5.3.0"
 
-next-with-apollo@^5.0.1:
+next-with-apollo@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/next-with-apollo/-/next-with-apollo-5.2.1.tgz#d87f5d16dae9cbe0a2cea650bf77d6ca70d4c54c"
   integrity sha512-aSTUNxgJFRPrcvEvm9rDSpSKd4FE7egNe0sbrNfjhZI/DsXTvrVC5B+UcnC0m8nLytDqM4ImCp3fjRNzExNgNA==

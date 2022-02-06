@@ -68,7 +68,7 @@ const ConnectTo = (props) => {
   }, [inputElement.current]);
 
   const DropdownCombobox = () => {
-    const { channels, index } = useUser();
+    const { index } = useUser();
 
     const allUserChannels = index.flatMap((channelSet) =>
       channelSet.channels.flatMap((c) => c),

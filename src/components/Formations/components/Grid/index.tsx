@@ -59,8 +59,7 @@ const Grid = (props) => {
         selectedConnection && (
           <Menu>
             {router.query.grove &&
-              (formation.key === Formations.GRID.key ||
-              formation.key == Formations.FOLDERS.key ? (
+              (formation.key === Formations.GRID.key ? (
                 <MenuItem
                   icon="send-to-graph"
                   onClick={() => handleBlockClick(selectedConnection)}

@@ -4,24 +4,33 @@ import React, { createContext, useContext } from 'react';
 import Loading from '~/src/components/Loader';
 import { CURRENT_USER } from '~/src/graphql/queries';
 import withApollo from '~/src/hooks/withApollo';
+import { Ervell } from '../types';
 
-const UserContext = createContext();
+const UserContext = createContext(null);
 
-export const UserProvider = withApollo((props) => {
+export interface IUserContext {
+  me: Ervell.ProfileChannelIndex;
+}
+
+type UserContext = {
+  currentUser: IUserContext;
+  index: Ervell.ProfileChannelIndex_User_channels_index[] | null;
+  flatIndex: Ervell.ProfileChannelIndex_User_channels_index_channels;
+};
+
+export const UserProvider = withApollo((props): any => {
   const {
     loading: loadingCurrentUser,
     error: errorLoadingCurrentUser,
     data: currentUser,
-  } = useQuery(CURRENT_USER);
+  } = useQuery<IUserContext>(CURRENT_USER);
 
   if (loadingCurrentUser) {
-    return <Loading fullScreen="true" description="Authenticating..." />;
+    return <Loading fullScreen={true} description="Authenticating..." />;
   } else if (errorLoadingCurrentUser) {
     console.error(errorLoadingCurrentUser);
     return `Error: ${errorLoadingCurrentUser}`;
   }
-
-  const channels = currentUser.me.channels;
 
   let index = currentUser.me.channels_index;
 
@@ -30,10 +39,7 @@ export const UserProvider = withApollo((props) => {
   );
 
   return (
-    <UserContext.Provider
-      value={{ currentUser, channels, index, flatIndex }}
-      {...props}
-    >
+    <UserContext.Provider value={{ currentUser, index, flatIndex }} {...props}>
       <SelectionProvider>{props.children}</SelectionProvider>
     </UserContext.Provider>
   );

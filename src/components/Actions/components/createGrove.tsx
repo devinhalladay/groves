@@ -83,4 +83,4 @@ const CreateGroveAction = (props) => {
   );
 };
 
-export default withChannel()(CreateGroveAction);
+export default withChannel(CreateGroveAction);

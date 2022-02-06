@@ -1,6 +1,11 @@
 import { useLazyQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import React, { createContext, useContext, useState } from 'react';
+import React, {
+  createContext,
+  ReactElement,
+  useContext,
+  useState,
+} from 'react';
 import Loading from '~/src/components/Loader';
 import { CHANNEL_SKELETON } from '~/src/graphql/queries';
 import withApollo from '~/src/hooks/withApollo';
@@ -8,7 +13,7 @@ import { Ervell } from '../types';
 
 const SelectionContext = createContext(null);
 
-const SelectionProvider = withApollo((props) => {
+const SelectionProvider = withApollo((props): any => {
   const router = useRouter();
 
   const [selectedChannel, setSelectedChannel] =
@@ -38,7 +43,7 @@ const SelectionProvider = withApollo((props) => {
   const [loadSkeleton, { called, loading, data: channelSkeleton }] =
     useLazyQuery(CHANNEL_SKELETON, {
       variables: {
-        channelId: channelID,
+        id: channelID,
       },
       client: props.apollo,
     });
