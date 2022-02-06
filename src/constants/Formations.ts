@@ -17,10 +17,4 @@ export default {
     title: 'Channel Index',
     icon: 'list-detail-view',
   },
-  // FOLDERS: {
-  //   key: 'FOLDERS',
-  //   value: 'folders',
-  //   title: 'Folders',
-  //   icon: 'panel-table'
-  // }
 }

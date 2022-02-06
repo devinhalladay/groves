@@ -8,7 +8,6 @@ import { ToastContainer } from 'react-toastify';
 import GrovesCanvas from '~/src/components/Canvas';
 import CanvasContextMenu from '~/src/components/CanvasContextMenu';
 import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
-import MillerPanel from '~/src/components/Formations/components/MillerPanel';
 import KeyMapDialog from '~/src/components/KeyMapDialog';
 import Loading from '~/src/components/Loader';
 import SelectionPanel from '~/src/components/SelectionPanel';
@@ -37,37 +36,31 @@ const Grove = ({ data, initialSelection, ...props }) => {
       return <Loading fullScreen={true} description="Loading blocks..." />;
     }
 
-    if (formation.key === Formations.CANVAS.key) {
-      return (
-        <>
-          {selectedConnection && <SelectionPanel />}
-          <CanvasContextMenu>
-            <GrovesCanvas {...props} />
-          </CanvasContextMenu>
-        </>
-      );
-    } else if (formation.key === Formations.GRID.key) {
-      if (channelSkeleton && channelSkeleton.channel) {
+    switch (formation.key) {
+      case Formations.CANVAS.key:
         return (
-          <div className="workspace">
-            <SelectionPanel key={formation.key} />
-            {/* <CanvasContextMenu> */}
-            <Grid blocks={channelSkeleton.channel.initial_contents} />
-            {/* </CanvasContextMenu> */}
-          </div>
+          <>
+            {selectedConnection && <SelectionPanel />}
+            <CanvasContextMenu>
+              <GrovesCanvas {...props} />
+            </CanvasContextMenu>
+          </>
         );
-      }
-    } else if (formation.key === Formations.CHANNEL_INDEX.key) {
-      return <ChannelIndex />;
-    } else if (formation.key === Formations.FOLDERS.key) {
-      return (
-        <div className="workspace">
-          <SelectionPanel key={formation.key} />
-          <MillerPanel blocks={channelSkeleton.channel.initial_contents} />
-        </div>
-      );
-    } else {
-      return <div>Error</div>;
+      case Formations.GRID.key:
+        if (channelSkeleton && channelSkeleton.channel) {
+          return (
+            <div className="workspace">
+              <SelectionPanel key={formation.key} />
+              {/* <CanvasContextMenu> */}
+              <Grid blocks={channelSkeleton.channel.initial_contents} />
+              {/* </CanvasContextMenu> */}
+            </div>
+          );
+        }
+      case Formations.CHANNEL_INDEX.key:
+        <ChannelIndex />;
+      default:
+        return null;
     }
   };
 
