@@ -18,13 +18,13 @@ const TypeModal = (props) => {
   return (
     <Dialog
       isOpen={isOpen}
-      title="Add a new object type"
+      title="New object type"
       icon="new-object"
       onClose={() => setTypeModalIsOpen(false)}
     >
       <div className={Classes.DIALOG_BODY}>
         <Callout
-          title="Objects in Groves"
+          title="Ontology for Are.na"
           intent="primary"
           style={{ marginBottom: 20 }}
         >

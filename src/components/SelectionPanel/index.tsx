@@ -7,7 +7,7 @@ import withChannel from '../Channel';
 import { Section } from './components/Section';
 import { useChannelMutation, useConnectionMutation } from './mutations';
 
-const SelectionPanel = React.memo<FC>(() => {
+const SelectionPanel = React.memo<FC>((): JSX.Element => {
   const { selectedConnection } = useSelection();
   const { updateConnection } = useConnectionMutation();
   const { updateChannel } = useChannelMutation();
