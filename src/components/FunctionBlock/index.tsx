@@ -23,7 +23,7 @@ const FunctionBlock = (inputs, output, ...props) => {
   return (
     <Card className="draggable-block-container">
       <div className="block block--channel">
-        <div class="status-indicator"></div>
+        <div className="status-indicator"></div>
       </div>
     </Card>
   );

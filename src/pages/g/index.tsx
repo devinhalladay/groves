@@ -31,16 +31,11 @@ const Grove = () => {
         <>
           <SelectionPanel />
           <KeyMapDialog />
-          {() => {
-            switch (formation.key) {
-              case Formations.GRID.key:
-                return <Grid blocks={flatIndex} />;
-              case Formations.CHANNEL_INDEX.key:
-                return <ChannelIndex />;
-              default:
-                return <ChannelIndex />;
-            }
-          }}
+          {formation === Formations.GRID ? (
+            <Grid blocks={flatIndex} />
+          ) : formation === Formations.CHANNEL_INDEX ? (
+            <ChannelIndex />
+          ) : null}
         </>
       )}
     </WorkspaceProvider>

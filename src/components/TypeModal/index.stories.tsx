@@ -12,20 +12,15 @@ const typeMock = [
   { title: 'Publication Year', id: 3 },
 ];
 
-const Story = (props) => <TypeModal {...props} />;
+const Story = (props) => <TypeModal type={props.type} isOpen={props.open} />;
 
-// Here we export a variant of the default template passing props
 export const TypeModalStory = Story.bind({});
-TypeModalStory.args = {
-  type: typeMock,
-};
 
-// Here we export the default component that
-// will be used by Storybook to show it inside the sidebar
 export default {
   title: 'Type Modal',
   component: TypeModal,
-  // argTypes: {
-  //   showImage: { control: 'boolean' }
-  // }
+  argTypes: {
+    open: { control: 'boolean', defaultValue: true },
+    type: { control: 'array', defaultValue: typeMock },
+  },
 };
