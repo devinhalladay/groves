@@ -11,7 +11,7 @@ export default gql`
       }
     ) {
       clientMutationId
-      ... on CreateBlockPayload {
+      ... on CreateBlockMutationPayload {
         blokk {
           ... on Text {
             content

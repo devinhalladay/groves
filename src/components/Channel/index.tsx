@@ -6,6 +6,7 @@ import {
   UPDATE_CHANNEL,
 } from '~/src/graphql/mutations';
 import { Ervell } from '~/src/types';
+import { GET_SKELETON } from './queries/getSkeleton';
 
 const withChannel = (props?: any) => (WrappedComponent) => () => {
   const [
@@ -15,6 +16,7 @@ const withChannel = (props?: any) => (WrappedComponent) => () => {
     Ervell.createChannelMutation,
     Ervell.createChannelMutationVariables
   >(CREATE_CHANNEL, {
+    refetchQueries: [GET_SKELETON],
     onCompleted: (data) => {
       console.log(data);
     },

@@ -1,4 +1,6 @@
+import { CURRENT_USER } from '~/src/graphql/queries';
 import TypeModal from './index';
+import { MockedProvider } from '@apollo/client/testing';
 
 const typeMock = [
   {
@@ -12,7 +14,11 @@ const typeMock = [
   { title: 'Publication Year', id: 3 },
 ];
 
-const Story = (props) => <TypeModal type={props.type} isOpen={props.open} />;
+const Story = (props) => (
+  <MockedProvider>
+    <TypeModal type={props.type} isOpen={props.isOpen} />
+  </MockedProvider>
+);
 
 export const TypeModalStory = Story.bind({});
 
@@ -20,7 +26,22 @@ export default {
   title: 'Type Modal',
   component: TypeModal,
   argTypes: {
-    open: { control: 'boolean', defaultValue: true },
+    isOpen: { control: 'boolean', defaultValue: true },
     type: { control: 'array', defaultValue: typeMock },
+  },
+  apolloClient: {
+    // do not put MockedProvider here, you can, but its preferred to do it in preview.js
+    mocks: [
+      {
+        request: {
+          query: CURRENT_USER,
+        },
+        result: {
+          data: {
+            viewer: null,
+          },
+        },
+      },
+    ],
   },
 };

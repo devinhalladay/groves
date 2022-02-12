@@ -10,6 +10,7 @@ import createBlock from '~/src/components/Block/mutations/createBlock';
 
 import { useTheme } from 'next-themes';
 import Themes from '~/src/constants/Themes';
+import { CHANNEL_SKELETON } from '~/src/graphql/queries';
 
 const CreateBlock = (props) => {
   const [files, setFiles] = useState([]);
@@ -105,6 +106,7 @@ const CreateBlock = (props) => {
 
   const [newBlock, { loading: mutationLoading, error: mutationError }] =
     useMutation(createBlock, {
+      refetchQueries: [CHANNEL_SKELETON],
       onCompleted: (data) => {
         console.log(data);
       },

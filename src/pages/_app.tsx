@@ -16,6 +16,7 @@ import { UserProvider } from '../context/user-context';
 import { ThemeProvider } from 'next-themes';
 import { WorkspaceProvider } from '../context/workspace-context';
 import Themes from '../constants/Themes';
+import { AppToaster } from '../components/useToast';
 
 interface GrovesClient extends AppProps {
   isAuthenticated: boolean;

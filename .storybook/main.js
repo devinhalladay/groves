@@ -9,6 +9,7 @@ module.exports = {
     '@storybook/preset-scss',
     '@storybook/addon-actions',
     '@storybook/addon-storysource',
+    'storybook-addon-apollo-client',
   ],
   webpackFinal: async (config) => {
     config.resolve.plugins = [

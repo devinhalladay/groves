@@ -1,11 +1,3 @@
-import {
-  AnchorButton,
-  Button,
-  EditableText,
-  MenuItem,
-  Icon,
-} from '@blueprintjs/core';
-import { MultiSelect, ItemRenderer } from '@blueprintjs/select';
 import { useRouter } from 'next/router';
 import React from 'react';
 import ChevronDown from '~/public/chevron-down.svg';
@@ -13,12 +5,23 @@ import ChevronUp from '~/public/chevron-up.svg';
 import { useSelection } from '~/src/context/selection-context';
 import { useUser } from '~/src/context/user-context';
 import { Ervell } from '~/src/types';
+
+import {
+  AnchorButton,
+  Button,
+  EditableText,
+  Icon,
+  MenuItem,
+} from '@blueprintjs/core';
+import { ItemRenderer, MultiSelect } from '@blueprintjs/select';
+
 import withChannel from '../../Channel';
+// import NewItem from '../../ChannelSelector/NewItem';
 import TypeModal from '../../TypeModal';
 import { useChannelMutation, useConnectionMutation } from '../mutations';
-import CreateNewTag from './CreateNewTag';
 import ExplainTooltip from './ExplainTooltip';
-import TagOption from './TagOption';
+import NewItem from '../../ChannelSelector/NewItem';
+import useToast from '../../useToast';
 
 const Section = ({ children }) => {
   return (
@@ -139,10 +142,18 @@ const Header = () => {
 };
 
 const Type = ({ setTypeModalIsOpen, typeModalIsOpen }) => {
+  const { showToast } = useToast();
   return (
     <div className="section mt-5">
       <p className="section__title">Block Type</p>
-      <Button onClick={() => setTypeModalIsOpen(!typeModalIsOpen)}>
+      <Button
+        onClick={() => {
+          showToast({
+            message: 'toast',
+          });
+          setTypeModalIsOpen(!typeModalIsOpen);
+        }}
+      >
         Create a new type
       </Button>
       <TypeModal
@@ -396,7 +407,7 @@ const Connections = ({ createChannel }) => {
         className="position-relative"
         createNewItemFromQuery={createNewTagFromQuery}
         createNewItemRenderer={(query, active) => (
-          <CreateNewTag
+          <NewItem
             active={active}
             query={query}
             handleCreateChannel={handleCreateChannel}
