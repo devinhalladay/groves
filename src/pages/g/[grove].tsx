@@ -1,12 +1,7 @@
-import { useQuery } from '@apollo/client';
-import { NonIdealState, Button } from '@blueprintjs/core';
-import Grid from '@components/Formations/components/Grid';
-import { useSelection } from '@context/selection-context';
-import { useWorkspace } from '@context/workspace-context';
+import dynamic from 'next/dynamic';
 import nookies from 'nookies';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
-import GrovesCanvas from '~/src/components/Canvas';
 import CanvasContextMenu from '~/src/components/CanvasContextMenu';
 import ChannelIndex from '~/src/components/Formations/components/ChannelIndex';
 import KeyMapDialog from '~/src/components/KeyMapDialog';
@@ -15,6 +10,16 @@ import SelectionPanel from '~/src/components/SelectionPanel';
 import Formations from '~/src/constants/Formations';
 import { CHANNEL_SKELETON } from '~/src/graphql/queries';
 import withApollo from '~/src/hooks/withApollo';
+
+import { useQuery } from '@apollo/client';
+import { Button, NonIdealState } from '@blueprintjs/core';
+import Grid from '@components/Formations/components/Grid';
+import { useSelection } from '@context/selection-context';
+import { useWorkspace } from '@context/workspace-context';
+
+const GrovesCanvas = dynamic(() => import('../../components/Canvas'), {
+  ssr: false,
+});
 
 const Grove = ({ data, initialSelection, ...props }) => {
   const { workspaceOptions } = useWorkspace();
@@ -174,7 +179,10 @@ const Grove = ({ data, initialSelection, ...props }) => {
           <>
             {selectedConnection && <SelectionPanel />}
             <CanvasContextMenu>
-              <GrovesCanvas {...props} />
+              <GrovesCanvas
+                {...props}
+                blocks={channelSkeleton.channel.initial_contents}
+              />
             </CanvasContextMenu>
           </>
         );

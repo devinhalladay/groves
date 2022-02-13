@@ -1,13 +1,14 @@
 import { useSession } from 'next-auth/react';
 import { gql, useQuery } from '@apollo/client';
-import GrovesCanvas from '~/src/components/Canvas';
 import { useSelection } from '@context/selection-context';
+import dynamic from 'next/dynamic';
 import { GetServerSideProps } from 'next';
-import { parseCookies } from 'nookies';
 import React, { useEffect } from 'react';
 import Loading from '~/src/components/Loader';
 import Panel from '~/src/components/Panel';
 import withApollo from '~/src/hooks/withApollo';
+
+const GrovesCanvas = dynamic(() => import('../components/Canvas'));
 
 const GET_LANDING_BLOCKS = gql`
   {

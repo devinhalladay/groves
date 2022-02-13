@@ -10,6 +10,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'x6-menu.scss';
+@import 'x6-toolbar.scss';
+
 $primary-color: #47a7ff;
 
 html,
@@ -1439,15 +1442,15 @@ button,
   box-shadow: 0.25px 0.25px 2px rgba(111, 123, 138, 0.19);
   border-radius: 2px;
 
-  &:focus {
-    background: #f1f4f6;
-    border: 1px solid #8b959f;
-    box-shadow: inset 2.25px -1.75px 1px rgba(111, 123, 138, 0.19),
-      inset -2.75px -2.75px 1px rgba(111, 123, 138, 0.19),
-      inset 0px 2.25px 1px rgba(111, 123, 138, 0.19);
-    outline: none;
-    border-radius: 2px;
-  }
+  // &:focus {
+  //   background: #f1f4f6;
+  //   border: 1px solid #8b959f;
+  //   box-shadow: inset 2.25px -1.75px 1px rgba(111, 123, 138, 0.19),
+  //     inset -2.75px -2.75px 1px rgba(111, 123, 138, 0.19),
+  //     inset 0px 2.25px 1px rgba(111, 123, 138, 0.19);
+  //   outline: none;
+  //   border-radius: 2px;
+  // }
 }
 
 .icon-button {

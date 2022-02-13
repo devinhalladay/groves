@@ -1,3 +1,5 @@
+const { patchWebpackConfig } = require('next-global-css');
+
 module.exports = {
   env: {
     APPLICATION_ID: process.env.APPLICATION_ID,
@@ -15,7 +17,9 @@ module.exports = {
     ignoreBuildErrors: true,
   },
 
-  webpack(config) {
+  webpack(config, options) {
+    patchWebpackConfig(config, options);
+
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
