@@ -190,7 +190,7 @@ const Grove = ({ data, initialSelection, ...props }) => {
           );
         }
       case Formations.CHANNEL_INDEX.key:
-        <ChannelIndex />;
+        return <ChannelIndex />;
       default:
         return null;
     }
