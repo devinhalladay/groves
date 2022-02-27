@@ -8,7 +8,9 @@ import Loading from '~/src/components/Loader';
 import Panel from '~/src/components/Panel';
 import withApollo from '~/src/hooks/withApollo';
 
-const GrovesCanvas = dynamic(() => import('../components/Canvas'));
+const GrovesCanvas = dynamic(() => import('../components/Canvas'), {
+  ssr: false,
+});
 
 const GET_LANDING_BLOCKS = gql`
   {
@@ -43,8 +45,6 @@ const Root = (props) => {
     data && setCanvasBlocks(data.channel.blokks);
   }, [data]);
 
-  console.log('test');
-
   if (loading) {
     return <Loading fullScreen={true} description="Loading your Grove :)" />;
   } else if (error) {
@@ -52,9 +52,11 @@ const Root = (props) => {
     return `Error: ${error}`;
   }
 
+  console.log(data);
+
   return (
     <>
-      <GrovesCanvas {...props} />
+      <GrovesCanvas blocks={data.channel.blokks} {...props} />
       <Panel
         pinSide="none"
         style={{

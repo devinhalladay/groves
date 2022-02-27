@@ -1,22 +1,8 @@
 import { Blokk_blokk } from 'ervell/src/__generated__/Blokk';
-import { useRef, useState } from 'react';
-import { Rnd } from 'react-rnd';
-import useSegment from '~/src/hooks/useSegment';
-import { dragStates } from '~/src/types';
-import { getMovementDirection } from '~/src/utils/block';
 
 import { Card } from '@blueprintjs/core';
 
 import { useSelection } from '../../context/selection-context';
-import { useWorkspace } from '../../context/workspace-context';
-import {
-  adjustWindowScroll,
-  cursorPositionInViewport,
-  shouldScrollAtEdge,
-  viewportDimensions,
-} from '../../utils/canvas';
-import BlockContextMenu, { handleBlockClick } from '../BlockContextMenu';
-import InlineExpandedChannel from '../ChannelEmbed';
 import BlockRepresentation from './components/BlockRepresentation';
 
 // TODO: Need to break up this component, it's all kinds of fucked up
@@ -40,10 +26,14 @@ const DraggableBlock = ({ block, width, height }) => {
     description = JSON.parse(block.description.replace('\n', ''));
   }
 
+  // const handleSelect = (connectable) => {
+  //   setSelectedConnection(connectable);
+  // };
+
   return (
     // <BlockContextMenu key={block.id} block={block} formation={formation}>
     <Card
-      onClick={() => console.log('test')}
+      // onClick={() => handleSelect(block)}
       interactive={true}
       className={`draggable-block-container w-full h-full ${
         block.__typename ? block.__typename : ''
