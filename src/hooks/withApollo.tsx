@@ -5,6 +5,8 @@ import {
   InMemoryCache,
 } from '@apollo/client';
 import { NextPage } from 'next';
+import { getToken } from 'next-auth/jwt';
+import { useSession } from 'next-auth/react';
 import withApollo from 'next-with-apollo';
 import { parseCookies } from 'nookies';
 
@@ -16,15 +18,13 @@ interface RenderOptions {
 
 export default withApollo(
   ({ initialState }) => {
-    const token = parseCookies()['access_token'];
-
     return new ApolloClient({
       ssrMode: typeof window === 'undefined',
       link: new HttpLink({
         uri: `${process.env.APPLICATION_API_CALLBACK}/api/apollo-client`,
         credentials: 'same-origin',
         headers: {
-          authorization: `Bearer ${token}`,
+          // authorization: `Bearer ${token}`,
           accept: 'application/json',
           'content-type': 'application/json',
         },

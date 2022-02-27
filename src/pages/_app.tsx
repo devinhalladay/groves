@@ -1,22 +1,9 @@
+import { SessionProvider, signIn, signOut } from 'next-auth/react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { parseCookies } from 'nookies';
-import React from 'react';
-import { configure, GlobalHotKeys } from 'react-hotkeys';
 import '~/public/style.scss';
-import {
-  AuthenticatedHeader,
-  UnauthenticatedHeader,
-} from '~/src/components/Header';
-import KeyMaps from '../constants/KeyMaps';
-import { AuthProvider } from '../context/auth-context';
-import { SelectionProvider } from '../context/selection-context';
 import { UserProvider } from '../context/user-context';
-import { ThemeProvider } from 'next-themes';
-import { WorkspaceProvider } from '../context/workspace-context';
-import Themes from '../constants/Themes';
-import { AppToaster } from '../components/useToast';
 
 interface GrovesClient extends AppProps {
   isAuthenticated: boolean;
@@ -24,17 +11,10 @@ interface GrovesClient extends AppProps {
 
 const GrovesClient = ({
   Component,
-  pageProps,
-  isAuthenticated,
-}: GrovesClient) => {
+  pageProps: { session, ...pageProps },
+}: // isAuthenticated,
+GrovesClient) => {
   const router = useRouter();
-
-  if (isAuthenticated) {
-    configure({
-      simulateMissingKeyPressEvents: false,
-      ignoreKeymapAndHandlerChangesByDefault: false,
-    });
-  }
 
   return (
     <>
@@ -75,15 +55,14 @@ const GrovesClient = ({
       {router.pathname === '/test' ? (
         <Component {...pageProps} />
       ) : (
-        <AuthProvider>
-          {isAuthenticated ? (
+        <SessionProvider session={session}>
+          {/* {isAuthenticated ? (
             <UserProvider>
               <GlobalHotKeys keyMap={KeyMaps}>
                 <ThemeProvider
                   attribute="class"
                   defaultTheme={Themes.LIGHT}
                   enableSystem={false}
-                  // value={{ dark: Themes.DARK, light: Themes.LIGHT }}
                   themes={[Themes.DARK, Themes.LIGHT]}
                 >
                   <WorkspaceProvider>
@@ -108,19 +87,22 @@ const GrovesClient = ({
                 </SelectionProvider>
               </WorkspaceProvider>
             </ThemeProvider>
-          )}
-        </AuthProvider>
+          )} */}
+          <UserProvider>
+            <Component {...pageProps} />
+          </UserProvider>
+        </SessionProvider>
       )}
     </>
   );
 };
 
-GrovesClient.getInitialProps = ({ ctx }) => {
-  if (parseCookies(ctx)['access_token']) {
-    return { isAuthenticated: true };
-  }
+// GrovesClient.getInitialProps = ({ ctx }) => {
+//   if (parseCookies(ctx)['access_token']) {
+//     return { isAuthenticated: true };
+//   }
 
-  return { isAuthenticated: false };
-};
+//   return { isAuthenticated: false };
+// };
 
 export default GrovesClient;

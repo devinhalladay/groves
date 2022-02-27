@@ -1,16 +1,13 @@
 import { Button, Navbar } from '@blueprintjs/core';
-import { useAuth } from '@context/auth-context';
 import Link from 'next/link';
 import React from 'react';
 import GroveActions from '~/src/components/Actions';
 import GrovesMenu from '~/src/components/Header/components/GrovesMenu';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import GrovesNavigator from '~/src/components/Header/components/Navigator';
 import Panel from '~/src/components/Panel';
 
 const UnauthenticatedHeader = (props) => {
-  const handleLoginClick = () => {
-    window.location.href = `https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`;
-  };
   return (
     <Panel pinSide="center" panelType="nav">
       <header>
@@ -41,7 +38,7 @@ const UnauthenticatedHeader = (props) => {
           {process.env.AUTHENTICATION_ENABLED && (
             <ul>
               <li>
-                <Button onClick={handleLoginClick}>Login</Button>
+                <Button onClick={() => signIn()}>Login</Button>
               </li>
             </ul>
           )}
@@ -52,7 +49,7 @@ const UnauthenticatedHeader = (props) => {
 };
 
 const AuthenticatedHeader = ({ initialSelection }) => {
-  const { hasPreviousSession } = useAuth();
+  const { data: session } = useSession();
 
   if (!process.env.AUTHENTICATION_ENABLED) {
     return (
@@ -88,7 +85,7 @@ const AuthenticatedHeader = ({ initialSelection }) => {
     );
   }
 
-  if (hasPreviousSession) {
+  if (session) {
     return (
       <>
         <Panel panelType="nav">
@@ -156,12 +153,7 @@ const AuthenticatedHeader = ({ initialSelection }) => {
             {process.env.AUTHENTICATION_ENABLED && (
               <ul>
                 <li>
-                  <a
-                    className="button"
-                    href={`https://dev.are.na/oauth/authorize?client_id=${process.env.APPLICATION_ID}&redirect_uri=${process.env.APPLICATION_CALLBACK}&response_type=code`}
-                  >
-                    Login
-                  </a>
+                  <button onClick={() => signOut()}>Login</button>
                 </li>
               </ul>
             )}

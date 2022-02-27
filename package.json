@@ -34,6 +34,7 @@
     "@storybook/preset-scss": "^1.0.3",
     "@storybook/preset-typescript": "^3.0.0",
     "@tippyjs/react": "^4.1.0",
+    "@types/next-auth": "^3.15.0",
     "add": "^2.0.6",
     "aws-sdk": "^2.819.0",
     "axios": "^0.19.2",

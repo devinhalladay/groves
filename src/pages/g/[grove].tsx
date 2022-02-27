@@ -16,7 +16,6 @@ import Formations from '~/src/constants/Formations';
 import { CHANNEL_SKELETON } from '~/src/graphql/queries';
 import withApollo from '~/src/hooks/withApollo';
 import { addApolloState, initializeApollo } from '~/src/lib/apolloClient';
-import { withAuthSync } from '~/src/utils/auth';
 
 const Grove = ({ data, initialSelection, ...props }) => {
   const { apollo } = props;
@@ -242,4 +241,4 @@ export async function getInitialProps(context) {
   });
 }
 
-export default withApollo(withAuthSync(Grove));
+export default withApollo(Grove);

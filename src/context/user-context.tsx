@@ -20,17 +20,13 @@ export type UserContext = {
 
 export const UserProvider = withApollo((props): any => {
   const {
-    loading: loadingCurrentUser,
-    error: errorLoadingCurrentUser,
+    loading,
+    error,
     data: currentUser,
   } = useQuery<IUserContext>(CURRENT_USER);
 
-  if (loadingCurrentUser) {
-    return <Loading fullScreen={true} description="Authenticating..." />;
-  } else if (errorLoadingCurrentUser) {
-    console.error(errorLoadingCurrentUser);
-    return `Error: ${errorLoadingCurrentUser}`;
-  }
+  if (loading) return 'Loading...';
+  if (error) return `Error! ${error.message}`;
 
   let index = currentUser.me.channels_index;
 
