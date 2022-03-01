@@ -17,4 +17,4 @@ export default {
     title: 'Channel Index',
     icon: 'list-detail-view',
   },
-}
+};
