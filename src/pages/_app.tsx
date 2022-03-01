@@ -1,22 +1,21 @@
+import { ApolloProvider } from '@apollo/client';
+import { getSession, SessionProvider, signIn, signOut } from 'next-auth/react';
+import { ThemeProvider } from 'next-themes';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { parseCookies } from 'nookies';
-import React from 'react';
-import { configure, GlobalHotKeys } from 'react-hotkeys';
+import { GlobalHotKeys } from 'react-hotkeys';
 import '~/public/style.scss';
 import {
   AuthenticatedHeader,
+  ComposedHeader,
   UnauthenticatedHeader,
-} from '~/src/components/Header';
+} from '../components/Header';
 import KeyMaps from '../constants/KeyMaps';
-import { AuthProvider } from '../context/auth-context';
+import Themes from '../constants/Themes';
 import { SelectionProvider } from '../context/selection-context';
 import { UserProvider } from '../context/user-context';
-import { ThemeProvider } from 'next-themes';
 import { WorkspaceProvider } from '../context/workspace-context';
-import Themes from '../constants/Themes';
-import { AppToaster } from '../components/useToast';
 
 interface GrovesClient extends AppProps {
   isAuthenticated: boolean;
@@ -24,17 +23,10 @@ interface GrovesClient extends AppProps {
 
 const GrovesClient = ({
   Component,
-  pageProps,
-  isAuthenticated,
-}: GrovesClient) => {
+  pageProps: { session, ...pageProps },
+}: // isAuthenticated,
+GrovesClient) => {
   const router = useRouter();
-
-  if (isAuthenticated) {
-    configure({
-      simulateMissingKeyPressEvents: false,
-      ignoreKeymapAndHandlerChangesByDefault: false,
-    });
-  }
 
   return (
     <>
@@ -71,56 +63,33 @@ const GrovesClient = ({
         ></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
-      {router.pathname === '/test' ? (
-        <Component {...pageProps} />
-      ) : (
-        <AuthProvider>
-          {isAuthenticated ? (
-            <UserProvider>
-              <GlobalHotKeys keyMap={KeyMaps}>
-                <ThemeProvider
-                  attribute="class"
-                  defaultTheme={Themes.LIGHT}
-                  enableSystem={false}
-                  // value={{ dark: Themes.DARK, light: Themes.LIGHT }}
-                  themes={[Themes.DARK, Themes.LIGHT]}
-                >
-                  <WorkspaceProvider>
-                    <AuthenticatedHeader {...pageProps} />
-                    <Component {...pageProps} />
-                  </WorkspaceProvider>
-                </ThemeProvider>
-              </GlobalHotKeys>
-            </UserProvider>
-          ) : (
+      <SessionProvider session={session}>
+        <UserProvider>
+          <GlobalHotKeys keyMap={KeyMaps}>
             <ThemeProvider
               attribute="class"
-              enableSystem={false}
               defaultTheme={Themes.LIGHT}
-              // value={{ dark: Themes.DARK, light: Themes.LIGHT }}
+              enableSystem={false}
               themes={[Themes.DARK, Themes.LIGHT]}
             >
               <WorkspaceProvider>
-                <UnauthenticatedHeader {...pageProps} />
-                <SelectionProvider>
-                  <Component {...pageProps} />
-                </SelectionProvider>
+                <ComposedHeader {...pageProps} />
+                <Component {...pageProps} />
               </WorkspaceProvider>
             </ThemeProvider>
-          )}
-        </AuthProvider>
-      )}
+          </GlobalHotKeys>
+        </UserProvider>
+      </SessionProvider>
     </>
   );
 };
 
-GrovesClient.getInitialProps = ({ ctx }) => {
-  if (parseCookies(ctx)['access_token']) {
-    return { isAuthenticated: true };
-  }
-
-  return { isAuthenticated: false };
-};
+export async function getServerSideProps(ctx) {
+  return {
+    props: {
+      session: await getSession(ctx),
+    },
+  };
+}
 
 export default GrovesClient;

@@ -92,7 +92,7 @@ const SelectionPanel = React.memo<FC>((): JSX.Element => {
     );
   } else if (error) {
     console.log(error);
-    return error;
+    return null;
   }
 
   return (

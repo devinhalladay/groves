@@ -28,8 +28,6 @@ const ChannelEmbed = ({
     return <Loading />;
   }
 
-  console.log(data);
-
   return (
     <>
       <div className="header">

@@ -39,7 +39,8 @@ const WorkspaceProvider = (props) => {
       value={{ workspaceOptions, setWorkspaceOptions, zoomScale, setZoomScale }}
       {...props}
     >
-      <GlobalHotKeys handlers={keyHandlers} />;{props.children}
+      <GlobalHotKeys handlers={keyHandlers} />
+      {props.children}
     </WorkspaceContext.Provider>
   );
 };

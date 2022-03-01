@@ -19,8 +19,6 @@ function ChannelSelector({ createChannel }) {
   const { createConnection, removeConnection } = useConnectionMutation();
   const { index, flatIndex } = useUser();
 
-  console.log(flatIndex);
-
   const { showToast } = useToast();
   const filterTags = (query, tag) => {
     const text = `${tag.title}`;

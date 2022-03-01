@@ -29,7 +29,6 @@ export default withApollo((props) => {
     useSelection();
 
   const preventPan = (event, x, y) => {
-    console.log('eval pan');
     if (
       event.target &&
       event.target.parentElement &&

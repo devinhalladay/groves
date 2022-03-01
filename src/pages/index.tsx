@@ -1,13 +1,13 @@
-import { gql, useQuery } from '@apollo/client';
-import GrovesCanvas from '@components/Canvas';
-import { useSelection } from '@context/selection-context';
-import { GetServerSideProps } from 'next';
-import { parseCookies } from 'nookies';
-import React, { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 import Loading from '~/src/components/Loader';
 import Panel from '~/src/components/Panel';
 import withApollo from '~/src/hooks/withApollo';
-import { withAuthSync } from '../utils/auth';
+
+import { gql, useQuery } from '@apollo/client';
+import GrovesCanvas from '@components/Canvas';
+
+import { useSelection } from '../context/selection-context';
 
 const GET_LANDING_BLOCKS = gql`
   {
@@ -34,6 +34,9 @@ const Root = (props) => {
   const { loading, error, data } = useQuery(GET_LANDING_BLOCKS);
 
   const { setCanvasBlocks } = useSelection();
+
+  const { data: session } = useSession();
+  // const { accessToken } = session;
 
   useEffect(() => {
     data && setCanvasBlocks(data.channel.blokks);
@@ -92,15 +95,15 @@ const Root = (props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  if (parseCookies(context)['access_token']) {
-    context.res.writeHead(301, { Location: '/g' });
-    context.res.end();
-  }
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   if (parseCookies(context)['access_token']) {
+//     context.res.writeHead(301, { Location: '/g' });
+//     context.res.end();
+//   }
 
-  return {
-    props: {},
-  };
-};
+//   return {
+//     props: {},
+//   };
+// };
 
-export default withApollo(withAuthSync(Root));
+export default withApollo(Root);

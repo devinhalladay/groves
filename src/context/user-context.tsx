@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { SelectionProvider } from '@context/selection-context';
-import React, { createContext, useContext } from 'react';
+import { WithApolloProps } from 'next-with-apollo';
+import { createContext, useContext } from 'react';
 import Loading from '~/src/components/Loader';
 import { CURRENT_USER } from '~/src/graphql/queries';
 import withApollo from '~/src/hooks/withApollo';
@@ -18,19 +19,16 @@ export type UserContext = {
   flatIndex: Ervell.ProfileChannelIndex_User_channels_index_channels;
 };
 
-export const UserProvider = withApollo((props): any => {
+export const UserProvider = withApollo((props) => {
   const {
-    loading: loadingCurrentUser,
-    error: errorLoadingCurrentUser,
+    loading,
+    error,
     data: currentUser,
   } = useQuery<IUserContext>(CURRENT_USER);
 
-  if (loadingCurrentUser) {
-    return <Loading fullScreen={true} description="Authenticating..." />;
-  } else if (errorLoadingCurrentUser) {
-    console.error(errorLoadingCurrentUser);
-    return `Error: ${errorLoadingCurrentUser}`;
-  }
+  if (loading) return <Loading fullScreen={true} />;
+
+  if (error) return <SelectionProvider>{props.children}</SelectionProvider>;
 
   let index = currentUser.me.channels_index;
 
