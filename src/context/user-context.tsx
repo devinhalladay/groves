@@ -28,7 +28,7 @@ export const UserProvider = withApollo((props) => {
 
   if (loading) return <Loading fullScreen={true} />;
 
-  if (error) throw new Error(error.message);
+  if (error) return <SelectionProvider>{props.children}</SelectionProvider>;
 
   let index = currentUser.me.channels_index;
 
