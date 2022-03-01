@@ -4405,19 +4405,17 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-<<<<<<< HEAD
+"@types/resize-observer-browser@^0.1.6":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@types/resize-observer-browser/-/resize-observer-browser-0.1.7.tgz#294aaadf24ac6580b8fbd1fe3ab7b59fe85f9ef3"
+  integrity sha512-G9eN0Sn0ii9PWQ3Vl72jDPgeJwRWhv2Qk/nQkJuWmRmOB4HX3/BhD5SE1dZs/hzPZL/WKnvF0RHdTSG54QJFyg==
+
 "@types/responselike@*", "@types/responselike@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/responselike/-/responselike-1.0.0.tgz#251f4fe7d154d2bad125abe1b429b23afd262e29"
   integrity sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==
   dependencies:
     "@types/node" "*"
-=======
-"@types/resize-observer-browser@^0.1.6":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@types/resize-observer-browser/-/resize-observer-browser-0.1.7.tgz#294aaadf24ac6580b8fbd1fe3ab7b59fe85f9ef3"
-  integrity sha512-G9eN0Sn0ii9PWQ3Vl72jDPgeJwRWhv2Qk/nQkJuWmRmOB4HX3/BhD5SE1dZs/hzPZL/WKnvF0RHdTSG54QJFyg==
->>>>>>> 8cf7780 (Build out new canvas with ant x6)
 
 "@types/scheduler@*":
   version "0.16.2"
@@ -13125,7 +13123,6 @@ newrelic@6.14.0:
   optionalDependencies:
     "@newrelic/native-metrics" "^5.3.0"
 
-<<<<<<< HEAD
 next-auth@*:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.2.1.tgz#042e4858d9f67b4f702d3a55bae0d2f04db3cac3"
@@ -13140,12 +13137,11 @@ next-auth@*:
     preact "^10.6.3"
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
-=======
+
 next-global-css@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/next-global-css/-/next-global-css-1.2.0.tgz#b04870e39eccdf81b5ad0b74514762ac9a39cb7f"
   integrity sha512-36EeyYTSoKN7rWyCKfhM4TScJ4VuJP8b2ThAPLmlZRiYT+DS3QVcsZWuClC55S2zwvx6eRUB1SljfUjUiPig5A==
->>>>>>> 8cf7780 (Build out new canvas with ant x6)
 
 next-themes@^0.0.15:
   version "0.0.15"
