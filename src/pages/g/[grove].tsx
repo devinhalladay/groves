@@ -15,13 +15,14 @@ import SelectionPanel from '~/src/components/SelectionPanel';
 import Formations from '~/src/constants/Formations';
 import { CHANNEL_SKELETON } from '~/src/graphql/queries';
 import withApollo from '~/src/hooks/withApollo';
+import client from '~/src/lib/apollo-client';
 import { addApolloState, initializeApollo } from '~/src/lib/apolloClient';
 
 const Grove = ({ data, initialSelection, ...props }) => {
-  const { apollo } = props;
-
   const { workspaceOptions } = useWorkspace();
   const { formation } = workspaceOptions;
+
+  const { apollo } = props;
 
   const { selectedConnection, channelID } = useSelection();
 
@@ -218,27 +219,22 @@ const Grove = ({ data, initialSelection, ...props }) => {
 };
 
 export async function getInitialProps(context) {
-  const cookies = nookies.get(context);
-
-  if (!cookies.access_token) {
-    context.res.writeHead(301, { Location: '/' });
-    context.res.end();
-  }
-
-  const apolloClient = initializeApollo(cookies.access_token);
-
-  const id = context.query.grove;
-
-  const res = await apolloClient.query({
-    query: CHANNEL_SKELETON,
-    variables: {
-      id: id,
-    },
-  });
-
-  return addApolloState(apolloClient, {
-    props: { initialSelection: res.data },
-  });
+  // const cookies = nookies.get(context);
+  // if (!cookies.access_token) {
+  //   context.res.writeHead(301, { Location: '/' });
+  //   context.res.end();
+  // }
+  // const apolloClient = initializeApollo(cookies.access_token);
+  // const id = context.query.grove;
+  // const res = await apolloClient.query({
+  //   query: CHANNEL_SKELETON,
+  //   variables: {
+  //     id: id,
+  //   },
+  // });
+  // return addApolloState(apolloClient, {
+  //   props: { initialSelection: res.data },
+  // });
 }
 
 export default withApollo(Grove);

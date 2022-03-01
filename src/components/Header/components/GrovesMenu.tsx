@@ -1,17 +1,14 @@
 import { Menu, MenuItem } from '@blueprintjs/core';
 import { Popover2 } from '@blueprintjs/popover2';
-import { useAuth } from '@context/auth-context';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useUser } from '@context/user-context';
 import React, { useState } from 'react';
 
 const GrovesMenu = () => {
-  const { logout } = useAuth();
   const { currentUser } = useUser();
 
   const [showMenu, setShowMenu] = useState(false);
   const closeMenu = () => setShowMenu(false);
-
-  console.log('nav clicked');
 
   return (
     <Popover2
@@ -19,7 +16,7 @@ const GrovesMenu = () => {
       content={
         <Menu>
           <MenuItem icon="blank" text={`Welcome, ${currentUser.me.name}`} />
-          <MenuItem icon="log-out" text="Logout" onClick={logout} />
+          <MenuItem icon="log-out" text="Logout" onClick={() => signOut()} />
         </Menu>
       }
     >

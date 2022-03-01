@@ -1,14 +1,13 @@
-import { gql, useQuery } from '@apollo/client';
-import GrovesCanvas from '@components/Canvas';
-import { useSelection } from '@context/selection-context';
-import { GetServerSideProps } from 'next';
-import { getToken } from 'next-auth/jwt';
-import { signIn, signOut, useSession } from 'next-auth/react';
-import { parseCookies } from 'nookies';
-import React, { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 import Loading from '~/src/components/Loader';
 import Panel from '~/src/components/Panel';
 import withApollo from '~/src/hooks/withApollo';
+
+import { gql, useQuery } from '@apollo/client';
+import GrovesCanvas from '@components/Canvas';
+
+import { useSelection } from '../context/selection-context';
 
 const GET_LANDING_BLOCKS = gql`
   {
@@ -32,41 +31,23 @@ const GET_LANDING_BLOCKS = gql`
 `;
 
 const Root = (props) => {
-  // const { loading, error, data } = useQuery(GET_LANDING_BLOCKS);
+  const { loading, error, data } = useQuery(GET_LANDING_BLOCKS);
 
-  // const { setCanvasBlocks } = useSelection();
+  const { setCanvasBlocks } = useSelection();
 
   const { data: session } = useSession();
   // const { accessToken } = session;
 
-  // useEffect(() => {
-  //   data && setCanvasBlocks(data.channel.blokks);
-  // }, [data]);
+  useEffect(() => {
+    data && setCanvasBlocks(data.channel.blokks);
+  }, [data]);
 
-  // if (loading) {
-  //   return <Loading fullScreen="true" description="Loading your Grove :)" />;
-  // } else if (error) {
-  //   console.error(error);
-  //   return `Error: ${error}`;
-  // }
-
-  console.log(session);
-
-  return (
-    <>
-      {session ? (
-        <>
-          Signed in as {session.user.name} <br />
-          <button onClick={() => signOut()}>Sign out</button>
-        </>
-      ) : (
-        <>
-          Not signed in <br />
-          <button onClick={() => signIn()}>Sign in</button>
-        </>
-      )}
-    </>
-  );
+  if (loading) {
+    return <Loading fullScreen="true" description="Loading your Grove :)" />;
+  } else if (error) {
+    console.error(error);
+    return `Error: ${error}`;
+  }
 
   return (
     <>

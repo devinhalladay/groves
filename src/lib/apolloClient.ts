@@ -7,17 +7,14 @@ export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 
 let apolloClient;
 
-function createApolloClient(token) {
-  // console.log('token');
-  // console.log(token);
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+export function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: new HttpLink({
       uri: `${process.env.APPLICATION_API_CALLBACK}/api/apollo-client`,
       credentials: 'same-origin',
       headers: {
-        authorization: `Bearer ${token}`,
+        // authorization: `Bearer ${token}`,
         accept: 'application/json',
         'content-type': 'application/json'
       }
@@ -26,9 +23,9 @@ function createApolloClient(token) {
   });
 }
 
-export function initializeApollo(token, initialState = null) {
+export function initializeApollo(initialState = null) {
   const _apolloClient =
-    typeof apolloClient !== undefined && apolloClient !== null && createApolloClient(token);
+    typeof apolloClient !== undefined && apolloClient !== null && createApolloClient();
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // gets hydrated here

@@ -1,23 +1,8 @@
-import {
-  ApolloClient,
-  ApolloProvider,
-  createHttpLink,
-  from,
-  HttpLink,
-  InMemoryCache,
-} from '@apollo/client';
+import { getSession } from 'next-auth/react';
+import { ApolloClient, from, InMemoryCache, HttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { NextPage } from 'next';
-import { getSession, useSession } from 'next-auth/react';
-import withApollo from 'next-with-apollo';
 
-interface RenderOptions {
-  children: React.ReactNode[];
-  Page: NextPage;
-  props: any;
-}
-
-const httpLink = createHttpLink({
+const httpLink = new HttpLink({
   uri: `${process.env.APPLICATION_API_CALLBACK}/api/apollo-client`,
   credentials: 'same-origin',
   headers: {
@@ -28,6 +13,7 @@ const httpLink = createHttpLink({
 
 const authLink = setContext(async (_, { headers }: { headers: Headers }) => {
   const session = await getSession();
+
   const modifiedHeader = {
     headers: {
       ...headers,
@@ -46,13 +32,4 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export default withApollo(() => client, {
-  render: ({ Page, children, props }: RenderOptions) => {
-    return (
-      <ApolloProvider client={props.apollo}>
-        {Page && <Page {...props} />}
-        {children}
-      </ApolloProvider>
-    );
-  },
-});
+export default client;

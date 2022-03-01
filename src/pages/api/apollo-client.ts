@@ -1,46 +1,33 @@
-import { getSession } from "next-auth/react";
-
 const axios = require('axios');
 
 export default async (req, res) => {
   let { query } = await req.body;
+  const { authorization } = req.headers;
 
   query = JSON.parse(JSON.stringify(query));
 
   const authURL = `https://api.are.na/graphql`;
 
-  const session = await getSession({ req })
+  console.log(query);
 
-  console.log('NEW SESSION', session);
+  try {
+    const result = await axios.post(
+      authURL,
+      {
+        ...req.body,
+      },
+      {
+        headers: {
+          Authorization: authorization,
+          'X-APP-TOKEN': process.env.GRAPHQL_TOKEN,
+        },
+      },
+    );
 
-  if (session) {
-    // Signed in
-    console.log("Session", JSON.stringify(session, null, 2))
-
-    try {
-      await axios
-        .post(
-          authURL,
-          {
-            ...req.body,
-          },
-          {
-            headers: {
-              authorization: `Bearer ${session.accessToken}`,
-              'X-APP-TOKEN': process.env.GRAPHQL_TOKEN,
-            },
-          },
-        )
-        .then((response) => {
-          return res.status(response.status).json(response.data);
-        });
-    } catch (error) {
-      return res.status(400).json({ message: error });
-    }
-  } else {
-    // Not Signed in
-    res.status(401)
+    return res.status(200).json(result.data);
+  } catch (err) {
+    res.status(500);
   }
 
-
+  return res.status(401).json({ message: 'not logged in' });
 };
