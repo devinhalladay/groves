@@ -35,8 +35,6 @@ const Grove = ({ data, initialSelection, ...props }) => {
       return <Loading fullScreen={true} description="Loading blocks..." />;
     }
 
-    console.log(channelSkeleton?.channel?.initial_contents);
-
     if (!channelSkeleton?.channel?.initial_contents.length) {
       return (
         <NonIdealState

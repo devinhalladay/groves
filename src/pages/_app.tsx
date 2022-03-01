@@ -28,8 +28,6 @@ const GrovesClient = ({
 GrovesClient) => {
   const router = useRouter();
 
-  console.log(session);
-
   return (
     <>
       <Head>
@@ -65,43 +63,26 @@ GrovesClient) => {
         ></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      {router.pathname === '/test' ? (
-        <Component {...pageProps} />
-      ) : (
-        <SessionProvider session={session}>
-          <UserProvider>
-            <GlobalHotKeys keyMap={KeyMaps}>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme={Themes.LIGHT}
-                enableSystem={false}
-                themes={[Themes.DARK, Themes.LIGHT]}
-              >
-                <WorkspaceProvider>
-                  <ComposedHeader {...pageProps} />
-                  <Component {...pageProps} />
-                </WorkspaceProvider>
-              </ThemeProvider>
-            </GlobalHotKeys>
-          </UserProvider>
-        </SessionProvider>
-      )}
+      <SessionProvider session={session}>
+        <UserProvider>
+          <GlobalHotKeys keyMap={KeyMaps}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme={Themes.LIGHT}
+              enableSystem={false}
+              themes={[Themes.DARK, Themes.LIGHT]}
+            >
+              <WorkspaceProvider>
+                <ComposedHeader {...pageProps} />
+                <Component {...pageProps} />
+              </WorkspaceProvider>
+            </ThemeProvider>
+          </GlobalHotKeys>
+        </UserProvider>
+      </SessionProvider>
     </>
   );
 };
-
-// GrovesClient.getInitialProps = async ({ ctx }) => {
-//   // if (parseCookies(ctx)['access_token']) {
-//   //   return { isAuthenticated: true };
-//   // }
-
-//   // return { isAuthenticated: false };
-
-//   const session = await getSession({ ctx });
-//   console.log(session);
-
-//   return { session: session };
-// };
 
 export async function getServerSideProps(ctx) {
   return {

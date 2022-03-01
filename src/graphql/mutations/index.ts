@@ -46,13 +46,6 @@ const grovePageFragments = {
       source_url
     }
 
-    fragment KonnectableEmbed on Embed {
-      id
-      title
-      href
-      image_url(size: DISPLAY)
-    }
-
     fragment KonnectableModel on Model {
       created_at(relative: true)
     }
@@ -99,7 +92,7 @@ const grovePageFragments = {
         }
       }
     }
-  `
+  `,
 };
 
 // export const ADD_BLOCK = gql`
@@ -134,8 +127,14 @@ const grovePageFragments = {
 // `;
 
 export const UPDATE_CHANNEL = gql`
-  mutation updateChannelMutation($id: ID!, $title: String, $description: String) {
-    update_channel(input: { id: $id, title: $title, description: $description }) {
+  mutation updateChannelMutation(
+    $id: ID!
+    $title: String
+    $description: String
+  ) {
+    update_channel(
+      input: { id: $id, title: $title, description: $description }
+    ) {
       ...ChannelContentsConnectable
     }
   }
@@ -158,7 +157,12 @@ export const UPDATE_CONNECTION = gql`
     $content: String
   ) {
     update_block(
-      input: { id: $connectable_id, title: $title, content: $content, description: $description }
+      input: {
+        id: $connectable_id
+        title: $title
+        content: $content
+        description: $description
+      }
     ) {
       ...ChannelContentsConnectable
     }

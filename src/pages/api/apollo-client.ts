@@ -8,8 +8,6 @@ export default async (req, res) => {
 
   const authURL = `https://api.are.na/graphql`;
 
-  console.log(query);
-
   try {
     const result = await axios.post(
       authURL,

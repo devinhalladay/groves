@@ -270,7 +270,6 @@ const Connections = ({ createChannel }) => {
       });
 
       let selected = selectedConnection;
-      console.log(selectedConnection);
       selected.current_user_channels.push({
         title: tag.title,
       });

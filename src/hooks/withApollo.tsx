@@ -46,7 +46,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export default withApollo(() => client, {
+export default withApollo<NextPage>(() => client, {
   render: ({ Page, children, props }: RenderOptions) => {
     return (
       <ApolloProvider client={props.apollo}>
