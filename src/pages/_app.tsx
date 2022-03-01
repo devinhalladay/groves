@@ -16,7 +16,6 @@ import Themes from '../constants/Themes';
 import { SelectionProvider } from '../context/selection-context';
 import { UserProvider } from '../context/user-context';
 import { WorkspaceProvider } from '../context/workspace-context';
-import client from '../lib/apollo-client';
 
 interface GrovesClient extends AppProps {
   isAuthenticated: boolean;

@@ -7,7 +7,6 @@ import React, { createContext, useContext } from 'react';
 import Loading from '~/src/components/Loader';
 import { CURRENT_USER } from '~/src/graphql/queries';
 import withApollo from '~/src/hooks/withApollo';
-import client from '../lib/apollo-client';
 import { Ervell } from '../types';
 
 const UserContext = createContext(null);
