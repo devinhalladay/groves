@@ -5,11 +5,12 @@ import withApollo from '~/src/hooks/withApollo';
 import { Ervell } from '~/src/types';
 
 import { GridLayout, RandomLayout } from '@antv/layout';
-import { Graph, Model } from '@antv/x6';
+import { Cell, Graph, Model, Node } from '@antv/x6';
 import '@antv/x6-react-shape';
 import { Toolbar } from '@antv/x6-react-components';
 import { Colors, Icon, Navbar } from '@blueprintjs/core';
 import DraggableBlock from '../Block';
+import { useSelection } from '~/src/context/selection-context';
 
 interface ICanvas {
   blocks: Ervell.Blokk_blokk[];
@@ -21,6 +22,7 @@ export default withApollo(({ blocks }: ICanvas) => {
   const [graph, setGraph] = useState<Graph>(null);
   const [history, setHistory] = useState();
 
+  const { selectedConnection, setSelectedConnection } = useSelection();
   const { theme } = useTheme();
 
   const data = blocks.reduce(
@@ -65,10 +67,14 @@ export default withApollo(({ blocks }: ICanvas) => {
           modifiers: 'meta',
           autoResize: true,
         },
+        grid: {
+          visible: true,
+        },
         selecting: {
           enabled: true,
           rubberband: true,
           modifiers: 'shift',
+          className: 'x6-selecting selected',
         },
         history: {
           enabled: true,
@@ -89,17 +95,22 @@ export default withApollo(({ blocks }: ICanvas) => {
         },
       });
 
-      const gridLayout = new RandomLayout({
-        type: 'random',
+      const gridLayout = new GridLayout({
+        // type: 'random',
+        type: 'grid',
         height: document.documentElement.clientHeight,
-        width: document.documentElement.clientWidth,
+        nodeSize: [250, 250],
+        // width: document.documentElement.clientWidth,
+        preventOverlap: true,
+        preventOverlapPadding: 16,
+        cols: 5,
       });
 
       const model = gridLayout.layout(data);
-
       g.fromJSON(model);
 
       setHistory(g.history);
+      g.centerContent();
       setGraph(g);
     }
 
@@ -110,6 +121,16 @@ export default withApollo(({ blocks }: ICanvas) => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    graph &&
+      graph.on(
+        'node:selected',
+        (args: { cell: Cell; node: Node; options: Model.SetOptions }) => {
+          setSelectedConnection(args.node.data);
+        },
+      );
+  }, [graph]);
 
   const onUndo = () => {
     history.undo();
