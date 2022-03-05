@@ -2,7 +2,6 @@ import { Blokk_blokk } from 'ervell/src/__generated__/Blokk';
 
 import { Card } from '@blueprintjs/core';
 
-import { useSelection } from '../../context/selection-context';
 import BlockRepresentation from './components/BlockRepresentation';
 
 // TODO: Need to break up this component, it's all kinds of fucked up
@@ -10,19 +9,35 @@ import BlockRepresentation from './components/BlockRepresentation';
 // feels bad and makes it hard to keep track of props
 
 interface DraggableBlock {
-  block: Blokk_blokk;
+  block?: Blokk_blokk;
   width: number;
   height: number;
 }
 
-const DraggableBlock = ({ block, width, height }) => {
+const DraggableBlock = ({ block, width, height }: DraggableBlock) => {
   let description;
 
   // const { selectedConnection, setSelectedConnection } = useSelection();
   // const { workspaceOptions, zoomScale, setCanvasBlocks } = useWorkspace();
   // const { formation } = workspaceOptions;
 
-  if (block.description && block.description.includes('"x":')) {
+  if (!block)
+    return (
+      <Card
+        // onClick={() => handleSelect(block)}
+        interactive={true}
+        className={`draggable-block-container w-full h-full`}
+      >
+        <div
+          className={`block block--text`}
+          onScroll={(e) => e.stopPropagation()}
+        >
+          <p>test</p>
+        </div>
+      </Card>
+    );
+
+  if (block?.description && block.description.includes('"x":')) {
     description = JSON.parse(block.description.replace('\n', ''));
   }
 

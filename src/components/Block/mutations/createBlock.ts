@@ -14,8 +14,25 @@ export default gql`
       ... on CreateBlockMutationPayload {
         blokk {
           ... on Text {
-            content
             id
+            title
+            href
+            content(format: HTML)
+            created_at(relative: true)
+            ... on ConnectableInterface {
+              __typename
+              current_user_channels {
+                __typename
+                id
+                title
+                href
+              }
+              description
+              user {
+                id
+                name
+              }
+            }
           }
           ... on Image {
             id
