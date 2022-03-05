@@ -1,19 +1,13 @@
-import { ApolloProvider } from '@apollo/client';
 import { getSession, SessionProvider, signIn, signOut } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { GlobalHotKeys } from 'react-hotkeys';
-import '~/public/style.scss';
-import {
-  AuthenticatedHeader,
-  ComposedHeader,
-  UnauthenticatedHeader,
-} from '../components/Header';
+import '~/public/styles/style.scss';
+import { ComposedHeader } from '../components/Header';
 import KeyMaps from '../constants/KeyMaps';
 import Themes from '../constants/Themes';
-import { SelectionProvider } from '../context/selection-context';
 import { UserProvider } from '../context/user-context';
 import { WorkspaceProvider } from '../context/workspace-context';
 

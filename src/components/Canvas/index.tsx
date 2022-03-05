@@ -5,10 +5,10 @@ import withApollo from '~/src/hooks/withApollo';
 import { Ervell } from '~/src/types';
 
 import { GridLayout, RandomLayout } from '@antv/layout';
-import { Addon, Cell, Graph, Model, Node } from '@antv/x6';
+import { Addon, Cell, Graph, Model, Node, NodeView } from '@antv/x6';
 import '@antv/x6-react-shape';
 import { Toolbar } from '@antv/x6-react-components';
-import { Colors, Icon, Navbar } from '@blueprintjs/core';
+import { Button, Colors, Icon, Navbar } from '@blueprintjs/core';
 import DraggableBlock from '../Block';
 import { useSelection } from '~/src/context/selection-context';
 import { DraggableEvent } from 'react-draggable';
@@ -16,6 +16,7 @@ import { useMutation } from '@apollo/client';
 import createBlock from '~/src/components/Block/mutations/createBlock';
 import { CHANNEL_SKELETON } from '~/src/graphql/queries';
 import { useRouter } from 'next/router';
+import { HistoryManager } from '@antv/x6/lib/graph/history';
 
 interface ICanvas {
   blocks: Ervell.Blokk_blokk[];
@@ -26,8 +27,9 @@ export default withApollo(({ blocks }: ICanvas) => {
   const minimapContainer = useRef<HTMLDivElement>();
   const dndContainer = useRef<HTMLDivElement>();
   const [graph, setGraph] = useState<Graph>(null);
-  const [history, setHistory] = useState();
+  const [history, setHistory] = useState<HistoryManager>(null);
   const [dnd, setDnd] = useState<Addon.Dnd>(null);
+  const [minimap, setMinimap] = useState<Addon.MiniMap>(null);
 
   const { setSelectedConnection } = useSelection();
   const { theme } = useTheme();
@@ -111,7 +113,6 @@ export default withApollo(({ blocks }: ICanvas) => {
         selecting: {
           enabled: true,
           rubberband: true,
-          modifiers: 'shift',
           className: 'x6-selecting selected',
         },
         history: {
@@ -127,6 +128,9 @@ export default withApollo(({ blocks }: ICanvas) => {
         minimap: {
           enabled: true,
           container: minimapContainer.current,
+          graphOptions: {
+            async: true,
+          },
         },
         embedding: {
           enabled: true,
@@ -156,14 +160,13 @@ export default withApollo(({ blocks }: ICanvas) => {
       });
 
       const gridLayout = new GridLayout({
-        // type: 'random',
         type: 'grid',
         height: document.documentElement.clientHeight,
         nodeSize: [250, 250],
-        // width: document.documentElement.clientWidth,
         preventOverlap: true,
         preventOverlapPadding: 16,
         cols: 5,
+        condense: true,
       });
 
       const model = gridLayout.layout(data);
@@ -178,11 +181,9 @@ export default withApollo(({ blocks }: ICanvas) => {
       setGraph(g);
     }
 
-    return () => {
-      if (graph) {
-        graph.dispose();
-        graph.minimap.dispose();
-      }
+    return function cleanup() {
+      graph?.dispose();
+      graph?.minimap.dispose();
     };
   }, []);
 
@@ -195,7 +196,7 @@ export default withApollo(({ blocks }: ICanvas) => {
         },
       );
       graph.on('node:added', ({ node }) => {
-        console.log('node:added', node.store.data.data);
+        setSelectedConnection(node.store.data.data);
       });
     }
   }, [graph]);
@@ -270,16 +271,20 @@ export default withApollo(({ blocks }: ICanvas) => {
 
       <Toolbar
         size="big"
-        className="bp4-navbar absolute bottom-4 left-1/2 h-9 flex items-center w-fit-content px-9"
+        className="bp4-navbar absolute bottom-4 left-1/2 flex items-center"
       >
         <div className="dnd-wrap">
-          <div
-            data-type="react-shape"
-            className="dnd-circle"
-            onMouseDown={startDrag}
-          >
-            Text Block
-          </div>
+          <Navbar.Group>
+            <Button
+              minimal={true}
+              large={true}
+              data-type="react-shape"
+              icon="new-text-box"
+              className="action"
+              style={{ paddingRight: 10 }}
+              onMouseDown={startDrag}
+            ></Button>
+          </Navbar.Group>
         </div>
       </Toolbar>
 

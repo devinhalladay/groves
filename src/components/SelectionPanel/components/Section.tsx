@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
-import ChevronDown from '~/public/chevron-down.svg';
-import ChevronUp from '~/public/chevron-up.svg';
+import ChevronDown from '~/public/icons/chevron-down.svg';
+import ChevronUp from '~/public/icons/chevron-up.svg';
 import { useSelection } from '~/src/context/selection-context';
 import { useUser } from '~/src/context/user-context';
 import { Ervell } from '~/src/types';

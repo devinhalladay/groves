@@ -15,7 +15,7 @@ export type WorkspaceOptions = {
 
 const WorkspaceProvider = (props) => {
   const [workspaceOptions, setWorkspaceOptions] = useState<WorkspaceOptions>({
-    formation: Formations.GRID,
+    formation: Formations.CANVAS,
   });
 
   const [zoomScale, setZoomScale] = useState(1);

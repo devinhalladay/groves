@@ -1,5 +1,5 @@
 import Slider from 'rc-slider';
-import ZoomInIcon from '~/public/zoom-in.svg';
+import ZoomInIcon from '~/public/icons/zoom-in.svg';
 import { useSelection } from '~/src/context/selection-context';
 import { useWorkspace } from '~/src/context/workspace-context';
 
