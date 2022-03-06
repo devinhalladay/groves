@@ -1,8 +1,12 @@
 import { Blokk_blokk } from 'ervell/src/__generated__/Blokk';
 
 import { Card } from '@blueprintjs/core';
+import BlockContextMenu, { handleBlockClick } from '../BlockContextMenu';
 
 import BlockRepresentation from './components/BlockRepresentation';
+import { useWorkspace } from '~/src/context/workspace-context';
+import Formations from '~/src/constants/Formations';
+import { useSelection } from '~/src/context/selection-context';
 
 // TODO: Need to break up this component, it's all kinds of fucked up
 // and recursively renders itself via InlineExpandedChannel which
@@ -14,14 +18,14 @@ interface DraggableBlock {
   height: number;
 }
 
-const DraggableBlock = ({ block, width, height }: DraggableBlock) => {
+const DraggableBlock = ({ block, width, height, ...props }: DraggableBlock) => {
   let description;
 
-  // const { selectedConnection, setSelectedConnection } = useSelection();
-  // const { workspaceOptions, zoomScale, setCanvasBlocks } = useWorkspace();
-  // const { formation } = workspaceOptions;
+  console.log(props.node.store.data.data);
 
   if (!block)
+    // const { selectedConnection, setSelectedConnection } = useSelection();
+
     return (
       <Card
         // onClick={() => handleSelect(block)}
@@ -46,7 +50,6 @@ const DraggableBlock = ({ block, width, height }: DraggableBlock) => {
   // };
 
   return (
-    // <BlockContextMenu key={block.id} block={block} formation={formation}>
     <Card
       // onClick={() => handleSelect(block)}
       interactive={true}
@@ -87,7 +90,6 @@ const DraggableBlock = ({ block, width, height }: DraggableBlock) => {
         <BlockRepresentation block={block} />
       </div>
     </Card>
-    // </BlockContextMenu>
   );
 };
 

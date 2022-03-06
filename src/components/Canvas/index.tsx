@@ -29,7 +29,6 @@ export default withApollo(({ blocks }: ICanvas) => {
   const [graph, setGraph] = useState<Graph>(null);
   const [history, setHistory] = useState<HistoryManager>(null);
   const [dnd, setDnd] = useState<Addon.Dnd>(null);
-  const [minimap, setMinimap] = useState<Addon.MiniMap>(null);
 
   const { setSelectedConnection } = useSelection();
   const { theme } = useTheme();
@@ -60,13 +59,6 @@ export default withApollo(({ blocks }: ICanvas) => {
     },
     { nodes: [] },
   );
-
-  // const startDrag = (e: DraggableEvent) => {
-  //   console.log('start drag', e);
-  //   const target = e.currentTarget as HTMLElement;
-  //   const type = target.getAttribute('data-type');
-  //   const node = type === 'react-shape';
-  // };
 
   const [newBlock, { loading: mutationLoading, error: mutationError }] =
     useMutation(createBlock, {
@@ -147,7 +139,6 @@ export default withApollo(({ blocks }: ICanvas) => {
         label: 'data',
         x: 100,
         y: 100,
-        data: {},
       });
 
       g.centerContent();
@@ -202,13 +193,29 @@ export default withApollo(({ blocks }: ICanvas) => {
   }, [graph]);
 
   useEffect(() => {
-    dnd &&
+    if (dnd) {
       graph.on(
         'node:selected',
         (args: { cell: Cell; node: Node; options: Model.SetOptions }) => {
           setSelectedConnection(args.node.data);
         },
       );
+
+      graph.on(
+        'node:added',
+        (args: { cell: Cell; node: Node; options: Model.SetOptions }) => {
+          async function fetchBlock() {
+            const testBlock = await createTextBlock('a test block!');
+
+            console.log(args.node);
+
+            args.node.replaceData(testBlock);
+          }
+
+          fetchBlock();
+        },
+      );
+    }
   }, [dnd]);
 
   const onUndo = () => {
@@ -234,23 +241,19 @@ export default withApollo(({ blocks }: ICanvas) => {
     }
   };
 
-  const startDrag = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const startDrag = async (
+    e: React.MouseEvent<HTMLDivElement | HTMLButtonElement, MouseEvent>,
+  ) => {
     const target = e.currentTarget;
     const type = target.getAttribute('data-type');
-    const testBlock = await createTextBlock('a test block!');
-    console.log(testBlock);
 
     const node =
       type === 'react-shape'
         ? graph.createNode({
-            id: Math.random().toString(),
             width: 250,
             height: 250,
             shape: 'react-shape',
-            component: (
-              <DraggableBlock block={testBlock} width={250} height={250} />
-            ),
-            data: testBlock,
+            component: <DraggableBlock width={250} height={250} />,
           })
         : null;
 
@@ -269,24 +272,17 @@ export default withApollo(({ blocks }: ICanvas) => {
         ref={dndContainer}
       ></div>
 
-      <Toolbar
-        size="big"
-        className="bp4-navbar absolute bottom-4 left-1/2 flex items-center"
-      >
-        <div className="dnd-wrap">
-          <Navbar.Group>
-            <Button
-              minimal={true}
-              large={true}
-              data-type="react-shape"
-              icon="new-text-box"
-              className="action"
-              style={{ paddingRight: 10 }}
-              onMouseDown={startDrag}
-            ></Button>
-          </Navbar.Group>
-        </div>
-      </Toolbar>
+      <Navbar className="w-1/4 bottom-[15px] flex items-center absolute left-1/2 -translate-x-1/2 rounded-[10px] bg-[#f6f7f9] border border-[#6ab8ff]">
+        <Navbar.Group>
+          <Button
+            minimal={true}
+            large={true}
+            data-type="react-shape"
+            icon="new-text-box"
+            onMouseDown={startDrag}
+          ></Button>
+        </Navbar.Group>
+      </Navbar>
 
       <Toolbar
         size="big"
