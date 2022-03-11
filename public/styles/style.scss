@@ -184,18 +184,26 @@ header {
       }
     }
 
-    input {
-      border: 0;
+    .bp4-popover-target {
+      flex-grow: 1;
+    }
+
+    .bp4-input-group {
       height: 100%;
-      font-size: 100%;
-      padding: 0;
-      padding-left: 15px;
-      flex: 1;
-      outline: none;
-      -webkit-appearance: none;
-      border-radius: 0 10px 10px 0;
-      background-color: $light-gray4;
-      color: $pt-text-color;
+
+      input {
+        border: 0;
+        height: 100%;
+        font-size: 100%;
+        padding: 0;
+        padding-left: 15px;
+        flex: 1;
+        outline: none;
+        -webkit-appearance: none;
+        border-radius: 0 10px 10px 0;
+        background-color: $light-gray4;
+        color: $pt-text-color;
+      }
     }
   }
 }
