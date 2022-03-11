@@ -1,29 +1,29 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
+  parser: ['@typescript-eslint/parser', '@babel/eslint-parser'],
   root: true, // Make sure eslint picks up the config at the root of the directory
   parserOptions: {
     ecmaVersion: 6, // Use the latest ecmascript standard
     sourceType: 'module', // Allows using import/export statements
     ecmaFeatures: {
-      jsx: true // Enable JSX since we're using React
-    }
+      jsx: true, // Enable JSX since we're using React
+    },
   },
   settings: {
     react: {
-      version: 'detect' // Automatically detect the react version
-    }
+      version: 'detect', // Automatically detect the react version
+    },
   },
   env: {
     es6: true,
     browser: true, // Enables browser globals like window and document
     amd: true, // Enables require() and define() as global variables as per the amd spec.
-    node: true // Enables Node.js global variables and Node.js scoping.
+    node: true, // Enables Node.js global variables and Node.js scoping.
   },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier' // Make this the last element so prettier config overrides other formatting rules
+    'prettier', // Make this the last element so prettier config overrides other formatting rules
   ],
   overrides: [
     {
@@ -31,15 +31,15 @@ module.exports = {
       extends: [
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
-        'prettier/@typescript-eslint'
+        'prettier/@typescript-eslint',
       ],
       parser: '@typescript-eslint/parser',
-      plugins: ['@typescript-eslint', 'prettier']
-    }
+      plugins: ['@typescript-eslint', 'prettier', 'babel'],
+    },
   ],
   plugins: ['@typescript-eslint', 'react-hooks', 'prettier'],
   rules: {
     'react/react-in-jsx-scope': 'off',
-    'prettier/prettier': ['error', {}, { usePrettierrc: true }] // Use our .prettierrc file as source
-  }
+    'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Use our .prettierrc file as source
+  },
 };

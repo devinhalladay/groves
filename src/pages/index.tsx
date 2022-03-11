@@ -1,13 +1,16 @@
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { gql, useQuery } from '@apollo/client';
+import { useSelection } from '@context/selection-context';
+import dynamic from 'next/dynamic';
+import { GetServerSideProps } from 'next';
+import React, { useEffect } from 'react';
 import Loading from '~/src/components/Loader';
 import Panel from '~/src/components/Panel';
 import withApollo from '~/src/hooks/withApollo';
 
-import { gql, useQuery } from '@apollo/client';
-import GrovesCanvas from '@components/Canvas';
-
-import { useSelection } from '../context/selection-context';
+const GrovesCanvas = dynamic(() => import('../components/Canvas'), {
+  ssr: false,
+});
 
 const GET_LANDING_BLOCKS = gql`
   {
@@ -43,15 +46,17 @@ const Root = (props) => {
   }, [data]);
 
   if (loading) {
-    return <Loading fullScreen="true" description="Loading your Grove :)" />;
+    return <Loading fullScreen={true} description="Loading your Grove :)" />;
   } else if (error) {
     console.error(error);
     return `Error: ${error}`;
   }
 
+  console.log(data);
+
   return (
     <>
-      <GrovesCanvas {...props} />
+      <GrovesCanvas blocks={data.channel.blokks} {...props} />
       <Panel
         pinSide="none"
         style={{

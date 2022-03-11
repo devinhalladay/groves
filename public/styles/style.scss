@@ -10,131 +10,10 @@
 @tailwind components;
 @tailwind utilities;
 
-$primary-color: #47a7ff;
+@import 'x6-menu.scss';
+@import 'x6-toolbar.scss';
 
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-  display: block;
-}
-body {
-  line-height: 1;
-}
-ol,
-ul {
-  list-style: none;
-}
-blockquote,
-q {
-  quotes: none;
-}
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-  content: '';
-  content: none;
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
+$primary-color: #47a7ff;
 
 body,
 html {
@@ -993,16 +872,10 @@ header {
     height: calc(100% - 45px);
   }
 
-  &:hover {
-    transform: scale(1.02, 1.02);
-  }
-
   &.isBeingDragged,
   &.selected.isBeingDragged {
     border: 1.5px solid #47a7ff;
     box-sizing: border-box;
-    // box-shadow: 0px 5.60708px 16.8212px rgba(111, 123, 138, 0.2),
-    //   0px 1.40177px 2.80354px rgba(111, 123, 138, 0.2), 0px 0px 0px rgba(111, 123, 138, 0.1);
     background: linear-gradient(
         0deg,
         rgba(71, 167, 255, 0.15),
@@ -1439,15 +1312,15 @@ button,
   box-shadow: 0.25px 0.25px 2px rgba(111, 123, 138, 0.19);
   border-radius: 2px;
 
-  &:focus {
-    background: #f1f4f6;
-    border: 1px solid #8b959f;
-    box-shadow: inset 2.25px -1.75px 1px rgba(111, 123, 138, 0.19),
-      inset -2.75px -2.75px 1px rgba(111, 123, 138, 0.19),
-      inset 0px 2.25px 1px rgba(111, 123, 138, 0.19);
-    outline: none;
-    border-radius: 2px;
-  }
+  // &:focus {
+  //   background: #f1f4f6;
+  //   border: 1px solid #8b959f;
+  //   box-shadow: inset 2.25px -1.75px 1px rgba(111, 123, 138, 0.19),
+  //     inset -2.75px -2.75px 1px rgba(111, 123, 138, 0.19),
+  //     inset 0px 2.25px 1px rgba(111, 123, 138, 0.19);
+  //   outline: none;
+  //   border-radius: 2px;
+  // }
 }
 
 .icon-button {
@@ -1764,4 +1637,59 @@ button,
   .meta {
     color: $pt-text-color-muted;
   }
+}
+
+// .x6-selecting {
+//   .selected {
+//   }
+// }
+
+.x6-widget-transform {
+  border: 2px solid #ffae64;
+  box-sizing: border-box !important;
+  margin: 0;
+  padding: 0;
+
+  div {
+    border: 2px solid #ffae64;
+  }
+
+  .x6-widget-transform-resize {
+    border-radius: 2px;
+    width: 14px;
+    height: 14px;
+
+    &[data-position='right'],
+    &[data-position='left'],
+    &[data-position='top'],
+    &[data-position='bottom'] {
+      display: none;
+    }
+  }
+}
+
+.x6-toolbar-content {
+  width: 100%;
+  height: 100%;
+  .dnd-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.x6-toolbar {
+  height: 56px;
+  padding: 0;
+  bottom: 15px;
+}
+
+.x6-toolbar-content-inner {
+  width: 100%;
+  height: 100%;
+}
+
+.dnd-wrap {
+  width: 100%;
+  height: 100%;
 }

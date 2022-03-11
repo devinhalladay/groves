@@ -1,5 +1,5 @@
 import { Button, Colors, Icon } from '@blueprintjs/core';
-import MoonIcon from '~/public/moon.svg';
+import MoonIcon from '~/public/icons/moon.svg';
 
 import { useTheme } from 'next-themes';
 import Themes from '~/src/constants/Themes';

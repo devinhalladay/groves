@@ -58,6 +58,7 @@ const grovePageFragments = {
       title
       href
       content(format: HTML)
+      content_md: content(format: MARKDOWN)
     }
 
     fragment KonnectableImage on Image {

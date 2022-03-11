@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { forwardRef, useCallback, useRef, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
-import ActionIcon from '~/public/create-block.svg';
+import ActionIcon from '~/public/icons/create-block.svg';
 import createBlock from '~/src/components/Block/mutations/createBlock';
 
 import { useTheme } from 'next-themes';

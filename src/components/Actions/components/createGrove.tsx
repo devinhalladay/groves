@@ -3,7 +3,7 @@ import { Popover2 } from '@blueprintjs/popover2';
 import withChannel from '@components/Channel';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
-import CreateGrove from '~/public/create-grove.svg';
+import CreateGrove from '~/public/icons/create-grove.svg';
 import { useSelection } from '~/src/context/selection-context';
 
 import { useTheme } from 'next-themes';

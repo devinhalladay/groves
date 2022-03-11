@@ -41,4 +41,6 @@ const Grove = () => {
   }
 };
 
+Grove.displayName = 'Grove';
+
 export default withApollo(withChannel()(Grove));

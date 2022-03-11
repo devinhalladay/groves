@@ -4,7 +4,11 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      width: {
+        'fit-content': 'fit-content',
+      },
+    },
   },
   plugins: [],
 };

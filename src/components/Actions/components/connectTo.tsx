@@ -5,7 +5,7 @@ import { useCombobox } from 'downshift';
 import { useRouter } from 'next/router';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import LinkGrovesIcon from '~/public/link-groves.svg';
+import LinkGrovesIcon from '~/public/icons/link-groves.svg';
 
 import { useTheme } from 'next-themes';
 import { CREATE_CONNECTION } from '~/src/graphql/mutations';

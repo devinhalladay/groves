@@ -38,6 +38,15 @@ const grovePageFragments = {
       image_url(size: DISPLAY)
     }
 
+    fragment KonnectableEmbed on Embed {
+      id
+      title
+      href
+      source_url
+      image_url(size: DISPLAY)
+      embed_html
+    }
+
     fragment KonnectableLink on Link {
       id
       href

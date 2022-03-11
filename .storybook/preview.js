@@ -1,4 +1,4 @@
-import '../public/style.scss';
+import '../public/styles/style.scss';
 
 import { MockedProvider } from '@apollo/client/testing';
 
