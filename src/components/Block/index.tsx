@@ -124,4 +124,4 @@ const DraggableBlock = ({
   );
 };
 
-export default withApollo(DraggableBlock);
+export default DraggableBlock;

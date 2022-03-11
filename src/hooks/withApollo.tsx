@@ -7,7 +7,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { NextPage } from 'next';
-import { getSession, useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import withApollo from 'next-with-apollo';
 
 interface RenderOptions {
@@ -46,11 +46,10 @@ const client = new ApolloClient({
 });
 
 export default withApollo<NextPage>(() => client, {
-  render: ({ Page, children, props }: RenderOptions) => {
+  render: ({ Page, props }: RenderOptions) => {
     return (
       <ApolloProvider client={props.apollo}>
-        {Page && <Page {...props} />}
-        {children}
+        <Page {...props} />
       </ApolloProvider>
     );
   },

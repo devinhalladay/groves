@@ -1,5 +1,10 @@
+// @ts-check
+
 const { patchWebpackConfig } = require('next-global-css');
 
+/**
+ * @type {import('next').NextConfig}
+ **/
 module.exports = {
   env: {
     APPLICATION_ID: process.env.APPLICATION_ID,
@@ -12,6 +17,8 @@ module.exports = {
     AUTHENTICATION_ENABLED:
       process.env.NODE_ENV === 'production' ? false : true,
   },
+
+  reactStrictMode: true,
 
   typescript: {
     ignoreBuildErrors: true,

@@ -240,6 +240,13 @@ export default withApollo(({ blocks }: ICanvas) => {
           fetchBlock();
         },
       );
+
+      // graph.on('cell:dblclick', ({ cell, e }) => {
+      //   // node text editor docs: https://x6.antv.vision/en/docs/api/registry/node-tool/#node-editor
+      //   const isNode = cell.isNode();
+      //   const name = cell.isNode() ? 'node-editor' : 'edge-editor';
+
+      // });
     }
   }, [dnd]);
 
@@ -303,7 +310,7 @@ export default withApollo(({ blocks }: ICanvas) => {
         ref={dndContainer}
       ></div>
 
-      <Navbar className="w-1/4 bottom-[15px] flex items-center absolute left-1/2 -translate-x-1/2 rounded-[10px] bg-[#f6f7f9] border border-[#6ab8ff]">
+      <Navbar className="w-1/4 p-2 bottom-[15px] flex items-center absolute left-1/2 -translate-x-1/2 rounded-[10px] bg-[#f6f7f9] border border-[#6ab8ff]">
         <Navbar.Group>
           <Button
             minimal={true}
