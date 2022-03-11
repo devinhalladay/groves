@@ -36,8 +36,13 @@ export const UserProvider = withApollo((props) => {
     channelSet.channels.flatMap((c) => c),
   );
 
+  let user = currentUser || null;
+
   return (
-    <UserContext.Provider value={{ currentUser, index, flatIndex }} {...props}>
+    <UserContext.Provider
+      value={{ currentUser: user, index, flatIndex }}
+      {...props}
+    >
       {props.children}
     </UserContext.Provider>
   );

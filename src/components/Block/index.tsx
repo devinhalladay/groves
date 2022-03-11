@@ -52,7 +52,7 @@ const DraggableBlock = ({
           className={`block block--text`}
           onScroll={(e) => e.stopPropagation()}
         >
-          <p>test</p>
+          <p>Whoa! How'd I get here?</p>
         </div>
       </Card>
     );
