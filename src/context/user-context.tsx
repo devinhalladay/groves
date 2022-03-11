@@ -28,7 +28,7 @@ export const UserProvider = withApollo((props) => {
 
   if (loading) return <Loading fullScreen={true} />;
 
-  if (error) return <SelectionProvider>{props.children}</SelectionProvider>;
+  if (error) return props.children;
 
   let index = currentUser.me.channels_index;
 
@@ -38,7 +38,7 @@ export const UserProvider = withApollo((props) => {
 
   return (
     <UserContext.Provider value={{ currentUser, index, flatIndex }} {...props}>
-      <SelectionProvider>{props.children}</SelectionProvider>
+      {props.children}
     </UserContext.Provider>
   );
 });

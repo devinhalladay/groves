@@ -1,22 +1,24 @@
+import '@antv/x6-react-shape';
+
 import { useTheme } from 'next-themes';
+import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
+import createBlock from '~/src/components/Block/mutations/createBlock';
 import Themes from '~/src/constants/Themes';
+import { useSelection } from '~/src/context/selection-context';
+import { CHANNEL_SKELETON } from '~/src/graphql/queries';
 import withApollo from '~/src/hooks/withApollo';
 import { Ervell } from '~/src/types';
 
-import { GridLayout, RandomLayout } from '@antv/layout';
-import { Addon, Cell, Graph, Model, Node, NodeView } from '@antv/x6';
-import '@antv/x6-react-shape';
+import { GridLayout } from '@antv/layout';
+import { Addon, Cell, Graph, Model, Node } from '@antv/x6';
 import { Toolbar } from '@antv/x6-react-components';
-import { Button, Colors, Icon, Navbar } from '@blueprintjs/core';
-import DraggableBlock from '../Block';
-import { useSelection } from '~/src/context/selection-context';
-import { DraggableEvent } from 'react-draggable';
-import { useMutation } from '@apollo/client';
-import createBlock from '~/src/components/Block/mutations/createBlock';
-import { CHANNEL_SKELETON } from '~/src/graphql/queries';
-import { useRouter } from 'next/router';
 import { HistoryManager } from '@antv/x6/lib/graph/history';
+import { useMutation } from '@apollo/client';
+import { Button, Colors, Icon, Navbar } from '@blueprintjs/core';
+
+import DraggableBlock from '../Block';
+import { useConnectionMutation } from '../SelectionPanel/mutations';
 
 interface ICanvas {
   blocks: Ervell.Blokk_blokk[];
@@ -30,9 +32,23 @@ export default withApollo(({ blocks }: ICanvas) => {
   const [history, setHistory] = useState<HistoryManager>(null);
   const [dnd, setDnd] = useState<Addon.Dnd>(null);
 
-  const { setSelectedConnection } = useSelection();
+  const { setSelectedConnection, channelID } = useSelection();
+  const { removeConnection } = useConnectionMutation();
+
   const { theme } = useTheme();
   const router = useRouter();
+
+  const handleRemoveConnection = (node, block) => {
+    removeConnection({
+      variables: {
+        connectable_id: block.id,
+        connectable_type: 'BLOCK',
+        channel_id: channelID,
+      },
+    }).then(() => {
+      node.remove();
+    });
+  };
 
   const data = blocks.reduce(
     (acc, block, i) => {
@@ -45,9 +61,11 @@ export default withApollo(({ blocks }: ICanvas) => {
         component: (
           <DraggableBlock
             type={block.__typename}
+            handleRemoveConnection={handleRemoveConnection}
             key={block.id}
             block={block}
             bounds="parent"
+            channelId={channelID}
           />
         ),
         label: 'data',
@@ -134,7 +152,14 @@ export default withApollo(({ blocks }: ICanvas) => {
         width: 250,
         height: 250,
         shape: 'react-shape',
-        component: <DraggableBlock width={250} height={250} />,
+        component: (
+          <DraggableBlock
+            channelId={channelID}
+            width={250}
+            height={250}
+            handleRemoveConnection={handleRemoveConnection}
+          />
+        ),
         grid: true,
         label: 'data',
         x: 100,
@@ -253,7 +278,13 @@ export default withApollo(({ blocks }: ICanvas) => {
             width: 250,
             height: 250,
             shape: 'react-shape',
-            component: <DraggableBlock width={250} height={250} />,
+            component: (
+              <DraggableBlock
+                handleRemoveConnection={handleRemoveConnection}
+                width={250}
+                height={250}
+              />
+            ),
           })
         : null;
 

@@ -8,6 +8,7 @@ import '~/public/styles/style.scss';
 import { ComposedHeader } from '../components/Header';
 import KeyMaps from '../constants/KeyMaps';
 import Themes from '../constants/Themes';
+import { SelectionProvider } from '../context/selection-context';
 import { UserProvider } from '../context/user-context';
 import { WorkspaceProvider } from '../context/workspace-context';
 
@@ -67,8 +68,10 @@ GrovesClient) => {
               themes={[Themes.DARK, Themes.LIGHT]}
             >
               <WorkspaceProvider>
-                <ComposedHeader {...pageProps} />
-                <Component {...pageProps} />
+                <SelectionProvider>
+                  <ComposedHeader {...pageProps} />
+                  <Component {...pageProps} />
+                </SelectionProvider>
               </WorkspaceProvider>
             </ThemeProvider>
           </GlobalHotKeys>

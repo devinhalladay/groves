@@ -5,7 +5,7 @@ import { Ervell } from '../types';
 
 const SelectionContext = createContext(null);
 
-const SelectionProvider = withApollo((props): any => {
+export const SelectionProvider = withApollo((props): any => {
   const router = useRouter();
 
   const [selectedChannel, setSelectedChannel] =
@@ -55,6 +55,6 @@ const SelectionProvider = withApollo((props): any => {
   );
 });
 
-const useSelection = () => useContext(SelectionContext);
+export const useSelection = () => useContext(SelectionContext);
 
-export { useSelection, SelectionProvider, SelectionContext };
+export default SelectionContext;
