@@ -44,7 +44,7 @@ const PropertiesPanel: React.FunctionComponent<IPropertiesPanel> = ({
 
       {relationFields.map((field, i) => (
         <div
-          key={i}
+          key={field.id}
           style={{
             display: 'flex',
             marginBottom: 20,
@@ -70,16 +70,24 @@ const PropertiesPanel: React.FunctionComponent<IPropertiesPanel> = ({
             {i + 1}
           </div>
           {/* {channelSelector ? channelSelector : <PureChannelSelector />} */}
-          <ChannelSelector />
+          <ChannelSelector
+            onSuccess={(channel) => {
+              const newFields = [...relationFields];
+              newFields[i].title = channel.title;
+              newFields[i].id = channel.id;
+              setRelationFields(newFields);
+            }}
+          />
           {/* <InputGroup fill={true} defaultValue={field.title} key={field.id} /> */}
           <Button
             icon="cross"
             fill={false}
             style={{ marginLeft: 10 }}
             onClick={() => {
-              let newFields = relationFields;
-              newFields.splice(i, 1);
-              setRelationFields([...newFields]);
+              // let newFields = relationFields.filter(
+              //   (item, index) => item.id !== field.id,
+              // );
+              // setRelationFields(newFields);
             }}
           />
         </div>

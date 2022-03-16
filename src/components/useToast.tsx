@@ -4,7 +4,7 @@ import { Position, Toaster, ToastProps } from '@blueprintjs/core';
 export const AppToaster =
   typeof document !== 'undefined'
     ? Toaster.create({
-        className: 'toaster z-[3000]',
+        className: 'toaster z-[1000]',
         position: Position.BOTTOM,
         maxToasts: 3,
         canEscapeKeyClear: true,

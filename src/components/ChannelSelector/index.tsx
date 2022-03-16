@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { FC } from 'react';
 
-import { Icon, Intent, MenuItem } from '@blueprintjs/core';
+import { Icon, Intent, MenuItem, Tag } from '@blueprintjs/core';
 import { ItemRenderer, MultiSelect } from '@blueprintjs/select';
 
 import { useSelection } from '../../context/selection-context';
@@ -13,7 +13,15 @@ import { useConnectionMutation } from '../SelectionPanel/mutations';
 import NewItem from './NewItem';
 import useToast from '../useToast';
 
-function ChannelSelector({ createChannel }) {
+interface IChannelSelector {
+  createChannel: (channel: Ervell.ChannelMetadata) => void;
+  onSuccess: (tag: Ervell.ChannelMetadata) => void;
+}
+
+const ChannelSelector: FC<IChannelSelector> = ({
+  createChannel,
+  onSuccess,
+}) => {
   const { selectedConnection, setSelectedConnection } = useSelection();
   const router = useRouter();
   const { createConnection, removeConnection } = useConnectionMutation();
@@ -74,10 +82,11 @@ function ChannelSelector({ createChannel }) {
   const handleTagSelect = async (tag) => {
     if (flatIndex.filter((t) => t.title == tag.title).length > 0) {
       if (!isTagSelected(tag)) {
-        selectTag(tag);
+        // selectTag(tag);
+        onSuccess && onSuccess(tag);
       } else {
-        handleTagRemove(tag);
-        console.log(selectedConnection);
+        // handleTagRemove(tag);
+        // console.log(selectedConnection);
       }
     }
   };
@@ -167,7 +176,6 @@ function ChannelSelector({ createChannel }) {
           icon="add"
           text={`Create "${query}"`}
           active={active}
-          // onClick={handleClick}
           onClick={() => handleCreateChannel(query)}
           shouldDismissPopover={true}
         />
@@ -183,15 +191,9 @@ function ChannelSelector({ createChannel }) {
       items={flatIndex}
       noResults={<MenuItem disabled={true} text="No results." />}
       onItemSelect={handleTagSelect}
-      tagRenderer={(item) => item.title}
-      tagInputProps={{
-        tagProps: {
-          minimal: true,
-        },
-      }}
-      resetOnSelect={true}
+      tagRenderer={(item) => <Tag>{item.title}</Tag>}
     />
   );
-}
+};
 
 export default withChannel()(ChannelSelector);
