@@ -1,3 +1,5 @@
+import { MenuItem } from '@blueprintjs/core';
+import { Select, Suggest } from '@blueprintjs/select';
 import { useSelection } from '@context/selection-context';
 import { useUser } from '@context/user-context';
 import Downshift from 'downshift';
@@ -5,18 +7,20 @@ import { useRouter } from 'next/router';
 import React, { useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import KeyMaps from '~/src/constants/KeyMaps';
+import { Ervell } from '~/src/types';
 
 const GrovesNavigator = ({ initialSelection }) => {
   const router = useRouter();
 
   const { channels, index } = useUser();
-  const { selectedChannel, setSelectedChannel } = useSelection();
+  const { selectedChannel, setSelectedChannel, channelID } = useSelection();
 
   const allUserChannels = index.flatMap((channelSet) =>
     channelSet.channels.flatMap((c) => c),
   );
 
-  const [inputItems, setInputItems] = useState(allUserChannels);
+  const [inputItems, setInputItems] =
+    useState<Ervell.ChannelMetadata[]>(allUserChannels);
 
   const inputRef = useRef(null);
 
@@ -27,14 +31,28 @@ const GrovesNavigator = ({ initialSelection }) => {
 
   const keyHandlers = { FOCUS_NAVIGATOR: (e) => handleFocusInput(e) };
 
-  const selectInputContents = () => {
-    inputRef.current && inputRef.current.select();
-  };
-
   return (
-    <>
+    <div className="grove-navigation">
       <GlobalHotKeys handlers={keyHandlers} keyMap={KeyMaps} />
-      <Downshift
+      <Suggest
+        className="flex"
+        popoverProps={{
+          fill: true,
+          minimal: true,
+          popoverClassName: 'max-h-72 overflow-scroll',
+        }}
+        fill={true}
+        noResults={<MenuItem disabled={true} text="No results." />}
+        items={inputItems}
+        itemRenderer={(item) => <MenuItem text={item.title} key={item.id} />}
+        onItemSelect={(item) => {
+          console.log(item);
+        }}
+        defaultSelectedItem={
+          inputItems.filter((item) => item.id === channelID)[0]
+        }
+      />
+      {/* <Downshift
         onInputValueChange={(inputValue) => {
           setInputItems(
             allUserChannels.filter((item) =>
@@ -125,8 +143,8 @@ const GrovesNavigator = ({ initialSelection }) => {
             </div>
           </>
         )}
-      </Downshift>
-    </>
+      </Downshift> */}
+    </div>
   );
 };
 

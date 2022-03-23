@@ -32,7 +32,7 @@ export const SelectionProvider = withApollo((props): any => {
 
   const channelID = getChannelID();
 
-  let initialSelection = null;
+  let initialSelection = selectedChannel;
 
   return (
     <SelectionContext.Provider

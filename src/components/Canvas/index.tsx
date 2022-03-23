@@ -131,7 +131,7 @@ export default withApollo(({ blocks }: ICanvas) => {
         },
         mousewheel: {
           enabled: true,
-          modifiers: 'meta',
+          modifiers: 'cmd',
         },
         resizing: {
           enabled: true,
